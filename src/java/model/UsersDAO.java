@@ -2,7 +2,7 @@ package model;
 
 import entity.Users;
 
-public class DAOUsers {
+public class UsersDAO extends DBContext {
 
 	public Users getUserList() {
 		return null;

@@ -1,6 +1,6 @@
 package model;
 
-public class DAODashoard {
+public class DashBoardDAO {
 
 	public void initDashBoardInfor() {
 

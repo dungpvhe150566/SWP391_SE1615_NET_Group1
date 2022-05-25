@@ -1,6 +1,8 @@
 package model;
 
-public class DAOProduct {
+import entity.Product;
+
+public class ProductDAO extends DBContext {
 
 	public void getProductList() {
 

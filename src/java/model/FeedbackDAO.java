@@ -1,6 +1,6 @@
 package model;
 
-public class DAOFeedback {
+public class FeedbackDAO {
 
 	public void addFeedback() {
 

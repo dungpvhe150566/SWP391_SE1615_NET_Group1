@@ -1,6 +1,8 @@
 package model;
 
-public class DAOCart {
+import entity.Cart;
+
+public class CartDAO extends DBContext {
 
 	public void changeAmount() {
 

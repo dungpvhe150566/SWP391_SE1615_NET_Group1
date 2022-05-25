@@ -1,6 +1,8 @@
 package model;
 
-public class DAOOrders {
+import entity.Orders;
+
+public class OrdersDAO extends DBContext {
 
 	public void getOrderList() {
 

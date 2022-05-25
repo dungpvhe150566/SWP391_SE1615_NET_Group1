@@ -1,6 +1,6 @@
 package model;
 
-public class DAOShipInfo {
+public class ShipInfoDAO {
 
 	public void addShipInfor() {
 
