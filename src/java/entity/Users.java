@@ -82,4 +82,9 @@ public class Users {
         this.StatusID = StatusID;
     }
 
+    @Override
+    public String toString() {
+        return "Users{" + "UserID=" + UserID + ", Username=" + Username + ", Password=" + Password + ", email=" + email + ", ActiveCode=" + ActiveCode + ", isSeller=" + isSeller + ", isAdmin=" + isAdmin + ", StatusID=" + StatusID + '}';
+    }
+
 }
