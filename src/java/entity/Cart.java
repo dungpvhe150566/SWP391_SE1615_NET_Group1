@@ -32,4 +32,11 @@ public class Cart {
         this.Amount = Amount;
     }
 
+    @Override
+    public String toString() {
+        return "UserID: "+UserID+"  ProductID: "+ProductID+"  Amount: "+Amount;
+    }
+
+    
+    
 }
