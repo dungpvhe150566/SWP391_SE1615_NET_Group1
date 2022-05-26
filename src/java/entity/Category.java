@@ -32,4 +32,11 @@ public class Category {
         this.icon = icon;
     }
 
+    @Override
+    public String toString() {
+        return "CategoryID: "+CategoryID+"  CategoryName: "+CategoryName +" Icon: "+icon;
+    }
+
+    
+    
 }
