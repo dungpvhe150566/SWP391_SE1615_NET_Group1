@@ -4,7 +4,15 @@ public class Manufacturer {
 
     private int ManufacturerID;
 
-    private char ManufacturerName;
+    private String ManufacturerName;
+
+    public Manufacturer() {
+    }
+
+    public Manufacturer(int ManufacturerID, String ManufacturerName) {
+        this.ManufacturerID = ManufacturerID;
+        this.ManufacturerName = ManufacturerName;
+    }
 
     public int getManufacturerID() {
         return ManufacturerID;
@@ -14,13 +22,15 @@ public class Manufacturer {
         this.ManufacturerID = ManufacturerID;
     }
 
-    public char getManufacturerName() {
+    public String getManufacturerName() {
         return ManufacturerName;
     }
 
-    public void setManufacturerName(char ManufacturerName) {
+    public void setManufacturerName(String ManufacturerName) {
         this.ManufacturerName = ManufacturerName;
     }
+
+    
 
     @Override
     public String toString() {

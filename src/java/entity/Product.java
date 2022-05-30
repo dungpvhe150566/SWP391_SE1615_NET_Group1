@@ -4,9 +4,9 @@ public class Product {
 
     private int ProductID;
 
-    private char ProductName;
+    private String ProductName;
 
-    private char Description;
+    private String Description;
 
     private int OriginalPrice;
 
@@ -14,7 +14,7 @@ public class Product {
 
     private int SellPercent;
 
-    private char imageLink;
+    private String imageLink;
 
     private int CategoryID;
 
@@ -32,6 +32,31 @@ public class Product {
 
     private float weight;
 
+    public Product() {
+    }
+
+    public Product(int ProductID, String ProductName, String Description, int OriginalPrice, int SellPrice, int SellPercent, String imageLink, int CategoryID, int SellerID, int Amount, int StatusID, int ManufacturerID, float height, float width, float weight) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.Description = Description;
+        this.OriginalPrice = OriginalPrice;
+        this.SellPrice = SellPrice;
+        this.SellPercent = SellPercent;
+        this.imageLink = imageLink;
+        this.CategoryID = CategoryID;
+        this.SellerID = SellerID;
+        this.Amount = Amount;
+        this.StatusID = StatusID;
+        this.ManufacturerID = ManufacturerID;
+        this.height = height;
+        this.width = width;
+        this.weight = weight;
+    }
+
+   
+    
+    
+
     public int getProductID() {
         return ProductID;
     }
@@ -40,19 +65,19 @@ public class Product {
         this.ProductID = ProductID;
     }
 
-    public char getProductName() {
+    public String getProductName() {
         return ProductName;
     }
 
-    public void setProductName(char ProductName) {
+    public void setProductName(String ProductName) {
         this.ProductName = ProductName;
     }
 
-    public char getDescription() {
+    public String getDescription() {
         return Description;
     }
 
-    public void setDescription(char Description) {
+    public void setDescription(String Description) {
         this.Description = Description;
     }
 
@@ -80,11 +105,11 @@ public class Product {
         this.SellPercent = SellPercent;
     }
 
-    public char getImageLink() {
+    public String getImageLink() {
         return imageLink;
     }
 
-    public void setImageLink(char imageLink) {
+    public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
     }
 
@@ -152,4 +177,5 @@ public class Product {
         this.weight = weight;
     }
 
+    
 }

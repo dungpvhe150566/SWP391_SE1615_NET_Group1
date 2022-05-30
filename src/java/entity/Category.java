@@ -4,9 +4,18 @@ public class Category {
 
     private int CategoryID;
 
-    private int CategoryName;
+    private String CategoryName;
 
-    private int icon;
+    private String icon;
+
+    public Category() {
+    }
+
+    public Category(int CategoryID, String CategoryName, String icon) {
+        this.CategoryID = CategoryID;
+        this.CategoryName = CategoryName;
+        this.icon = icon;
+    }
 
     public int getCategoryID() {
         return CategoryID;
@@ -16,22 +25,23 @@ public class Category {
         this.CategoryID = CategoryID;
     }
 
-    public int getCategoryName() {
+    public String getCategoryName() {
         return CategoryName;
     }
 
-    public void setCategoryName(int CategoryName) {
+    public void setCategoryName(String CategoryName) {
         this.CategoryName = CategoryName;
     }
 
-    public int getIcon() {
+    public String getIcon() {
         return icon;
     }
 
-    public void setIcon(int icon) {
+    public void setIcon(String icon) {
         this.icon = icon;
     }
 
+    
     @Override
     public String toString() {
         return "CategoryID: "+CategoryID+"  CategoryName: "+CategoryName +" Icon: "+icon;
