@@ -14,6 +14,19 @@ public class UserAddress {
 
     private char PhoneNum;
 
+    public UserAddress() {
+    }
+
+    public UserAddress(int ID, int UserID, char ShipName, char ShipAddress, int ShipCityID, char PhoneNum) {
+        this.ID = ID;
+        this.UserID = UserID;
+        this.ShipName = ShipName;
+        this.ShipAddress = ShipAddress;
+        this.ShipCityID = ShipCityID;
+        this.PhoneNum = PhoneNum;
+    }
+    
+
     public int getID() {
         return ID;
     }
