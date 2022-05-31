@@ -18,6 +18,21 @@ public class Users {
 
     private int StatusID;
 
+    public Users() {
+    }
+
+    public Users(int UserID, char Username, char Password, char email, char ActiveCode, int isSeller, int isAdmin, int StatusID) {
+        this.UserID = UserID;
+        this.Username = Username;
+        this.Password = Password;
+        this.email = email;
+        this.ActiveCode = ActiveCode;
+        this.isSeller = isSeller;
+        this.isAdmin = isAdmin;
+        this.StatusID = StatusID;
+    }
+
+    
     public int getUserID() {
         return UserID;
     }
