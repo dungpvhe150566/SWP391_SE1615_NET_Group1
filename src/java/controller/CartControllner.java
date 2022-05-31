@@ -5,7 +5,6 @@
 package controller;
 
 import entity.Cart;
-import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
@@ -16,14 +15,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.ProductDAO;
 
 /**
  *
  * @author Pham Van Trong
  */
-@WebServlet(name = "AddToCartControllner", urlPatterns = {"/addtocart"})
-public class AddToCartControllner extends HttpServlet {
+@WebServlet(name = "CartControllner", urlPatterns = {"/Cart"})
+public class CartControllner extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,29 +37,24 @@ public class AddToCartControllner extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-             int productId = Integer.parseInt(request.getParameter("productId"));
-            //map    productId | cart
-            HttpSession session = request.getSession();
+         HttpSession session = request.getSession();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
-            if (carts == null) {
+            if(carts==null){
                 carts = new LinkedHashMap<>();
             }
-           
-            if (carts.containsKey(productId)) {//sản phẩm đã có trên giỏ hàng
-                int oldQuantity = carts.get(productId).getAmount();
-                carts.get(productId).setAmount(oldQuantity + 1);
-                
-               
-               
-            } else {//sản phẩm chưa có trên giỏ hàng
-                Product product = new ProductDAO().getProductById(productId);
-                carts.put(productId, Cart.builder().product(product).Amount(1).build());
-            }
-       
             
-//h
-            session.setAttribute("carts", carts);
-            response.sendRedirect("ShopController");
+            //tinh tong tien
+            double totalMoney = 0;
+            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
+                Integer productId = entry.getKey();
+                Cart cart = entry.getValue();
+                
+                totalMoney += cart.getAmount()* cart.getProduct().getSellPrice();
+                
+            }
+            request.setAttribute("totalMoney", totalMoney);
+            request.setAttribute("carts", carts);
+            request.getRequestDispatcher("carts.jsp").forward(request, response);
         }
     }
 
