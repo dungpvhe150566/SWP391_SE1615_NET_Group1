@@ -7,6 +7,25 @@ public class Cart {
     private int ProductID;
 
     private int Amount;
+    private Product product;
+
+    public Cart() {
+    }
+
+    public Cart(int UserID, int ProductID, int Amount, Product product) {
+        this.UserID = UserID;
+        this.ProductID = ProductID;
+        this.Amount = Amount;
+        this.product = product;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
 
     public int getUserID() {
         return UserID;
