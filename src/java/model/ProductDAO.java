@@ -1,6 +1,8 @@
 package model;
 
 import entity.Product;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
@@ -261,6 +263,41 @@ public class ProductDAO extends DBContext {
 //        for (Product product : products) {
 //            System.out.println(product);
 //        }
+    }
+
+    public Product getProductById(int productId) {
+         try {
+            String sql = "select *  from Product  where  ProductID = ?";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, productId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                   int pId = rs.getInt(1);
+                String ProductName = rs.getString(2);
+                String Description = rs.getNString(3);
+                int OriginalPrice = rs.getInt(4);
+                int SellPrice = rs.getInt(5);
+                  int SalePercent = rs.getInt(6);
+                  
+                String imageLink = rs.getString(7);
+                int CategoryID = rs.getInt(8);
+                
+
+                int SellerID= rs.getInt(9); 
+                int Amount = rs.getInt(10);
+                int StatusID = rs.getInt(11);
+                int ManufacturerID = rs.getInt(12);
+                float height  = rs.getFloat(13);
+                float width  = rs.getFloat(14);
+                float weight  = rs.getFloat(15);
+                Product product = new Product(productId, ProductName, Description, OriginalPrice, SellPrice, SalePercent, imageLink, CategoryID, SellerID, Amount, StatusID, ManufacturerID, height, width, weight);
+                return product;
+            }
+        } catch (Exception ex) {
+           ex.printStackTrace();
+        }
+        return null;
     }
 
     
