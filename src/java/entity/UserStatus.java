@@ -6,15 +6,6 @@ public class UserStatus {
 
     private char StatusName;
 
-    public UserStatus() {
-    }
-
-    public UserStatus(int ID, char StatusName) {
-        this.ID = ID;
-        this.StatusName = StatusName;
-    }
-    
-
     public int getID() {
         return ID;
     }

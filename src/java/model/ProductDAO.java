@@ -72,6 +72,136 @@ public class ProductDAO extends DBContext {
         }
         return products;
     }
+    
+    /**
+     * Get All Products From Database
+     *
+     * @param 
+     * @return Vector Product List
+     */
+    public Vector<Product> getProductList() {
+
+        // Create vector to store all Categories
+        Vector<Product> products = new Vector<>();
+
+        // Create value atribute of each Category
+        int productID;
+        String productName;
+        String description;
+        int originalPrice;
+        int sellPrice;
+        int salePercent;
+        String imageLink;
+        int categoryID;
+        int sellerID;
+        int amount;
+        int statusID;
+        int manufacturerID;
+        float height;
+        float width;
+        float weight;
+
+        // Query Statement to get all Categories in Database 
+        String sqlQuery = "select * from Product";
+
+        // Resultset to store all Categories 
+        ResultSet rs = getData(sqlQuery);
+
+        // Get all categories store to vector
+        try {
+            while (rs.next()) {
+                // Get and store all attribute of each Product
+                productID = rs.getInt(1);
+                productName = rs.getString(2);
+                description = rs.getString(3);
+                originalPrice = rs.getInt(4);
+                sellPrice = rs.getInt(5);
+                salePercent = rs.getInt(6);
+                imageLink = rs.getString(7);
+                categoryID = rs.getInt(8);
+                sellerID = rs.getInt(9);
+                amount = rs.getInt(10);
+                statusID = rs.getInt(11);
+                manufacturerID = rs.getInt(12);
+                height = rs.getFloat(13);
+                width = rs.getFloat(14);
+                weight = rs.getFloat(15);
+                // Add Product to vector 
+                products.add(new Product(productID, productName, description,
+                        originalPrice, sellPrice, salePercent, imageLink,
+                        categoryID, sellerID, amount, statusID,
+                        manufacturerID, height, width, weight));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
+    
+    /**
+     * Get All Products of Category From Database
+     *
+     * @param Category ID
+     * @return Vector Product List
+     */
+    public Vector<Product> getProductListByCategoryID(String cID) {
+
+        // Create vector to store all Categories
+        Vector<Product> products = new Vector<>();
+
+        // Create value atribute of each Category
+        int productID;
+        String productName;
+        String description;
+        int originalPrice;
+        int sellPrice;
+        int salePercent;
+        String imageLink;
+        int categoryID;
+        int sellerID;
+        int amount;
+        int statusID;
+        int manufacturerID;
+        float height;
+        float width;
+        float weight;
+
+        // Query Statement to get all Categories in Database 
+        String sqlQuery = "select * from Product where CategoryID = " + cID;
+
+        // Resultset to store all Categories 
+        ResultSet rs = getData(sqlQuery);
+
+        // Get all categories store to vector
+        try {
+            while (rs.next()) {
+                // Get and store all attribute of each Product
+                productID = rs.getInt(1);
+                productName = rs.getString(2);
+                description = rs.getString(3);
+                originalPrice = rs.getInt(4);
+                sellPrice = rs.getInt(5);
+                salePercent = rs.getInt(6);
+                imageLink = rs.getString(7);
+                categoryID = rs.getInt(8);
+                sellerID = rs.getInt(9);
+                amount = rs.getInt(10);
+                statusID = rs.getInt(11);
+                manufacturerID = rs.getInt(12);
+                height = rs.getFloat(13);
+                width = rs.getFloat(14);
+                weight = rs.getFloat(15);
+                // Add Product to vector 
+                products.add(new Product(productID, productName, description,
+                        originalPrice, sellPrice, salePercent, imageLink,
+                        categoryID, sellerID, amount, statusID,
+                        manufacturerID, height, width, weight));
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return products;
+    }
 
     // This method to get Total of Number Product have in Database
     public int getTotalPage(String productName) {

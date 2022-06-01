@@ -32,9 +32,6 @@ public class Product {
 
     private float weight;
 
-    public Product() {
-    }
-
     public Product(int ProductID, String ProductName, String Description, int OriginalPrice, int SellPrice, int SellPercent, String imageLink, int CategoryID, int SellerID, int Amount, int StatusID, int ManufacturerID, float height, float width, float weight) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
@@ -53,8 +50,6 @@ public class Product {
         this.weight = weight;
     }
 
-   
-    
     
 
     public int getProductID() {
@@ -177,5 +172,4 @@ public class Product {
         this.weight = weight;
     }
 
-    
 }
