@@ -5,8 +5,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
-public class ManufacturerDAO extends DBContext{
-    public Vector<Manufacturer> getManufacturerList(){
+public class ManufacturerDAO extends DBContext {
+
+    public Vector<Manufacturer> getManufacturerList() {
         // Create vector to store all Categories
         Vector<Manufacturer> manufacturers = new Vector<>();
 

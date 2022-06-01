@@ -8,9 +8,6 @@ public class Category {
 
     private String icon;
 
-    public Category() {
-    }
-
     public Category(int CategoryID, String CategoryName, String icon) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
@@ -41,7 +38,6 @@ public class Category {
         this.icon = icon;
     }
 
-    
     @Override
     public String toString() {
         return "CategoryID: "+CategoryID+"  CategoryName: "+CategoryName +" Icon: "+icon;
