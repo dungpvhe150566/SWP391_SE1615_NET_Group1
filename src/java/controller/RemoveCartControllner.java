@@ -56,7 +56,7 @@ public class RemoveCartControllner extends HttpServlet {
                 carts.clear();
             }
             session.setAttribute("carts", carts);
-            response.sendRedirect("cart");
+            response.sendRedirect("cart.jsp");
         }
     }
 

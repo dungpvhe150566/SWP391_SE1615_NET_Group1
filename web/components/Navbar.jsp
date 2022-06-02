@@ -73,7 +73,7 @@
                     </a>
                     <a href="cart.jsp" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">0</span>
+                        <span class="badge">${sessionScope.carts.size()}</span>
                     </a>
                 </div>
             </div>
