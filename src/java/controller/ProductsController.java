@@ -44,7 +44,7 @@ public class ProductsController extends HttpServlet {
             if (service == null) {
                 Vector<Product> productList = new Vector<Product>();
                 
-                if (categoryID != null) {
+                if (categoryID != null && !categoryID.equals("0")) {
                     productList = (new ProductDAO()).getProductListByCategoryID(categoryID);
                 } else {
                     productList = (new ProductDAO()).getProductList();

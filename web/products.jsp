@@ -94,7 +94,7 @@
                     <div class="tm-bg-primary-dark tm-block tm-block-products">
                         <h2 class="tm-block-title">Product List</h2>
                         <div class="form-outline mb-3">
-                            <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for names..">
+                            <input class="form-control" type="text" id="searchName" onkeyup="myFunction()" placeholder="Search for names..">
                         </div>
                         <div class="tm-product-table-container ">
                             <table class="table table-hover tm-table-small tm-product-table">
@@ -118,7 +118,7 @@
                                         <td>${product.getOriginalPrice()}</td>
                                         <td>${product.getAmount()}</td>
                                         <td>
-                                            <a href="#" class="tm-product-delete-link">
+                                            <a onclick="return deleteProduct()" class="tm-product-delete-link">
                                                 <i class="far fa-trash-alt tm-product-delete-icon"></i>
                                             </a>
                                         </td>
@@ -145,10 +145,14 @@
                         <div class="tm-product-table-container">
                             <table class="table tm-table-small tm-product-table">
                                 <tbody>
+                                    <tr onclick="searchCategory(0)">
+                                        <td>0</td>
+                                        <td>All</td>
+                                    </tr>
                                     <c:forEach items="${categoryList}" var="category">
-                                        <tr onclick="searchCategory(event)">
-                                            <td id="${category.getCategoryID()}">${category.getCategoryID()}</td>
-                                            <td id="${category.getCategoryID()}">${category.getCategoryName()}</td>
+                                        <tr onclick="searchCategory(${category.getCategoryID()})">
+                                            <td>${category.getCategoryID()}</td>
+                                            <td>${category.getCategoryName()}</td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -175,23 +179,31 @@
         <!-- https://getbootstrap.com/ -->
 
         <script>
-            function myFunction() {
-                let input = document.getElementById('myInput').value;
-                input = input.toLowerCase();
-                let x = document.getElementsByClassName('product-tr');
+                                            function searchName() {
+                                                let input = document.getElementById('myInput').value;
+                                                input = input.toLowerCase();
+                                                let x = document.getElementsByClassName('product-tr');
 
-                for (i = 0; i < x.length; i++) {
-                    if (!x[i].getElementsByTagName("td")[0].innerHTML.toLowerCase().includes(input)) {
-                        x[i].style.display = "none";
-                    } else {
-                        x[i].style.display = "";
-                    }
-                }
-            }
-            
-            function searchCategory(event) {
-                window.location.href = "ProductsController?CategoryID=" + event.target.id;
-            }
+                                                for (i = 0; i < x.length; i++) {
+                                                    if (!x[i].getElementsByTagName("td")[0].innerHTML.toLowerCase().includes(input)) {
+                                                        x[i].style.display = "none";
+                                                    } else {
+                                                        x[i].style.display = "";
+                                                    }
+                                                }
+                                            }
+
+                                            function searchCategory(categoryID) {
+                                                window.location.href = "ProductsController?CategoryID=" + categoryID;
+                                            }
+
+                                            function deleteProduct(productID) {
+                                                if (confirm("Are you sure delete product ?")) {
+                                                    return true;
+                                                } else {
+                                                    return false;
+                                                }
+                                            }
         </script>
     </body>
 </html>
