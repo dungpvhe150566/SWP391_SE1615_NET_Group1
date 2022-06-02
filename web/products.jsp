@@ -96,45 +96,47 @@
                         <div class="form-outline mb-3">
                             <input class="form-control" type="text" id="searchName" onkeyup="myFunction()" placeholder="Search for names..">
                         </div>
-                        <div class="tm-product-table-container ">
-                            <table class="table table-hover tm-table-small tm-product-table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">&nbsp;</th>
-                                        <th scope="col">PRODUCT NAME</th>
-                                        <th scope="col">Sell Price</th>
-                                        <th scope="col">Original Price</th>
-                                        <th scope="col">Amount</th>
-                                        <th scope="col">&nbsp;</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="product-tb">
-                                    <c:forEach items="${productList}" var="product">
-                                    <input type="hidden" value="${product.getCategoryID()}">
-                                    <tr class="product-tr">
-                                        <th scope="row"><input type="checkbox" value="${product.getProductID()}"></th>
-                                        <td class="tm-product-name">${product.getProductName()}</a></td>
-                                        <td>${product.getSellPrice()}</td>
-                                        <td>${product.getOriginalPrice()}</td>
-                                        <td>${product.getAmount()}</td>
-                                        <td>
-                                            <a onclick="return deleteProduct()" class="tm-product-delete-link">
-                                                <i class="far fa-trash-alt tm-product-delete-icon"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- table container -->
-                        <a
-                            href="add-product.jsp"
-                            class="btn btn-primary btn-block text-uppercase mb-3">Add new product
-                        </a>
-                        <button class="btn btn-primary btn-block text-uppercase">
-                            Delete selected products
-                        </button>
+                        <form actiopn="ProductsController" method="POST">
+                            <div class="tm-product-table-container ">
+                                <input type="hidden" value="deleteProducts" name="do">
+                                <table class="table table-hover tm-table-small tm-product-table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">&nbsp;</th>
+                                            <th scope="col">PRODUCT NAME</th>
+                                            <th scope="col">Sell Price</th>
+                                            <th scope="col">Original Price</th>
+                                            <th scope="col">Amount</th>
+                                            <th scope="col">&nbsp;</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="product-tb">
+                                        <c:forEach items="${productList}" var="product">
+                                            <tr class="product-tr">
+                                                <th scope="row"><input type="checkbox" value="${product.getProductID()}" name="productID"></th>
+                                                <td class="tm-product-name">${product.getProductName()}</a></td>
+                                                <td>${product.getSellPrice()}</td>
+                                                <td>${product.getOriginalPrice()}</td>
+                                                <td>${product.getAmount()}</td>
+                                                <td>
+                                                    <a onclick="return deleteProduct(${product.getProductID()})" class="tm-product-delete-link">
+                                                        <i class="far fa-trash-alt tm-product-delete-icon"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- table container -->
+                            <a
+                                href="add-product.jsp"
+                                class="btn btn-primary btn-block text-uppercase mb-3">Add new product
+                            </a>
+                            <button class="btn btn-primary btn-block text-uppercase" type="submit">
+                                Delete selected products
+                            </button>
+                        </form>
                     </div>
 
                 </div>
@@ -199,7 +201,7 @@
 
                                             function deleteProduct(productID) {
                                                 if (confirm("Are you sure delete product ?")) {
-                                                    return true;
+                                                    window.location.href = "ProductsController?do=deleteProduct&productID=" + productID;
                                                 } else {
                                                     return false;
                                                 }

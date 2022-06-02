@@ -40,22 +40,35 @@ public class ProductsController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
             String categoryID = request.getParameter("CategoryID");
-            
-            if (service == null) {
-                Vector<Product> productList = new Vector<Product>();
-                
-                if (categoryID != null && !categoryID.equals("0")) {
-                    productList = (new ProductDAO()).getProductListByCategoryID(categoryID);
-                } else {
-                    productList = (new ProductDAO()).getProductList();
+
+            if (service != null) {
+                if (service.equals("deleteProduct")) {
+                    try {
+                        int productID = Integer.parseInt(request.getParameter("productID"));
+                        (new ProductDAO()).deleteProduct(productID);
+                    } catch(NumberFormatException e) {};
                 }
                 
-                Vector<Category> categoryList = categoryList = (new CategoryDAO()).getAllCategory();
-                
-                
-                request.setAttribute("categoryList", categoryList);
-                request.setAttribute("productList", productList);
+                if (service.equals("deleteProducts")) {
+                    try {
+                        String[] arrProductID = request.getParameterValues("productID");
+                        (new ProductDAO()).deleteProducts(arrProductID);
+                    } catch(NumberFormatException e) {};
+                }
             }
+
+            Vector<Product> productList = new Vector<Product>();
+
+            if (categoryID != null && !categoryID.equals("0")) {
+                productList = (new ProductDAO()).getProductListByCategoryID(categoryID);
+            } else {
+                productList = (new ProductDAO()).getProductList();
+            }
+
+            Vector<Category> categoryList = categoryList = (new CategoryDAO()).getAllCategory();
+
+            request.setAttribute("categoryList", categoryList);
+            request.setAttribute("productList", productList);
             
             request.getRequestDispatcher("products.jsp").forward(request, response);
         }

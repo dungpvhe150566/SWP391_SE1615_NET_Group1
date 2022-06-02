@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -13,14 +14,13 @@ import java.util.logging.Logger;
 public class ProductDAO extends DBContext {
 
     /**
-     * Get All Products From Database follow CategoryID
-     *                                       Product Name
-     *                                       Prices of Product
-     *                                       Manufacturer ID
-     * @param 
-     * @return Vector  have max 6 Product (following Pagination)
+     * Get All Products From Database follow CategoryID Product Name Prices of
+     * Product Manufacturer ID
+     *
+     * @param
+     * @return Vector have max 6 Product (following Pagination)
      */
-     public Vector<Product> getProductList(int cID, String productName,
+    public Vector<Product> getProductList(int cID, String productName,
             String[] prices, String[] mID, int start, int end) {
         // Create vector to store all Categories
         Vector<Product> products = new Vector<>();
@@ -29,7 +29,7 @@ public class ProductDAO extends DBContext {
         String price = "";
         String categoryID = "";
         String manufacturersID = "";
-        
+
 //        If the product price condition is passed
 //        we will cut the chain to get the product price
         if (prices != null) {
@@ -44,25 +44,25 @@ public class ProductDAO extends DBContext {
             }
             price += ") ";
         }
-        
+
 //        Set value of CategoryID if passed in
         if (cID != 0) {
             categoryID += " and(CategoryID = " + cID + " ) ";
         }
-        
+
 //        Set value of ManufacturerID if passed in
         if (mID != null) {
-            String msID =  Arrays.toString(mID);
-            manufacturersID += " and (ManufacturerID in (" +msID.substring(1,msID.length()-1)+ ") ) ";
+            String msID = Arrays.toString(mID);
+            manufacturersID += " and (ManufacturerID in (" + msID.substring(1, msID.length() - 1) + ") ) ";
         }
 
         // Query Statement to get all Categories in Database 
         String sqlQuery = "with x as (	select row_number() over(order by ProductID asc) as row, * from Product "
                 + "where (ProductName like '%" + productName + "%') "
-                + manufacturersID 
-                + categoryID 
+                + manufacturersID
+                + categoryID
                 + price + " ) "
-                + "select * from x where  row between  " + start + " and " + end ;
+                + "select * from x where  row between  " + start + " and " + end;
 
         // Resultset to store all Categories 
         ResultSet rs = getData(sqlQuery);
@@ -98,24 +98,22 @@ public class ProductDAO extends DBContext {
         return products;
     }
 
-     
-     /**
-     * Get Total Page Products in Database follow CategoryID
-     *                                       Product Name
-     *                                       Prices of Product
-     *                                       Manufacturer ID
-     * @param 
+    /**
+     * Get Total Page Products in Database follow CategoryID Product Name Prices
+     * of Product Manufacturer ID
+     *
+     * @param
      * @return number of Page Products
      */
     public int getTotalPage(int cID, String productName,
             String[] prices, String[] mID) {
-        
+
         //  Variable to store the condition values passed to filter products in Database
         int totalPage = 0;
         String temp = "";
-        String categoryID="";
-        String manufacturersID="";
-        
+        String categoryID = "";
+        String manufacturersID = "";
+
 //        If the product price condition is passed
 //        we will cut the chain to get the product price
         if (prices != null) {
@@ -129,21 +127,21 @@ public class ProductDAO extends DBContext {
             }
             temp += ")";
         }
-        
+
 //        Set value of CategoryID if passed in
         if (cID != 0) {
-            categoryID += " and (CategoryID ="+cID+") ";
+            categoryID += " and (CategoryID =" + cID + ") ";
         }
-        
+
 //        Set value of ManufacturerID if passed in
         if (mID != null) {
-            String msID =  Arrays.toString(mID);
-            manufacturersID += " and (ManufacturerID in (" + msID.substring(1,msID.length()-1) + ")) ";
+            String msID = Arrays.toString(mID);
+            manufacturersID += " and (ManufacturerID in (" + msID.substring(1, msID.length() - 1) + ")) ";
         }
 
         // Query statement to get total Product in Database
         String sqlQuery = "select count(ProductID) from Product "
-                + " where (ProductName like '%"+productName+"%') "
+                + " where (ProductName like '%" + productName + "%') "
                 + categoryID + manufacturersID + temp;
 
         // Execute query to get total Product
@@ -159,12 +157,11 @@ public class ProductDAO extends DBContext {
         // convet total product to total page (each page have 6 product)
         return (int) Math.ceil((double) totalPage / 6);
     }
-    
-    
+
     /**
      * Get All Products From Database
      *
-     * @param 
+     * @param
      * @return Vector Product List
      */
     public Vector<Product> getProductList() {
@@ -225,8 +222,7 @@ public class ProductDAO extends DBContext {
         }
         return products;
     }
-    
-    
+
     /**
      * Get All Products of Category From Database
      *
@@ -292,43 +288,40 @@ public class ProductDAO extends DBContext {
         return products;
     }
 
-    
-     public Product getProductById(int productId) {
-         try {
+    public Product getProductById(int productId) {
+        try {
             String sql = "select *  from Product  where  ProductID = ?";
-            
+
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setInt(1, productId);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                   int pId = rs.getInt(1);
+                int pId = rs.getInt(1);
                 String ProductName = rs.getString(2);
                 String Description = rs.getNString(3);
                 int OriginalPrice = rs.getInt(4);
                 int SellPrice = rs.getInt(5);
-                  int SalePercent = rs.getInt(6);
-                  
+                int SalePercent = rs.getInt(6);
+
                 String imageLink = rs.getString(7);
                 int CategoryID = rs.getInt(8);
-                
 
-                int SellerID= rs.getInt(9); 
+                int SellerID = rs.getInt(9);
                 int Amount = rs.getInt(10);
                 int StatusID = rs.getInt(11);
                 int ManufacturerID = rs.getInt(12);
-                float height  = rs.getFloat(13);
-                float width  = rs.getFloat(14);
-                float weight  = rs.getFloat(15);
+                float height = rs.getFloat(13);
+                float width = rs.getFloat(14);
+                float weight = rs.getFloat(15);
                 Product product = new Product(productId, ProductName, Description, OriginalPrice, SellPrice, SalePercent, imageLink, CategoryID, SellerID, Amount, StatusID, ManufacturerID, height, width, weight);
                 return product;
             }
         } catch (Exception ex) {
-           ex.printStackTrace();
+            ex.printStackTrace();
         }
         return null;
     }
-  
-     
+
     public void addProduct() {
 
     }
@@ -337,8 +330,53 @@ public class ProductDAO extends DBContext {
 
     }
 
-    public void deleteProduct() {
+    /**
+     * Delete Product From Database follow Product ID
+     *
+     * @param
+     * @return Vector have max 6 Product (following Pagination)
+     */
+    public int deleteProduct(int ProductID) {
+        int n = 0;
+        String sql = "delete from Order_Detail where ProductID = " + ProductID + "\n"
+                + "	delete from Cart where ProductID = " + ProductID + "\n"
+                + "	delete from Feedback_Replies where FeedbackID in (select FeedbackID from Feedback where ProductID = " + ProductID + ")\n"
+                + "	delete from Feedback where ProductID = " + ProductID + "\n"
+                + "	delete from Product where ProductID = " + ProductID + "";
 
+        try {
+            Statement state = conn.createStatement();
+
+            n = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
+    }
+
+    public int deleteProducts(String[] arrProductID) {
+
+        String productIDs = "";
+        for (String s : arrProductID) {
+            productIDs = productIDs.concat(s + " ");
+        }
+        productIDs = productIDs.trim().replace(" ", ",");
+
+        int n = 0;
+        String sql = "delete from Order_Detail where ProductID in ("+productIDs+")\n"
+                + "	delete from Cart where ProductID in ("+productIDs+")\n"
+                + "	delete from Feedback_Replies where FeedbackID in (select FeedbackID from Feedback where ProductID in ("+productIDs+"))\n"
+                + "	delete from Feedback where ProductID in ("+productIDs+")\n"
+                + "	delete from Product where ProductID in ("+productIDs+")";
+
+        try {
+            Statement state = conn.createStatement();
+
+            n = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return n;
     }
 
     public static void main(String[] args) {
@@ -348,11 +386,5 @@ public class ProductDAO extends DBContext {
 //            System.out.println(product);
 //        }
     }
-
-   
-
-    
-
-    
 
 }
