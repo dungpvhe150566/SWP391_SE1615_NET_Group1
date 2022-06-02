@@ -14,7 +14,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-         <!-- Topbar Start -->
+        <!-- Topbar Start -->
         <div class="container-fluid">
             <div class="row bg-secondary py-2 px-xl-5">
                 <div class="col-lg-6 d-none d-lg-block">
@@ -53,11 +53,11 @@
                     </a>
                 </div>
                 <div class="col-lg-6 col-6 text-left">
-<!--                    Search By Name-->
+                    <!--                    Search By Name-->
                     <form action="ShopController" id="searchByProductName" method="post">
                         <input type="hidden" name="do" value="searchByName">
                         <div class="input-group">
-                            <input type="text" name="productName" class="form-control" placeholder="Search by name">
+                            <input type="text" name="productName" class="form-control" placeholder="${productName!=null? productName:' Search by name'}">
                             <div class="input-group-append">
                                 <span class="input-group-text bg-transparent text-primary">
                                     <a onclick="document.getElementById('searchByProductName').submit();" ><i class="fa fa-search"></i></a> 
@@ -71,9 +71,9 @@
                         <i class="fas fa-heart text-primary"></i>
                         <span class="badge">0</span>
                     </a>
-                    <a href="cart.jsp" class="btn border">
+                    <a href="" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">${sessionScope.carts.size()}</span>
+                        <span class="badge">0</span>
                     </a>
                 </div>
             </div>
@@ -87,14 +87,14 @@
                 <div class="col-lg-3 d-none d-lg-block">
                     <a class="btn shadow-none d-flex align-items-center justify-content-between bg-primary text-white w-100" 
                        data-toggle="collapse" href="#navbar-vertical" style="height: 65px; margin-top: -1px; padding: 0 30px;">
-                        <h6 class="m-0">Manufactures</h6>
+                        <h6 class="m-0">Category</h6>
                         <i class="fa fa-angle-down text-dark"></i>
                     </a>
                     <nav class="manufactury collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical"
                          style=" width: calc(100% - 30px); z-index: 1;">
                         <div class=" navbar-nav w-100 overflow-hidden" >
-                            <c:forEach items="${manufacturers}" var="manufacturer">
-                                <a href="ShopController?do=searchByManufacturer&manufacturerID=${manufacturer.getManufacturerID()}" class="nav-item nav-link">${manufacturer.getManufacturerName()}</a>
+                            <c:forEach items="${categories}" var="category" >
+                                <a href="ShopController?do=searchByCategory&categoryID=${category.getCategoryID()}" class="nav-item nav-link">${category.getCategoryName()}</a>
                             </c:forEach>
                         </div>
                     </nav>
@@ -122,7 +122,7 @@
                                 <a href="#" class="nav-item nav-link">Contact</a>
                             </div>
                             <div class="navbar-nav ml-auto py-0">
-                                <a href="login.jsp" class="nav-item nav-link">Login</a>
+                                <a href="" class="nav-item nav-link">Login</a>
                                 <a href="" class="nav-item nav-link">Register</a>
                             </div>
                         </div>
@@ -130,5 +130,6 @@
                 </div>
             </div>
         </div>
+        <!-- Navbar End -->
     </body>
 </html>

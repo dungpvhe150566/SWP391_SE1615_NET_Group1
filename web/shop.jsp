@@ -23,69 +23,78 @@
         <!-- Page Header Start -->
         <div class="container-fluid bg-secondary mb-5">
             <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
+                <img class="img-fluid w-100" src="image/" alt="">
                 <h1 class="font-weight-semi-bold text-uppercase mb-3">Our Shop</h1>
             </div>
         </div>
         <!-- Page Header End -->
+
+
         <!-- Shop Start -->
         <div class="container-fluid pt-5">
             <div class="row px-xl-5">
                 <!-- Shop Sidebar Start -->
                 <div class="col-lg-3 col-md-12">
-                    <!-- Category Start -->
-                    <div class="border-bottom mb-4 pb-4 " >
-                        <h5 class="font-weight-semi-bold mb-4">Filter By Category</h5>
-                        <form action="ShopController" id="searchByProductName" method="post">
-                            <c:set var = "i" value = "0"/>
-                            <c:forEach items="${categories}" var="category" >
-                                <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                    <input type="checkbox" class="custom-control-input" value="${category.getCategoryID()}" name="category" id="color-${i}">
-                                    <label class="custom-control-label" for="color-${i}">${category.getCategoryName()}</label>
-                                    <span class="badge border font-weight-normal">1000</span>
-                                    <c:set var="i" value="${i+1}"/>
-                                </div>
-                            </c:forEach>
-                        </form>
-                    </div>
-                    <!-- Category End -->
+                    <form action="ShopController">
+                        <input type="hidden" name="do" value="${service}" >
+                        <input type="hidden" name="productName" value="${productName}" >
+                        <input type="hidden" name="categoryID" value="${categoryID}" >
+                        <!-- Price Start -->
+                        <div class="border-bottom mb-4 pb-4">
+                            <h5 class="font-weight-semi-bold mb-4">Filter By Price</h5>
 
-                    <!-- Price Start -->
-                    <div class="border-bottom mb-4 pb-4">
-                        <h5 class="font-weight-semi-bold mb-4">Filter By Price</h5>
-                        <form>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" checked id="price-all">
+                                <input onchange="this.form.submit();" ${listPrices.contains('0-100000000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input" value="0-100000000" id="price-all">
                                 <label class="custom-control-label" for="price-all">All Price</label>
                                 <span class="badge border font-weight-normal">CountAll</span>
                             </div>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="price-1">
-                                <label class="custom-control-label" for="price-1">$0 - $200.000</label>
+                                <input onchange="this.form.submit();" ${listPrices.contains('100000-500000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input" value="100000-500000" id="price-1">
+                                <label class="custom-control-label" for="price-1">$100.000 - $500.000</label>
                                 <span class="badge border font-weight-normal">150</span>
                             </div>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="price-2">
-                                <label class="custom-control-label" for="price-2">$200.000 - $2.000.000</label>
+                                <input onchange="this.form.submit();" ${listPrices.contains('500000-1000000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input" value="500000-1000000" id="price-2">
+                                <label class="custom-control-label" for="price-2">$500.000 - $1.000.000</label>
                                 <span class="badge border font-weight-normal">295</span>
                             </div>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="price-3">
-                                <label class="custom-control-label" for="price-3">$2.000.000 - $5.000.000</label>
+                                <input onchange="this.form.submit();" ${listPrices.contains('1000000-5000000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input" value="1000000-5000000" id="price-3">
+                                <label class="custom-control-label" for="price-3">$1.000.000 - $5.000.000</label>
                                 <span class="badge border font-weight-normal">246</span>
                             </div>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="price-4">
-                                <label class="custom-control-label" >$5.000.000 - $10.000.000</label>
+                                <input onchange="this.form.submit();" ${listPrices.contains('5000000-10000000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input" value="5000000-10000000" id="price-4">
+                                <label class="custom-control-label" for="price-4" >$5.000.000 - $10.000.000</label>
                                 <span class="badge border font-weight-normal">145</span>
                             </div>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                                <input type="checkbox" class="custom-control-input" id="price-5">
+                                <input onchange="this.form.submit();" ${listPrices.contains('10000000-800000000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input"value="10000000-800000000" id="price-5">
                                 <label class="custom-control-label" for="price-5">>$10.000.000</label>
                                 <span class="badge border font-weight-normal">168</span>
                             </div>
-                        </form>
-                    </div>
-                    <!-- Price End -->
+                        </div>
+                        <!-- Price End -->
+
+                        <!--                    Manufacturer-->
+                        <div class="border-bottom mb-4 pb-4">
+                            <h5 class="font-weight-semi-bold mb-4">Filter by Manufacturer</h5>
+                            <c:set var="i" value="1"/>
+                            <div class=" manufactury ">
+                                <c:forEach items="${listManufacturers}" var="manufacturer">
+                                    <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                        <input type="checkbox" ${manufacturers.contains(Integer.toString(manufacturer.getManufacturerID()))?'checked ':' '} 
+                                               onchange="this.form.submit();" name="manufacturer" class="custom-control-input" 
+                                               id="color-${i}" value="${manufacturer.getManufacturerID()}">
+                                        <label class="custom-control-label" for="color-${i}">${manufacturer.getManufacturerName()}</label>
+                                        <span class="badge border font-weight-normal">--</span>
+                                    </div>
+                                    <c:set var="i" value="${i}+1"/>
+                                </c:forEach>
+                            </div>
+                        </div>
+                        <!--                    Manufacturer End-->
+                    </form>
                 </div>
                 <!-- Shop Sidebar End -->
 
@@ -111,7 +120,7 @@
                             <div class="col-lg-4 col-md-6 col-sm-12 pb-1">
                                 <div class="card product-item border-0 mb-4">
                                     <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
-                                        <img class="img-fluid w-100" src="${product.getImageLink()} " alt="">
+                                        <img class="img-fluid w-100" src="image/${product.getImageLink()}" alt="">
                                     </div>
                                     <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
                                         <h6 class="text-truncate mb-3">${product.getProductName()}</h6>
@@ -131,17 +140,17 @@
                             <nav aria-label="Page navigation">
                                 <ul class="pagination justify-content-center mb-3">
                                     <li class="page-item ${indexPage==1?'disabled':''}">
-                                        <a class="page-link" href="ShopController?do=${service}&indexPage=${indexPage-1}&productName=${productName}&manufacturerID=${manufacturerID}" aria-label="Previous">
+                                        <a class="page-link" href="ShopController?do=${service}&indexPage=${indexPage-1}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                             <span class="sr-only">Previous</span>
                                         </a>
                                     </li>
                                     <c:forEach var="i" begin="1" end="${totalPage}"  >
                                         <li class="page-item ${indexPage==i?'active':''}">
-                                            <a class="page-link" href="ShopController?do=${service}&indexPage=${i}&productName=${productName}&manufacturerID=${manufacturerID}">${i}</a></li>
+                                            <a class="page-link" href="ShopController?do=${service}&indexPage=${i}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}">${i}</a></li>
                                         </c:forEach>
                                     <li class="page-item ${indexPage==totalPage?'disabled':''}">
-                                        <a class="page-link" href="ShopController?do=${service}&indexPage=${indexPage+1}&productName=${productName}&manufacturerID=${manufacturerID}" aria-label="Next">
+                                        <a class="page-link" href="ShopController?do=${service}&indexPage=${indexPage+1}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                             <span class="sr-only">Next</span>
                                         </a>
