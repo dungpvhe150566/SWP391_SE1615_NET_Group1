@@ -71,9 +71,9 @@
                         <i class="fas fa-heart text-primary"></i>
                         <span class="badge">0</span>
                     </a>
-                    <a href="" class="btn border">
+                    <a href="cart.jsp" class="btn border">
                         <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">0</span>
+                        <span class="badge">${sessionScope.carts.size()}</span>
                     </a>
                 </div>
             </div>
@@ -122,7 +122,7 @@
                                 <a href="#" class="nav-item nav-link">Contact</a>
                             </div>
                             <div class="navbar-nav ml-auto py-0">
-                                <a href="" class="nav-item nav-link">Login</a>
+                                <a href="login.jsp" class="nav-item nav-link">Login</a>
                                 <a href="" class="nav-item nav-link">Register</a>
                             </div>
                         </div>
