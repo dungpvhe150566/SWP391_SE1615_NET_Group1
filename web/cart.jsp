@@ -68,14 +68,14 @@
 
                                         </td>
                                         <td class="align-middle">${C.value.product.getSellPrice()*C.value.getAmount()}</td>
-                                        <td class="align-middle"><a href="deletecart?productId=${C.value.product.getProductID()}" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></a></td>
+                                        <td class="align-middle"><a href="#"onclick="showMess(${C.value.product.getProductID()})" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></a></td>
                                         </tr>
                                     </form>
                                 </c:forEach>
-              
+
                                 </tbody>
                             </table>
-                              
+
                         </div>
                         <div class="col-lg-4">
                             <form class="mb-5" action="">
@@ -122,6 +122,14 @@
 
 
         <!-- JavaScript Libraries -->
+        <script>
+            function showMess(id) {
+                var option = confirm("Are u sure to delete this Product");
+                if (option === true) {
+                    window.location.href = 'deletecart?productId=' + id;
+                }
+            }
+        </script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
