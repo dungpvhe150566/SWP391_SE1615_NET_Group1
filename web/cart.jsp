@@ -60,7 +60,7 @@
                                     <form action="update-quantity">
                                         <tr>
                                         <input type="hidden" name="productId" value="${C.value.product.getProductID()}"/>
-                                        <td class="align-middle"><img src="${C.value.product.getImageLink()}"  style="width: 50px;">${C.value.product.getProductName()}</td>
+                                        <td class="align-middle"><img src="image/${C.value.product.getImageLink()}"  style="width: 50px;">${C.value.product.getProductName()}</td>
                                         <td class="align-middle">${C.value.product.getSellPrice()} VND</td>
                                         <td class="align-middle">
 
@@ -103,7 +103,7 @@
                                 <div class="card-footer border-secondary bg-transparent">
                                     <div class="d-flex justify-content-between mt-2">
                                         <h5 class="font-weight-bold">Total</h5>
-                                        <h5 class="font-weight-bold"> ${totalMoney}VND</h5>
+                                        <h5 class="font-weight-bold"> ${carts.totalMoney}VND</h5>
                                     </div>
                                     <a href="checkout.jsp" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                                 </div>
