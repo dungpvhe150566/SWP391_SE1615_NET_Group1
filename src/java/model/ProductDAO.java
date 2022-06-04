@@ -322,8 +322,48 @@ public class ProductDAO extends DBContext {
         return null;
     }
 
-    public void addProduct() {
+    public int addProduct(Product pro) {
+        int n = 0;
+        String preSql = "INSERT INTO Product ([ProductName]\n" +
+"           ,[Description]\n" +
+"           ,[OriginalPrice]\n" +
+"           ,[SellPrice]\n" +
+"           ,[SalePercent]\n" +
+"           ,[imageLink]\n" +
+"           ,[CategoryID]\n" +
+"           ,[SellerID]\n" +
+"           ,[Amount]\n" +
+"           ,[StatusID]\n" +
+"           ,[ManufacturerID]\n" +
+"           ,[height]\n" +
+"           ,[width]\n" +
+"           ,[weight])\n" +
+"       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+        try {
+            PreparedStatement pre = conn.prepareStatement(preSql);
+
+            pre.setString(1, pro.getProductName());
+            pre.setString(2, pro.getDescription());
+            pre.setInt(3, pro.getOriginalPrice());
+            pre.setInt(4, pro.getSellPrice());
+            pre.setInt(5, pro.getSellPercent());
+            pre.setString(6, pro.getImageLink());
+            pre.setInt(7, pro.getCategoryID());
+            pre.setInt(8, pro.getSellerID());
+            pre.setInt(9, pro.getAmount());
+            pre.setInt(10, pro.getStatusID());
+            pre.setInt(11, pro.getManufacturerID());
+            pre.setFloat(12, pro.getHeight());
+            pre.setFloat(13, pro.getWidth());
+            pre.setFloat(14, pro.getWeight());
+
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return n;
     }
 
     public void updateProduct() {

@@ -114,7 +114,7 @@
                                         <c:forEach items="${productList}" var="product">
                                             <tr class="product-tr">
                                                 <th scope="row"><input type="checkbox" value="${product.getProductID()}" name="productID"></th>
-                                                <td class="tm-product-name">${product.getProductName()}</a></td>
+                                                <td class="tm-product-name" onclick="editProduct(${product.getProductID()})">${product.getProductName()}</a></td>
                                                 <td>${product.getSellPrice()}</td>
                                                 <td>${product.getOriginalPrice()}</td>
                                                 <td>${product.getAmount()}</td>
@@ -130,7 +130,7 @@
                             </div>
                             <!-- table container -->
                             <a
-                                href="add-product.jsp"
+                                href="addproduct"
                                 class="btn btn-primary btn-block text-uppercase mb-3">Add new product
                             </a>
                             <button class="btn btn-primary btn-block text-uppercase" type="submit">
@@ -205,6 +205,10 @@
                                                 } else {
                                                     return false;
                                                 }
+                                            }
+                                            
+                                            function editProduct(productID) {
+                                                confirm("OK");
                                             }
         </script>
     </body>

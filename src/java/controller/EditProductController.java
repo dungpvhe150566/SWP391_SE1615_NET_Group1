@@ -5,24 +5,22 @@
  */
 package controller;
 
-import entity.Category;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Vector;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.CategoryDAO;
 import model.ProductDAO;
 
 /**
  *
  * @author Dung
  */
-public class ProductsController extends HttpServlet {
+@WebServlet(name = "EditProductController", urlPatterns = {"/editproduct"})
+public class EditProductController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,40 +35,21 @@ public class ProductsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+            String productIDText = request.getParameter("prodcutID");
             String service = request.getParameter("do");
-            String categoryID = request.getParameter("CategoryID");
 
-            if (service != null) {
-                if (service.equals("deleteProduct")) {
-                    try {
-                        int productID = Integer.parseInt(request.getParameter("productID"));
-                        (new ProductDAO()).deleteProduct(productID);
-                    } catch(NumberFormatException e) {};
-                }
-                
-                if (service.equals("deleteProducts")) {
-                    try {
-                        String[] arrProductID = request.getParameterValues("productID");
-                        (new ProductDAO()).deleteProducts(arrProductID);
-                    } catch(NumberFormatException e) {};
-                }
-            }
-
-            Vector<Product> productList = new Vector<Product>();
-
-            if (categoryID != null && !categoryID.equals("0")) {
-                productList = (new ProductDAO()).getProductListByCategoryID(categoryID);
+            if (productIDText == null) {
+                request.getRequestDispatcher("error.jsp").forward(request, response);
+                return;
             } else {
-                productList = (new ProductDAO()).getProductList();
+                int productID = Integer.parseInt(productIDText);
+
+                Product pro = (new ProductDAO()).getProductById(productID);
+
+                request.setAttribute("prodcut", pro);
             }
 
-            Vector<Category> categoryList = (new CategoryDAO()).getAllCategory();
-
-            request.setAttribute("categoryList", categoryList);
-            request.setAttribute("productList", productList);
-            
-            request.getRequestDispatcher("products.jsp").forward(request, response);
+            request.getRequestDispatcher("edit-product.jsp").forward(request, response);
         }
     }
 

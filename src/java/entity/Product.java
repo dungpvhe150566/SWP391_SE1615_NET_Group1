@@ -32,6 +32,23 @@ public class Product {
 
     private float weight;
 
+    public Product(String ProductName, String Description, int OriginalPrice, int SellPrice, int SellPercent, String imageLink, int CategoryID, int SellerID, int Amount, int StatusID, int ManufacturerID, float height, float width, float weight) {
+        this.ProductName = ProductName;
+        this.Description = Description;
+        this.OriginalPrice = OriginalPrice;
+        this.SellPrice = SellPrice;
+        this.SellPercent = SellPercent;
+        this.imageLink = imageLink;
+        this.CategoryID = CategoryID;
+        this.SellerID = SellerID;
+        this.Amount = Amount;
+        this.StatusID = StatusID;
+        this.ManufacturerID = ManufacturerID;
+        this.height = height;
+        this.width = width;
+        this.weight = weight;
+    }
+
     public Product(int ProductID, String ProductName, String Description, int OriginalPrice, int SellPrice, int SellPercent, String imageLink, int CategoryID, int SellerID, int Amount, int StatusID, int ManufacturerID, float height, float width, float weight) {
         this.ProductID = ProductID;
         this.ProductName = ProductName;
@@ -49,8 +66,6 @@ public class Product {
         this.width = width;
         this.weight = weight;
     }
-
-    
 
     public int getProductID() {
         return ProductID;
