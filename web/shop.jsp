@@ -18,13 +18,27 @@
     </head>
     <body>
         <!-- Topbar Start -->
-               <%@include file="components/Navbar.jsp" %>
+        <%@include file="components/Navbar.jsp" %>
         <!-- Navbar End -->
+
         <!-- Page Header Start -->
-        <div class="container-fluid bg-secondary mb-5">
-            <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
-                <img class="img-fluid w-100" src="image/" alt="">
-                <h1 class="font-weight-semi-bold text-uppercase mb-3">Our Shop</h1>
+        <div class="container-fluid mb-5">
+            <div class="row border-top px-xl-5">
+                <div class="col-lg-12">
+                    <div id="header-carousel" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner">
+                            <div class="carousel-item" style="height: 410px;">
+                                <img class="img-fluid" src="image/SlideShow/image1.jpg" alt="Image">
+                            </div>
+                            <div class="carousel-item active" style="height: 410px;">
+                                <img class="img-fluid" src="image/SlideShow/image2.jpg" alt="Image">
+                            </div>
+                            <div class="carousel-item" style="height: 410px;">
+                                <img class="img-fluid" src="image/SlideShow/image3.jpg" alt="Image">
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- Page Header End -->
@@ -129,7 +143,7 @@
                                         </div>
                                     </div>
                                     <div class="card-footer d-flex justify-content-between bg-light border">
-                                        <a href="" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+                                        <a href="ShopDetailController?do=ViewDetail&categoryID=${product.getCategoryID()}&productID=${product.getProductID()}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                                         <a href="addtocart?productId=${product.getProductID()}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
                                     </div>
                                 </div>
@@ -165,7 +179,7 @@
         </div>
         <!-- Shop End -->
         <!-- Footer Start -->
-                <%@include file="components/Footer.jsp" %>
+        <%@include file="components/Footer.jsp" %>
         <!-- JavaScript Libraries -->
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
