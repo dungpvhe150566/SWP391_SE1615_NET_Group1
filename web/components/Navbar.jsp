@@ -66,7 +66,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="col-lg-3 col-6 text-right">
+                <c:if test="${sessionScope.user!=null}">
                     <a href="" class="btn border">
                         <i class="fas fa-heart text-primary"></i>
                         <span class="badge">0</span>
@@ -75,7 +75,28 @@
                         <i class="fas fa-shopping-cart text-primary"></i>
                         <span class="badge">${sessionScope.carts.size()}</span>
                     </a>
-                </div>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <img src="image/Other/ava1.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 30px;">
+                            ${sessionScope.user.getUsername()}</a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <a href="" class="dropdown-item"><i class="fas fa-id-card"></i> YOUR PROFILE</a>
+                            <a href="" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> LOG OUT</a>
+                        </div>
+                    </div>
+                </c:if>
+                <c:if test="${sessionScope.user==null}">
+                    <div class="col-lg-3 col-6 text-right">
+                        <a href="" class="btn border">
+                            <i class="fas fa-heart text-primary"></i>
+                            <span class="badge">0</span>
+                        </a>
+                        <a href="cart.jsp" class="btn border">
+                            <i class="fas fa-shopping-cart text-primary"></i>
+                            <span class="badge">${sessionScope.carts.size()}</span>
+                        </a>
+                    </div>
+                </c:if>
             </div>
         </div>
         <!-- Topbar End -->
@@ -111,13 +132,20 @@
                             <div class="navbar-nav mr-auto py-0">
                                 <a href="index.jsp" class="nav-item nav-link">Home</a>
                                 <a href="ShopController" class="nav-item nav-link active">Shop</a>
-                                
-                               
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
+                                    <div class="dropdown-menu rounded-0 m-0">
+                                        <a href="Cart" class="dropdown-item">Shopping Cart</a>
+                                        <a href="checkout.jsp" class="dropdown-item">Checkout</a>
+                                    </div>
+                                </div>
                                 <a href="#" class="nav-item nav-link">Contact</a>
                             </div>
                             <div class="navbar-nav ml-auto py-0">
-                                <a href="login.jsp" class="nav-item nav-link">Login</a>
-                                <a href="login.jsp" class="nav-item nav-link">Register</a>
+                                <c:if test="${sessionScope.user==null}">
+                                    <a href="login.jsp" class="nav-item nav-link">Login</a>
+                                    <a href="login.jsp" class="nav-item nav-link">Register</a>
+                                </c:if>
                             </div>
                         </div>
                     </nav>
