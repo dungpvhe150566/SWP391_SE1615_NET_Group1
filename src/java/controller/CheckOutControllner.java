@@ -20,8 +20,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Pham Van Trong
  */
-@WebServlet(name = "CartControllner", urlPatterns = {"/Cart"})
-public class CartControllner extends HttpServlet {
+@WebServlet(name = "CheckOutControllner", urlPatterns = {"/Checkout"})
+public class CheckOutControllner extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,28 +35,27 @@ public class CartControllner extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+         request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-         HttpSession session = request.getSession();
+            HttpSession session = request.getSession();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
-            if(carts==null){
+            if (carts == null) {
                 carts = new LinkedHashMap<>();
             }
-            
+
             //tinh tong tien
             double totalMoney = 0;
             for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
                 Integer productId = entry.getKey();
                 Cart cart = entry.getValue();
-                
-                totalMoney += (cart.getAmount()* cart.getProduct().getSellPrice());
-                
+
+                totalMoney += cart.getAmount()* cart.getProduct().getSellPrice();
+
             }
-            
-            
-            request.setAttribute("totalMoney", totalMoney);
             request.setAttribute("carts", carts);
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
+            request.setAttribute("totalMoney", totalMoney);
+            request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
     }
 
