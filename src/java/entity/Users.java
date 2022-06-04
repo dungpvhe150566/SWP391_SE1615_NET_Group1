@@ -4,13 +4,13 @@ public class Users {
 
     private int UserID;
 
-    private char Username;
+    private String Username;
 
-    private char Password;
+    private String Password;
 
-    private char email;
+    private String email;
 
-    private char ActiveCode;
+    private String ActiveCode;
 
     private int isSeller;
 
@@ -26,37 +26,38 @@ public class Users {
         this.UserID = UserID;
     }
 
-    public char getUsername() {
+    public String getUsername() {
         return Username;
     }
 
-    public void setUsername(char Username) {
+    public void setUsername(String Username) {
         this.Username = Username;
     }
 
-    public char getPassword() {
+    public String getPassword() {
         return Password;
     }
 
-    public void setPassword(char Password) {
+    public void setPassword(String Password) {
         this.Password = Password;
     }
 
-    public char getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(char email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public char getActiveCode() {
+    public String getActiveCode() {
         return ActiveCode;
     }
 
-    public void setActiveCode(char ActiveCode) {
+    public void setActiveCode(String ActiveCode) {
         this.ActiveCode = ActiveCode;
     }
+
 
     public int getIsSeller() {
         return isSeller;
