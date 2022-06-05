@@ -29,11 +29,42 @@
     </head>
 
     <body>
+        
         <!-- Topbar Start -->
         <div class="container-fluid">
+             <div class="row bg-secondary py-2 px-xl-5">
+                <div class="col-lg-6 d-none d-lg-block">
+                    <div class="d-inline-flex align-items-center">
+                        <a class="text-dark" href="dontrollner-dasboard">Admin</a>
+                        <span class="text-muted px-2">|</span>
+                        <a class="text-dark" href="">Help</a>
+                        <span class="text-muted px-2">|</span>
+                        <a class="text-dark" href="">Support</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center text-lg-right">
+                    <div class="d-inline-flex align-items-center">
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a class="text-dark px-2" href="">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="text-dark pl-2" href="">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="row align-items-center py-3 px-xl-5">
                 <div class="col-lg-3 d-none d-lg-block">
-                    <a href="" class="text-decoration-none">
+                    <a href="HomeController" class="text-decoration-none">
                         <h1 class="m-0 display-5 font-weight-semi-bold"><span class="text-primary font-weight-bold border px-3 mr-1">E</span>Shopper</h1>
                     </a>
                 </div>
@@ -50,16 +81,8 @@
                     </form>
                 </div>
                 <c:if test="${sessionScope.user!=null}">
-                    <a href="" class="btn border">
-                        <i class="fas fa-heart text-primary"></i>
-                        <span class="badge">0</span>
-                    </a>
-                    <a href="cart.jsp" class="btn border">
-                        <i class="fas fa-shopping-cart text-primary"></i>
-                        <span class="badge">${sessionScope.carts.size()}</span>
-                    </a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                        <a href="#" class="nav-link" data-toggle="dropdown">
                             <img src="image/Other/ava1.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 30px;">
                             ${sessionScope.user.getUsername()}</a>
                         <div class="dropdown-menu rounded-0 m-0">
@@ -67,14 +90,24 @@
                             <a href="" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> LOG OUT</a>
                         </div>
                     </div>
-                    
+                    <a href="cart.jsp" class="btn border">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+                        <span class="badge">${sessionScope.carts.size()}</span>
+                    </a>
+                    <div class="nav-item dropdown ">
+                        <a href="" class="btn border nav-link" data-toggle="dropdown">
+                                <i class="fas fa-bell text-primary"></i>
+                                <span class="badge">0</span>
+                            </a>
+                        <div class="dropdown-menu rounded-0 m-0">
+                            <p>Notification1</p>
+                            <p>Notification2</p>
+                            <p>Notification3</p>
+                        </div>
+                    </div>
                 </c:if>
                 <c:if test="${sessionScope.user==null}">
                     <div class="col-lg-3 col-6 text-right">
-                        <a href="" class="btn border">
-                            <i class="fas fa-heart text-primary"></i>
-                            <span class="badge">0</span>
-                        </a>
                         <a href="cart.jsp" class="btn border">
                             <i class="fas fa-shopping-cart text-primary"></i>
                             <span class="badge">${sessionScope.carts.size()}</span>
