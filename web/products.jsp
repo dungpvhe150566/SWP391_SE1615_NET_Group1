@@ -208,7 +208,7 @@
                                             }
                                             
                                             function editProduct(productID) {
-                                                confirm("OK");
+                                                window.location.href = "editproduct?productID=" + productID;
                                             }
         </script>
     </body>

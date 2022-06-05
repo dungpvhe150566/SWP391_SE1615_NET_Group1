@@ -97,20 +97,22 @@
                     <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
                         <div class="row">
                             <div class="col-12">
-                                <h2 class="tm-block-title d-inline-block">Add Product</h2>
+                                <h2 class="tm-block-title d-inline-block">Update Product</h2>
                             </div>
                         </div>
-                        <form method="post" action="addproduct" class="tm-edit-product-form" enctype="multipart/form-data">
-                            <input type="hidden" name="do" value="addproduct">
+                        <form method="post" action="editproduct" class="tm-edit-product-form" enctype="multipart/form-data">
                             <p>${message}</p>
                             <div class="row tm-edit-product-row">
                                 <div class="col-xl-6 col-lg-6 col-md-12">
+                                    <input type="hidden" name="do" value="editproduct">
+                                    <input type="hidden" name="productID" value="${product.getProductID()}">
                                     <div class="form-group mb-3">
                                         <label
                                             for="product_name"
                                             >Product Name
                                         </label>
                                         <input
+                                            value="${product.getProductName()}"
                                             id="product_name"
                                             name="product_name"
                                             type="text"
@@ -128,7 +130,7 @@
                                             name="description"
                                             rows="3"
                                             required
-                                            ></textarea>
+                                            >${product.getDescription()}</textarea>
                                     </div>
                                     <div class="row">
                                         <div class="form-group mb-3 col-xs-12 col-sm-6">
@@ -137,6 +139,7 @@
                                                 >Original Price
                                             </label>
                                             <input
+                                                value="${product.getOriginalPrice()}"
                                                 id="original_price"
                                                 name="original_price"
                                                 type="text"
@@ -150,6 +153,7 @@
                                                 >Sell Price
                                             </label>
                                             <input
+                                                value="${product.getSellPrice()}"
                                                 id="sell_price"
                                                 name="sell_price"
                                                 type="text"
@@ -164,6 +168,7 @@
                                             >Sale Percent (%)
                                         </label>
                                         <input
+                                            value="${product.getSellPercent()}"
                                             id="sale_percent"
                                             name="sale_percent"
                                             type="number"
@@ -185,7 +190,7 @@
                                             required
                                             >
                                             <c:forEach items="${categoryList}" var="category">
-                                                <option value="${category.getCategoryID()}">${category.getCategoryName()}</option>
+                                                <option value="${category.getCategoryID()}" ${category.getCategoryID() == product.getCategoryID() ? "selected" : ""}>${category.getCategoryName()}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -201,7 +206,7 @@
                                             required
                                             >
                                             <c:forEach items="${manufacturerList}" var="manufacturer">
-                                                <option value="${manufacturer.getManufacturerID()}">${manufacturer.getManufacturerName()}</option>
+                                                <option value="${manufacturer.getManufacturerID()}" ${manufacturer.getManufacturerID() == product.getManufacturerID() ? "selected" : ""}>${manufacturer.getManufacturerName()}</option>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -211,6 +216,7 @@
                                             >Amount
                                         </label>
                                         <input
+                                            value="${product.getAmount()}"
                                             id="amount"
                                             name="amount"
                                             type="number"
@@ -227,7 +233,9 @@
                                             >Image
                                         </label>
                                         <div class="tm-product-img-dummy mx-auto">
+                                            <input type="hidden" name="imageLink" value="${product.getImageLink()}">
                                             <img
+                                                src="/image/${product.getImageLink()}"
                                                 onclick="document.getElementById('fileInput').click();"
                                                 id="previewImage"
                                                 style="max-height: 100%; width: 100%;"
@@ -251,6 +259,7 @@
                                                 >Height
                                             </label>
                                             <input
+                                                value="${product.getHeight()}"
                                                 id="height"
                                                 name="height"
                                                 type="text"
@@ -264,6 +273,7 @@
                                                 >Width
                                             </label>
                                             <input
+                                                value="${product.getWidth()}"
                                                 id="width"
                                                 name="width"
                                                 type="text"
@@ -277,6 +287,7 @@
                                                 >Weight
                                             </label>
                                             <input
+                                                value="${product.getWeight()}"
                                                 id="weight"
                                                 name="weight"
                                                 type="text"
@@ -287,7 +298,7 @@
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary btn-block text-uppercase">Add Product Now</button>
+                                    <button type="submit" class="btn btn-primary btn-block text-uppercase">Update Product Now</button>
                                 </div>
                             </div>
                         </form>

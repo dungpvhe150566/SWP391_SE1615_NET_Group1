@@ -5,14 +5,21 @@
  */
 package controller;
 
+import entity.Category;
+import entity.Manufacturer;
 import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Vector;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+import model.CategoryDAO;
+import model.ManufacturerDAO;
 import model.ProductDAO;
 
 /**
@@ -20,6 +27,11 @@ import model.ProductDAO;
  * @author Dung
  */
 @WebServlet(name = "EditProductController", urlPatterns = {"/editproduct"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 100 // 100 MB
+)
 public class EditProductController extends HttpServlet {
 
     /**
@@ -34,20 +46,64 @@ public class EditProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            String productIDText = request.getParameter("prodcutID");
-            String service = request.getParameter("do");
 
+            String service = request.getParameter("do");
+            String message = "";
+
+            if (service != null) {
+                Part filePart = request.getPart("fileInput");
+                String fileName = filePart.getSubmittedFileName();
+                if (fileName.length() == 0) {
+                    fileName = request.getParameter("imageLink");
+                }
+
+                //Get and store all attribute of each Product
+                try {
+                    int productID = Integer.parseInt(request.getParameter("productID"));
+                    String productName = request.getParameter("product_name");
+                    String description = request.getParameter("description");
+                    int originalPrice = Integer.parseInt(request.getParameter("original_price"));
+                    int sellPrice = Integer.parseInt(request.getParameter("sell_price"));
+                    int salePercent = Integer.parseInt(request.getParameter("sale_percent"));
+                    String imageLink = fileName;
+                    int category = Integer.parseInt(request.getParameter("category"));
+                    int seller = 1;
+                    int amount = Integer.parseInt(request.getParameter("amount"));
+                    int statusID = 1;
+                    int manufacture = Integer.parseInt(request.getParameter("manufacture"));
+                    float height = Float.parseFloat(request.getParameter("height"));
+                    float width = Float.parseFloat(request.getParameter("width"));
+                    float weight = Float.parseFloat(request.getParameter("weight"));
+
+                    Product pro = new Product(productID, productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight);
+
+                    (new ProductDAO()).updateProduct(pro);
+
+                    message = "<p style=\"color: green\">Succesful</p>";
+                } catch (NumberFormatException e) {
+                    message = "<p style=\"color: red\">Wrong format input</p>";
+                    e.printStackTrace();
+                }
+            }
+
+            String productIDText = request.getParameter("productID");
             if (productIDText == null) {
                 request.getRequestDispatcher("error.jsp").forward(request, response);
                 return;
             } else {
                 int productID = Integer.parseInt(productIDText);
-
                 Product pro = (new ProductDAO()).getProductById(productID);
-
-                request.setAttribute("prodcut", pro);
+                request.setAttribute("product", pro);
             }
+
+            Vector<Category> categoryList = (new CategoryDAO()).getAllCategory();
+            Vector<Manufacturer> manufacturerList = (new ManufacturerDAO()).getManufacturerList();
+
+            request.setAttribute("message", message);
+            request.setAttribute("categoryList", categoryList);
+            request.setAttribute("manufacturerList", manufacturerList);
 
             request.getRequestDispatcher("edit-product.jsp").forward(request, response);
         }

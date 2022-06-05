@@ -324,21 +324,21 @@ public class ProductDAO extends DBContext {
 
     public int addProduct(Product pro) {
         int n = 0;
-        String preSql = "INSERT INTO Product ([ProductName]\n" +
-"           ,[Description]\n" +
-"           ,[OriginalPrice]\n" +
-"           ,[SellPrice]\n" +
-"           ,[SalePercent]\n" +
-"           ,[imageLink]\n" +
-"           ,[CategoryID]\n" +
-"           ,[SellerID]\n" +
-"           ,[Amount]\n" +
-"           ,[StatusID]\n" +
-"           ,[ManufacturerID]\n" +
-"           ,[height]\n" +
-"           ,[width]\n" +
-"           ,[weight])\n" +
-"       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String preSql = "INSERT INTO Product ([ProductName]\n"
+                + "           ,[Description]\n"
+                + "           ,[OriginalPrice]\n"
+                + "           ,[SellPrice]\n"
+                + "           ,[SalePercent]\n"
+                + "           ,[imageLink]\n"
+                + "           ,[CategoryID]\n"
+                + "           ,[SellerID]\n"
+                + "           ,[Amount]\n"
+                + "           ,[StatusID]\n"
+                + "           ,[ManufacturerID]\n"
+                + "           ,[height]\n"
+                + "           ,[width]\n"
+                + "           ,[weight])\n"
+                + "       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try {
             PreparedStatement pre = conn.prepareStatement(preSql);
@@ -366,8 +366,49 @@ public class ProductDAO extends DBContext {
         return n;
     }
 
-    public void updateProduct() {
+    public int updateProduct(Product pro) {
+        int n = 0;
+        String preSql = "UPDATE [ElectronicShop].[dbo].[Product]\n"
+                + "   SET [ProductName] = ?\n"
+                + "      ,[Description] = ?\n"
+                + "      ,[OriginalPrice] = ?\n"
+                + "      ,[SellPrice] = ?\n"
+                + "      ,[SalePercent] = ?\n"
+                + "      ,[imageLink] = ?\n"
+                + "      ,[CategoryID] = ?\n"
+                + "      ,[SellerID] = ?\n"
+                + "      ,[Amount] = ?\n"
+                + "      ,[StatusID] = ?\n"
+                + "      ,[ManufacturerID] = ?\n"
+                + "      ,[height] = ?\n"
+                + "      ,[width] = ?\n"
+                + "      ,[weight] = ?\n"
+                + " WHERE ProductID = " + pro.getProductID();
 
+        try {
+            PreparedStatement pre = conn.prepareStatement(preSql);
+
+            pre.setString(1, pro.getProductName());
+            pre.setString(2, pro.getDescription());
+            pre.setInt(3, pro.getOriginalPrice());
+            pre.setInt(4, pro.getSellPrice());
+            pre.setInt(5, pro.getSellPercent());
+            pre.setString(6, pro.getImageLink());
+            pre.setInt(7, pro.getCategoryID());
+            pre.setInt(8, pro.getSellerID());
+            pre.setInt(9, pro.getAmount());
+            pre.setInt(10, pro.getStatusID());
+            pre.setInt(11, pro.getManufacturerID());
+            pre.setFloat(12, pro.getHeight());
+            pre.setFloat(13, pro.getWidth());
+            pre.setFloat(14, pro.getWeight());
+
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return n;
     }
 
     /**
@@ -403,11 +444,11 @@ public class ProductDAO extends DBContext {
         productIDs = productIDs.trim().replace(" ", ",");
 
         int n = 0;
-        String sql = "delete from Order_Detail where ProductID in ("+productIDs+")\n"
-                + "	delete from Cart where ProductID in ("+productIDs+")\n"
-                + "	delete from Feedback_Replies where FeedbackID in (select FeedbackID from Feedback where ProductID in ("+productIDs+"))\n"
-                + "	delete from Feedback where ProductID in ("+productIDs+")\n"
-                + "	delete from Product where ProductID in ("+productIDs+")";
+        String sql = "delete from Order_Detail where ProductID in (" + productIDs + ")\n"
+                + "	delete from Cart where ProductID in (" + productIDs + ")\n"
+                + "	delete from Feedback_Replies where FeedbackID in (select FeedbackID from Feedback where ProductID in (" + productIDs + "))\n"
+                + "	delete from Feedback where ProductID in (" + productIDs + ")\n"
+                + "	delete from Product where ProductID in (" + productIDs + ")";
 
         try {
             Statement state = conn.createStatement();
