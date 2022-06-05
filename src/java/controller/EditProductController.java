@@ -8,6 +8,7 @@ package controller;
 import entity.Category;
 import entity.Manufacturer;
 import entity.Product;
+import entity.ProductStatus;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
@@ -21,6 +22,7 @@ import javax.servlet.http.Part;
 import model.CategoryDAO;
 import model.ManufacturerDAO;
 import model.ProductDAO;
+import model.ProductStatusDAO;
 
 /**
  *
@@ -100,10 +102,12 @@ public class EditProductController extends HttpServlet {
 
             Vector<Category> categoryList = (new CategoryDAO()).getAllCategory();
             Vector<Manufacturer> manufacturerList = (new ManufacturerDAO()).getManufacturerList();
+            Vector<ProductStatus> productStatusList = (new ProductStatusDAO()).getProductStatusList();
 
             request.setAttribute("message", message);
             request.setAttribute("categoryList", categoryList);
             request.setAttribute("manufacturerList", manufacturerList);
+            request.setAttribute("productStatusList", productStatusList);
 
             request.getRequestDispatcher("edit-product.jsp").forward(request, response);
         }

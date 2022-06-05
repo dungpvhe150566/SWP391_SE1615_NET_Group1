@@ -210,21 +210,6 @@
                                             </c:forEach>
                                         </select>
                                     </div>
-                                    <div class="form-group mb-3">
-                                        <label
-                                            for="amount"
-                                            >Amount
-                                        </label>
-                                        <input
-                                            value="${product.getAmount()}"
-                                            id="amount"
-                                            name="amount"
-                                            type="number"
-                                            class="form-control validate"
-                                            data-large-mode="true"
-                                            required
-                                            />
-                                    </div>
                                 </div>
                                 <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
                                     <div class="form-group">
@@ -295,6 +280,37 @@
                                                 required
                                                 />
                                         </div>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label
+                                            for="amount"
+                                            >Amount
+                                        </label>
+                                        <input
+                                            value="${product.getAmount()}"
+                                            id="amount"
+                                            name="amount"
+                                            type="number"
+                                            class="form-control validate"
+                                            data-large-mode="true"
+                                            required
+                                            />
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label
+                                            for="productstatus"
+                                            >Status</label
+                                        >
+                                        <select
+                                            class="custom-select tm-select-accounts"
+                                            id="manufacture"
+                                            name="productstatus"
+                                            required
+                                            >
+                                            <c:forEach items="${productStatusList}" var="productStatus">
+                                                <option value="${productStatus.getStatusID()}" ${productStatus.getStatusID() == product.getStatusID() ? "selected" : ""}>${productStatus.getStatusName()}</option>
+                                            </c:forEach>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-12">
