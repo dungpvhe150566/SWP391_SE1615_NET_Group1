@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import entity.SendEmail;
 import entity.Users;
 
 /**
@@ -25,7 +26,7 @@ import entity.Users;
  * @author HP
  */
 @WebServlet(name = "RegisterServlet", urlPatterns = {"/register"})
-public class RegisterServlet extends HttpServlet {
+public class RegisterController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -78,21 +79,21 @@ public class RegisterServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String email = request.getParameter("email");   //Lay email
+        String username = request.getParameter("username"); //Lay user
+        String password = request.getParameter("password"); //Lay password
         String repassword = request.getParameter("repassword");
         String text = "";
         UsersDAO dao = new UsersDAO();
-        List<Users> list = dao.getAll();
+        List<Users> list = dao.getAll();   //Lay ra list user
         for (Users users : list) {
-            if (users.getEmail().equalsIgnoreCase(email)) {
+            if (users.getEmail().equalsIgnoreCase(email)) { //Neu email da ton tai chuyen den trang login va bao loi
                 text = "The email already exits";
                 request.setAttribute("err", text);
                 request.setAttribute("email1", email);
                 request.setAttribute("username1", username);
                 request.getRequestDispatcher("login.jsp").forward(request, response);
-            } else if (users.getUsername().equalsIgnoreCase(username)) {
+            } else if (users.getUsername().equalsIgnoreCase(username)) { //Neu username ton tai chuyen den trang login va bao loi
                 text = "The username already exits";
                 request.setAttribute("err", text);
                 request.setAttribute("email1", email);
@@ -100,7 +101,7 @@ public class RegisterServlet extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
         }
-        if (!password.equalsIgnoreCase(repassword)) {
+        if (!password.equalsIgnoreCase(repassword)) { //Neu mat khau va confirm mat khau khong match chuyen den login va bao loi
             text = "The password and repassword didn't match";
             request.setAttribute("err", text);
             request.setAttribute("email1", email);
@@ -108,11 +109,15 @@ public class RegisterServlet extends HttpServlet {
             request.getRequestDispatcher("login.jsp").forward(request, response);
         }
         try {
-            HttpSession session = request.getSession();
+            SendEmail SE = new SendEmail();  //Truong hop dang nhap thanh cong 
+            SE.sendEmail(email); //Gui email
+            HttpSession session = request.getSession(); //Day email,username,password len session
+//            PrintWriter out = response.getWriter();
+//            out.print(email+username+password);
             session.setAttribute("email2", email);
             session.setAttribute("username2", username);
             session.setAttribute("password", password);
-            request.getRequestDispatcher("confirm.jsp").forward(request, response);
+            request.getRequestDispatcher("thankyou.jsp").forward(request, response); //Chuyen den trang thankyou.jsp
         } catch (Exception e) {
             System.out.println(e);
         }

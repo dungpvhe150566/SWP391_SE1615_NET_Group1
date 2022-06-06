@@ -5,25 +5,21 @@
  */
 package controller;
 
-import model.UsersDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.security.NoSuchAlgorithmException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author HP
+ * @author viet
  */
-@WebServlet(name = "ConfirmServlet", urlPatterns = {"/confirm"})
-public class ConfirmServlet extends HttpServlet {
+@WebServlet(name = "LogoutController", urlPatterns = {"/logout"})
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +38,10 @@ public class ConfirmServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ConfirmServlet</title>");
+            out.println("<title>Servlet LogoutController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ConfirmServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LogoutController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,7 +59,9 @@ public class ConfirmServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            HttpSession session = request.getSession();
+            session.removeAttribute("user");
+            request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     /**
@@ -77,12 +75,7 @@ public class ConfirmServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        UsersDAO dao = new UsersDAO();
-        dao.insert(email, username,password);
-        response.sendRedirect("login.jsp");
+        processRequest(request, response);
     }
 
     /**

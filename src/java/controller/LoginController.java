@@ -21,8 +21,8 @@ import entity.Users;
  *
  * @author HP
  */
-@WebServlet(name = "LoginServlet", urlPatterns = {"/login"})
-public class LoginServlet extends HttpServlet {
+@WebServlet(name = "LoginController", urlPatterns = {"/login"})
+public class LoginController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -62,18 +62,18 @@ public class LoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String email = request.getParameter("email");
-            String password = request.getParameter("password");
+            String email = request.getParameter("email");  //Lay email
+            String password = request.getParameter("password");  //Lay password
             UsersDAO dao = new UsersDAO();
-            List<Users> list = dao.getAll();
+            List<Users> list = dao.getAll(); //Lay ra list user
             for (Users users : list) {
-            if(users.getEmail().equalsIgnoreCase(email) && users.getPassword().equalsIgnoreCase(password)){
+            if(users.getEmail().equalsIgnoreCase(email) && users.getPassword().equalsIgnoreCase(password)){  //Kiem tra email va password nhap vao co trung trong database khong
                 HttpSession session = request.getSession();
                 session.setAttribute("user", users);
-                request.getRequestDispatcher("shop.jsp").forward(request, response);
+                request.getRequestDispatcher("index.jsp").forward(request, response); //Neu dang nhap thanh cong chuyen den home
             }
         }
-            String text = "Your email or password is incorrect";
+            String text = "Your email or password is incorrect"; //Neu dang nhap that bai chuyen den trang login va bat dang nhap lai
             request.setAttribute("alert", text);
             request.getRequestDispatcher("login.jsp").forward(request, response);
     }
