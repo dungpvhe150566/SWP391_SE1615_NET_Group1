@@ -25,7 +25,7 @@
         <url-pattern>/ShopController</url-pattern>
     </servlet-mapping>
     <welcome-file-list>
-        <welcome-file>HomeController</welcome-file>
+        <welcome-file>ShopController</welcome-file>
     </welcome-file-list>
     <servlet-mapping>
         <servlet-name>ShopDetailController</servlet-name>
