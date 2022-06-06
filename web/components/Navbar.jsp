@@ -73,7 +73,7 @@
                             ${sessionScope.user.getUsername()}</a>
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="" class="dropdown-item"><i class="fas fa-id-card"></i> YOUR PROFILE</a>
-                            <a href="" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> LOG OUT</a>
+                            <a href="logout" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> LOG OUT</a>
                         </div>
                     </div>
                     <a href="cart.jsp" class="btn border">

@@ -69,12 +69,13 @@
                     </a>
                 </div>
                 <div class="col-lg-6 col-6 text-left">
-                    <form action="">
+                    <form action="ShopController" id="searchByProductName" method="post">
+                        <input type="hidden" name="do" value="searchByName">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search for products">
+                            <input type="text" name="productName" class="form-control" placeholder="Search by name">
                             <div class="input-group-append">
                                 <span class="input-group-text bg-transparent text-primary">
-                                    <i class="fa fa-search"></i>
+                                    <a onclick="document.getElementById('searchByProductName').submit();" ><i class="fa fa-search"></i></a> 
                                 </span>
                             </div>
                         </div>

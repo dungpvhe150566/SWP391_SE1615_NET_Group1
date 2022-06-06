@@ -70,7 +70,7 @@ public class LoginController extends HttpServlet {
             if(users.getEmail().equalsIgnoreCase(email) && users.getPassword().equalsIgnoreCase(password)){  //Kiem tra email va password nhap vao co trung trong database khong
                 HttpSession session = request.getSession();
                 session.setAttribute("user", users);
-                request.getRequestDispatcher("index.jsp").forward(request, response); //Neu dang nhap thanh cong chuyen den home
+                request.getRequestDispatcher("HomeController").forward(request, response); //Neu dang nhap thanh cong chuyen den home
             }
         }
             String text = "Your email or password is incorrect"; //Neu dang nhap that bai chuyen den trang login va bat dang nhap lai
