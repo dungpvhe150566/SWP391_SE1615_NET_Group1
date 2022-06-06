@@ -47,13 +47,18 @@ public class ShopDetailController extends HttpServlet {
             
             if(service!=null && service.equals("ViewDetail")){
                 
+//                Get ProductID from User wanto view detail
                 int productID=Integer.parseInt(request.getParameter("productID"));
+//                Get Product follow ProductID
                 Product product = productDAO.getProductById(productID);
+//                Set Product to display for User view detail
                 request.setAttribute("product", product);
                 
+//                 Get Feedback of this Product follow ProductID
                 Vector<Feedback> feedbacks = feedbackDAO.getFeedBackByPID(productID);
                 request.setAttribute("feedbacks", feedbacks);
                 
+//                Get ProductsList same Catrgory with this Product to display for Use
                 String categoryID = request.getParameter("categoryID");
                 Vector<Product> productsSameCategory = productDAO.getProductListByCategoryID(categoryID);
                 request.setAttribute("productsSameCategory", productsSameCategory);
@@ -61,7 +66,6 @@ public class ShopDetailController extends HttpServlet {
             
              Vector<Category> categories = categoryDAO.getAllCategory();
             request.setAttribute("categories", categories);
-            
             
             
             RequestDispatcher dispatcher = request.getRequestDispatcher("/detail.jsp");

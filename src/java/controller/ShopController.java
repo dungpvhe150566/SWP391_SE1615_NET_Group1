@@ -63,53 +63,56 @@ public class ShopController extends HttpServlet {
                 indexPage = Integer.parseInt(index);
             }
             
-            
-//            Filter all products by Manufacturers user selected
-//            get the Array of ManufacturersIDs selected from the user
+//            Filter follow Manufacturers
+//            get the ManufacturersID selected from the user
             String[] manufacturersID = request.getParameterValues("manufacturer");
-//            Retrieves a String of ManufacturersIDs selected from the user 
-//            (to perform pagination while preserving the pre-selected User ManufacturersIds 
-//            in case of multiple product display pages, Support for PAGE SWITCHING)
             String msID = request.getParameter("manufacturers");
-            
             if(msID!=null && !msID.isEmpty()){
+//                list ManufacturersID have form "[...,...]" so need split 
                 manufacturersID = msID.substring(1, msID.length() - 1).split(",");
             }
-            
             if(manufacturersID != null ){
                 request.setAttribute("manufacturers", Arrays.toString(manufacturersID));
             }
             
+            
 //            Filter follow Price
+//            get the prices selected from the user
             String[] prices = request.getParameterValues("prices");
             String listPrices = request.getParameter("listPrices");
             if (listPrices != null && !listPrices.isEmpty()) {
+//                list prices have form "[...,...]" so need split 
                 prices = listPrices.substring(1, listPrices.length() - 1).split(",");
             }
             if (prices != null) {
                 request.setAttribute("listPrices", Arrays.toString(prices));
             }
 
-//            Search follow Category
+            
+//            User Search follow Category
             if (service != null && service.equals("searchByCategory")) {
                 int categoryID = Integer.parseInt(request.getParameter("categoryID"));
                 productsList = productDao.getProductList(categoryID, "", prices, manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage);
                 totalPage = productDao.getTotalPage(categoryID, "", prices, manufacturersID);
                 request.setAttribute("categoryID", categoryID);
             } 
-//            Search follow ProductName
-            else if (service != null && service.equals("searchByName")) { 
+            
+//            User Search follow ProductName
+            else if (service != null && service.equals("searchByName")) {
+//                Get ProductName from User Input
                 String productName = request.getParameter("productName");
                 productsList = productDao.getProductList(0, productName, prices, manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage);
                 totalPage = productDao.getTotalPage(0, productName, prices, manufacturersID);
                 request.setAttribute("productName", productName);
             }
+            
 //            List All Products
             else {
                 productsList = productDao.getProductList(0, "", prices, manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage);
                 totalPage = productDao.getTotalPage(0, "", prices, manufacturersID);
             }
 
+//            set information to display to the user(CategoryList, ProductsList,ManufacturingsList)
             Vector<Category> categories = categoryDao.getAllCategory();
             request.setAttribute("products", productsList);
             request.setAttribute("categories", categories);

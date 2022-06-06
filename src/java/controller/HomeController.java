@@ -36,11 +36,11 @@ public class HomeController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             
+//            Get All Category to display for User select
             CategoryDAO categoryDAO = new CategoryDAO();
             Vector<Category> categoryList =  categoryDAO.getAllCategory();
-            
-            
             request.setAttribute("categoryList", categoryList);
+            
             RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
             dispatcher.forward(request, response);
         }
