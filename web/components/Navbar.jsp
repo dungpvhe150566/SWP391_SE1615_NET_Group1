@@ -76,7 +76,7 @@
                             <a href="logout" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> LOG OUT</a>
                         </div>
                     </div>
-                    <a href="cart.jsp" class="btn border">
+                    <a href="Cart" >
                         <i class="fas fa-shopping-cart text-primary"></i>
                         <span class="badge">${sessionScope.carts.size()}</span>
                     </a>
@@ -94,7 +94,7 @@
                 </c:if>
                 <c:if test="${sessionScope.user==null}">
                     <div class="col-lg-3 col-6 text-right">
-                        <a href="cart.jsp" class="btn border">
+                        <a href="Cart">
                             <i class="fas fa-shopping-cart text-primary"></i>
                             <span class="badge">${sessionScope.carts.size()}</span>
                         </a>

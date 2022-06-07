@@ -108,11 +108,17 @@
                                 <div class="card-footer border-secondary bg-transparent">
                                     <div class="d-flex justify-content-between mt-2">
                                         <h5 class="font-weight-bold">Total</h5>
-                                        <h5 class="font-weight-bold"> ${totalMoney}VND</h5>
+                                        <h5 type="" style="
+                                            display:inline-block;
+                                            white-space: nowrap;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            max-width: 50ch;"class="font-weight-bold" >${totalMoney}VND</h5>
                                     </div>
                                     <a href="checkout.jsp" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                                 </div>
                             </div>
+                                    <h3>${totalMoney}</h3>
                         </div>
                     </c:otherwise>
                 </c:choose>

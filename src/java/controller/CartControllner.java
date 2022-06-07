@@ -53,11 +53,11 @@ public class CartControllner extends HttpServlet {
                 
             }
             
-            
+//            out.print(totalMoney);
             request.setAttribute("totalMoney", totalMoney);
             request.setAttribute("carts", carts);
             request.getRequestDispatcher("cart.jsp").forward(request, response);
-        }
+       }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
