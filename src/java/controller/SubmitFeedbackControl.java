@@ -39,11 +39,13 @@ public class SubmitFeedbackControl extends HttpServlet {
         try {
             ProductDAO productDao = new ProductDAO();
 
+            String orderId = request.getParameter("orderId");
             String productId = request.getParameter("productId");
 
             Product p = productDao.getProductByID(productId);
 
             request.setAttribute("product", p);
+            request.setAttribute("orderId", orderId);
             request.getRequestDispatcher("FeedbackForm.jsp").forward(request, response);
 
         } catch (Exception e) {
@@ -94,23 +96,25 @@ public class SubmitFeedbackControl extends HttpServlet {
             // get input rating
             String star = request.getParameter("star-value");
             String feedback = request.getParameter("feedback-text");
-
+            //get order id
+            String orderId = request.getParameter("orderId");
 
             // create feedback
             Feedback userFeedback = new Feedback();
             userFeedback.setProductID(productId);
             userFeedback.setUserID(currentAccount.getUserID());
             userFeedback.setStar(Integer.parseInt(star));
+            userFeedback.setOrderID(Integer.parseInt(orderId));
             userFeedback.setFeedbackDetails(feedback);
             System.out.println(userFeedback);
 
             // add feedback to database
             boolean addFeedback = feedbackDAO.addFeedback(userFeedback);
-            
+
             // redirect to Home
-            if(addFeedback) {
+            if (addFeedback) {
                 request.getRequestDispatcher("detail.jsp").forward(request, response);
-            }           
+            }
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("thankyou.jsp");
