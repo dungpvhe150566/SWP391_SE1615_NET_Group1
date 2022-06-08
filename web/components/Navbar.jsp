@@ -133,7 +133,7 @@
                         </button>
                         <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div class="navbar-nav mr-auto py-0">
-                                <a href="index.jsp" class="nav-item nav-link">Home</a>
+                                <a href="HomeController" class="nav-item nav-link">Home</a>
                                 <a href="ShopController" class="nav-item nav-link active">Shop</a>
                                 
                                 <a href="#" class="nav-item nav-link">Contact</a>
