@@ -2,12 +2,17 @@ package model;
 
 import entity.Feedback;
 import entity.Product;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 public class FeedbackDAO extends DBContext {
 
+    PreparedStatement ps = null; //...
+    ResultSet rs = null; //Nhận kết quả trả về
     public Vector<Feedback> getFeedBackByPID(int productID) {
         // Create vector to store all Categories
         Vector<Feedback> feedbacks = new Vector<>();
@@ -41,8 +46,221 @@ public class FeedbackDAO extends DBContext {
         return feedbacks;
     }
 
-    public void addFeedback() {
+    public List<Feedback> getFeedbacks() {
+        String query = "SELECT * FROM Feedback";
+        try {
+            List<Feedback> lsFeedback = new ArrayList<>();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Feedback f = new Feedback(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("ProductID"),
+                        rs.getInt("OrderID"),
+                        rs.getInt("Star"),
+                        rs.getString("FeedbackDetail")
+                );
+                lsFeedback.add(f);
+            }
+            return lsFeedback;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    /**
+     * Get a feedback by id
+     *
+     * @param id the id of the feedback
+     * @return a feedback with the specified id
+     */
+    public Feedback getFeedbacksById(int id) {
+        String query = "SELECT * FROM Feedback WHERE ID = ?";
+        try {
+            Feedback f;
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                f = new Feedback(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("ProductID"),
+                        rs.getInt("OrderID"),
+                        rs.getInt("Star"),
+                        rs.getString("FeedbackDetail")
+                );
+                return f;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Get a list of feedback by product id
+     *
+     * @param productId the id of the product
+     * @return a list of feedback
+     */
+    public List<Feedback> getFeedbacksByProductId(int productId) {
+        String query = "SELECT * FROM Feedback WHERE ProductID = ?";
+        try {
+            List<Feedback> lsFeedback = new ArrayList<>();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, productId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Feedback f = new Feedback(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("ProductID"),
+                        rs.getInt("OrderID"),
+                        rs.getInt("Star"),
+                        rs.getString("FeedbackDetail")
+                );
+                lsFeedback.add(f);
+            }
+            return lsFeedback;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Get a list of feedback by user id
+     *
+     * @param userId the id of the user
+     * @return a list of feedback
+     */
+    public List<Feedback> getFeedbacksByUserId(int userId) {
+        String query = "SELECT * FROM Feedback WHERE UserID = ?";
+        try {
+            List<Feedback> lsFeedback = new ArrayList<>();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Feedback f = new Feedback(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("ProductID"),
+                        rs.getInt("OrderID"),
+                        rs.getInt("Star"),
+                        rs.getString("FeedbackDetail")
+                );
+                lsFeedback.add(f);
+            }
+            return lsFeedback;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Get a list of feedback by user id and product id
+     *
+     * @param userId the id of the user
+     * @param productId the id of the product
+     * @return list of feedback with the user id and product id
+     */
+    public List<Feedback> getFeedbacksByUserIdAndProductId(int userId, int productId) {
+        String query = "SELECT * FROM Feedback WHERE UserID = ?"
+                + " AND ProductID = ?";
+        try {
+            List<Feedback> lsFeedback = new ArrayList<>();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, userId);
+            ps.setInt(2, productId);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Feedback f = new Feedback(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("ProductID"),
+                        rs.getInt("OrderID"),
+                        rs.getInt("Star"),
+                        rs.getString("FeedbackDetail")
+                );
+                lsFeedback.add(f);
+            }
+            return lsFeedback;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Get a feedback by order id
+     *
+     * @param orderId the id of the order
+     * @return a list of feedback with the order id
+     */
+    public List<Feedback> getFeedbacksByOrderId(int orderId) {
+        String query = "SELECT * FROM Feedback WHERE OrderID = ? ";
+        try {
+            List<Feedback> lsFeedback = new ArrayList<>();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, orderId);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Feedback f = new Feedback(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("ProductID"),
+                        rs.getInt("OrderID"),
+                        rs.getInt("Star"),
+                        rs.getString("FeedbackDetail")
+                );
+                lsFeedback.add(f);
+            }
+            return lsFeedback;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Add a feedback to the database
+     *
+     * @param theFeedback to add to database
+     * @return true if add successful, else false
+     */
+    public boolean addFeedback(Feedback theFeedback) {
+        String query = "INSERT INTO Feedback VALUES (?, ?, ?, ?, ?);";
+        int check = 0;
+        try {
+            ps = conn.prepareStatement(query);
+            //Set data to the "?"
+            ps.setInt(1, theFeedback.getUserID());
+            ps.setInt(2, theFeedback.getProductID());
+            ps.setInt(3, theFeedback.getOrderID());
+            ps.setInt(4, theFeedback.getStar());
+            ps.setString(5, theFeedback.getFeedbackDetails());
+            check = ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+            check = -1;
+        }
+        return check > 0;
+    }
+
+    /**
+     * Get total count of all feedback
+     *
+     * @return total count of all feedback
+     */
+    public int countTotalFeedback() {
+        return getFeedbacks().size();
     }
 
 //    public static void main(String[] args) {

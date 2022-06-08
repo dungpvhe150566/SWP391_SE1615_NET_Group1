@@ -67,6 +67,18 @@ public class Product {
         this.weight = weight;
     }
 
+    public Product(int ProductID, String ProductName, String Description, int SellPrice, String imageLink) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.Description = Description;
+        this.SellPrice = SellPrice;
+        this.imageLink = imageLink;
+
+    }
+
+    public Product() {
+    }
+
     public int getProductID() {
         return ProductID;
     }

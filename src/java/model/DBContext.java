@@ -30,7 +30,7 @@ public class DBContext {
     }
     
     public DBContext() {
-        this("jdbc:sqlserver://localhost:1433;databaseName=ElectronicShop", "sa", "123456");
+        this("jdbc:sqlserver://localhost:2511;databaseName=ElectronicShop", "sa", "123456");
     }
     
     public ResultSet getData(String sql) {

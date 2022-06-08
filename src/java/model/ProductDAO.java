@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -459,13 +461,46 @@ public class ProductDAO extends DBContext {
         }
         return n;
     }
+    PreparedStatement ps = null; //...
+    ResultSet rs = null; //Nhận kết quả trả về
 
-    public static void main(String[] args) {
-//        ProductDAO dao = new ProductDAO();
-//        Vector<Product> products = dao.searchByCustom(1, "", 1, 100);
-//        for (Product product : products) {
-//            System.out.println(product);
-//        }
+    public List<Product> getProductBySellID(int id) { //Must be int type because when saving to Session, it is still int
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM Product WHERE SellerID = ?";
+        try {
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getString("Description"), rs.getInt("SellPrice"), rs.getString("imageLink")));
+            }
+        } catch (Exception e) {
+        }
+        return list;
     }
+
+    public Product getProductByID(String id) { //Must be int type because when saving to Session, it is still int
+        String query = "SELECT * FROM Product WHERE ProductID = ?";
+        try {
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return (new Product(rs.getInt("ProductID"),
+                        rs.getString("ProductName"), rs.getString("Description"),
+                        rs.getInt("SellPrice"), rs.getString("imageLink")));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+//    public static void main(String[] args) {
+////        ProductDAO dao = new ProductDAO();
+////        Vector<Product> products = dao.searchByCustom(1, "", 1, 100);
+////        for (Product product : products) {
+////            System.out.println(product);
+////        }
+//    }
 
 }

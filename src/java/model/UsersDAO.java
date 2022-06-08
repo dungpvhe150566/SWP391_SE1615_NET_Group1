@@ -9,8 +9,6 @@ import java.util.List;
 import static javafx.scene.input.KeyCode.U;
 import static jdk.nashorn.internal.runtime.regexp.joni.constants.AsmConstants.S;
 
-
-
 /**
  *
  * @author HP
@@ -37,6 +35,25 @@ public class UsersDAO extends DBContext {
         return list;
     }
 
+    PreparedStatement ps = null; //...
+    ResultSet rs = null; //Get the results returned
+    public Users getAccountByID(String id) {
+        String query = "SELECT * FROM Users WHERE UserID = ?";
+        try {
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return new Users(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getInt(6),
+                        rs.getInt(7), rs.getInt(8));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
     public void insert(String email, String username, String password) { // insert user information into database
         String query = "insert into Users(Username,Password,email) values (?,?,?) ";
         try {
@@ -57,6 +74,6 @@ public class UsersDAO extends DBContext {
         for (Users student : list) {
             System.out.println(student.getUsername());
         }
-      // dao.insert("anhem", "olamigo", "anhdungzoo9");
+        // dao.insert("anhem", "olamigo", "anhdungzoo9");
     }
 }

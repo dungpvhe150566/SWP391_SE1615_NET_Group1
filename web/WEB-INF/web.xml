@@ -16,6 +16,14 @@
         <servlet-name>HomeController</servlet-name>
         <servlet-class>controller.HomeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewAllFeedbackController</servlet-name>
+        <servlet-class>controller.ViewAllFeedbackController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitFeedbackControl</servlet-name>
+        <servlet-class>controller.SubmitFeedbackControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
         <url-pattern>/ProductsController</url-pattern>
@@ -34,6 +42,14 @@
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/HomeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllFeedbackController</servlet-name>
+        <url-pattern>/ViewAllFeedbackController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitFeedbackControl</servlet-name>
+        <url-pattern>/SubmitFeedbackControl</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

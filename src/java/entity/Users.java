@@ -18,6 +18,15 @@ public class Users {
 
     private int StatusID;
 
+    public Users(int aInt, String string, String string0, String string1, String string2, int aInt0, int aInt1, int aInt2) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public Users() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+
     public int getUserID() {
         return UserID;
     }

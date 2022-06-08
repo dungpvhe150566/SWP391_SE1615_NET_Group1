@@ -5,7 +5,7 @@ public class Feedback {
     private int ID;
 
     private int UserID;
-    
+
     private String UserName;
 
     private int ProductID;
@@ -13,10 +13,12 @@ public class Feedback {
     private int OrderID;
 
     private String DateFeedback;
-    
+
     private int Star;
 
     private String FeedbackDetails;
+    private Users user;
+    private Product product;
 
     public Feedback() {
     }
@@ -31,7 +33,7 @@ public class Feedback {
         this.Star = Star;
         this.FeedbackDetails = FeedbackDetails;
     }
-    
+
     public Feedback(int ID, String UserName, String DateFeedback, int Star, String FeedbackDetails) {
         this.ID = ID;
         this.UserName = UserName;
@@ -40,8 +42,33 @@ public class Feedback {
         this.FeedbackDetails = FeedbackDetails;
     }
 
+    public Feedback(int ID, int UserID, int ProductID, int OrderID, int Star, String FeedbackDetails) {
+        this.ID = ID;
+        this.UserID = UserID;
+        this.ProductID = ProductID;
+        this.OrderID = OrderID;
+        this.Star = Star;
+        this.FeedbackDetails = FeedbackDetails;
+    }
+
+    public Users getUser() {
+        return user;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setUser(Users user) {
+        this.user = user;
+    }
+
     public int getID() {
         return ID;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public void setID(int ID) {
@@ -104,13 +131,11 @@ public class Feedback {
         this.FeedbackDetails = FeedbackDetails;
     }
 
-    
-    
     @Override
     public String toString() {
-           return ID +" " + UserName + " "+ DateFeedback+" "+Star+" "+FeedbackDetails;
+        return ID + " " + UserName + " " + DateFeedback + " " + Star + " " + FeedbackDetails;
     }
 
     
-    
+
 }
