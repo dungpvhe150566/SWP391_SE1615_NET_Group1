@@ -146,7 +146,7 @@
                                 </div>
                                 <!--Send Review, Question for this Product-->
                                 <div class="col-md-6">
-                                    <h4 class="mb-4"><a href="SubmitFeedbackControl?productId=${product.getProductID()}&orderId=${product.getProductID()}">Add a review</a>Add a review</h4>
+                                    <h4 class="mb-4"><a href="SubmitFeedbackControl?productId=${product.getProductID()}">Add Feedbacks</a></h4>
                                     
                                 </div>
                             </div>

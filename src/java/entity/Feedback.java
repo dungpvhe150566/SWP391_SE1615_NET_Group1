@@ -1,5 +1,7 @@
 package entity;
 
+import java.sql.Date;
+
 public class Feedback {
 
     private int ID;
@@ -10,9 +12,7 @@ public class Feedback {
 
     private int ProductID;
 
-    private int OrderID;
-
-    private String DateFeedback;
+    private Date DateFeedback;
 
     private int Star;
 
@@ -23,32 +23,38 @@ public class Feedback {
     public Feedback() {
     }
 
-    public Feedback(int ID, int UserID, String UserName, int ProductID, int OrderID, String DateFeedback, int Star, String FeedbackDetails) {
+    public Feedback(int ID, int UserID, String UserName, int ProductID,  Date DateFeedback, int Star, String FeedbackDetails) {
         this.ID = ID;
         this.UserID = UserID;
         this.UserName = UserName;
         this.ProductID = ProductID;
-        this.OrderID = OrderID;
         this.DateFeedback = DateFeedback;
         this.Star = Star;
         this.FeedbackDetails = FeedbackDetails;
     }
 
-    public Feedback(int ID, String UserName, String DateFeedback, int Star, String FeedbackDetails) {
-        this.ID = ID;
-        this.UserName = UserName;
+    public Feedback(int UserID, int ProductID,int Star, String FeedbackDetails,Date DateFeedback) {
+        this.UserID = UserID;
+        this.ProductID = ProductID;
+        this.Star = Star;
+        this.FeedbackDetails = FeedbackDetails;
         this.DateFeedback = DateFeedback;
+    }
+
+    public Feedback(int ID, int UserID, int ProductID, int Star, String FeedbackDetails) {
+        this.ID = ID;
+        this.UserID = UserID;
+        this.ProductID = ProductID;
         this.Star = Star;
         this.FeedbackDetails = FeedbackDetails;
     }
 
-    public Feedback(int ID, int UserID, int ProductID, int OrderID, int Star, String FeedbackDetails) {
+    public Feedback(int ID, String userName, Date dayFeedBack, int star, String feedbackDetails) {
         this.ID = ID;
-        this.UserID = UserID;
-        this.ProductID = ProductID;
-        this.OrderID = OrderID;
-        this.Star = Star;
-        this.FeedbackDetails = FeedbackDetails;
+        this.UserName = userName;
+        this.DateFeedback = dayFeedBack;
+        this.Star = star;
+        this.FeedbackDetails = feedbackDetails;
     }
 
     public Users getUser() {
@@ -99,19 +105,11 @@ public class Feedback {
         this.ProductID = ProductID;
     }
 
-    public int getOrderID() {
-        return OrderID;
-    }
-
-    public void setOrderID(int OrderID) {
-        this.OrderID = OrderID;
-    }
-
-    public String getDateFeedback() {
+    public Date getDateFeedback() {
         return DateFeedback;
     }
 
-    public void setDateFeedback(String DateFeedback) {
+    public void setDateFeedback(Date DateFeedback) {
         this.DateFeedback = DateFeedback;
     }
 

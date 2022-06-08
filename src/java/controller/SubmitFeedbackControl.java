@@ -10,6 +10,7 @@ import entity.Product;
 import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.System.out;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -39,13 +40,11 @@ public class SubmitFeedbackControl extends HttpServlet {
         try {
             ProductDAO productDao = new ProductDAO();
 
-            String orderId = request.getParameter("orderId");
             String productId = request.getParameter("productId");
 
             Product p = productDao.getProductByID(productId);
 
             request.setAttribute("product", p);
-            request.setAttribute("orderId", orderId);
             request.getRequestDispatcher("FeedbackForm.jsp").forward(request, response);
 
         } catch (Exception e) {
@@ -85,27 +84,36 @@ public class SubmitFeedbackControl extends HttpServlet {
 
             // get current user account
             HttpSession session = request.getSession();
-            Users currentAccount = (Users) session.getAttribute("acc");
+            Users currentAccount = (Users) session.getAttribute("user");
 
             // get FeedbackDAO
             FeedbackDAO feedbackDAO = new FeedbackDAO();
 
             // get current product id
             int productId = Integer.parseInt(request.getParameter("productId"));
-
+            
+            // get current product id
+            int cateid=Integer.parseInt(request.getParameter("cateID"));
+            
             // get input rating
             String star = request.getParameter("star-value");
+            if(star==null){
+                star="0";
+            }
             String feedback = request.getParameter("feedback-text");
-            //get order id
-            String orderId = request.getParameter("orderId");
+
+            //get current date
+            java.util.Date utilDate = new java.util.Date();
+            java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
             // create feedback
             Feedback userFeedback = new Feedback();
             userFeedback.setProductID(productId);
             userFeedback.setUserID(currentAccount.getUserID());
+            out.println(currentAccount.getUserID());
             userFeedback.setStar(Integer.parseInt(star));
-            userFeedback.setOrderID(Integer.parseInt(orderId));
             userFeedback.setFeedbackDetails(feedback);
+            userFeedback.setDateFeedback(sqlDate);
             System.out.println(userFeedback);
 
             // add feedback to database
@@ -113,7 +121,7 @@ public class SubmitFeedbackControl extends HttpServlet {
 
             // redirect to Home
             if (addFeedback) {
-                request.getRequestDispatcher("detail.jsp").forward(request, response);
+                request.getRequestDispatcher("ShopDetailController?do=ViewDetail&categoryID="+cateid+"&productID=" + productId).forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();

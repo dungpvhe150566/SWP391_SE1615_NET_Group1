@@ -159,7 +159,7 @@
                                         <textarea name="feedback-text" class="form-control" id="feedback-text" rows="5" placeholder="Your Feedback here"></textarea>
                                         <input type="hidden" id="star-value" name="star-value">
                                         <input type="hidden" id="productId" name="productId" value="${product.getProductID()}">
-                                        <input type="hidden" id="orderId" name="orderId" value="${orderId}">
+                                        <input type="hidden" id="productId" name="cateID" value="${product.getCategoryID()}">
                                         <input type="submit" class="btn btn-success mt-5" value="Submit">                                   
                                 </form>
                             </div>

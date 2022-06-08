@@ -2,6 +2,7 @@ package model;
 
 import entity.Feedback;
 import entity.Product;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,10 +21,10 @@ public class FeedbackDAO extends DBContext {
         // Query Statement to get all Categories in Database 
         String sqlQuery = "select f.ID,\n"
                 + "		 u.Username,\n"
-                + "		 o.DayBuy,\n"
+                + "		 f.DateComment,\n"
                 + "		 f.Star,\n"
                 + "		 f.FeedbackDetail\n"
-                + "		 from Feedback f join Orders o on f.OrderID = o.ID join Users u on o.UserID = u.UserID where f.ProductID="+productID;
+                + "		 from Feedback f join Users u on f.UserID = u.UserID where f.ProductID="+productID;
 
         // Resultset to store all Categories 
         ResultSet rs = getData(sqlQuery);
@@ -34,7 +35,7 @@ public class FeedbackDAO extends DBContext {
                 // Get and store all attribute of each Feedback
                 int feedbackID = rs.getInt(1);
                 String userName = rs.getString(2);
-                String dayFeedBack = rs.getString(3);
+                Date dayFeedBack = rs.getDate(3);
                 int star = rs.getInt(4);
                 String feedbackDetails = rs.getString(5);
                 // Add FeedBack to vector 
@@ -57,7 +58,6 @@ public class FeedbackDAO extends DBContext {
                         rs.getInt("ID"),
                         rs.getInt("UserID"),
                         rs.getInt("ProductID"),
-                        rs.getInt("OrderID"),
                         rs.getInt("Star"),
                         rs.getString("FeedbackDetail")
                 );
@@ -88,7 +88,6 @@ public class FeedbackDAO extends DBContext {
                         rs.getInt("ID"),
                         rs.getInt("UserID"),
                         rs.getInt("ProductID"),
-                        rs.getInt("OrderID"),
                         rs.getInt("Star"),
                         rs.getString("FeedbackDetail")
                 );
@@ -119,7 +118,6 @@ public class FeedbackDAO extends DBContext {
                         rs.getInt("ID"),
                         rs.getInt("UserID"),
                         rs.getInt("ProductID"),
-                        rs.getInt("OrderID"),
                         rs.getInt("Star"),
                         rs.getString("FeedbackDetail")
                 );
@@ -150,7 +148,6 @@ public class FeedbackDAO extends DBContext {
                         rs.getInt("ID"),
                         rs.getInt("UserID"),
                         rs.getInt("ProductID"),
-                        rs.getInt("OrderID"),
                         rs.getInt("Star"),
                         rs.getString("FeedbackDetail")
                 );
@@ -184,7 +181,6 @@ public class FeedbackDAO extends DBContext {
                         rs.getInt("ID"),
                         rs.getInt("UserID"),
                         rs.getInt("ProductID"),
-                        rs.getInt("OrderID"),
                         rs.getInt("Star"),
                         rs.getString("FeedbackDetail")
                 );
@@ -216,7 +212,6 @@ public class FeedbackDAO extends DBContext {
                         rs.getInt("ID"),
                         rs.getInt("UserID"),
                         rs.getInt("ProductID"),
-                        rs.getInt("OrderID"),
                         rs.getInt("Star"),
                         rs.getString("FeedbackDetail")
                 );
@@ -243,9 +238,9 @@ public class FeedbackDAO extends DBContext {
             //Set data to the "?"
             ps.setInt(1, theFeedback.getUserID());
             ps.setInt(2, theFeedback.getProductID());
-            ps.setInt(3, theFeedback.getOrderID());
-            ps.setInt(4, theFeedback.getStar());
-            ps.setString(5, theFeedback.getFeedbackDetails());
+            ps.setInt(3, theFeedback.getStar());
+            ps.setString(4, theFeedback.getFeedbackDetails());
+            ps.setDate(5, theFeedback.getDateFeedback());
             check = ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
@@ -263,11 +258,11 @@ public class FeedbackDAO extends DBContext {
         return getFeedbacks().size();
     }
 
-//    public static void main(String[] args) {
-//        FeedbackDAO feedbackDAO = new FeedbackDAO();
-//        for (Feedback f : feedbackDAO.getFeedBackByPID(6)) {
-//            System.out.println(f);
-//        }
-//    }
+    public static void main(String[] args) {
+        FeedbackDAO feedbackDAO = new FeedbackDAO();
+        for (Feedback f : feedbackDAO.getFeedBackByPID(2)) {
+            System.out.println(f);
+        }
+    }
 
 }
