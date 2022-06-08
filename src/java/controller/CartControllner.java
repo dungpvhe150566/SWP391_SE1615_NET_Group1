@@ -49,7 +49,7 @@ public class CartControllner extends HttpServlet {
                 Integer productId = entry.getKey();
                 Cart cart = entry.getValue();
                 
-                totalMoney += (cart.getAmount()* cart.getProduct().getSellPrice());
+                totalMoney += (cart.getAmount()* cart.getProduct().getOriginalPrice());
                 
             }
             

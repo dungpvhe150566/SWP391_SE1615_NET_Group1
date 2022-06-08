@@ -66,13 +66,13 @@
                                             overflow: hidden;
                                             text-overflow: ellipsis;
                                             max-width: 40ch;"class="align-middle"><img src="image/${C.value.product.getImageLink()}"  style="width: 50px;" >${C.value.product.getProductName()}</td>
-                                        <td class="align-middle">${C.value.product.getSellPrice()} VND</td>
+                                        <td class="align-middle">${C.value.product.getOriginalPrice()} VND</td>
                                         <td class="align-middle">
 
-                                            <input name ="quantity" onchange="this.form.submit()" type="number" class="form-control form-control-sm bg-secondary text-center" value="${C.value.getAmount()}">
+                                            <input  min='0' type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" name ="quantity" onchange="this.form.submit()"  class="form-control form-control-sm bg-secondary text-center" value="${C.value.getAmount()}">
 
                                         </td>
-                                        <td class="align-middle">${C.value.product.getSellPrice()*C.value.getAmount()}</td>
+                                        <td class="align-middle">${C.value.product.getOriginalPrice()*C.value.getAmount()}</td>
                                         <td class="align-middle"><a href="#"onclick="showMess(${C.value.product.getProductID()})" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></a></td>
                                         </tr>
                                     </form>
@@ -98,7 +98,7 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between mb-3 pt-1">
                                         <h6 class="font-weight-medium">Subtotal</h6>
-                                        <h6 class="font-weight-medium"></h6>
+                                        <h6 class="font-weight-medium">${totalMoney}</h6>
                                     </div>
                                     <div class="d-flex justify-content-between">
                                         <h6 class="font-weight-medium">Shipping</h6>
@@ -113,12 +113,12 @@
                                             white-space: nowrap;
                                             overflow: hidden;
                                             text-overflow: ellipsis;
-                                            max-width: 50ch;"class="font-weight-bold" >${totalMoney}VND</h5>
+                                            max-width: 50ch;"class="font-weight-bold" >VND</h5>
                                     </div>
                                     <a href="checkout.jsp" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                                 </div>
                             </div>
-                                    <h3>${totalMoney}</h3>
+                                    
                         </div>
                     </c:otherwise>
                 </c:choose>
@@ -141,6 +141,7 @@
                 }
             }
         </script>
+        
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
