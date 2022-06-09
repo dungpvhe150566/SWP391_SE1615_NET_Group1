@@ -117,6 +117,7 @@
                 <div class="col">
                     <div class="nav nav-tabs justify-content-center border-secondary mb-4">
                         <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                        <a href="SubmitFeedbackControl?productId=${product.getProductID()}" class="nav-item nav-link">Add Feedbacks</a>
                         <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (${feedbacks.size()})</a>
                     </div>
                     <div class="tab-content">
@@ -145,10 +146,6 @@
                                     </c:forEach>
                                 </div>
                                 <!--Send Review, Question for this Product-->
-                                <div class="col-md-6">
-                                    <h4 class="mb-4"><a href="SubmitFeedbackControl?productId=${product.getProductID()}">Add Feedbacks</a></h4>
-                                    
-                                </div>
                             </div>
                         </div>
                     </div>

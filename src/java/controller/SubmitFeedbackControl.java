@@ -101,6 +101,7 @@ public class SubmitFeedbackControl extends HttpServlet {
                 star="0";
             }
             String feedback = request.getParameter("feedback-text");
+            feedback.trim();
 
             //get current date
             java.util.Date utilDate = new java.util.Date();

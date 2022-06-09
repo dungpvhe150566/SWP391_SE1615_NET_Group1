@@ -59,8 +59,6 @@ public class ViewAllFeedbackController extends HttpServlet {
                 System.out.println(product);
                 
             }
-            List<Integer> lsId = lsProduct.stream().map(Product::getSellerID).collect(Collectors.toList());
-
             List<Feedback> lsFeedback = new ArrayList<>();
                 lsFeedback=feedbackDao.getFeedbacksByProductId(2);
 
