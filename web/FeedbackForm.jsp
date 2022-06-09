@@ -155,8 +155,8 @@
 
                             <div class="feedback-text">
                                 <form action="SubmitFeedbackControl" id="submit-feedback" method="POST" onsubmit="submitFeedback()" >                                    
-                                        <label for="feedback-text" class="form-label">Your Feedback: </label>
-                                        <textarea name="feedback-text" class="form-control" id="feedback-text" rows="5" placeholder="Your Feedback here*" required=""></textarea>
+                                        <label for="feedback-text" class="form-label">Your Feedback(*): </label>
+                                        <textarea name="feedback-text" class="form-control" id="feedback-text" rows="5" placeholder="Your Feedback here(*)" required=""></textarea>
                                         <input type="hidden" id="star-value" name="star-value">
                                         <input type="hidden" id="productId" name="productId" value="${product.getProductID()}">
                                         <input type="hidden" id="productId" name="cateID" value="${product.getCategoryID()}">
