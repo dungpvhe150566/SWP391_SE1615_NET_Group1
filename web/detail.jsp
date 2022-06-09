@@ -68,7 +68,7 @@
                         </div>
                         <small class="pt-1">(${feedbacks.size()} Reviews)</small>
                     </div>
-                    <h3 class="font-weight-semi-bold mb-4">${product.getOriginalPrice()}</h3>
+                    <h3 class="font-weight-semi-bold mb-4">${product.getSellPrice()}</h3>
                     <div class="d-flex mb-3">
                         <p class="text-dark font-weight-medium mb-0 mr-3">Height: ${product.getHeight()}</p>
                     </div>

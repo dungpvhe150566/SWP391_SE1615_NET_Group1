@@ -199,4 +199,9 @@ public class Product {
         this.weight = weight;
     }
 
+    @Override
+    public String toString() {
+        return "Product{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", Description=" + Description + ", OriginalPrice=" + OriginalPrice + ", SellPrice=" + SellPrice + ", SellPercent=" + SellPercent + ", imageLink=" + imageLink + ", CategoryID=" + CategoryID + ", SellerID=" + SellerID + ", Amount=" + Amount + ", StatusID=" + StatusID + ", ManufacturerID=" + ManufacturerID + ", height=" + height + ", width=" + width + ", weight=" + weight + '}';
+    }
+
 }

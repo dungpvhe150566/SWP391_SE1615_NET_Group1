@@ -1,9 +1,3 @@
-<%-- 
-    Document   : ViewAllFeedbacks
-    Created on : Jul 13, 2021, 5:05:06 PM
-    Author     : TRANTATDAT
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -26,8 +20,6 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <title>Electronic Shop</title>
-        <!--Favicon-->
-        <!--<link rel="icon" type="image/png" href="image/faviconLogo.png" />-->
     </head>
     <body>
 
@@ -35,28 +27,28 @@
             <div class="row">
                 <div class="col-md-2" style="background-color: #ebebf2">
                     <nav class="navbar navbar-expand-lg navbar-light flex-column">
-                        <a class="navbar-brand" href="dashBoard"><img src="#" width="200px"></a>
+                        <a class="navbar-brand" href="dashBoard"><img src="image/Other/AccountDashboard.jpg" width="200px"></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="HomeController"><i class="fas fa-home"></i>Home</a>
+                                <a class="nav-link" href="HomeController">Home</a>
                                 <hr class="line">
                             </li>
-                            <c:if test="${sessionScope.acc == null}">
+                            <c:if test="${sessionScope.user == null}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="LoginController">Login</a>
+                                    <a class="nav-link" href="login.jsp">Login</a>
                                 </li>
                             </c:if>
-                            <c:if test = "${sessionScope.acc != null}">
+                            <c:if test = "${sessionScope.user != null}">
                                 <li class="nav-item">
                                     <a class="nav-link" href="profile"><i class="fas fa-user-circle"></i>Hello ${sessionScope.acc.user}</a>
                                     <hr class="line">
                                 </li>
 
-                                <c:if test="${sessionScope.acc.isSell == 1}">
+                                <c:if test="${sessionScope.user.isSell == 1}">
                                     <li class="nav-item">
                                         <a class="nav-link" href="manager"><i class="fas fa-tasks"></i>Manager Product</a>
                                         <a class="nav-link" href="manage-feedback"><i class="fas fa-tasks"></i>Manage Feedback</a>
@@ -69,7 +61,7 @@
                             <li class="nav-item">&nbsp;
                             </li> 
                         </ul>
-                        <a class="nav-link" href="logout" style="position: fixed; right: 10px;">LogOut</a>
+                        <a class="nav-link" href="HomeController" style="position: fixed; right: 10px;">LogOut</a>
                     </nav>
                 </div>
                 <div class="col-md-10">
@@ -95,7 +87,7 @@
                     </div>
                     <div class="row-fluid">
                         <div class="col-md-12">
-                            <table id="feedback" style="margin-left:3em; border: 1px solid;">
+                            <table id="feedback" style=" border: 1px solid;">
                                 <thead >
                                     <tr>
                                         <th style="text-align: center;">FeedbackID</th>
@@ -110,14 +102,14 @@
                                     <c:forEach var="item" items="${lsFeedback}" >
                                         <tr style="padding:2px; border: 1px solid">
                                             <td>${item.getID()}</td>
-                                            <td>${item.getUserID()}</td>
+                                            <td>${item.getUserName()}</td>
                                             <td>
                                                 <c:forEach begin="1" end="${item.getStar()}">
                                                     <span><i class="fa fa-star checked" style="font-size: 10px"></i></span>  
                                                     </c:forEach>
                                             </td>
                                             <td>
-                                                <!--${item.product.name}-->
+                                                ${item.getProductName()}
                                             </td>
                                             <td><a href="view-detail-feedback?id=${item.getID()}">Detail</a></td>
                                         </tr>

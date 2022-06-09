@@ -107,7 +107,9 @@ public class FeedbackDAO extends DBContext {
      * @return a list of feedback
      */
     public List<Feedback> getFeedbacksByProductId(int productId) {
-        String query = "SELECT * FROM Feedback WHERE ProductID = ?";
+        String query = "SELECT * FROM Feedback f "
+                + "join Users u on f.UserID=u.UserID"
+                + " join Product p on p.ProductID=f.ProductID WHERE f.ProductID = ?";
         try {
             List<Feedback> lsFeedback = new ArrayList<>();
             ps = conn.prepareStatement(query);
@@ -116,8 +118,8 @@ public class FeedbackDAO extends DBContext {
             while (rs.next()) {
                 Feedback f = new Feedback(
                         rs.getInt("ID"),
-                        rs.getInt("UserID"),
-                        rs.getInt("ProductID"),
+                        rs.getString("Username"),
+                        rs.getString("ProductName"),
                         rs.getInt("Star"),
                         rs.getString("FeedbackDetail")
                 );
@@ -260,7 +262,7 @@ public class FeedbackDAO extends DBContext {
 
     public static void main(String[] args) {
         FeedbackDAO feedbackDAO = new FeedbackDAO();
-        for (Feedback f : feedbackDAO.getFeedBackByPID(2)) {
+        for (Feedback f : feedbackDAO.getFeedbacksByProductId(2)) {
             System.out.println(f);
         }
     }

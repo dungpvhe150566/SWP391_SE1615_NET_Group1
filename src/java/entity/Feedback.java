@@ -11,6 +11,7 @@ public class Feedback {
     private String UserName;
 
     private int ProductID;
+    private String ProductName;
 
     private Date DateFeedback;
 
@@ -55,6 +56,22 @@ public class Feedback {
         this.DateFeedback = dayFeedBack;
         this.Star = star;
         this.FeedbackDetails = feedbackDetails;
+    }
+
+    public Feedback(int ID, String Usname, String Pname, int star, String detail) {
+        this.ID = ID;
+        this.UserName = Usname;
+        this.ProductName = Pname;
+        this.Star = star;
+        this.FeedbackDetails = detail;
+    }
+
+    public String getProductName() {
+        return ProductName;
+    }
+
+    public void setProductName(String ProductName) {
+        this.ProductName = ProductName;
     }
 
     public Users getUser() {
@@ -131,7 +148,7 @@ public class Feedback {
 
     @Override
     public String toString() {
-        return ID + " " + UserName + " " + DateFeedback + " " + Star + " " + FeedbackDetails;
+        return ID + " " + UserName + " " + ProductName + " " + Star + " " + FeedbackDetails;
     }
 
     

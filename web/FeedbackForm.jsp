@@ -98,13 +98,13 @@
             <div class="container">
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <img src="image/${product.getImageLink()}" style="width: 100px">
+                        <img src="image/${product.getImageLink()}" style="width: 500px">
                     <div class="card-body p-5">
                         <h3 class="title mb-3">${product.getProductName()}</h3>
 
                         <p class="price-detail-wrap"> 
                             <span class="price h3 text-warning"> 
-                                <span class="currency">VND </span><span class="num">${product.getOriginalPrice()}</span>
+                                <span class="currency">${product.getSellPrice()} VND </span><span class="num"></span>
                             </span> 
                         </p> 
                         <hr>
@@ -160,7 +160,8 @@
                                         <input type="hidden" id="star-value" name="star-value">
                                         <input type="hidden" id="productId" name="productId" value="${product.getProductID()}">
                                         <input type="hidden" id="productId" name="cateID" value="${product.getCategoryID()}">
-                                        <input type="submit" class="btn btn-success mt-5" value="Submit">                                   
+                                        <input type="submit" class="btn btn-success mt-5" value="Submit">   
+                                        <a href="ShopController" class="btn btn-success mt-5" >Home</a>
                                 </form>
                             </div>
                         </div>
