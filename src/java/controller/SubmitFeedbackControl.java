@@ -39,11 +39,11 @@ public class SubmitFeedbackControl extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             ProductDAO productDao = new ProductDAO();
-
+            //get productId from detail
             String productId = request.getParameter("productId");
-
+            //get product from Id
             Product p = productDao.getProductByID(productId);
-
+            //Set product to FeedbackForm.jsp
             request.setAttribute("product", p);
             request.getRequestDispatcher("FeedbackForm.jsp").forward(request, response);
 
