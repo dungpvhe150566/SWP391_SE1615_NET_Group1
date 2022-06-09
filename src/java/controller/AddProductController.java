@@ -1,19 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import entity.Category;
 import entity.Manufacturer;
 import entity.Product;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -51,7 +43,6 @@ public class AddProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
             String message = "";
 
@@ -79,9 +70,7 @@ public class AddProductController extends HttpServlet {
 
                         Product pro = new Product(productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight);
 
-                        (new ProductDAO()).addProduct(pro);
-
-                        message = "<p style=\"color: green\">Succesful</p>";
+                        if ((new ProductDAO()).addProduct(pro) > 0) message = "<p style=\"color: green\">Succesful</p>";
                     } catch (NumberFormatException e) {
                         message = "<p style=\"color: red\">Wrong format input</p>";
                         e.printStackTrace();

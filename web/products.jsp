@@ -49,7 +49,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="products.jsp">
+                            <a class="nav-link active" href="ProductsController">
                                 <i class="fas fa-shopping-cart"></i> Products
                             </a>
                         </li>
@@ -94,7 +94,7 @@
                     <div class="tm-bg-primary-dark tm-block tm-block-products">
                         <h2 class="tm-block-title">Product List</h2>
                         <div class="form-outline mb-3">
-                            <input class="form-control" type="text" id="searchName" onkeyup="myFunction()" placeholder="Search for names..">
+                            <input class="form-control" type="text" id="myInput" onkeyup="searchName()" placeholder="Search for names..">
                         </div>
                         <form actiopn="ProductsController" method="POST">
                             <div class="tm-product-table-container ">
