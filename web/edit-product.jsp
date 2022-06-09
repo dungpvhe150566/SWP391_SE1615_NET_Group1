@@ -51,7 +51,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="products.jsp">
+                            <a class="nav-link active" href="ProductsController">
                                 <i class="fas fa-shopping-cart"></i> Products
                             </a>
                         </li>
@@ -247,7 +247,8 @@
                                                 value="${product.getHeight()}"
                                                 id="height"
                                                 name="height"
-                                                type="text"
+                                                type="number"
+                                                step="any"
                                                 class="form-control validate"
                                                 required
                                                 />
@@ -261,7 +262,8 @@
                                                 value="${product.getWidth()}"
                                                 id="width"
                                                 name="width"
-                                                type="text"
+                                                type="number"
+                                                step="any"
                                                 class="form-control validate"
                                                 required
                                                 />
@@ -275,7 +277,8 @@
                                                 value="${product.getWeight()}"
                                                 id="weight"
                                                 name="weight"
-                                                type="text"
+                                                type="number"
+                                                step="any"
                                                 class="form-control validate"
                                                 required
                                                 />

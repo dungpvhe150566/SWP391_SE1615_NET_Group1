@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import entity.Category;
@@ -10,7 +6,6 @@ import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Vector;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,6 +37,7 @@ public class ProductsController extends HttpServlet {
             String categoryID = request.getParameter("CategoryID");
 
             if (service != null) {
+                //Delete one product 
                 if (service.equals("deleteProduct")) {
                     try {
                         int productID = Integer.parseInt(request.getParameter("productID"));
@@ -49,6 +45,7 @@ public class ProductsController extends HttpServlet {
                     } catch(NumberFormatException e) {};
                 }
                 
+                //Delete products has been checked
                 if (service.equals("deleteProducts")) {
                     try {
                         String[] arrProductID = request.getParameterValues("productID");
@@ -57,14 +54,16 @@ public class ProductsController extends HttpServlet {
                 }
             }
 
+            
             Vector<Product> productList = new Vector<Product>();
-
+            //Get Product List if categoryID is exist or categoryID = 0, if not list all product
             if (categoryID != null && !categoryID.equals("0")) {
                 productList = (new ProductDAO()).getProductListByCategoryID(categoryID);
             } else {
                 productList = (new ProductDAO()).getProductList();
             }
 
+            //Get Category List
             Vector<Category> categoryList = (new CategoryDAO()).getAllCategory();
 
             request.setAttribute("categoryList", categoryList);

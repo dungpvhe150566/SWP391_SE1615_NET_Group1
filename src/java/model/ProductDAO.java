@@ -1,15 +1,12 @@
 package model;
 
 import entity.Product;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ProductDAO extends DBContext {
 
@@ -58,7 +55,7 @@ public class ProductDAO extends DBContext {
 
         // Query Statement to get all Categories in Database 
         String sqlQuery = "with x as (	select row_number() over(order by ProductID asc) as row, * from Product "
-                + "where (ProductName like '%" + productName + "%') "
+                + "where (ProductName like '%" + productName.trim() + "%') "
                 + manufacturersID
                 + categoryID
                 + price + " ) "

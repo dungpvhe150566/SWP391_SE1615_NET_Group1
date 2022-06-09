@@ -51,7 +51,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="products.jsp">
+                            <a class="nav-link active" href="ProductsController">
                                 <i class="fas fa-shopping-cart"></i> Products
                             </a>
                         </li>
@@ -256,6 +256,7 @@
                                                 id="height"
                                                 name="height"
                                                 type="number"
+                                                step="any"
                                                 class="form-control validate"
                                                 data-large-mode="true"
                                                 required
@@ -270,6 +271,7 @@
                                                 id="width"
                                                 name="width"
                                                 type="number"
+                                                step="any"
                                                 class="form-control validate"
                                                 data-large-mode="true"
                                                 required
@@ -284,6 +286,7 @@
                                                 id="weight"
                                                 name="weight"
                                                 type="number"
+                                                step="any"
                                                 class="form-control validate"
                                                 data-large-mode="true"
                                                 required
