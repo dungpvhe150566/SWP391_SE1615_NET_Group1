@@ -180,7 +180,7 @@
                                        overflow: hidden;
                                        text-overflow: ellipsis;
                                        max-width: 13ch;">${C.value.product.getProductName()}</p>
-                                    <p>${C.value.product.getSellPrice()*C.value.getAmount()}</p>
+                                    <p>${C.value.product.getOriginalPrice()*C.value.getAmount()}</p>
                                 </div>
                             </c:forEach>
                             <hr class="mt-0">

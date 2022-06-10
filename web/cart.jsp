@@ -115,7 +115,7 @@
                                             text-overflow: ellipsis;
                                             max-width: 50ch;"class="font-weight-bold" >VND</h5>
                                     </div>
-                                    <a href="checkout.jsp" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
+                                    <a href="Checkout" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                                 </div>
                             </div>
                                     
