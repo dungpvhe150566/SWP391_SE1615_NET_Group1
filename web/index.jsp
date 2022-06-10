@@ -136,6 +136,8 @@
                                 <a href="HomeController" class="nav-item nav-link active">Home</a>
                                 <a href="ShopController" class="nav-item nav-link">Shop</a>
                                 <a href="contact.html" class="nav-item nav-link">Contact</a>
+                                <a href="ViewAllFeedbackController" class="nav-item nav-link">Feedbacks Management</a>
+
                             </div>
                             <div class="navbar-nav ml-auto py-0">
                                 <c:if test="${sessionScope.user==null}">
