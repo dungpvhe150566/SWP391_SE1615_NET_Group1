@@ -85,11 +85,11 @@ public class FeedbackDAO extends DBContext {
             rs = ps.executeQuery();
             if (rs.next()) {
                 f = new Feedback(
-                        rs.getInt("ID"),
                         rs.getInt("UserID"),
                         rs.getInt("ProductID"),
                         rs.getInt("Star"),
-                        rs.getString("FeedbackDetail")
+                        rs.getString("FeedbackDetail"),
+                        rs.getDate("DateComment")
                 );
                 return f;
             }

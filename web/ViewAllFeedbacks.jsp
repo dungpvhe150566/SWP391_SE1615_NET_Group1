@@ -111,7 +111,7 @@
                                             <td>
                                                 ${item.getProductName()}
                                             </td>
-                                            <td><a href="view-detail-feedback?id=${item.getID()}">Detail</a></td>
+                                            <td><a href="ViewFeedbackDetailController?id=${item.getID()}">Detail</a></td>
                                         </tr>
 
                                     </c:forEach>
