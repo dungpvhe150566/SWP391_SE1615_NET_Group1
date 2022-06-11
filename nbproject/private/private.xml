@@ -2,7 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
         <group>
             <file>file:/F:/Summer2022/SWP/Project/SWP391_SE1615_NET_Group1/web/products.jsp</file>
             <file>file:/F:/Summer2022/SWP/Project/SWP391_SE1615_NET_Group1/src/java/controller/ProductsController.java</file>
@@ -16,6 +15,15 @@
             <file>file:/F:/Summer2022/SWP/Project/SWP391_SE1615_NET_Group1/src/java/controller/ShopController.java</file>
             <file>file:/F:/Summer2022/SWP/Project/SWP391_SE1615_NET_Group1/web/edit-product.jsp</file>
             <file>file:/F:/Summer2022/SWP/Project/SWP391_SE1615_NET_Group1/src/java/controller/CartControllner.java</file>
+        </group>
+        <group>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/controller/ViewAllFeedbackController.java</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/entity/Feedback.java</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/model/FeedbackDAO.java</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/web/ViewFeedbackDetail.jsp</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/web/index.jsp</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/controller/ViewFeedbackDetailController.java</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/web/ViewAllFeedbacks.jsp</file>
         </group>
     </open-files>
 </project-private>

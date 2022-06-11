@@ -47,6 +47,7 @@ public class ViewAllFeedbackController extends HttpServlet {
             // get current user
             HttpSession session = request.getSession();
             Users a = (Users) session.getAttribute("user");
+            System.out.println(a.getUserID());
 
             // get all dao
             ProductDAO productDao = new ProductDAO();
@@ -54,13 +55,19 @@ public class ViewAllFeedbackController extends HttpServlet {
             UsersDAO userDao = new UsersDAO();
 
             // get all feedback of product of this seller
-            List<Product> lsProduct = productDao.getProductBySellID(3);
+            List<Product> lsProduct = productDao.getProductBySellID(a.getUserID());
+            List<Integer> lsId = lsProduct.stream().map(Product::getProductID).collect(Collectors.toList());
+            List<Feedback> lsFeedback = new ArrayList<>();
+
             for (Product product : lsProduct) {
                 System.out.println(product);
-                
+
             }
-            List<Feedback> lsFeedback = new ArrayList<>();
-                lsFeedback=feedbackDao.getFeedbacksByProductId(2);
+            for (int id : lsId) {
+                lsFeedback.addAll(feedbackDao.getFeedbacksByProductId(id));
+                System.out.println(id);
+
+            }
 
             for (Feedback feedback : lsFeedback) {
                 // get all account that made feedback

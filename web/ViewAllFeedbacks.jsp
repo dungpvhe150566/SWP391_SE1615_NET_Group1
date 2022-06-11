@@ -48,14 +48,6 @@
                                     <hr class="line">
                                 </li>
 
-                                <c:if test="${sessionScope.user.isSell == 1}">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="manager"><i class="fas fa-tasks"></i>Manager Product</a>
-                                        <a class="nav-link" href="manage-feedback"><i class="fas fa-tasks"></i>Manage Feedback</a>
-                                        <hr class="line">
-                                    </li> 
-                                </c:if>
-
                             </c:if>
 
                             <li class="nav-item">&nbsp;
@@ -66,25 +58,6 @@
                 </div>
                 <div class="col-md-10">
                     <hr>
-                    <div class="row">
-                        <p>Choose your sort options and order: </p>
-                        <form class="sort-form" action="manage-feedback" method="POST">
-                            <input type="hidden" name="sort-flag" value="true" />
-                            <input type="radio" id="sort-star" name="sort-order" value="1" checked="true">
-                            <label for="sort-star">Sort by star</label><br>
-                            <input type="radio" id="sort-name" name="sort-order" value="2">
-                            <label for="sort-name">Sort by user name</label><br>
-                            <input type="radio" id="sort-product" name="sort-order" value="3">
-                            <label for="sort-product">Sort by product</label>
-                            <br><br>
-                            <input type="radio" id="sort-order" name="sort-by-order" value="1" checked="true">
-                            <label for="sort-order">Ascending</label><br>
-                            <input type="radio" id="sort-order" name="sort-by-order" value="2">
-                            <label for="sort-order">Descending</label><br>
-                            <br>
-                            <input type="submit" value="Submit">
-                        </form>
-                    </div>
                     <div class="row-fluid">
                         <div class="col-md-12">
                             <table id="feedback" style=" border: 1px solid;">

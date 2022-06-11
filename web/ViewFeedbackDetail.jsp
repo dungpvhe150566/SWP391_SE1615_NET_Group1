@@ -52,27 +52,6 @@
                                     <a class="nav-link" href="profile"><i class="fas fa-user-circle"></i>Hello ${sessionScope.acc.user}</a>
                                     <hr class="line">
                                 </li>
-
-                                <c:if test="${sessionScope.user.isSell == 1}">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="manager"><i class="fas fa-tasks"></i>Manager Product</a>
-                                        <hr class="line">
-                                        <a class="nav-link" href="blogManager"><i class="fas fa-tasks"></i>Manager Blog</a>
-                                        <hr class="line">
-                                        <a class="nav-link" href="manage-feedback"><i class="fas fa-tasks"></i>Manage Feedback</a>
-                                        <hr class="line">
-                                    </li> 
-                                </c:if>
-
-                                <c:if test="${sessionScope.user.isAdmin == 1}">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="accountManager"><i class="fas fa-tasks"></i>Manager Account</a>
-                                        <hr class="line">
-                                    </li> 
-                                </c:if>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="viewAllNotifications"><i class="fas fa-bell"></i>Notifications (${numberNoti})</a>
-                                </li> 
                             </c:if>
 
                             <li class="nav-item">&nbsp;

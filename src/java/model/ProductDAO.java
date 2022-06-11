@@ -492,12 +492,12 @@ public class ProductDAO extends DBContext {
         return null;
     }
 
-//    public static void main(String[] args) {
-////        ProductDAO dao = new ProductDAO();
-////        Vector<Product> products = dao.searchByCustom(1, "", 1, 100);
-////        for (Product product : products) {
-////            System.out.println(product);
-////        }
-//    }
+    public static void main(String[] args) {
+        ProductDAO dao = new ProductDAO();
+//        Vector<Product> products = dao.searchByCustom(1, "", 1, 100);
+//        for (Product product : products) {
+//            System.out.println(product);
+//        }
+    }
 
 }
