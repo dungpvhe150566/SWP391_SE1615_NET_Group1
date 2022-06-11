@@ -1,9 +1,3 @@
-<%-- 
-    Document   : AccountManager
-    Created on : Mar 25, 2021, 4:47:17 PM
-    Author     : ADMIN
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -131,7 +125,7 @@
                                                         </c:if>
                                                     </td>
                                                     <td>
-                                                        <a target="blank" href="editAccount?UserID=${o.getUserID()}"><button type="button" class="btn btn-outline-info  btn-sm">Edit</button></a>
+                                                        <a target="blank" href="EditAccountController?UserID=${o.getUserID()}"><button type="button" class="btn btn-outline-info  btn-sm">Edit</button></a>
                                                         <form action="deleteAccount" method="POST" style="display:inline">
                                                             <a> <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="if (confirm('Are you sure you want to delete?'))
                                                                         form.action = 'deleteAccount?UserID=${o.getUserID()}';

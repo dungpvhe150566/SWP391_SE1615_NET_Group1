@@ -32,6 +32,10 @@
         <servlet-name>AccountManagerController</servlet-name>
         <servlet-class>controller.AccountManagerController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>EditAccountController</servlet-name>
+        <servlet-class>controller.EditAccountController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
         <url-pattern>/ProductsController</url-pattern>
@@ -66,6 +70,10 @@
     <servlet-mapping>
         <servlet-name>AccountManagerController</servlet-name>
         <url-pattern>/AccountManagerController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditAccountController</servlet-name>
+        <url-pattern>/EditAccountController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

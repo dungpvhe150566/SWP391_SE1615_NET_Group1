@@ -4,6 +4,7 @@ import entity.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import static javafx.scene.input.KeyCode.U;
@@ -37,6 +38,7 @@ public class UsersDAO extends DBContext {
 
     PreparedStatement ps = null; //...
     ResultSet rs = null; //Get the results returned
+
     public List<Users> getAllAccounts() {
         List<Users> list = new ArrayList<>();
         String query = "SELECT * FROM Users";
@@ -54,6 +56,7 @@ public class UsersDAO extends DBContext {
         }
         return list;
     }
+
     public Users getAccountByID(String id) {
         String query = "SELECT * FROM Users WHERE UserID = ?";
         try {
@@ -85,12 +88,32 @@ public class UsersDAO extends DBContext {
         }
     }
 
-    public static void main(String[] args) {
-        UsersDAO dao = new UsersDAO();
-        List<Users> list = dao.getAllAccounts();
-        for (Users student : list) {
-            System.out.println(student);
+    public void updateUser(String id, String user, String password, String email, String isSell, String isAdmin, String activeCode, int status) {
+        String preSql = "update Users set Username=? ,Password=? "
+                + ",email=? ,ActiveCode=? "
+                + ",isSeller=? ,isAdmin=? ,"
+                + "StatusID=?  where UserID=" + id;
+
+        try {
+            PreparedStatement ps = conn.prepareStatement(preSql);
+            ps.setString(1, user);
+            ps.setString(2, password);
+            ps.setString(3, email);
+            ps.setString(4, activeCode);
+            ps.setString(5, isSell);
+            ps.setString(6, isAdmin);
+            ps.setInt(7, status);
+            ps.execute();
+        } catch (Exception e) {
+            System.out.println(e);
+
         }
-        // dao.insert("anhem", "olamigo", "anhdungzoo9");
+
     }
+
+//    public static void main(String[] args) {
+//        UsersDAO dao = new UsersDAO();
+//        dao.updateUser("6", "nguyentranhoang", "nguyentranhoang", "HoangNTHE150691@fpt.edu.vn", "0", "0", "bbbbb", 1);
+//        // dao.insert("anhem", "olamigo", "anhdungzoo9");
+//    }
 }
