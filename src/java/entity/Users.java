@@ -23,9 +23,18 @@ public class Users {
     public Users() {
     }
 
-    public Users(int aInt, String string, String string0, String string1, String string2, int aInt0, int aInt1, int aInt2) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public Users(int UserID, String Username, String Password, String email, String ActiveCode, int isSeller, int isAdmin, int StatusID) {
+        this.UserID = UserID;
+        this.Username = Username;
+        this.Password = Password;
+        this.email = email;
+        this.ActiveCode = ActiveCode;
+        this.isSeller = isSeller;
+        this.isAdmin = isAdmin;
+        this.StatusID = StatusID;
     }
+
+    
     
 
     public int getUserID() {

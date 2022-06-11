@@ -37,6 +37,23 @@ public class UsersDAO extends DBContext {
 
     PreparedStatement ps = null; //...
     ResultSet rs = null; //Get the results returned
+    public List<Users> getAllAccounts() {
+        List<Users> list = new ArrayList<>();
+        String query = "SELECT * FROM Users";
+        try {
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Users(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getInt(6),
+                        rs.getInt(7), rs.getInt(8)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
     public Users getAccountByID(String id) {
         String query = "SELECT * FROM Users WHERE UserID = ?";
         try {
@@ -70,9 +87,9 @@ public class UsersDAO extends DBContext {
 
     public static void main(String[] args) {
         UsersDAO dao = new UsersDAO();
-        List<Users> list = dao.getAll();
+        List<Users> list = dao.getAllAccounts();
         for (Users student : list) {
-            System.out.println(student.getUsername());
+            System.out.println(student);
         }
         // dao.insert("anhem", "olamigo", "anhdungzoo9");
     }

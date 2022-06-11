@@ -137,6 +137,7 @@
                                 <a href="ShopController" class="nav-item nav-link">Shop</a>
                                 <a href="contact.html" class="nav-item nav-link">Contact</a>
                                 <a href="ViewAllFeedbackController" class="nav-item nav-link">Feedbacks Management</a>
+                                <a href="AccountManagerController" class="nav-item nav-link">Account Management</a>
 
                             </div>
                             <div class="navbar-nav ml-auto py-0">

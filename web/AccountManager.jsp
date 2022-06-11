@@ -120,21 +120,21 @@
                                         <tbody>
                                             <c:forEach items="${list}" var="o">
                                                 <tr>
-                                                    <td>${o.id}</td>
-                                                    <td><a href="#">${o.user}</a></td>
+                                                    <td>${o.getUserID()}</td>
+                                                    <td><a href="#">${o.getUsername()}</a></td>
                                                     <td style="width: 200px;">
-                                                        <c:if test="${o.isSell==1}">
+                                                        <c:if test="${o.getIsSeller()==1}">
                                                             <a href="#" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">Seller</a>
                                                         </c:if>
-                                                        <c:if test="${o.isAdmin==1}">
+                                                        <c:if test="${o.getIsAdmin()==1}">
                                                             <a href="#" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">Admin</a>
                                                         </c:if>
                                                     </td>
                                                     <td>
-                                                        <a target="blank" href="editAccount?UserID=${o.id}"><button type="button" class="btn btn-outline-info  btn-sm">Edit</button></a>
+                                                        <a target="blank" href="editAccount?UserID=${o.getUserID()}"><button type="button" class="btn btn-outline-info  btn-sm">Edit</button></a>
                                                         <form action="deleteAccount" method="POST" style="display:inline">
                                                             <a> <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="if (confirm('Are you sure you want to delete?'))
-                                                                        form.action = 'deleteAccount?UserID=${o.id}';
+                                                                        form.action = 'deleteAccount?UserID=${o.getUserID()}';
                                                                     else
                                                                         return false;"/>  
                                                             </a>

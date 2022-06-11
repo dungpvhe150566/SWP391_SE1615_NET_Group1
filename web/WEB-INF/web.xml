@@ -28,6 +28,10 @@
         <servlet-name>ViewFeedbackDetailController</servlet-name>
         <servlet-class>controller.ViewFeedbackDetailController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AccountManagerController</servlet-name>
+        <servlet-class>controller.AccountManagerController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
         <url-pattern>/ProductsController</url-pattern>
@@ -58,6 +62,10 @@
     <servlet-mapping>
         <servlet-name>ViewFeedbackDetailController</servlet-name>
         <url-pattern>/ViewFeedbackDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManagerController</servlet-name>
+        <url-pattern>/AccountManagerController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
