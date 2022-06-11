@@ -49,7 +49,7 @@
                             </c:if>
                             <c:if test = "${sessionScope.user != null}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="profile"><i class="fas fa-user-circle"></i>Hello ${sessionScope.acc.user}</a>
+                                    <a class="nav-link" href="profile"><i class="fas fa-user-circle"></i>Hello</a>
                                     <hr class="line">
                                 </li>
                             </c:if>
@@ -86,7 +86,7 @@
                                 <table class="table table-borderless">
                                     <tr style="padding:2px; ">
                                         <td class="col-md-3"><b>User:</b></td>
-                                        <td class="col-md-9">${requestScope.feedback.user.getUserName()}</td>
+                                        <td class="col-md-9"></td>
                                     </tr>
                                     <tr style="padding:2px; ">
                                         <td class="col-md-3"><b>Product Name:</b></td>
