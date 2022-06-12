@@ -13,9 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.CategoryDAO;
-import model.ManufacturerDAO;
-import model.ProductDAO;
+import dao.CategoryDAO;
+import dao.ManufacturerDAO;
+import dao.ProductDAO;
 
 /**
  *

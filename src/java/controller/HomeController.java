@@ -5,6 +5,7 @@
  */
 package controller;
 
+import entity.Blog;
 import entity.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,7 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.CategoryDAO;
+import dao.BlogDAO;
+import dao.CategoryDAO;
 
 /**
  *
@@ -38,6 +40,12 @@ public class HomeController extends HttpServlet {
             
 //            Get All Category to display for User select
             CategoryDAO categoryDAO = new CategoryDAO();
+            BlogDAO blogDAO = new BlogDAO();
+            
+            
+            Vector<Blog> blogs =  blogDAO.getBlogList();
+            request.setAttribute("blogs", blogs);
+            
             Vector<Category> categoryList =  categoryDAO.getAllCategory();
             request.setAttribute("categoryList", categoryList);
             

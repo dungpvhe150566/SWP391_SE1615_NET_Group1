@@ -1,4 +1,4 @@
-package model;
+package dao;
 
 import entity.Users;
 import java.sql.Connection;

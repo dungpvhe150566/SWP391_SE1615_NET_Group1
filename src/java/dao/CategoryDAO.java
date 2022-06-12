@@ -1,4 +1,4 @@
-package model;
+package dao;
 
 import entity.Category;
 import java.sql.ResultSet;
