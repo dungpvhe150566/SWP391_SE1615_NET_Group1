@@ -19,8 +19,8 @@ public class ProductDAO extends DBContext {
      * @param
      * @return Vector have max 6 Product (following Pagination)
      */
-    public Vector<Product> getProductList(int cID, String productName,
-            String[] prices, String[] mID, int start, int end) {
+   public Vector<Product> getProductList(int cID, String productName,
+            String[] prices, String[] mID, int start, int end, String sortby) {
         // Create vector to store all Categories
         Vector<Product> products = new Vector<>();
 
@@ -28,6 +28,7 @@ public class ProductDAO extends DBContext {
         String price = "";
         String categoryID = "";
         String manufacturersID = "";
+        String sort = "";
 
 //        If the product price condition is passed
 //        we will cut the chain to get the product price
@@ -55,13 +56,21 @@ public class ProductDAO extends DBContext {
             manufacturersID += " and (ManufacturerID in (" + msID.substring(1, msID.length() - 1) + ") ) ";
         }
 
+        if (sortby != null && !sortby.isEmpty()) {
+            if (sortby.equals("Ascending")) {
+                sort += " order by x.OriginalPrice asc";
+            } else {
+                sort += " order by x.OriginalPrice desc";
+            }
+        }
+
         // Query Statement to get all Categories in Database 
         String sqlQuery = "with x as (	select row_number() over(order by ProductID asc) as row, * from Product "
                 + "where (ProductName like '%" + productName.trim() + "%') "
                 + manufacturersID
                 + categoryID
                 + price + " ) "
-                + "select * from x where  row between  " + start + " and " + end;
+                + "select * from x where  row between  " + start + " and " + end + sort;
 
         // Resultset to store all Categories 
         ResultSet rs = getData(sqlQuery);
