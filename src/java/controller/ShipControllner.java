@@ -4,27 +4,22 @@
  */
 package controller;
 
-import entity.Cart;
-import entity.Ship;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import model.ShipDAO;
 
 /**
  *
  * @author Pham Van Trong
  */
-@WebServlet(name = "CheckOutControllner", urlPatterns = {"/Checkout"})
-public class CheckOutControllner extends HttpServlet {
+@WebServlet(name = "ShipControllner", urlPatterns = {"/Ship"})
+public class ShipControllner extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,33 +33,8 @@ public class CheckOutControllner extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-         request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            HttpSession session = request.getSession();
-            Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
-            if (carts == null) {
-                carts = new LinkedHashMap<>();
-            }
-
-            //tinh tong tien
-            double totalMoney = 0;
-            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
-                Integer productId = entry.getKey();
-                Cart cart = entry.getValue();
-
-                totalMoney += cart.getAmount()* cart.getProduct().getOriginalPrice();
-
-            }
-            // tinh gia shipping
-//            int shipID = Integer.parseInt(request.getParameter("shipID"));
-//            ShipDAO shipDAO = new ShipDAO();
-//            List<Ship> listShip = shipDAO.getAllShips();
-//            request.setAttribute("carts", carts);
-//            session.setAttribute("listShip", listShip);
-            
-            request.setAttribute("totalMoney", totalMoney);
-            request.getRequestDispatcher("checkout.jsp").forward(request, response);
+          
         }
     }
 
@@ -80,7 +50,7 @@ public class CheckOutControllner extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<entity.Ship> listShips = new ShipDAO().getAllShips();
+         List<entity.Ship> listShips = new ShipDAO().getAllShips();
        request.setAttribute("listShips", listShips);
         request.getRequestDispatcher("checkout.jsp").forward(request, response);
     }

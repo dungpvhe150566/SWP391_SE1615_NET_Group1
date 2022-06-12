@@ -69,34 +69,27 @@
                                 <input class="form-control" type="text" placeholder="+123 456 789">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label>Address Line 1</label>
+                                <label>Address Detail</label>
                                 <input class="form-control" type="text" placeholder="123 Street">
                             </div>
+                           
                             <div class="col-md-6 form-group">
-                                <label>Address Line 2</label>
-                                <input class="form-control" type="text" placeholder="123 Street">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Country</label>
-                                <select class="custom-select">
-                                    <option selected>United States</option>
-                                    <option>Afghanistan</option>
-                                    <option>Albania</option>
-                                    <option>Algeria</option>
-                                </select>
+                                <label>City</label>
+                                <form action="Checkout" method="POST"> 
+                                        <select class="custom-select" >
+                                            <c:forEach items="${listShips}" var="C">
+                                                <option selected="${C. getId()}">${C.getCityName()}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </form>
+                               
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>City</label>
                                 <input class="form-control" type="text" placeholder="New York">
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label>State</label>
-                                <input class="form-control" type="text" placeholder="New York">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>ZIP Code</label>
-                                <input class="form-control" type="text" placeholder="123">
-                            </div>
+                          
+                           
                             <div class="col-md-12 form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="newaccount">
@@ -138,15 +131,19 @@
                                 <label>Address Line 2</label>
                                 <input class="form-control" type="text" placeholder="123 Street">
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label>Country</label>
-                                <select class="custom-select">
+                          
+                                <div class="col-md-6 form-group">
+                                    <label>City</label>
+                                    <select class="custom-select">
+                                        
                                     <option selected>United States</option>
                                     <option>Afghanistan</option>
                                     <option>Albania</option>
                                     <option>Algeria</option>
                                 </select>
-                            </div>
+                                   
+                                </div>
+                            
                             <div class="col-md-6 form-group">
                                 <label>City</label>
                                 <input class="form-control" type="text" placeholder="New York">
@@ -190,7 +187,7 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">$10</h6>
+                                <h6 class="font-weight-medium">${C.getShipPrice()}</h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
