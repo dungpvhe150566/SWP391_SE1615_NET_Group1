@@ -53,6 +53,7 @@
                         <input type="hidden" name="do" value="${service}" >
                         <input type="hidden" name="productName" value="${productName}" >
                         <input type="hidden" name="categoryID" value="${categoryID}" >
+                        <input type="hidden" name="sort" value="${sort}" >
                         <!-- Price Start -->
                         <div class="border-bottom mb-4 pb-4">
                             <h5 class="font-weight-semi-bold mb-4">Filter By Price</h5>
@@ -121,11 +122,11 @@
                                 <div class="dropdown ml-4">
                                     <button class="btn border dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
                                             aria-expanded="false">
-                                        Sort by
+                                        ${sort==null? 'Sort by': sort}
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="triggerId">
-                                        <a class="dropdown-item" href="#">ascending</a>
-                                        <a class="dropdown-item" href="#">decreasing</a>
+                                        <a  class="dropdown-item" href="ShopController?do=${service}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=Ascending">Ascending</a>
+                                        <a class="dropdown-item" href="ShopController?do=${service}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=Decreasing">Decreasing</a>
                                     </div>
                                 </div>
                             </div>
@@ -154,17 +155,17 @@
                             <nav aria-label="Page navigation">
                                 <ul class="pagination justify-content-center mb-3">
                                     <li class="page-item ${indexPage==1?'disabled':''}">
-                                        <a class="page-link" href="ShopController?do=${service}&indexPage=${indexPage-1}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}" aria-label="Previous">
+                                        <a class="page-link" href="ShopController?do=${service}&indexPage=${indexPage-1}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=${sort}" aria-label="Previous">
                                             <span aria-hidden="true">&laquo;</span>
                                             <span class="sr-only">Previous</span>
                                         </a>
                                     </li>
                                     <c:forEach var="i" begin="1" end="${totalPage}"  >
                                         <li class="page-item ${indexPage==i?'active':''}">
-                                            <a class="page-link" href="ShopController?do=${service}&indexPage=${i}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}">${i}</a></li>
+                                            <a class="page-link" href="ShopController?do=${service}&indexPage=${i}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=${sort}">${i}</a></li>
                                         </c:forEach>
                                     <li class="page-item ${indexPage==totalPage?'disabled':''}">
-                                        <a class="page-link" href="ShopController?do=${service}&indexPage=${indexPage+1}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}" aria-label="Next">
+                                        <a class="page-link" href="ShopController?do=${service}&indexPage=${indexPage+1}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=${sort}" aria-label="Next">
                                             <span aria-hidden="true">&raquo;</span>
                                             <span class="sr-only">Next</span>
                                         </a>
