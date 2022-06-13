@@ -128,7 +128,7 @@
                                                         <a target="blank" href="EditAccountController?UserID=${o.getUserID()}"><button type="button" class="btn btn-outline-info  btn-sm">Edit</button></a>
                                                         <form action="deleteAccount" method="POST" style="display:inline">
                                                             <a> <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="if (confirm('Are you sure you want to delete?'))
-                                                                        form.action = 'deleteAccount?UserID=${o.getUserID()}';
+                                                                        form.action = 'DeleteAccountController?UserID=${o.getUserID()}';
                                                                     else
                                                                         return false;"/>  
                                                             </a>

@@ -3,14 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/controller/ViewAllFeedbackController.java</file>
-            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/entity/Feedback.java</file>
-            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/model/FeedbackDAO.java</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/controller/EditAccountController.java</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/web/css/addAddress.css</file>
             <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/web/ViewFeedbackDetail.jsp</file>
-            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/web/index.jsp</file>
             <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/controller/ViewFeedbackDetailController.java</file>
-            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/web/ViewAllFeedbacks.jsp</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/model/UsersDAO.java</file>
         </group>
-        <group/>
+        <group>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/controller/SubmitFeedbackControl.java</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/controller/EditAccountController.java</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/web/css/addAddress.css</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/web/ViewFeedbackDetail.jsp</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/controller/ViewFeedbackDetailController.java</file>
+            <file>file:/E:/CODE/SWP391_SE1615_NET_Group1/src/java/model/UsersDAO.java</file>
+        </group>
     </open-files>
 </project-private>

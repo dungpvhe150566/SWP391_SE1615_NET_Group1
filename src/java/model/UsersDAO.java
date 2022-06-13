@@ -111,6 +111,27 @@ public class UsersDAO extends DBContext {
 
     }
 
+    public void deleteAccount(String id) {
+        String query = "			delete from Orders where UserID = ?\n"
+                + "				delete from Product where SellerID = ?\n"
+                + "				delete from Cart where UserID = ?\n"
+                + "				delete from Feedback where UserID = ?\n"
+                + "				delete from UserAddress where UserID=?\n"
+                + "				delete from Users where UserID = ?";
+        try {
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            ps.setString(2, id);
+            ps.setString(3, id);
+            ps.setString(4, id);
+            ps.setString(5, id);
+            ps.setString(6, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return;
+    }
+
 //    public static void main(String[] args) {
 //        UsersDAO dao = new UsersDAO();
 //        dao.updateUser("6", "nguyentranhoang", "nguyentranhoang", "HoangNTHE150691@fpt.edu.vn", "0", "0", "bbbbb", 1);
