@@ -53,11 +53,11 @@
                         <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label>First Name</label>
+                                <label>CustomerName</label>
                                 <input class="form-control" type="text" placeholder="John">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label>Last Name</label>
+                                <label>Note</label>
                                 <input class="form-control" type="text" placeholder="Doe">
                             </div>
                             <div class="col-md-6 form-group">
@@ -65,7 +65,7 @@
                                 <input class="form-control" type="text" placeholder="example@email.com">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label>Mobile No</label>
+                                <label>Phone Number</label>
                                 <input class="form-control" type="text" placeholder="+123 456 789">
                             </div>
                             <div class="col-md-6 form-group">
@@ -78,16 +78,13 @@
                                 <form action="Checkout" method="POST"> 
                                         <select class="custom-select" >
                                             <c:forEach items="${listShips}" var="C">
-                                                <option selected="${C. getId()}">${C.getCityName()}</option>
+                                                <option selected="${C.getId()}">${C.getCityName()}</option>
                                             </c:forEach>
                                         </select>
                                     </form>
                                
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label>City</label>
-                                <input class="form-control" type="text" placeholder="New York">
-                            </div>
+                           
                           
                            
                             <div class="col-md-12 form-group">
@@ -202,25 +199,7 @@
                             <h4 class="font-weight-semi-bold m-0">Payment</h4>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="paypal">
-                                    <label class="custom-control-label" for="paypal">Paypal</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="directcheck">
-                                    <label class="custom-control-label" for="directcheck">Direct Check</label>
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
-                                    <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
-                                </div>
-                            </div>
-                        </div>
+                            
                         <div class="card-footer border-secondary bg-transparent">
                             <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
                         </div>

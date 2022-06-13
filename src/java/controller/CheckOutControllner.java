@@ -42,6 +42,7 @@ public class CheckOutControllner extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
+            List<entity.Ship> listShips = new ShipDAO().getAllShips();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
             if (carts == null) {
                 carts = new LinkedHashMap<>();
@@ -62,7 +63,9 @@ public class CheckOutControllner extends HttpServlet {
 //            List<Ship> listShip = shipDAO.getAllShips();
 //            request.setAttribute("carts", carts);
 //            session.setAttribute("listShip", listShip);
-            
+             
+           request.setAttribute("listShips", listShips);
+        
             request.setAttribute("totalMoney", totalMoney);
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
@@ -80,9 +83,7 @@ public class CheckOutControllner extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<entity.Ship> listShips = new ShipDAO().getAllShips();
-       request.setAttribute("listShips", listShips);
-        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+       processRequest(request, response);
     }
 
     /**
