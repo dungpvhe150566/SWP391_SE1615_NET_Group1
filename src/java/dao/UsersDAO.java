@@ -1,10 +1,9 @@
-package model;
+package dao;
 
 import entity.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import static javafx.scene.input.KeyCode.U;
@@ -38,25 +37,6 @@ public class UsersDAO extends DBContext {
 
     PreparedStatement ps = null; //...
     ResultSet rs = null; //Get the results returned
-
-    public List<Users> getAllAccounts() {
-        List<Users> list = new ArrayList<>();
-        String query = "SELECT * FROM Users";
-        try {
-            ps = conn.prepareStatement(query);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                list.add(new Users(rs.getInt(1), rs.getString(2),
-                        rs.getString(3), rs.getString(4),
-                        rs.getString(5), rs.getInt(6),
-                        rs.getInt(7), rs.getInt(8)));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
     public Users getAccountByID(String id) {
         String query = "SELECT * FROM Users WHERE UserID = ?";
         try {
@@ -87,7 +67,26 @@ public class UsersDAO extends DBContext {
             System.out.println(e);
         }
     }
-
+    public void deleteAccount(String id) {
+        String query = "			delete from Orders where UserID = ?\n"
+                + "				delete from Product where SellerID = ?\n"
+                + "				delete from Cart where UserID = ?\n"
+                + "				delete from Feedback where UserID = ?\n"
+                + "				delete from UserAddress where UserID=?\n"
+                + "				delete from Users where UserID = ?";
+        try {
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            ps.setString(2, id);
+            ps.setString(3, id);
+            ps.setString(4, id);
+            ps.setString(5, id);
+            ps.setString(6, id);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+        return;
+    }
     public void updateUser(String id, String user, String password, String email, String isSell, String isAdmin, String activeCode, int status) {
         String preSql = "update Users set Username=? ,Password=? "
                 + ",email=? ,ActiveCode=? "
@@ -110,31 +109,30 @@ public class UsersDAO extends DBContext {
         }
 
     }
-
-    public void deleteAccount(String id) {
-        String query = "			delete from Orders where UserID = ?\n"
-                + "				delete from Product where SellerID = ?\n"
-                + "				delete from Cart where UserID = ?\n"
-                + "				delete from Feedback where UserID = ?\n"
-                + "				delete from UserAddress where UserID=?\n"
-                + "				delete from Users where UserID = ?";
+    public List<Users> getAllAccounts() {
+        List<Users> list = new ArrayList<>();
+        String query = "SELECT * FROM Users";
         try {
             ps = conn.prepareStatement(query);
-            ps.setString(1, id);
-            ps.setString(2, id);
-            ps.setString(3, id);
-            ps.setString(4, id);
-            ps.setString(5, id);
-            ps.setString(6, id);
-            ps.executeUpdate();
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Users(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getInt(6),
+                        rs.getInt(7), rs.getInt(8)));
+            }
         } catch (Exception e) {
+            e.printStackTrace();
         }
-        return;
+        return list;
     }
 
-//    public static void main(String[] args) {
-//        UsersDAO dao = new UsersDAO();
-//        dao.updateUser("6", "nguyentranhoang", "nguyentranhoang", "HoangNTHE150691@fpt.edu.vn", "0", "0", "bbbbb", 1);
-//        // dao.insert("anhem", "olamigo", "anhdungzoo9");
-//    }
+    public static void main(String[] args) {
+        UsersDAO dao = new UsersDAO();
+        List<Users> list = dao.getAll();
+        for (Users student : list) {
+            System.out.println(student.getUsername());
+        }
+        // dao.insert("anhem", "olamigo", "anhdungzoo9");
+    }
 }

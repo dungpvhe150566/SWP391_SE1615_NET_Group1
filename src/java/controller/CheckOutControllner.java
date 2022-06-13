@@ -5,9 +5,11 @@
 package controller;
 
 import entity.Cart;
+import entity.Ship;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import dao.ShipDAO;
 
 /**
  *
@@ -39,6 +42,7 @@ public class CheckOutControllner extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try ( PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
+            List<entity.Ship> listShips = new ShipDAO().getAllShips();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
             if (carts == null) {
                 carts = new LinkedHashMap<>();
@@ -53,7 +57,15 @@ public class CheckOutControllner extends HttpServlet {
                 totalMoney += cart.getAmount()* cart.getProduct().getOriginalPrice();
 
             }
-            request.setAttribute("carts", carts);
+            // tinh gia shipping
+//            int shipID = Integer.parseInt(request.getParameter("shipID"));
+//            ShipDAO shipDAO = new ShipDAO();
+//            List<Ship> listShip = shipDAO.getAllShips();
+//            request.setAttribute("carts", carts);
+//            session.setAttribute("listShip", listShip);
+             
+           request.setAttribute("listShips", listShips);
+        
             request.setAttribute("totalMoney", totalMoney);
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         }
@@ -71,7 +83,7 @@ public class CheckOutControllner extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+       processRequest(request, response);
     }
 
     /**

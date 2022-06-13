@@ -13,9 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.CategoryDAO;
-import model.ManufacturerDAO;
-import model.ProductDAO;
+import dao.CategoryDAO;
+import dao.ManufacturerDAO;
+import dao.ProductDAO;
 
 /**
  *
@@ -37,7 +37,7 @@ public class ShopController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
 
-            // Get and Set service from User to 
+             // Get and Set service from User to 
             String service = request.getParameter("do");
             request.setAttribute("service", service);
 
@@ -83,12 +83,18 @@ public class ShopController extends HttpServlet {
             if (prices != null) {
                 request.setAttribute("listPrices", Arrays.toString(prices));
             }
-
             
+//            Sort product follow Price(Ascending/Descending)
+            String sort = request.getParameter("sort");
+            if(sort!=null && !sort.isEmpty()){
+                request.setAttribute("sort", sort);
+            }
+
 //            User Search follow Category
             if (service != null && service.equals("searchByCategory")) {
                 int categoryID = Integer.parseInt(request.getParameter("categoryID"));
-                productsList = productDao.getProductList(categoryID, "", prices, manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage);
+                productsList = productDao.getProductList(categoryID, "", prices,
+                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
                 totalPage = productDao.getTotalPage(categoryID, "", prices, manufacturersID);
                 request.setAttribute("categoryID", categoryID);
             } 
@@ -97,14 +103,16 @@ public class ShopController extends HttpServlet {
             else if (service != null && service.equals("searchByName")) {
 //                Get ProductName from User Input
                 String productName = request.getParameter("productName");
-                productsList = productDao.getProductList(0, productName, prices, manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage);
+                productsList = productDao.getProductList(0, productName, prices,
+                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
                 totalPage = productDao.getTotalPage(0, productName, prices, manufacturersID);
                 request.setAttribute("productName", productName);
             }
             
 //            List All Products
             else {
-                productsList = productDao.getProductList(0, "", prices, manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage);
+                productsList = productDao.getProductList(0, "", prices, 
+                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
                 totalPage = productDao.getTotalPage(0, "", prices, manufacturersID);
             }
 
@@ -119,6 +127,7 @@ public class ShopController extends HttpServlet {
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("shop.jsp");
             dispatcher.forward(request, response);
+
 
         }
     }
