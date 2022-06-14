@@ -19,6 +19,6 @@ public class Cart {
     private int Amount;
     
     private Product product;
-
+    private Ship ship;
     
 }

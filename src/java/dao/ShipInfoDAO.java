@@ -20,17 +20,15 @@ public class ShipInfoDAO extends DBContext {
                     + "           ,[PhoneNum]\n"
                     + "           ,[Note])\n"
                     + "     VALUES\n"
-                    + "           ()";
+                    + "           (?,?,?,?,?,?)";
 
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, shipping.getOrder_ID());
-            ps.setInt(2, shipping.getCustomerName());
-            ps.setString(3, shipping.getShoppingAddress());
-            ps.setString(4, shipping.getShoppingAddress());
-            ps.setInt(5, shipping.getShipCityID());
-            ps.setString(6, shipping.getPhoneNum());
-            ps.setString(7, shipping.getNote());
-            
+            ps.setString(2, shipping.getCustomerName());
+            ps.setString(3, shipping.getShippingAddress());
+            ps.setInt(4, shipping.getShipCityID());
+            ps.setString(5, shipping.getPhoneNum());
+            ps.setString(6, shipping.getNote());
             ps.executeUpdate();
 
             ResultSet rs = ps.getGeneratedKeys();
@@ -39,7 +37,7 @@ public class ShipInfoDAO extends DBContext {
             }
 
         } catch (Exception ex) {
-           ex.printStackTrace();
+            ex.printStackTrace();
         }
         return 0;
     }

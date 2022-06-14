@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import dao.ProductDAO;
+import dao.ShipDAO;
+import entity.Ship;
 
 /**
  *
@@ -40,6 +42,7 @@ public class AddToCartControllner extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
              int productId = Integer.parseInt(request.getParameter("productId"));
+             
             //map    productId | cart
             HttpSession session = request.getSession();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
@@ -57,8 +60,8 @@ public class AddToCartControllner extends HttpServlet {
                 Product product = new ProductDAO().getProductById(productId);
                 carts.put(productId, Cart.builder().product(product).Amount(1).build());
             }
-       
-            
+           
+           
 //h
             session.setAttribute("carts", carts);
             response.sendRedirect("ShopController");

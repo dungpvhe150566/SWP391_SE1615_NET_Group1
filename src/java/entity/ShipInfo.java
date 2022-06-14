@@ -14,9 +14,9 @@ public class ShipInfo {
 
     private int Order_ID;
 
-    private int CustomerName;
+    private String CustomerName;
 
-    private String ShoppingAddress;
+    private String ShippingAddress;
 
     private int ShipCityID;
 

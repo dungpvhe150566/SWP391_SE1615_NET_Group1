@@ -21,5 +21,17 @@ public class Ship {
     private String CityName;
     
     private int ShipPrice;
+
+//    public int getId() {
+//        return id;
+//    }
+//
+//    public String getCityName() {
+//        return CityName;
+//    }
+//
+//    public int getShipPrice() {
+//        return ShipPrice;
+//    }
     
 }

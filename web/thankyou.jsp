@@ -1,7 +1,7 @@
- <%-- 
-    Document   : result
-    Created on : Jan 14, 2022, 11:40:17 PM
-    Author     : HP
+<%-- 
+   Document   : result
+   Created on : Jan 14, 2022, 11:40:17 PM
+   Author     : HP
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -14,7 +14,10 @@
     <body>
         <div style="text-align: center;margin-top: 120px">
             <h3 style="font-family:cursive">Thank you for registering.We have sent a verification on email to the address provided.</h3>
-        <img style="height: 250px;width: 250px" src="image/mail.png">
+            <img style="height: 250px;width: 250px" src="image/mail.png">
+            <a href="Cart"> back to cart</a>
         </div>
+        
     </body>
+
 </html>
