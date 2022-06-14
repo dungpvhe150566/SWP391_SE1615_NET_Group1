@@ -62,12 +62,12 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String email = request.getParameter("email");  //Lay email
-            String password = request.getParameter("password");  //Lay password
+            String email = request.getParameter("email").trim();  //Lay email
+            String password = request.getParameter("password").trim();  //Lay password
             UsersDAO dao = new UsersDAO();
             List<Users> list = dao.getAll(); //Lay ra list user
             for (Users users : list) {
-            if(users.getEmail().equalsIgnoreCase(email) && users.getPassword().equalsIgnoreCase(password)){  //Kiem tra email va password nhap vao co trung trong database khong
+            if(users.getEmail().equals(email) && users.getPassword().equals(password)){  //Kiem tra email va password nhap vao co trung trong database khong
                 HttpSession session = request.getSession();
                 session.setAttribute("user", users);
                 request.getRequestDispatcher("HomeController").forward(request, response); //Neu dang nhap thanh cong chuyen den home

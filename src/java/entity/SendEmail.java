@@ -30,8 +30,8 @@ public class SendEmail {
         pr.setProperty("mail.smtp.port", "587");
         pr.setProperty("mail.smtp.auth", "true");
         pr.setProperty("mail.smtp.starttls.enable", "true");
-        String myaccount = "beastwantlov3@gmail.com";
-        String password = "anhdungzoo9";
+        String myaccount = "vietnhhe150036@fpt.edu.vn";
+        String password = "vietdz1234";
         Session session = Session.getInstance(pr, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {

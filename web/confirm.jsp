@@ -33,9 +33,9 @@
             <div class="form-container sign-in-container">
                 <form action="confirm" method="post">
                     <h1>Confirm</h1>
-                    <input type="email" name="email" value="${email2}" readonly="" />
-                    <input type="email" name="username" value="${username2}" readonly="" />
-                    <input type="text" name="password" value="${password}" readonly="" />
+                    <input type="email" name="email" value="${email2}"  />
+                    <input type="email" name="username" value="${username2}" hidden />
+                    <input type="text" name="password" value="${password}" hidden />
                     <button type="submit">Confirm</button>
                 </form>
             </div>
