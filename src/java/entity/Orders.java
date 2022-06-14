@@ -15,7 +15,7 @@ public class Orders {
 
     private int UserID;
 
-    private int TotalPrice;
+    private float TotalPrice;
 
     private String Note;
 

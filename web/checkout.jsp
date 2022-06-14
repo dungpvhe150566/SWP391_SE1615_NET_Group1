@@ -46,48 +46,40 @@
 
 
         <!-- Checkout Start -->
-        <div class="container-fluid pt-5">
+       <form action="Checkout" method="POST">
             <div class="row px-xl-5">
                 <div class="col-lg-8">
                     <div class="mb-4">
                         <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
+                         
                         <div class="row">
+
                             <div class="col-md-6 form-group">
                                 <label>CustomerName</label>
-                                <input class="form-control" type="text" placeholder="John">
+                                <input class="form-control"  id="name" name="name" type="text" placeholder="John">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Note</label>
-                                <input class="form-control" type="text" placeholder="Doe">
+                                <input class="form-control"  id="note "name="note" type="text" placeholder="Doe">
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label>E-mail</label>
-                                <input class="form-control" type="text" placeholder="example@email.com">
-                            </div>
+
                             <div class="col-md-6 form-group">
                                 <label>Phone Number</label>
-                                <input class="form-control" type="text" placeholder="+123 456 789">
+                                <input class="form-control"  id="phone"name="phone" type="text" placeholder="+123 456 789">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Address Detail</label>
-                                <input class="form-control" type="text" placeholder="123 Street">
+                                <input class="form-control" id="address" name="address" type="text" placeholder="123 Street">
                             </div>
-                           
+
                             <div class="col-md-6 form-group">
-                                <label>City</label>
-                                <form action="Checkout" method="POST"> 
-                                        <select class="custom-select" >
-                                            <c:forEach items="${listShips}" var="C">
-                                                <option selected="${C.getId()}">${C.getCityName()}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </form>
-                               
+                                <label>City ID (1-64)</label>
+                                <input class="form-control" id="CityId" name="CityId" type="text" placeholder="123 Street">
                             </div>
-                           
-                          
-                           
-                            <div class="col-md-12 form-group">
+
+
+
+<!--                            <div class="col-md-12 form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="newaccount">
                                     <label class="custom-control-label" for="newaccount">Create an account</label>
@@ -99,7 +91,12 @@
                                     <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
                                 </div>
                             </div>
+                             <div class="card-footer border-secondary bg-transparent">
+                                <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+                            </div>-->
                         </div>
+                                   
+
                     </div>
                     <div class="collapse mb-4" id="shipping-address">
                         <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
@@ -128,19 +125,19 @@
                                 <label>Address Line 2</label>
                                 <input class="form-control" type="text" placeholder="123 Street">
                             </div>
-                          
-                                <div class="col-md-6 form-group">
-                                    <label>City</label>
-                                    <select class="custom-select">
-                                        
+
+                            <div class="col-md-6 form-group">
+                                <label>City</label>
+                                <select class="custom-select">
+
                                     <option selected>United States</option>
                                     <option>Afghanistan</option>
                                     <option>Albania</option>
                                     <option>Algeria</option>
                                 </select>
-                                   
-                                </div>
-                            
+
+                            </div>
+
                             <div class="col-md-6 form-group">
                                 <label>City</label>
                                 <input class="form-control" type="text" placeholder="New York">
@@ -184,13 +181,13 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">${C.getShipPrice()}</h6>
+                                <h6 class="font-weight-medium">50.000 VND</h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5 class="font-weight-bold">Total</h5>
-                                <h5 class="font-weight-bold">$160</h5>
+                                <h5 class="font-weight-bold">${totalMoney + 50000}  </h5>
                             </div>
                         </div>
                     </div>
@@ -199,14 +196,15 @@
                             <h4 class="font-weight-semi-bold m-0">Payment</h4>
                         </div>
                         <div class="card-body">
-                            
-                        <div class="card-footer border-secondary bg-transparent">
-                            <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+
+                            <div class="card-footer border-secondary bg-transparent">
+                                <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+                               </form>
         <!-- Checkout End -->
 
 

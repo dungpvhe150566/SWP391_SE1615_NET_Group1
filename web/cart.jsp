@@ -100,10 +100,7 @@
                                         <h6 class="font-weight-medium">Subtotal</h6>
                                         <h6 class="font-weight-medium">${totalMoney}</h6>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <h6 class="font-weight-medium">Shipping</h6>
-                                        <h6 class="font-weight-medium">20.000 VND</h6>
-                                    </div>
+                                    
                                 </div>
                                 <div class="card-footer border-secondary bg-transparent">
                                     <div class="d-flex justify-content-between mt-2">
@@ -113,7 +110,7 @@
                                             white-space: nowrap;
                                             overflow: hidden;
                                             text-overflow: ellipsis;
-                                            max-width: 50ch;"class="font-weight-bold" >VND</h5>
+                                            max-width: 50ch;"class="font-weight-bold" >${totalMoney}VND</h5>
                                     </div>
                                     <a href="Checkout" class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</a>
                                 </div>
