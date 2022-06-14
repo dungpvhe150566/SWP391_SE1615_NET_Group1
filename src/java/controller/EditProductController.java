@@ -1,4 +1,3 @@
-
 package controller;
 
 import entity.Category;
@@ -77,9 +76,11 @@ public class EditProductController extends HttpServlet {
 
                     Product pro = new Product(productID, productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight);
 
-                    (new ProductDAO()).updateProduct(pro);
-
-                    message = "<p style=\"color: green\">Succesful</p>";
+                    if ((new ProductDAO()).updateProduct(pro) > 0) {
+                        message = "<p style=\"color: green\">Succesful</p>";
+                    } else {
+                        message = "<p style=\"color: green\">Fail to add products</p>";
+                    }
                 } catch (NumberFormatException e) {
                     message = "<p style=\"color: red\">Wrong format input</p>";
                     e.printStackTrace();

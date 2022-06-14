@@ -430,13 +430,14 @@ public class ProductDAO extends DBContext {
         String sql = "delete from Order_Detail where ProductID = " + ProductID + "\n"
                 + "	delete from Cart where ProductID = " + ProductID + "\n"
                 + "	delete from Feedback_Replies where FeedbackID in (select FeedbackID from Feedback where ProductID = " + ProductID + ")\n"
-                + "	delete from Feedback where ProductID = " + ProductID + "\n"
-                + "	delete from Product where ProductID = " + ProductID + "";
+                + "	delete from Feedback where ProductID = " + ProductID + "\n";
 
         try {
             Statement state = conn.createStatement();
 
-            n = state.executeUpdate(sql);
+            state.executeUpdate(sql);
+            
+            n = state.executeUpdate("delete from Product where ProductID = " + ProductID);
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -455,13 +456,13 @@ public class ProductDAO extends DBContext {
         String sql = "delete from Order_Detail where ProductID in (" + productIDs + ")\n"
                 + "	delete from Cart where ProductID in (" + productIDs + ")\n"
                 + "	delete from Feedback_Replies where FeedbackID in (select FeedbackID from Feedback where ProductID in (" + productIDs + "))\n"
-                + "	delete from Feedback where ProductID in (" + productIDs + ")\n"
-                + "	delete from Product where ProductID in (" + productIDs + ")";
+                + "	delete from Feedback where ProductID in (" + productIDs + ")\n";
 
         try {
             Statement state = conn.createStatement();
 
-            n = state.executeUpdate(sql);
+            state.executeUpdate(sql);
+            n = state.executeUpdate("delete from Product where ProductID in (" + productIDs + ")");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }

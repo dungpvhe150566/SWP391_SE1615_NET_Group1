@@ -70,7 +70,11 @@ public class AddProductController extends HttpServlet {
 
                         Product pro = new Product(productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight);
 
-                        if ((new ProductDAO()).addProduct(pro) > 0) message = "<p style=\"color: green\">Succesful</p>";
+                        if ((new ProductDAO()).addProduct(pro) > 0) {
+                            message = "<p style=\"color: green\">Succesful</p>";
+                        } else {
+                            message = "<p style=\"color: green\">Fail to add products</p>";
+                        }
                     } catch (NumberFormatException e) {
                         message = "<p style=\"color: red\">Wrong format input</p>";
                         e.printStackTrace();
