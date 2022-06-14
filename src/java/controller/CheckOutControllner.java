@@ -122,18 +122,8 @@ public class CheckOutControllner extends HttpServlet {
         String address = request.getParameter("address");
         String note = request.getParameter("note");
         int CityId = Integer.parseInt(request.getParameter("CityId"));
-       
-        
-         //lưu vào database
-        //Lưu Shipping
-        ShipInfo shipping = ShipInfo.builder()
-                .CustomerName(name)
-                .ShippingAddress(address)
-                .ShipCityID(CityId)
-                .PhoneNum(phone)
-                .Note(note)
-                .build();
-        int shippingId = new ShipInfoDAO().createReturnId(shipping); //trả về id tự tăng của bản ghi vừa lưu vào database
+//        int OrderID = Integer.parseInt(request.getParameter("OrderID"));
+ //trả về id tự tăng của bản ghi vừa lưu vào database
         
         HttpSession session = request.getSession();
         Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
@@ -159,7 +149,20 @@ public class CheckOutControllner extends HttpServlet {
         //Lưu OrderDetail
 
         new OrderDetailDAO().saveCart(orderId, carts);
-
+       
+        
+         //lưu vào database
+        //Lưu Shipping
+        ShipInfo shipping = ShipInfo.builder()
+                .Order_ID(orderId)
+                .CustomerName(name)
+                .ShippingAddress(address)
+                .ShipCityID(CityId)
+                .PhoneNum(phone)
+                .Note(note)
+                .build();
+        int shippingId = new ShipInfoDAO().createReturnId(shipping);
+        
         session.removeAttribute("carts");
         response.sendRedirect("thankyou.jsp");
     }  

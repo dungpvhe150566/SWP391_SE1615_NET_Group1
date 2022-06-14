@@ -20,7 +20,7 @@ public class ShipInfoDAO extends DBContext {
                     + "           ,[PhoneNum]\n"
                     + "           ,[Note])\n"
                     + "     VALUES\n"
-                    + "           ()";
+                    + "           (?,?,?,?,?,?)";
 
             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, shipping.getOrder_ID());
