@@ -68,7 +68,7 @@
                         </div>
                         <small class="pt-1">(${feedbacks.size()} Reviews)</small>
                     </div>
-                    <h3 class="font-weight-semi-bold mb-4">${product.getOriginalPrice()}</h3>
+                    <h3 class="font-weight-semi-bold mb-4">${product.getSellPrice()}</h3>
                     <div class="d-flex mb-3">
                         <p class="text-dark font-weight-medium mb-0 mr-3">Height: ${product.getHeight()}</p>
                     </div>
@@ -117,6 +117,7 @@
                 <div class="col">
                     <div class="nav nav-tabs justify-content-center border-secondary mb-4">
                         <a class="nav-item nav-link active" data-toggle="tab" href="#tab-pane-1">Description</a>
+                        <a href="SubmitFeedbackControl?productId=${product.getProductID()}" class="nav-item nav-link">Add Feedbacks</a>
                         <a class="nav-item nav-link" data-toggle="tab" href="#tab-pane-3">Reviews (${feedbacks.size()})</a>
                     </div>
                     <div class="tab-content">
@@ -145,37 +146,6 @@
                                     </c:forEach>
                                 </div>
                                 <!--Send Review, Question for this Product-->
-                                <div class="col-md-6">
-                                    <h4 class="mb-4">Leave a review</h4>
-                                    <small>Your email address will not be published. Required fields are marked *</small>
-                                    <div class="d-flex my-3">
-                                        <p class="mb-0 mr-2">Your Rating * :</p>
-                                        <div class="text-primary">
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <form>
-                                        <div class="form-group">
-                                            <label for="message">Your Review *</label>
-                                            <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="name">Your Name *</label>
-                                            <input type="text" class="form-control" id="name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">Your Email *</label>
-                                            <input type="email" class="form-control" id="email">
-                                        </div>
-                                        <div class="form-group mb-0">
-                                            <input type="submit" value="Leave Your Review" class="btn btn-primary px-3">
-                                        </div>
-                                    </form>
-                                </div>
                             </div>
                         </div>
                     </div>

@@ -5,24 +5,21 @@
  */
 package controller;
 
-import entity.Blog;
-import entity.Category;
+import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Vector;
-import javax.servlet.RequestDispatcher;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.BlogDAO;
-import dao.CategoryDAO;
+import dao.UsersDAO;
 
 /**
  *
  * @author Admin
  */
-public class HomeController extends HttpServlet {
+public class AccountManagerController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,22 +33,17 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            
-//            Get All Category to display for User select
-            CategoryDAO categoryDAO = new CategoryDAO();
-            BlogDAO blogDAO = new BlogDAO();
-            
-            
-            Vector<Blog> blogs =  blogDAO.getBlogList();
-            request.setAttribute("blogs", blogs);
-            
-            Vector<Category> categoryList =  categoryDAO.getAllCategory();
-            request.setAttribute("categoryList", categoryList);
-            
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-            dispatcher.forward(request, response);
+        try {
+            UsersDAO userDAO = new UsersDAO();
+            List<Users> listAccount = userDAO.getAllAccounts();
+
+            //Set data to JSP
+            request.setAttribute("list", listAccount);
+            request.getRequestDispatcher("AccountManager.jsp").forward(request, response);
+        } catch (Exception e) {
+            response.sendRedirect("thankyou.jsp");
         }
+        //Get data from DAO
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,24 +5,22 @@
  */
 package controller;
 
-import entity.Blog;
-import entity.Category;
+import entity.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Vector;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.BlogDAO;
-import dao.CategoryDAO;
+import dao.FeedbackDAO;
+import dao.ProductDAO;
+import dao.UsersDAO;
 
 /**
  *
  * @author Admin
  */
-public class HomeController extends HttpServlet {
+public class ViewFeedbackDetailController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,21 +34,35 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             
-//            Get All Category to display for User select
-            CategoryDAO categoryDAO = new CategoryDAO();
-            BlogDAO blogDAO = new BlogDAO();
-            
-            
-            Vector<Blog> blogs =  blogDAO.getBlogList();
-            request.setAttribute("blogs", blogs);
-            
-            Vector<Category> categoryList =  categoryDAO.getAllCategory();
-            request.setAttribute("categoryList", categoryList);
-            
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-            dispatcher.forward(request, response);
+            // get all dao
+            ProductDAO productDao = new ProductDAO();
+            FeedbackDAO feedbackDao = new FeedbackDAO();
+            UsersDAO userDao = new UsersDAO();
+
+            // get feedback id
+            int feedbackId = Integer.parseInt(request.getParameter("id"));
+
+            // get the feedback and set data for the feedback
+            Feedback feedback = feedbackDao.getFeedbacksById(feedbackId);
+            feedback.setProduct(
+                    productDao.getProductByID(
+                            String.valueOf(feedback.getProductID())
+                    )
+            );
+            feedback.setUser(
+                    userDao.getAccountByID(
+                            String.valueOf(feedback.getUserID())
+                    )
+            );
+
+            // send to jsp page
+            request.setAttribute("feedback", feedback);
+            request.getRequestDispatcher("ViewFeedbackDetail.jsp").forward(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("thankyou.jsp");
         }
     }
 

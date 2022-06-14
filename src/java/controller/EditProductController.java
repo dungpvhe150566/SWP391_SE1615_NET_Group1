@@ -14,10 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import model.CategoryDAO;
-import model.ManufacturerDAO;
-import model.ProductDAO;
-import model.ProductStatusDAO;
+import dao.CategoryDAO;
+import dao.ManufacturerDAO;
+import dao.ProductDAO;
+import dao.ProductStatusDAO;
 
 /**
  *

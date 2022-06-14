@@ -53,11 +53,11 @@
                         <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
                         <div class="row">
                             <div class="col-md-6 form-group">
-                                <label>First Name</label>
+                                <label>CustomerName</label>
                                 <input class="form-control" type="text" placeholder="John">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label>Last Name</label>
+                                <label>Note</label>
                                 <input class="form-control" type="text" placeholder="Doe">
                             </div>
                             <div class="col-md-6 form-group">
@@ -65,38 +65,28 @@
                                 <input class="form-control" type="text" placeholder="example@email.com">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label>Mobile No</label>
+                                <label>Phone Number</label>
                                 <input class="form-control" type="text" placeholder="+123 456 789">
                             </div>
                             <div class="col-md-6 form-group">
-                                <label>Address Line 1</label>
+                                <label>Address Detail</label>
                                 <input class="form-control" type="text" placeholder="123 Street">
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label>Address Line 2</label>
-                                <input class="form-control" type="text" placeholder="123 Street">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Country</label>
-                                <select class="custom-select">
-                                    <option selected>United States</option>
-                                    <option>Afghanistan</option>
-                                    <option>Albania</option>
-                                    <option>Algeria</option>
-                                </select>
-                            </div>
+                           
                             <div class="col-md-6 form-group">
                                 <label>City</label>
-                                <input class="form-control" type="text" placeholder="New York">
+                                <form action="Checkout" method="POST"> 
+                                        <select class="custom-select" >
+                                            <c:forEach items="${listShips}" var="C">
+                                                <option selected="${C.getId()}">${C.getCityName()}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </form>
+                               
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label>State</label>
-                                <input class="form-control" type="text" placeholder="New York">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>ZIP Code</label>
-                                <input class="form-control" type="text" placeholder="123">
-                            </div>
+                           
+                          
+                           
                             <div class="col-md-12 form-group">
                                 <div class="custom-control custom-checkbox">
                                     <input type="checkbox" class="custom-control-input" id="newaccount">
@@ -138,15 +128,19 @@
                                 <label>Address Line 2</label>
                                 <input class="form-control" type="text" placeholder="123 Street">
                             </div>
-                            <div class="col-md-6 form-group">
-                                <label>Country</label>
-                                <select class="custom-select">
+                          
+                                <div class="col-md-6 form-group">
+                                    <label>City</label>
+                                    <select class="custom-select">
+                                        
                                     <option selected>United States</option>
                                     <option>Afghanistan</option>
                                     <option>Albania</option>
                                     <option>Algeria</option>
                                 </select>
-                            </div>
+                                   
+                                </div>
+                            
                             <div class="col-md-6 form-group">
                                 <label>City</label>
                                 <input class="form-control" type="text" placeholder="New York">
@@ -180,7 +174,7 @@
                                        overflow: hidden;
                                        text-overflow: ellipsis;
                                        max-width: 13ch;">${C.value.product.getProductName()}</p>
-                                    <p>${C.value.product.getSellPrice()*C.value.getAmount()}</p>
+                                    <p>${C.value.product.getOriginalPrice()*C.value.getAmount()}</p>
                                 </div>
                             </c:forEach>
                             <hr class="mt-0">
@@ -190,7 +184,7 @@
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Shipping</h6>
-                                <h6 class="font-weight-medium">$10</h6>
+                                <h6 class="font-weight-medium">${C.getShipPrice()}</h6>
                             </div>
                         </div>
                         <div class="card-footer border-secondary bg-transparent">
@@ -205,25 +199,7 @@
                             <h4 class="font-weight-semi-bold m-0">Payment</h4>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="paypal">
-                                    <label class="custom-control-label" for="paypal">Paypal</label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="directcheck">
-                                    <label class="custom-control-label" for="directcheck">Direct Check</label>
-                                </div>
-                            </div>
-                            <div class="">
-                                <div class="custom-control custom-radio">
-                                    <input type="radio" class="custom-control-input" name="payment" id="banktransfer">
-                                    <label class="custom-control-label" for="banktransfer">Bank Transfer</label>
-                                </div>
-                            </div>
-                        </div>
+                            
                         <div class="card-footer border-secondary bg-transparent">
                             <button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
                         </div>

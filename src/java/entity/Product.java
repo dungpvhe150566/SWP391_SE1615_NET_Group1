@@ -67,6 +67,18 @@ public class Product {
         this.weight = weight;
     }
 
+    public Product(int ProductID, String ProductName, String Description, int SellPrice, String imageLink) {
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.Description = Description;
+        this.SellPrice = SellPrice;
+        this.imageLink = imageLink;
+
+    }
+
+    public Product() {
+    }
+
     public int getProductID() {
         return ProductID;
     }
@@ -185,6 +197,11 @@ public class Product {
 
     public void setWeight(float weight) {
         this.weight = weight;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" + "ProductID=" + ProductID + ", ProductName=" + ProductName + ", Description=" + Description + ", OriginalPrice=" + OriginalPrice + ", SellPrice=" + SellPrice + ", SellPercent=" + SellPercent + ", imageLink=" + imageLink + ", CategoryID=" + CategoryID + ", SellerID=" + SellerID + ", Amount=" + Amount + ", StatusID=" + StatusID + ", ManufacturerID=" + ManufacturerID + ", height=" + height + ", width=" + width + ", weight=" + weight + '}';
     }
 
 }

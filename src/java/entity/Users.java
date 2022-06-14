@@ -17,6 +17,25 @@ public class Users {
     private int isAdmin;
 
     private int StatusID;
+    
+    
+
+    public Users() {
+    }
+
+    public Users(int UserID, String Username, String Password, String email, String ActiveCode, int isSeller, int isAdmin, int StatusID) {
+        this.UserID = UserID;
+        this.Username = Username;
+        this.Password = Password;
+        this.email = email;
+        this.ActiveCode = ActiveCode;
+        this.isSeller = isSeller;
+        this.isAdmin = isAdmin;
+        this.StatusID = StatusID;
+    }
+
+    
+    
 
     public int getUserID() {
         return UserID;

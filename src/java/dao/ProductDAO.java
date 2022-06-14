@@ -1,11 +1,13 @@
-package model;
+package dao;
 
 import entity.Product;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Vector;
 
 public class ProductDAO extends DBContext {
@@ -17,8 +19,8 @@ public class ProductDAO extends DBContext {
      * @param
      * @return Vector have max 6 Product (following Pagination)
      */
-    public Vector<Product> getProductList(int cID, String productName,
-            String[] prices, String[] mID, int start, int end) {
+   public Vector<Product> getProductList(int cID, String productName,
+            String[] prices, String[] mID, int start, int end, String sortby) {
         // Create vector to store all Categories
         Vector<Product> products = new Vector<>();
 
@@ -26,6 +28,7 @@ public class ProductDAO extends DBContext {
         String price = "";
         String categoryID = "";
         String manufacturersID = "";
+        String sort = "";
 
 //        If the product price condition is passed
 //        we will cut the chain to get the product price
@@ -53,13 +56,21 @@ public class ProductDAO extends DBContext {
             manufacturersID += " and (ManufacturerID in (" + msID.substring(1, msID.length() - 1) + ") ) ";
         }
 
+        if (sortby != null && !sortby.isEmpty()) {
+            if (sortby.equals("Ascending")) {
+                sort += " order by x.OriginalPrice asc";
+            } else {
+                sort += " order by x.OriginalPrice desc";
+            }
+        }
+
         // Query Statement to get all Categories in Database 
         String sqlQuery = "with x as (	select row_number() over(order by ProductID asc) as row, * from Product "
                 + "where (ProductName like '%" + productName.trim() + "%') "
                 + manufacturersID
                 + categoryID
                 + price + " ) "
-                + "select * from x where  row between  " + start + " and " + end;
+                + "select * from x where  row between  " + start + " and " + end + sort;
 
         // Resultset to store all Categories 
         ResultSet rs = getData(sqlQuery);
@@ -457,13 +468,46 @@ public class ProductDAO extends DBContext {
         }
         return n;
     }
+    PreparedStatement ps = null; //...
+    ResultSet rs = null; //Nhận kết quả trả về
 
-    public static void main(String[] args) {
-//        ProductDAO dao = new ProductDAO();
-//        Vector<Product> products = dao.searchByCustom(1, "", 1, 100);
-//        for (Product product : products) {
-//            System.out.println(product);
-//        }
+    public List<Product> getProductBySellID(int id) { //Must be int type because when saving to Session, it is still int
+        List<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM Product WHERE SellerID = ?";
+        try {
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Product(rs.getInt("ProductID"), rs.getString("ProductName"), rs.getString("Description"), rs.getInt("SellPrice"), rs.getString("imageLink")));
+            }
+        } catch (Exception e) {
+        }
+        return list;
     }
+
+    public Product getProductByID(String id) { //Must be int type because when saving to Session, it is still int
+        String query = "SELECT * FROM Product WHERE ProductID = ?";
+        try {
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return (new Product(rs.getInt("ProductID"),
+                        rs.getString("ProductName"), rs.getString("Description"),
+                        rs.getInt("SellPrice"), rs.getString("imageLink")));
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+//    public static void main(String[] args) {
+////        ProductDAO dao = new ProductDAO();
+////        Vector<Product> products = dao.searchByCustom(1, "", 1, 100);
+////        for (Product product : products) {
+////            System.out.println(product);
+////        }
+//    }
 
 }

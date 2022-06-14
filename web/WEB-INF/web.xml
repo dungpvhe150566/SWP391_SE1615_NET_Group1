@@ -16,6 +16,30 @@
         <servlet-name>HomeController</servlet-name>
         <servlet-class>controller.HomeController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ViewAllFeedbackController</servlet-name>
+        <servlet-class>controller.ViewAllFeedbackController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitFeedbackControl</servlet-name>
+        <servlet-class>controller.SubmitFeedbackControl</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewFeedbackDetailController</servlet-name>
+        <servlet-class>controller.ViewFeedbackDetailController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AccountManagerController</servlet-name>
+        <servlet-class>controller.AccountManagerController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>EditAccountController</servlet-name>
+        <servlet-class>controller.EditAccountController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteAccountController</servlet-name>
+        <servlet-class>controller.DeleteAccountController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
         <url-pattern>/ProductsController</url-pattern>
@@ -34,6 +58,30 @@
     <servlet-mapping>
         <servlet-name>HomeController</servlet-name>
         <url-pattern>/HomeController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewAllFeedbackController</servlet-name>
+        <url-pattern>/ViewAllFeedbackController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitFeedbackControl</servlet-name>
+        <url-pattern>/SubmitFeedbackControl</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewFeedbackDetailController</servlet-name>
+        <url-pattern>/ViewFeedbackDetailController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AccountManagerController</servlet-name>
+        <url-pattern>/AccountManagerController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>EditAccountController</servlet-name>
+        <url-pattern>/EditAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteAccountController</servlet-name>
+        <url-pattern>/DeleteAccountController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

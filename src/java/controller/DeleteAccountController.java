@@ -5,24 +5,19 @@
  */
 package controller;
 
-import entity.Blog;
-import entity.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Vector;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.BlogDAO;
-import dao.CategoryDAO;
+import dao.UsersDAO;
 
 /**
  *
  * @author Admin
  */
-public class HomeController extends HttpServlet {
+public class DeleteAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,21 +31,18 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            
-//            Get All Category to display for User select
-            CategoryDAO categoryDAO = new CategoryDAO();
-            BlogDAO blogDAO = new BlogDAO();
-            
-            
-            Vector<Blog> blogs =  blogDAO.getBlogList();
-            request.setAttribute("blogs", blogs);
-            
-            Vector<Category> categoryList =  categoryDAO.getAllCategory();
-            request.setAttribute("categoryList", categoryList);
-            
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-            dispatcher.forward(request, response);
+        request.setCharacterEncoding("UTF-8");
+        try {
+            //Get ID from JSP
+            String id = request.getParameter("UserID");
+            //Call DAO
+            UsersDAO dao = new UsersDAO();
+            //Use function Delete to delete by ID
+            dao.deleteAccount(id);
+
+            response.sendRedirect("AccountManagerController");
+        } catch (Exception e) {
+            response.sendRedirect("thankyou.jsp");
         }
     }
 
