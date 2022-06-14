@@ -1,4 +1,3 @@
-
 package controller;
 
 import entity.Category;
@@ -35,26 +34,40 @@ public class ProductsController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
             String categoryID = request.getParameter("CategoryID");
+            String message = "";
 
             if (service != null) {
                 //Delete one product 
                 if (service.equals("deleteProduct")) {
                     try {
                         int productID = Integer.parseInt(request.getParameter("productID"));
-                        (new ProductDAO()).deleteProduct(productID);
-                    } catch(NumberFormatException e) {};
+                        if ((new ProductDAO()).deleteProduct(productID) > 0) {
+                            message = "<p style=\"color: green\">Succesful</p>";
+                        } else {
+                            message = "<p style=\"color: red\">Fail to add products</p>";
+                        }
+                    } catch (NumberFormatException e) {
+                        request.getRequestDispatcher("error.jsp").forward(request, response);
+                        e.printStackTrace();
+                    };
                 }
-                
+
                 //Delete products has been checked
                 if (service.equals("deleteProducts")) {
                     try {
                         String[] arrProductID = request.getParameterValues("productID");
-                        (new ProductDAO()).deleteProducts(arrProductID);
-                    } catch(NumberFormatException e) {};
+                        if ((new ProductDAO()).deleteProducts(arrProductID) > 0) {
+                            message = "<p style=\"color: green\">Succesful</p>";
+                        } else {
+                            message = "<p style=\"color: red\">Fail to add products</p>";
+                        }
+                    } catch (NumberFormatException e) {
+                        request.getRequestDispatcher("error.jsp").forward(request, response);
+                        e.printStackTrace();
+                    };
                 }
             }
 
-            
             Vector<Product> productList = new Vector<Product>();
             //Get Product List if categoryID is exist or categoryID = 0, if not list all product
             if (categoryID != null && !categoryID.equals("0")) {
@@ -66,9 +79,11 @@ public class ProductsController extends HttpServlet {
             //Get Category List
             Vector<Category> categoryList = (new CategoryDAO()).getAllCategory();
 
+            request.setAttribute("message", message);
+            request.setAttribute("categoryID", categoryID);
             request.setAttribute("categoryList", categoryList);
             request.setAttribute("productList", productList);
-            
+
             request.getRequestDispatcher("products.jsp").forward(request, response);
         }
     }

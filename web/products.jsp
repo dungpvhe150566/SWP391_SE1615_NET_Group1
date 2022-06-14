@@ -20,6 +20,11 @@
             Product Admin CSS Template
             https://templatemo.com/tm-524-product-admin
         -->
+        <!--Datatables-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
+        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
     </head>
 
     <body id="reportsPage" >
@@ -91,15 +96,15 @@
         <div class="container mt-5">
             <div class="row tm-content-row">
                 <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
-                    <div class="tm-bg-primary-dark tm-block tm-block-products">
+                    <div class="tm-bg-primary-dark tm-block tm-block-products" style="min-height: 900px">
                         <h2 class="tm-block-title">Product List</h2>
                         <div class="form-outline mb-3">
                             <input class="form-control" type="text" id="myInput" onkeyup="searchName()" placeholder="Search for names..">
                         </div>
-                        <form actiopn="ProductsController" method="POST">
-                            <div class="tm-product-table-container ">
+                        <form id="products" actiopn="ProductsController" method="POST">
+                            <div class="">
                                 <input type="hidden" value="deleteProducts" name="do">
-                                <table class="table table-hover tm-table-small tm-product-table">
+                                <table id="sortTable" class="table table-hover tm-table-small tm-product-table">
                                     <thead>
                                         <tr>
                                             <th scope="col">&nbsp;</th>
@@ -127,15 +132,33 @@
                                         </c:forEach>
                                     </tbody>
                                 </table>
+
+                                <script>
+                                    $.fn.DataTable.ext.pager.numbers_length = 5;
+                                    $('#sortTable').DataTable({
+                                        "searching": false,
+                                        "autoWidth": false,
+                                        "scrollY": 400,
+                                        "lengthChange": false,
+                                        "paging": true,
+                                        "info": true,
+                                        "language": {
+                                            "paginate": {
+                                                'previous': '<span><</span>',
+                                                'next': '<span>></span>'
+                                            }
+                                        }
+                                    });
+                                </script>
                             </div>
                             <!-- table container -->
                             <a
                                 href="addproduct"
-                                class="btn btn-primary btn-block text-uppercase mb-3">Add new product
+                                class="btn btn-primary btn-block text-uppercase mb-3 mt-5">Add new product
                             </a>
-                            <button class="btn btn-primary btn-block text-uppercase" type="submit">
+                            <a class="btn btn-primary btn-block text-uppercase" onclick="return deleteProducts()">
                                 Delete selected products
-                            </button>
+                            </a>
                         </form>
                     </div>
 
@@ -152,7 +175,7 @@
                                         <td>All</td>
                                     </tr>
                                     <c:forEach items="${categoryList}" var="category">
-                                        <tr onclick="searchCategory(${category.getCategoryID()})">
+                                        <tr onclick="searchCategory(${category.getCategoryID()})" ${categoryID == category.getCategoryID() ? "":""}>
                                             <td>${category.getCategoryID()}</td>
                                             <td>${category.getCategoryName()}</td>
                                         </tr>
@@ -180,6 +203,32 @@
         <script src="js/bootstrap.min.js"></script>
         <!-- https://getbootstrap.com/ -->
 
+        <style>
+            .page-item {
+                margin-right: 0px !important;
+                margin-bottom: 3px;
+                margin-top: 3px;
+            }
+
+            .pagination .page-item .page-link { 
+                background-color: #50697f; 
+                border: 0px;
+                color: white;
+            }
+            
+            .pagination .page-item .page-link span{ 
+                margin: 0 auto !important;
+            }
+
+            div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link:focus {
+                background-color: #394f62;
+            }
+
+            .pagination .page-item.active .page-link:hover {
+                background-color: #394f62;
+            }
+        </style>
+
         <script>
                                             function searchName() {
                                                 let input = document.getElementById('myInput').value;
@@ -206,9 +255,17 @@
                                                     return false;
                                                 }
                                             }
-                                            
+
                                             function editProduct(productID) {
                                                 window.location.href = "editproduct?productID=" + productID;
+                                            }
+                                            
+                                            function deleteProducts() {
+                                                if (confirm("Are you sure delete seleted products ?")) {
+                                                    document.getElementById('products').submit();
+                                                } else {
+                                                    return false;
+                                                }
                                             }
         </script>
     </body>

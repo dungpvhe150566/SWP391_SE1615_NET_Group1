@@ -116,6 +116,7 @@
                                             id="product_name"
                                             name="product_name"
                                             type="text"
+                                            maxlength="1000"
                                             class="form-control validate"
                                             required
                                             />
@@ -128,6 +129,7 @@
                                         <textarea
                                             class="form-control validate"
                                             name="description"
+                                            maxlength="2000"
                                             rows="3"
                                             required
                                             >${product.getDescription()}</textarea>
@@ -142,7 +144,11 @@
                                                 value="${product.getOriginalPrice()}"
                                                 id="original_price"
                                                 name="original_price"
-                                                type="text"
+                                                type="number"
+                                                onkeyup="if (this.value < 0)
+                                                            this.value = 0"
+                                                min="0"
+                                                max="1000000000"
                                                 class="form-control validate"
                                                 required
                                                 />
@@ -156,7 +162,11 @@
                                                 value="${product.getSellPrice()}"
                                                 id="sell_price"
                                                 name="sell_price"
-                                                type="text"
+                                                type="number"
+                                                onkeyup="if (this.value < 0)
+                                                            this.value = 0"
+                                                min="0"
+                                                max="1000000000"
                                                 class="form-control validate"
                                                 required
                                                 />
@@ -172,6 +182,9 @@
                                             id="sale_percent"
                                             name="sale_percent"
                                             type="number"
+                                            onkeyup="if (this.value < 0)this.value = 0"
+                                            min="0"
+                                            max="100"
                                             class="form-control validate"
                                             data-large-mode="true"
                                             placeholder="100%"
@@ -248,6 +261,9 @@
                                                 id="height"
                                                 name="height"
                                                 type="number"
+                                                onkeyup="if(this.value<0)this.value=0"
+                                                min="0"
+                                                max="1000000000"
                                                 step="any"
                                                 class="form-control validate"
                                                 required
@@ -263,6 +279,9 @@
                                                 id="width"
                                                 name="width"
                                                 type="number"
+                                                onkeyup="if(this.value<0)this.value=0"
+                                                min="0"
+                                                max="1000000000"
                                                 step="any"
                                                 class="form-control validate"
                                                 required
@@ -278,6 +297,9 @@
                                                 id="weight"
                                                 name="weight"
                                                 type="number"
+                                                onkeyup="if(this.value<0)this.value=0"
+                                                min="0"
+                                                max="1000000000"
                                                 step="any"
                                                 class="form-control validate"
                                                 required
@@ -294,6 +316,9 @@
                                             id="amount"
                                             name="amount"
                                             type="number"
+                                            onkeyup="if(this.value<0)this.value=0"
+                                            min="0"
+                                            max="1000000000"
                                             class="form-control validate"
                                             data-large-mode="true"
                                             required
