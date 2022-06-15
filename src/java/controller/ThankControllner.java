@@ -4,8 +4,17 @@
  */
 package controller;
 
+import dao.CategoryDAO;
+import dao.ManufacturerDAO;
+import dao.ProductDAO;
+import entity.Category;
+import entity.Manufacturer;
+import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Vector;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,7 +41,97 @@ public class ThankControllner extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
+             // Get and Set service from User to 
+            String service = request.getParameter("do");
+            request.setAttribute("service", service);
+
+            ProductDAO productDao = new ProductDAO();
+            CategoryDAO categoryDao = new CategoryDAO();
+            ManufacturerDAO manufacturerDAO = new ManufacturerDAO();
+
+//            ProductsList variable stores a list of products
+            Vector<Product> productsList = null;
+
+//            Get the position of the current Page to paginate products to display to users
+//            indexPage variable is the position of the page the user is viewing
+//            totalPage is variable is the total number of product pages requested by the user
+            int indexPage = 1;
+            int totalPage = 0;
+//            get the Page position being displayed to the user so that page transitions can be performed
+            String index = request.getParameter("indexPage");
+            if (index != null) {
+                indexPage = Integer.parseInt(index);
+            }
+            
+//            Filter follow Manufacturers
+//            get the ManufacturersID selected from the user
+            String[] manufacturersID = request.getParameterValues("manufacturer");
+            String msID = request.getParameter("manufacturers");
+            if(msID!=null && !msID.isEmpty()){
+//                list ManufacturersID have form "[...,...]" so need split 
+                manufacturersID = msID.substring(1, msID.length() - 1).split(",");
+            }
+            if(manufacturersID != null ){
+                request.setAttribute("manufacturers", Arrays.toString(manufacturersID));
+            }
+            
+            
+//            Filter follow Price
+//            get the prices selected from the user
+            String[] prices = request.getParameterValues("prices");
+            String listPrices = request.getParameter("listPrices");
+            if (listPrices != null && !listPrices.isEmpty()) {
+//                list prices have form "[...,...]" so need split 
+                prices = listPrices.substring(1, listPrices.length() - 1).split(",");
+            }
+            if (prices != null) {
+                request.setAttribute("listPrices", Arrays.toString(prices));
+            }
+            
+//            Sort product follow Price(Ascending/Descending)
+            String sort = request.getParameter("sort");
+            if(sort!=null && !sort.isEmpty()){
+                request.setAttribute("sort", sort);
+            }
+
+//            User Search follow Category
+            if (service != null && service.equals("searchByCategory")) {
+                int categoryID = Integer.parseInt(request.getParameter("categoryID"));
+                productsList = productDao.getProductList(categoryID, "", prices,
+                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
+                totalPage = productDao.getTotalPage(categoryID, "", prices, manufacturersID);
+                request.setAttribute("categoryID", categoryID);
+            } 
+            
+//            User Search follow ProductName
+            else if (service != null && service.equals("searchByName")) {
+//                Get ProductName from User Input
+                String productName = request.getParameter("productName");
+                productsList = productDao.getProductList(0, productName, prices,
+                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
+                totalPage = productDao.getTotalPage(0, productName, prices, manufacturersID);
+                request.setAttribute("productName", productName);
+            }
+            
+//            List All Products
+            else {
+                productsList = productDao.getProductList(0, "", prices, 
+                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
+                totalPage = productDao.getTotalPage(0, "", prices, manufacturersID);
+            }
+
+//            set information to display to the user(CategoryList, ProductsList,ManufacturingsList)
+            Vector<Category> categories = categoryDao.getAllCategory();
+            request.setAttribute("products", productsList);
+            request.setAttribute("categories", categories);
+            Vector<Manufacturer> manufacturers = manufacturerDAO.getManufacturerList();
+            request.setAttribute("listManufacturers", manufacturers);
+            request.setAttribute("indexPage", indexPage);   
+            request.setAttribute("totalPage", totalPage);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher("thankyou.jsp");
+            
+            dispatcher.forward(request, response);
            
         }
     }

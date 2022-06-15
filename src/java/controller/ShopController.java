@@ -126,6 +126,7 @@ public class ShopController extends HttpServlet {
             request.setAttribute("totalPage", totalPage);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("shop.jsp");
+            
             dispatcher.forward(request, response);
 
 
