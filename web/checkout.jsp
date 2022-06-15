@@ -46,12 +46,12 @@
 
 
         <!-- Checkout Start -->
-       <form action="Checkout" method="POST">
+        <form action="Checkout" method="POST">
             <div class="row px-xl-5">
                 <div class="col-lg-8">
                     <div class="mb-4">
                         <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
-                         
+
                         <div class="row">
 
                             <div class="col-md-6 form-group">
@@ -74,12 +74,18 @@
 
                             <div class="col-md-6 form-group">
                                 <label>City ID (1-64)</label>
-                                <input   min="1" max="64"  size="2" value="64"  onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control" id="CityId" name="CityId" type="number" placeholder="123 Street">
+                                <input  type="number" min="1" max="64" 
+                                        onKeyUp="if (this.value > 64) {
+                                                    this.value = '64';
+                                                } else if (this.value < 1) {
+                                                    this.value = '1';
+                                                }"
+                                        id="yourid" class="form-control" id="CityId" name="CityId"  placeholder="123 Street">
                             </div>
 
 
                         </div>
-                                   
+
 
                     </div>
                     <div class="collapse mb-4" id="shipping-address">
@@ -188,7 +194,7 @@
                     </div>
                 </div>
             </div>
-                               </form>
+        </form>
         <!-- Checkout End -->
 
 
