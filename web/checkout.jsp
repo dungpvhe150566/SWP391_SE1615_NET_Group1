@@ -65,7 +65,7 @@
 
                             <div class="col-md-6 form-group">
                                 <label>Phone Number</label>
-                                <input class="form-control"  id="phone"name="phone" type="text" placeholder="+123 456 789">
+                                <input maxlength="10" class="form-control"  id="phone"name="phone" type="text" placeholder="+123 456 789">
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Address Detail</label>
@@ -74,7 +74,7 @@
 
                             <div class="col-md-6 form-group">
                                 <label>City ID (1-64)</label>
-                                <input class="form-control" id="CityId" name="CityId" type="text" placeholder="123 Street">
+                                <input  min="1" max="64"  size="6" value="64"  onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control" id="CityId" name="CityId" type="number" placeholder="123 Street">
                             </div>
 
 
