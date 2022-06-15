@@ -17,17 +17,18 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
+        <div style="background-color: wheat">
          <h1> </h1>
          <br>
          
-        <h1 style="text-align: center"> Thanks you very much your Orders successfully</h1>
+         <h1 class="font-weight-bold" style="text-align: center"> Thanks you very much your Orders successfully</h1>
          <br>
          <br>
         <h3 style="text-align: center" style="color: #09f">The seems products , you are added (below)</h2>
         <br><!-- comment -->
         <br>
         <br>
-
+</div>
         <div class="col-sm-12 ">
             <div class="row pb-3 " >
                 <c:forEach items="${products}" var="product">
