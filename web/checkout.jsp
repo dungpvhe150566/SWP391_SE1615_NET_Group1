@@ -74,7 +74,7 @@
 
                             <div class="col-md-6 form-group">
                                 <label>City ID (1-64)</label>
-                                <input  min="1" max="64"  size="6" value="64"  onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control" id="CityId" name="CityId" type="number" placeholder="123 Street">
+                                <input   min="1" max="64"  size="2" value="64"  onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" class="form-control" id="CityId" name="CityId" type="number" placeholder="123 Street">
                             </div>
 
 
