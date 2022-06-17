@@ -13,9 +13,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.CategoryDAO;
-import dao.ManufacturerDAO;
-import dao.ProductDAO;
+import dao.impl.CategoryDAOImpl;
+import dao.impl.ManufacturerDAOImpl;
+import dao.impl.ProductDAOImpl;
 
 /**
  *
@@ -35,43 +35,35 @@ public class ShopController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try{
 
-             // Get and Set service from User to 
+            // Get and Set service from User to 
             String service = request.getParameter("do");
             request.setAttribute("service", service);
-
-            ProductDAO productDao = new ProductDAO();
-            CategoryDAO categoryDao = new CategoryDAO();
-            ManufacturerDAO manufacturerDAO = new ManufacturerDAO();
-
-//            ProductsList variable stores a list of products
-            Vector<Product> productsList = null;
 
 //            Get the position of the current Page to paginate products to display to users
 //            indexPage variable is the position of the page the user is viewing
 //            totalPage is variable is the total number of product pages requested by the user
             int indexPage = 1;
-            int totalPage = 0;
 //            get the Page position being displayed to the user so that page transitions can be performed
             String index = request.getParameter("indexPage");
             if (index != null) {
                 indexPage = Integer.parseInt(index);
             }
-            
+            request.setAttribute("indexPage", indexPage);
+
 //            Filter follow Manufacturers
 //            get the ManufacturersID selected from the user
             String[] manufacturersID = request.getParameterValues("manufacturer");
             String msID = request.getParameter("manufacturers");
-            if(msID!=null && !msID.isEmpty()){
+            if (msID != null && !msID.isEmpty()) {
 //                list ManufacturersID have form "[...,...]" so need split 
                 manufacturersID = msID.substring(1, msID.length() - 1).split(",");
             }
-            if(manufacturersID != null ){
+            if (manufacturersID != null) {
                 request.setAttribute("manufacturers", Arrays.toString(manufacturersID));
             }
-            
-            
+
 //            Filter follow Price
 //            get the prices selected from the user
             String[] prices = request.getParameterValues("prices");
@@ -83,53 +75,55 @@ public class ShopController extends HttpServlet {
             if (prices != null) {
                 request.setAttribute("listPrices", Arrays.toString(prices));
             }
-            
+
+//            User Search follow Category
+            int categoryID = 0;
+            if (service != null && service.equals("searchByCategory")) {
+                categoryID = Integer.parseInt(request.getParameter("categoryID"));
+                request.setAttribute("categoryID", categoryID);
+            }
+
+//            User Search follow ProductName
+            String productName = "";
+            if (service != null && service.equals("searchByName")) {
+//                Get ProductName from User Input
+                productName = request.getParameter("productName").trim();
+                request.setAttribute("productName", productName);
+            }
+
 //            Sort product follow Price(Ascending/Descending)
             String sort = request.getParameter("sort");
-            if(sort!=null && !sort.isEmpty()){
+            if (sort != null && !sort.isEmpty()) {
                 request.setAttribute("sort", sort);
             }
 
-//            User Search follow Category
-            if (service != null && service.equals("searchByCategory")) {
-                int categoryID = Integer.parseInt(request.getParameter("categoryID"));
-                productsList = productDao.getProductList(categoryID, "", prices,
-                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
-                totalPage = productDao.getTotalPage(categoryID, "", prices, manufacturersID);
-                request.setAttribute("categoryID", categoryID);
-            } 
-            
-//            User Search follow ProductName
-            else if (service != null && service.equals("searchByName")) {
-//                Get ProductName from User Input
-                String productName = request.getParameter("productName");
-                productsList = productDao.getProductList(0, productName, prices,
-                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
-                totalPage = productDao.getTotalPage(0, productName, prices, manufacturersID);
-                request.setAttribute("productName", productName);
-            }
-            
-//            List All Products
-            else {
-                productsList = productDao.getProductList(0, "", prices, 
-                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
-                totalPage = productDao.getTotalPage(0, "", prices, manufacturersID);
-            }
-
-//            set information to display to the user(CategoryList, ProductsList,ManufacturingsList)
-            Vector<Category> categories = categoryDao.getAllCategory();
+            ProductDAOImpl productDao = new ProductDAOImpl();
+//            Get List Products follow (CategoryID. ProductName, Price, ManufacturerID,Sort)
+            Vector<Product> productsList = productDao.getProductList(categoryID, productName, prices,
+                    manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage, sort);
             request.setAttribute("products", productsList);
-            request.setAttribute("categories", categories);
-            Vector<Manufacturer> manufacturers = manufacturerDAO.getManufacturerList();
-            request.setAttribute("listManufacturers", manufacturers);
-            request.setAttribute("indexPage", indexPage);   
+
+//            Get total PAge of list product(each page have max 6 products)
+            int totalPage = productDao.getTotalPage(categoryID, productName, prices, manufacturersID);
             request.setAttribute("totalPage", totalPage);
 
-            RequestDispatcher dispatcher = request.getRequestDispatcher("shop.jsp");
-            
-            dispatcher.forward(request, response);
+            CategoryDAOImpl categoryDao = new CategoryDAOImpl();
+//            Set CategoryList to display to the View Page
+            Vector<Category> categories = categoryDao.getAllCategory();
+            request.setAttribute("categories", categories);
+//            Set ManufacturerList to display to the View Page
+            ManufacturerDAOImpl manufacturerDAO = new ManufacturerDAOImpl();
+            Vector<Manufacturer> manufacturers = manufacturerDAO.getManufacturerList();
+            request.setAttribute("listManufacturers", manufacturers);
 
+            RequestDispatcher dispatcher1 = request.getRequestDispatcher("shop.jsp");
+            dispatcher1.forward(request, response);
 
+        }
+        catch(Exception e){
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+            dispatcher2.forward(request, response);
         }
     }
 

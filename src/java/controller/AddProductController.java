@@ -14,9 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import dao.CategoryDAO;
-import dao.ManufacturerDAO;
-import dao.ProductDAO;
+import dao.impl.CategoryDAOImpl;
+import dao.impl.ManufacturerDAOImpl;
+import dao.impl.ProductDAOImpl;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
@@ -42,7 +43,7 @@ public class AddProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try{
             String service = request.getParameter("do");
             String message = "";
 
@@ -70,7 +71,7 @@ public class AddProductController extends HttpServlet {
 
                         Product pro = new Product(productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight);
 
-                        if ((new ProductDAO()).addProduct(pro) > 0) {
+                        if ((new ProductDAOImpl()).addProduct(pro) > 0) {
                             message = "<p style=\"color: green\">Succesful</p>";
                         } else {
                             message = "<p style=\"color: green\">Fail to add products</p>";
@@ -83,14 +84,18 @@ public class AddProductController extends HttpServlet {
                 }
             }
 
-            Vector<Category> categoryList = (new CategoryDAO()).getAllCategory();
-            Vector<Manufacturer> manufacturerList = (new ManufacturerDAO()).getManufacturerList();
+            Vector<Category> categoryList = (new CategoryDAOImpl()).getAllCategory();
+            Vector<Manufacturer> manufacturerList = (new ManufacturerDAOImpl()).getManufacturerList();
 
             request.setAttribute("message", message);
             request.setAttribute("categoryList", categoryList);
             request.setAttribute("manufacturerList", manufacturerList);
 
             request.getRequestDispatcher("add-product.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+            dispatcher2.forward(request, response);
         }
     }
 

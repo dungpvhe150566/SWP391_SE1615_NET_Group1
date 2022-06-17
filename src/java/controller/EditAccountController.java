@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.UserAddressDAO;
-import dao.UsersDAO;
+import dao.impl.UsersDAOImpl;
 
 /**
  *
@@ -64,7 +64,7 @@ public class EditAccountController extends HttpServlet {
         try {
             //Get ID from jsp
             String id = request.getParameter("UserID");
-            UsersDAO dao = new UsersDAO();
+            UsersDAOImpl dao = new UsersDAOImpl();
             UserAddressDAO UserAddressDAO = new UserAddressDAO();
             //select users from id 
             Users x = dao.getAccountByID(id);
@@ -113,7 +113,7 @@ public class EditAccountController extends HttpServlet {
             System.out.println(isAdmin);
             System.out.println(isSell);
             //Step 2: update to database
-            UsersDAO dao = new UsersDAO();
+            UsersDAOImpl dao = new UsersDAOImpl();
             Users x = dao.getAccountByID(id);
             dao.updateUser(id, user, password, email, isSell, isAdmin,x.getActiveCode(), x.getStatusID());
             request.getRequestDispatcher("AccountManagerController").forward(request, response);

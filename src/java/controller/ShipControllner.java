@@ -12,7 +12,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.ShipDAO;
+import dao.impl.ShipDAOImpl;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
@@ -33,8 +34,8 @@ public class ShipControllner extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-          
+        try (PrintWriter out = response.getWriter()) {
+
         }
     }
 
@@ -50,9 +51,17 @@ public class ShipControllner extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         List<entity.Ship> listShips = new ShipDAO().getAllShips();
-       request.setAttribute("listShips", listShips);
-        request.getRequestDispatcher("checkout.jsp").forward(request, response);
+
+        try {
+            List<entity.Ship> listShips = new ShipDAOImpl().getAllShips();
+            request.setAttribute("listShips", listShips);
+            request.getRequestDispatcher("checkout.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+            dispatcher2.forward(request, response);
+        }
+
     }
 
     /**

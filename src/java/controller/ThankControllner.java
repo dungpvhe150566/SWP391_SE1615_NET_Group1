@@ -4,9 +4,9 @@
  */
 package controller;
 
-import dao.CategoryDAO;
-import dao.ManufacturerDAO;
-import dao.ProductDAO;
+import dao.impl.CategoryDAOImpl;
+import dao.impl.ManufacturerDAOImpl;
+import dao.impl.ProductDAOImpl;
 import entity.Category;
 import entity.Manufacturer;
 import entity.Product;
@@ -40,14 +40,14 @@ public class ThankControllner extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try {
              // Get and Set service from User to 
             String service = request.getParameter("do");
             request.setAttribute("service", service);
 
-            ProductDAO productDao = new ProductDAO();
-            CategoryDAO categoryDao = new CategoryDAO();
-            ManufacturerDAO manufacturerDAO = new ManufacturerDAO();
+            ProductDAOImpl productDao = new ProductDAOImpl();
+            CategoryDAOImpl categoryDao = new CategoryDAOImpl();
+            ManufacturerDAOImpl manufacturerDAO = new ManufacturerDAOImpl();
 
 //            ProductsList variable stores a list of products
             Vector<Product> productsList = null;
@@ -133,6 +133,10 @@ public class ThankControllner extends HttpServlet {
             
             dispatcher.forward(request, response);
            
+        }catch(Exception e){
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+            dispatcher2.forward(request, response);
         }
     }
 

@@ -5,7 +5,7 @@
  */
 package controller;
 
-import dao.UsersDAO;
+import dao.impl.UsersDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import entity.Users;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
@@ -41,7 +42,7 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginServlet</title>");            
+            out.println("<title>Servlet LoginServlet</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet LoginServlet at " + request.getContextPath() + "</h1>");
@@ -62,20 +63,26 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
             String email = request.getParameter("email").trim();  //Lay email
             String password = request.getParameter("password").trim();  //Lay password
-            UsersDAO dao = new UsersDAO();
+            UsersDAOImpl dao = new UsersDAOImpl();
             List<Users> list = dao.getAll(); //Lay ra list user
             for (Users users : list) {
-            if(users.getEmail().equals(email) && users.getPassword().equals(password)){  //Kiem tra email va password nhap vao co trung trong database khong
-                HttpSession session = request.getSession();
-                session.setAttribute("user", users);
-                request.getRequestDispatcher("HomeController").forward(request, response); //Neu dang nhap thanh cong chuyen den home
+                if (users.getEmail().equals(email) && users.getPassword().equals(password)) {  //Kiem tra email va password nhap vao co trung trong database khong
+                    HttpSession session = request.getSession();
+                    session.setAttribute("user", users);
+                    request.getRequestDispatcher("HomeController").forward(request, response); //Neu dang nhap thanh cong chuyen den home
+                }
             }
-        }
             String text = "Your email or password is incorrect"; //Neu dang nhap that bai chuyen den trang login va bat dang nhap lai
             request.setAttribute("alert", text);
             request.getRequestDispatcher("login.jsp").forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+            dispatcher2.forward(request, response);
+        }
     }
 
     /**

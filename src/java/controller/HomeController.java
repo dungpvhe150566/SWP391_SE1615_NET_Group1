@@ -5,6 +5,8 @@
  */
 package controller;
 
+import dao.BlogDAO;
+import dao.CategoryDAO;
 import entity.Blog;
 import entity.Category;
 import java.io.IOException;
@@ -15,8 +17,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.BlogDAO;
-import dao.CategoryDAO;
+import dao.impl.BlogDAOImpl;
+import dao.impl.CategoryDAOImpl;
 
 /**
  *
@@ -36,20 +38,22 @@ public class HomeController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            
-//            Get All Category to display for User select
-            CategoryDAO categoryDAO = new CategoryDAO();
-            BlogDAO blogDAO = new BlogDAO();
-            
-            
-            Vector<Blog> blogs =  blogDAO.getBlogList();
+        try {
+
+//            Get All Category, Blog to display for User select
+            BlogDAO blogDAO = new BlogDAOImpl();
+            CategoryDAO categoryDAO = new CategoryDAOImpl();
+            Vector<Blog> blogs = blogDAO.getBlogList();
+            Vector<Category> categoryList = categoryDAO.getAllCategory();
+
             request.setAttribute("blogs", blogs);
-            
-            Vector<Category> categoryList =  categoryDAO.getAllCategory();
             request.setAttribute("categoryList", categoryList);
-            
+
             RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+            dispatcher.forward(request, response);
+        } catch (Exception e) {
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
             dispatcher.forward(request, response);
         }
     }

@@ -12,9 +12,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.FeedbackDAO;
-import dao.ProductDAO;
-import dao.UsersDAO;
+import dao.impl.FeedbackDAOImpl;
+import dao.impl.ProductDAOImpl;
+import dao.impl.UsersDAOImpl;
 
 /**
  *
@@ -37,9 +37,9 @@ public class ViewFeedbackDetailController extends HttpServlet {
         try {
             
             // get all dao
-            ProductDAO productDao = new ProductDAO();
-            FeedbackDAO feedbackDao = new FeedbackDAO();
-            UsersDAO userDao = new UsersDAO();
+            ProductDAOImpl productDao = new ProductDAOImpl();
+            FeedbackDAOImpl feedbackDao = new FeedbackDAOImpl();
+            UsersDAOImpl userDao = new UsersDAOImpl();
 
             // get feedback id
             int feedbackId = Integer.parseInt(request.getParameter("id"));
@@ -62,7 +62,7 @@ public class ViewFeedbackDetailController extends HttpServlet {
             request.getRequestDispatcher("ViewFeedbackDetail.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("thankyou.jsp");
         }
     }
 

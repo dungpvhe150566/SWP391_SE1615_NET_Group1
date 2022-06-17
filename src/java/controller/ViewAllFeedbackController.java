@@ -21,9 +21,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import dao.FeedbackDAO;
-import dao.ProductDAO;
-import dao.UsersDAO;
+import dao.impl.FeedbackDAOImpl;
+import dao.impl.ProductDAOImpl;
+import dao.impl.UsersDAOImpl;
 
 /**
  *
@@ -50,9 +50,9 @@ public class ViewAllFeedbackController extends HttpServlet {
             System.out.println(a.getUserID());
 
             // get all dao
-            ProductDAO productDao = new ProductDAO();
-            FeedbackDAO feedbackDao = new FeedbackDAO();
-            UsersDAO userDao = new UsersDAO();
+            ProductDAOImpl productDao = new ProductDAOImpl();
+            FeedbackDAOImpl feedbackDao = new FeedbackDAOImpl();
+            UsersDAOImpl userDao = new UsersDAOImpl();
 
             // get all feedback of product of this seller
             List<Product> lsProduct = productDao.getProductBySellID(a.getUserID());
@@ -85,56 +85,12 @@ public class ViewAllFeedbackController extends HttpServlet {
                 feedback.setProduct(productWithFeedback);
 
             }
-            // allow sort by name, product, star
-            if (request.getParameter("sort-flag")!=null) {
-                int sortOption = Integer.parseInt(request.getParameter("sort-order"));
-                int sortOrder = Integer.parseInt(request.getParameter("sort-by-order"));
-                switch (sortOption) {
-                    // sort by star
-                    case 1: {
-                        if (sortOrder == 1) {
-                            // sort ascending
-                            lsFeedback.sort(Comparator.comparing((Feedback::getStar)));
-                        } else {
-                            // sort descending
-                            lsFeedback.sort(Comparator.comparing((Feedback::getStar)));
-                            Collections.reverse(lsFeedback);
-                        }
-                        break;
-                    }
-                    // sort by user
-                    case 2: {
-                        if (sortOrder == 1) {
-                            // sort ascending
-                            lsFeedback.sort(Comparator.comparing((accountMadeFeedback -> accountMadeFeedback.getUserName())));
-                        } else {
-                            // sort descending
-                            lsFeedback.sort(Comparator.comparing((accountMadeFeedback -> accountMadeFeedback.getUserName())));
-                            Collections.reverse(lsFeedback);
-                        }
-                        break;
-                    }
-                    // sort by product
-                    case 3: {
-                        if (sortOrder == 1) {
-                            // sort ascending
-                            lsFeedback.sort(Comparator.comparing((productWithFeedback -> productWithFeedback.getProductName())));
-                        } else {
-                            // sort descending
-                            lsFeedback.sort(Comparator.comparing((productWithFeedback-> productWithFeedback.getProductName())));
-                            Collections.reverse(lsFeedback);
-                        }
-                        break;
-                    }
-
-                }
-            }
 
             request.setAttribute("lsFeedback", lsFeedback);
             request.getRequestDispatcher("ViewAllFeedbacks.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("thankyou.jsp");
         }
     }
 

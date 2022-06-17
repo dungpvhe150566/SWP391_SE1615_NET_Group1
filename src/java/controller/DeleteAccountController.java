@@ -11,7 +11,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.UsersDAO;
+import dao.impl.UsersDAOImpl;
 
 /**
  *
@@ -36,7 +36,7 @@ public class DeleteAccountController extends HttpServlet {
             //Get ID from JSP
             String id = request.getParameter("UserID");
             //Call DAO
-            UsersDAO dao = new UsersDAO();
+            UsersDAOImpl dao = new UsersDAOImpl();
             //Use function Delete to delete by ID
             dao.deleteAccount(id);
 

@@ -9,8 +9,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.CategoryDAO;
-import dao.ProductDAO;
+import dao.impl.CategoryDAOImpl;
+import dao.impl.ProductDAOImpl;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
@@ -30,7 +31,7 @@ public class ProductsController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
             String categoryID = request.getParameter("CategoryID");
@@ -41,7 +42,7 @@ public class ProductsController extends HttpServlet {
                 if (service.equals("deleteProduct")) {
                     try {
                         int productID = Integer.parseInt(request.getParameter("productID"));
-                        if ((new ProductDAO()).deleteProduct(productID) > 0) {
+                        if ((new ProductDAOImpl()).deleteProduct(productID) > 0) {
                             message = "<p style=\"color: green\">Succesful</p>";
                         } else {
                             message = "<p style=\"color: red\">Fail to add products</p>";
@@ -56,7 +57,7 @@ public class ProductsController extends HttpServlet {
                 if (service.equals("deleteProducts")) {
                     try {
                         String[] arrProductID = request.getParameterValues("productID");
-                        if ((new ProductDAO()).deleteProducts(arrProductID) > 0) {
+                        if ((new ProductDAOImpl()).deleteProducts(arrProductID) > 0) {
                             message = "<p style=\"color: green\">Succesful</p>";
                         } else {
                             message = "<p style=\"color: red\">Fail to add products</p>";
@@ -71,13 +72,13 @@ public class ProductsController extends HttpServlet {
             Vector<Product> productList = new Vector<Product>();
             //Get Product List if categoryID is exist or categoryID = 0, if not list all product
             if (categoryID != null && !categoryID.equals("0")) {
-                productList = (new ProductDAO()).getProductListByCategoryID(categoryID);
+                productList = (new ProductDAOImpl()).getProductListByCategoryID(categoryID);
             } else {
-                productList = (new ProductDAO()).getProductList();
+                productList = (new ProductDAOImpl()).getProductList();
             }
 
             //Get Category List
-            Vector<Category> categoryList = (new CategoryDAO()).getAllCategory();
+            Vector<Category> categoryList = (new CategoryDAOImpl()).getAllCategory();
 
             request.setAttribute("message", message);
             request.setAttribute("categoryID", categoryID);
@@ -85,6 +86,10 @@ public class ProductsController extends HttpServlet {
             request.setAttribute("productList", productList);
 
             request.getRequestDispatcher("products.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+            dispatcher2.forward(request, response);
         }
     }
 

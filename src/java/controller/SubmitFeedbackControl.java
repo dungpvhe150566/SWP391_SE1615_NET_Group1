@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import dao.FeedbackDAO;
-import dao.ProductDAO;
+import dao.impl.FeedbackDAOImpl;
+import dao.impl.ProductDAOImpl;
 
 /**
  *
@@ -38,7 +38,7 @@ public class SubmitFeedbackControl extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            ProductDAO productDao = new ProductDAO();
+            ProductDAOImpl productDao = new ProductDAOImpl();
             //get productId from detail
             String productId = request.getParameter("productId");
             //get product from Id
@@ -86,8 +86,8 @@ public class SubmitFeedbackControl extends HttpServlet {
             HttpSession session = request.getSession();
             Users currentAccount = (Users) session.getAttribute("user");
 
-            // get FeedbackDAO
-            FeedbackDAO feedbackDAO = new FeedbackDAO();
+            // get FeedbackDAOImpl
+            FeedbackDAOImpl feedbackDAO = new FeedbackDAOImpl();
 
             // get current product id
             int productId = Integer.parseInt(request.getParameter("productId"));

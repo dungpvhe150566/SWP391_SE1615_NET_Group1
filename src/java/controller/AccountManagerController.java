@@ -13,7 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.UsersDAO;
+import dao.impl.UsersDAOImpl;
 
 /**
  *
@@ -34,14 +34,14 @@ public class AccountManagerController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            UsersDAO userDAO = new UsersDAO();
+            UsersDAOImpl userDAO = new UsersDAOImpl();
             List<Users> listAccount = userDAO.getAllAccounts();
 
             //Set data to JSP
             request.setAttribute("list", listAccount);
             request.getRequestDispatcher("AccountManager.jsp").forward(request, response);
         } catch (Exception e) {
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("thankyou.jsp");
         }
         //Get data from DAO
     }

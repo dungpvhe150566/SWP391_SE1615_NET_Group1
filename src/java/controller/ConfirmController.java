@@ -5,12 +5,13 @@
  */
 package controller;
 
-import dao.UsersDAO;
+import dao.impl.UsersDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -77,12 +78,18 @@ public class ConfirmController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try{
         String email = request.getParameter("email"); //Lay email
         String username = request.getParameter("username");   //Lay username
         String password = request.getParameter("password");  //Lay password
-        UsersDAO dao = new UsersDAO();
+        UsersDAOImpl dao = new UsersDAOImpl();
         dao.insert(email, username,password); //Insert vao database
         response.sendRedirect("login.jsp"); //Chuyen den login
+        }catch(Exception e){
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+            dispatcher2.forward(request, response);
+        }
     }
 
     /**

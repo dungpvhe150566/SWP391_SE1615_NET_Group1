@@ -16,9 +16,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import dao.ProductDAO;
-import dao.ShipDAO;
+import dao.impl.ProductDAOImpl;
+import dao.impl.ShipDAOImpl;
 import entity.Ship;
+import javax.servlet.RequestDispatcher;
 
 /**
  *
@@ -39,7 +40,7 @@ public class AddToCartControllner extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try  {
             /* TODO output your page here. You may use following sample code. */
              int productId = Integer.parseInt(request.getParameter("productId"));
              
@@ -57,7 +58,7 @@ public class AddToCartControllner extends HttpServlet {
                
                
             } else {//sản phẩm chưa có trên giỏ hàng
-                Product product = new ProductDAO().getProductById(productId);
+                Product product = new ProductDAOImpl().getProductById(productId);
                 carts.put(productId, Cart.builder().product(product).Amount(1).build());
             }
            
@@ -65,6 +66,10 @@ public class AddToCartControllner extends HttpServlet {
 //h
             session.setAttribute("carts", carts);
             response.sendRedirect("ShopController");
+        }catch(Exception e){
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+            dispatcher2.forward(request, response);
         }
     }
 
