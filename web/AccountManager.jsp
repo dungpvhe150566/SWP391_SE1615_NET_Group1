@@ -5,9 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <!--Favicon-->
-        <link rel="icon" type="image/png" href="image/faviconLogo.png" />
-        <title>Computer ERA</title>
+        <title></title>
         <link href="css/Dashboard.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -25,7 +23,7 @@
             });
             function search() {
                 var searchText = document.getElementById("search_Account").value;
-                location.href = "searchInAccount?text=" + searchText;
+                location.href = "searchInAccountController?text=" + searchText;
                 return false;
             }
         </script>
@@ -35,31 +33,34 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-2" style="background-color: #ebebf2;">
-                    <a class="navbar-brand" href="dashBoard"><img src="image/Other/Logo.jpg" width="200px"></a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link" href="home"><i class="fas fa-home"></i>Home</a>
+                            <a class="nav-link" href="HomeController"><i class="fas fa-home"></i>Home</a>
                             <hr class="line">
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="dashBoard"><i class="far fa-chart-bar"></i>Dashboard overview</a>
+                            <a class="nav-link" href="AccountManagerController">AccountManager</a>
                             <hr class="line">
                         </li>
-                        <c:if test="${sessionScope.acc == null}">
+<!--                        <li class="nav-item">
+                            <a class="nav-link" href="dashBoard"><i class="far fa-chart-bar"></i>Dashboard overview</a>
+                            <hr class="line">
+                        </li>-->
+                        <c:if test="${sessionScope.user == null}">
                             <li class="nav-item">
-                                <a class="nav-link" href="login">Login</a>
+                                <a class="nav-link" href="LoginController">Login</a>
                             </li>
                         </c:if>
-                        <c:if test = "${sessionScope.acc != null}">
+                        <c:if test = "${sessionScope.user != null}">
                             <li id="drop">
                                 <a class="nav-link" href="profile" id="profileOption"><i class="fas fa-user-circle"></i>Hello ${sessionScope.acc.user}</a>
                                 <div class="dropdownContent">
-                                    <a href="profile">View my profile</a>
-                                    <a href="logout">LogOut</a>
+                                    <a href="profile">View my profile</a></br>
+                                    <a href="LogoutController">LogOut</a>
                                 </div>
                                 <hr class="line">
                             </li>
@@ -93,7 +94,7 @@
                     <div class="container">
                         <div class="d-flex justify-content-center h-100">
                             <div class="searchbar">
-                                <input class="search_input" type="text" id="search_Account" placeholder="Search...">
+                                <input class="search_input" type="text" id="search_Account" placeholder="Search..."value="">
                                 <button onclick="search();" class="search_icon"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
