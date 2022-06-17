@@ -126,6 +126,24 @@ public class UsersDAO extends DBContext {
         }
         return list;
     }
+     public List<Users> searchAccountInManager(String name) {
+        List<Users> list = new ArrayList<>();
+        String query = "SELECT * FROM Users \n"
+                + "WHERE Username LIKE ?";
+        try {
+            ps = conn.prepareStatement(query);
+            ps.setString(1, "%" + name + "%");            
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Users(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getInt(6),
+                        rs.getInt(7), rs.getInt(8)));
+            }
+        } catch (Exception e) {
+        }
+        return list;
+    }
 
     public static void main(String[] args) {
         UsersDAO dao = new UsersDAO();

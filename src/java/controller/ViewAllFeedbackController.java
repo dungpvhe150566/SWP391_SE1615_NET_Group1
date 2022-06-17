@@ -85,12 +85,56 @@ public class ViewAllFeedbackController extends HttpServlet {
                 feedback.setProduct(productWithFeedback);
 
             }
+            // allow sort by name, product, star
+            if (request.getParameter("sort-flag")!=null) {
+                int sortOption = Integer.parseInt(request.getParameter("sort-order"));
+                int sortOrder = Integer.parseInt(request.getParameter("sort-by-order"));
+                switch (sortOption) {
+                    // sort by star
+                    case 1: {
+                        if (sortOrder == 1) {
+                            // sort ascending
+                            lsFeedback.sort(Comparator.comparing((Feedback::getStar)));
+                        } else {
+                            // sort descending
+                            lsFeedback.sort(Comparator.comparing((Feedback::getStar)));
+                            Collections.reverse(lsFeedback);
+                        }
+                        break;
+                    }
+                    // sort by user
+                    case 2: {
+                        if (sortOrder == 1) {
+                            // sort ascending
+                            lsFeedback.sort(Comparator.comparing((accountMadeFeedback -> accountMadeFeedback.getUserName())));
+                        } else {
+                            // sort descending
+                            lsFeedback.sort(Comparator.comparing((accountMadeFeedback -> accountMadeFeedback.getUserName())));
+                            Collections.reverse(lsFeedback);
+                        }
+                        break;
+                    }
+                    // sort by product
+                    case 3: {
+                        if (sortOrder == 1) {
+                            // sort ascending
+                            lsFeedback.sort(Comparator.comparing((productWithFeedback -> productWithFeedback.getProductName())));
+                        } else {
+                            // sort descending
+                            lsFeedback.sort(Comparator.comparing((productWithFeedback-> productWithFeedback.getProductName())));
+                            Collections.reverse(lsFeedback);
+                        }
+                        break;
+                    }
+
+                }
+            }
 
             request.setAttribute("lsFeedback", lsFeedback);
             request.getRequestDispatcher("ViewAllFeedbacks.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("thankyou.jsp");
+            response.sendRedirect("error.jsp");
         }
     }
 

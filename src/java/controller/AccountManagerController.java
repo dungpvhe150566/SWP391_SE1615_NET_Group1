@@ -41,7 +41,7 @@ public class AccountManagerController extends HttpServlet {
             request.setAttribute("list", listAccount);
             request.getRequestDispatcher("AccountManager.jsp").forward(request, response);
         } catch (Exception e) {
-            response.sendRedirect("thankyou.jsp");
+            response.sendRedirect("error.jsp");
         }
         //Get data from DAO
     }

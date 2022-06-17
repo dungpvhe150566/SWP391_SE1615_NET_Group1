@@ -8,7 +8,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <!--Favicon-->
-        <link rel="icon" type="image/png" href="image/faviconLogo.png" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 
         <!--Table Styling-->
@@ -21,9 +20,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <title>Computer ERA</title>
-        <!--Favicon-->
-        <link rel="icon" type="image/png" href="image/faviconLogo.png" />
+        <title></title>
     </head>
     <body>
 
@@ -32,19 +29,18 @@
             <div class="row">
                 <div class="col-md-2" style="background-color: #ebebf2">
                     <nav class="navbar navbar-expand-lg navbar-light flex-column">
-                        <a class="navbar-brand" href="dashBoard"><img src="image/Other/Logo.jpg" width="200px"></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
 
                         <ul class="nav flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="home"><i class="fas fa-home"></i>Home</a>
+                                <a class="nav-link" href="HomeController"><i class="fas fa-home"></i>Home</a>
                                 <hr class="line">
                             </li>
                             <c:if test="${sessionScope.user == null}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="login">Login</a>
+                                    <a class="nav-link" href="LoginController">Login</a>
                                 </li>
                             </c:if>
                             <c:if test = "${sessionScope.user != null}">
@@ -86,7 +82,7 @@
                                 <table class="table table-borderless">
                                     <tr style="padding:2px; ">
                                         <td class="col-md-3"><b>User:</b></td>
-                                        <td class="col-md-9"></td>
+                                        <td class="col-md-9">${requestScope.feedback.user.getUsername()}</td>
                                     </tr>
                                     <tr style="padding:2px; ">
                                         <td class="col-md-3"><b>Product Name:</b></td>

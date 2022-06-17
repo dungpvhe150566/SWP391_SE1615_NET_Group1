@@ -5,22 +5,21 @@
  */
 package controller;
 
-import entity.Feedback;
+import dao.UsersDAO;
+import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.FeedbackDAO;
-import dao.ProductDAO;
-import dao.UsersDAO;
 
 /**
  *
  * @author Admin
  */
-public class ViewFeedbackDetailController extends HttpServlet {
+public class searchInAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,33 +34,14 @@ public class ViewFeedbackDetailController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            
-            // get all dao
-            ProductDAO productDao = new ProductDAO();
-            FeedbackDAO feedbackDao = new FeedbackDAO();
-            UsersDAO userDao = new UsersDAO();
+            String searchText = request.getParameter("text");
 
-            // get feedback id
-            int feedbackId = Integer.parseInt(request.getParameter("id"));
+            UsersDAO UserDAO = new UsersDAO();
+            List<Users> listA = UserDAO.searchAccountInManager(searchText);
+            request.setAttribute("list", listA);
+            request.getRequestDispatcher("AccountManager.jsp").forward(request, response);
 
-            // get the feedback and set data for the feedback
-            Feedback feedback = feedbackDao.getFeedbacksById(feedbackId);
-            feedback.setProduct(
-                    productDao.getProductByID(
-                            String.valueOf(feedback.getProductID())
-                    )
-            );
-            feedback.setUser(
-                    userDao.getAccountByID(
-                            String.valueOf(feedback.getUserID())
-                    )
-            );
-
-            // send to jsp page
-            request.setAttribute("feedback", feedback);
-            request.getRequestDispatcher("ViewFeedbackDetail.jsp").forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
             response.sendRedirect("error.jsp");
         }
     }
