@@ -26,10 +26,10 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
         // Query Statement to get all Categories in Database 
         String sqlQuery = "select f.ID,\n"
                 + "		 u.Username,\n"
-                + "		 o.DayBuy,\n"
+                + "		 f.DateComment,\n"
                 + "		 f.Star,\n"
                 + "		 f.FeedbackDetail\n"
-                + "		 from Feedback f join Orders o on f.OrderID = o.ID join Users u on o.UserID = u.UserID where f.ProductID="+productID;
+                + "		 from Feedback f join Users u on f.UserID = u.UserID where f.ProductID=" + productID;
 
         // Resultset to store all Categories 
 
@@ -111,11 +111,11 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
             rs = preparedStatement.executeQuery();
             if (rs.next()) {
                 f = new Feedback(
-                        rs.getInt("ID"),
                         rs.getInt("UserID"),
                         rs.getInt("ProductID"),
                         rs.getInt("Star"),
-                        rs.getString("FeedbackDetail")
+                        rs.getString("FeedbackDetail"),
+                        rs.getDate("DateComment")
                 );
                 return f;
             }

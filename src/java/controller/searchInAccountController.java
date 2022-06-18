@@ -5,19 +5,21 @@
  */
 package controller;
 
+import dao.impl.UsersDAOImpl;
+import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.impl.UsersDAOImpl;
 
 /**
  *
  * @author Admin
  */
-public class DeleteAccountController extends HttpServlet {
+public class searchInAccountController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,17 +33,14 @@ public class DeleteAccountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         try {
-            //Get ID from JSP
-            String id = request.getParameter("UserID");
-            System.out.println(id);
-            //Call DAO
-            UsersDAOImpl dao = new UsersDAOImpl();
-            //Use function Delete to delete by ID
-            dao.deleteAccount(id);
+            String searchText = request.getParameter("text");
 
+            UsersDAOImpl UserDAO = new UsersDAOImpl();
+            List<Users> listA = UserDAO.searchAccountInManager(searchText);
+            request.setAttribute("list", listA);
             request.getRequestDispatcher("AccountManager.jsp").forward(request, response);
+
         } catch (Exception e) {
             response.sendRedirect("error.jsp");
         }
