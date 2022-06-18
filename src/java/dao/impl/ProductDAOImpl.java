@@ -600,6 +600,48 @@ conn = getConnection();
         }
         return null;
     }
+    
+    public Vector<Product> searchProductByNameAndCategory(String name, String categoryID) throws Exception {
+         String query = "SELECT * FROM Product WHERE CategoryID = ? and ProductName like '%"+name+"%'";
+         Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        Vector<Product> vectorProduct = new Vector<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, categoryID);
+            rs = preparedStatement.executeQuery();
+            
+//            ps = conn.prepareStatement(query);
+//            ps.setString(1, id);
+//            rs = ps.executeQuery();
+            while (rs.next()) {
+                vectorProduct.add(new Product(rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("Description"),
+                        rs.getInt("OriginalPrice"),
+                        rs.getInt("SellPrice"),
+                        rs.getInt("SalePercent"),
+                        rs.getString("imageLink"),
+                        rs.getInt("CategoryID"),
+                        rs.getInt("SellerID"),
+                        rs.getInt("Amount"),
+                        rs.getInt("StatusID"),
+                        rs.getInt("ManufacturerID"),
+                        rs.getFloat("height"),
+                        rs.getFloat("width"),
+                        rs.getFloat("weight")));
+            }
+            return vectorProduct;
+        } catch (Exception e) {
+            throw e;
+        }finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
 
     public static void main(String[] args) {
         ProductDAOImpl dao = new ProductDAOImpl();

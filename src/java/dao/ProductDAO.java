@@ -35,4 +35,6 @@ public interface ProductDAO {
      public List<Product> getProductBySellID(int id) throws Exception ;
      
      public Product getProductByID(String id) throws Exception ;
+     
+     public Vector<Product> searchProductByNameAndCategory(String name, String categoryID) throws Exception;
 }
