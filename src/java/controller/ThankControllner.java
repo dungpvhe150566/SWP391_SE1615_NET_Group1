@@ -41,7 +41,7 @@ public class ThankControllner extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-             // Get and Set service from User to 
+            // Get and Set service from User to 
             String service = request.getParameter("do");
             request.setAttribute("service", service);
 
@@ -62,20 +62,19 @@ public class ThankControllner extends HttpServlet {
             if (index != null) {
                 indexPage = Integer.parseInt(index);
             }
-            
+
 //            Filter follow Manufacturers
 //            get the ManufacturersID selected from the user
             String[] manufacturersID = request.getParameterValues("manufacturer");
             String msID = request.getParameter("manufacturers");
-            if(msID!=null && !msID.isEmpty()){
+            if (msID != null && !msID.isEmpty()) {
 //                list ManufacturersID have form "[...,...]" so need split 
                 manufacturersID = msID.substring(1, msID.length() - 1).split(",");
             }
-            if(manufacturersID != null ){
+            if (manufacturersID != null) {
                 request.setAttribute("manufacturers", Arrays.toString(manufacturersID));
             }
-            
-            
+
 //            Filter follow Price
 //            get the prices selected from the user
             String[] prices = request.getParameterValues("prices");
@@ -87,10 +86,10 @@ public class ThankControllner extends HttpServlet {
             if (prices != null) {
                 request.setAttribute("listPrices", Arrays.toString(prices));
             }
-            
+
 //            Sort product follow Price(Ascending/Descending)
             String sort = request.getParameter("sort");
-            if(sort!=null && !sort.isEmpty()){
+            if (sort != null && !sort.isEmpty()) {
                 request.setAttribute("sort", sort);
             }
 
@@ -98,25 +97,21 @@ public class ThankControllner extends HttpServlet {
             if (service != null && service.equals("searchByCategory")) {
                 int categoryID = Integer.parseInt(request.getParameter("categoryID"));
                 productsList = productDao.getProductList(categoryID, "", prices,
-                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
+                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage, sort);
                 totalPage = productDao.getTotalPage(categoryID, "", prices, manufacturersID);
                 request.setAttribute("categoryID", categoryID);
-            } 
-            
-//            User Search follow ProductName
+            } //            User Search follow ProductName
             else if (service != null && service.equals("searchByName")) {
 //                Get ProductName from User Input
                 String productName = request.getParameter("productName");
                 productsList = productDao.getProductList(0, productName, prices,
-                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
+                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage, sort);
                 totalPage = productDao.getTotalPage(0, productName, prices, manufacturersID);
                 request.setAttribute("productName", productName);
-            }
-            
-//            List All Products
+            } //            List All Products
             else {
-                productsList = productDao.getProductList(0, "", prices, 
-                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage,sort);
+                productsList = productDao.getProductList(0, "", prices,
+                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage, sort);
                 totalPage = productDao.getTotalPage(0, "", prices, manufacturersID);
             }
 
@@ -126,17 +121,18 @@ public class ThankControllner extends HttpServlet {
             request.setAttribute("categories", categories);
             Vector<Manufacturer> manufacturers = manufacturerDAO.getManufacturerList();
             request.setAttribute("listManufacturers", manufacturers);
-            request.setAttribute("indexPage", indexPage);   
+            request.setAttribute("indexPage", indexPage);
             request.setAttribute("totalPage", totalPage);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("thankyou.jsp");
-            
+
             dispatcher.forward(request, response);
-           
-        }catch(Exception e){
-            request.setAttribute("ex", e);
-            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
-            dispatcher2.forward(request, response);
+
+        } catch (Exception e) {
+//            request.setAttribute("ex", e);
+//            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+//            dispatcher2.forward(request, response);
+            e.printStackTrace();
         }
     }
 
