@@ -74,6 +74,7 @@
                                         </td>
                                         <td class="align-middle">${C.value.product.getOriginalPrice()*C.value.getAmount()}</td>
                                         <td class="align-middle"><a href="#"onclick="showMess(${C.value.product.getProductID()})" class="btn btn-sm btn-primary"><i class="fa fa-times"></i></a></td>
+                                          <!--     <td><a  href="deleteall?carts=${carts}" class="btn btn-outline-danger" ><i class="bi bi-trash"></i>DeleteALL</a></td>-->
                                         </tr>
                                     </form>
                                 </c:forEach>
