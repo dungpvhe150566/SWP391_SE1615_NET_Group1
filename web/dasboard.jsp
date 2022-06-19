@@ -132,7 +132,7 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
         </script>
         <script>
-            var xValues = [1, 20, 300, 400, 500, 600, 700, 800, 900, 1000];
+            var xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
             new Chart("myChart", {
                 type: "line",
@@ -143,11 +143,11 @@
                             borderColor: "red",
                             fill: false
                         }, {
-                            data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
+                            data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000,6000,440,600],
                             borderColor: "green",
                             fill: false
                         }, {
-                            data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100],
+                            data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100,6000,440,600],
                             borderColor: "blue",
                             fill: false
                         }]
