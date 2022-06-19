@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class ViewDao extends DBContext{
 
-    public int getView() throws Exception  {
+    public  int getView() throws Exception  {
         Connection conn = null;
             PreparedStatement prepare = null;
             ResultSet rs = null;
@@ -69,4 +69,12 @@ public class ViewDao extends DBContext{
         }
         return check > 0;
     }
+//    public static void main(String[] args) {
+//        try {
+//            int viewg = new ViewDao().getView();
+//            System.out.println(viewg);
+//        } catch (Exception ex) {
+//            Logger.getLogger(ViewDao.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
 }

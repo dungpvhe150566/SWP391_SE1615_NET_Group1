@@ -110,7 +110,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block">
                             <h2 class="tm-block-title">Latest Hits</h2>
-                            <canvas id="lineChart"></canvas>
+                            <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
@@ -139,7 +139,7 @@
                                         <span class="tm-small tm-text-color-secondary">6h ago.</span>
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
                     </div>
@@ -171,7 +171,7 @@
                                         <td>16:00, 12 NOV 2018</td>
                                         <td>08:00, 18 NOV 2018</td>
                                     </tr>
-                                   
+
                                 </tbody>
                             </table>
                         </div>
@@ -198,6 +198,34 @@
         <script src="js/bootstrap.min.js"></script>
         <!-- https://getbootstrap.com/ -->
         <script src="js/tooplate-scripts.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+        </script>
+        <script>
+            var xValues = [1, 20, 300, 400, 500, 600, 700, 800, 900, 1000];
+
+            new Chart("myChart", {
+                type: "line",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                            data: [${view}],
+                            borderColor: "red",
+                            fill: false
+                        }, {
+                            data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000],
+                            borderColor: "green",
+                            fill: false
+                        }, {
+                            data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100],
+                            borderColor: "blue",
+                            fill: false
+                        }]
+                },
+                options: {
+                    legend: {display: false}
+                }
+            });</script>
         <script>
             Chart.defaults.global.defaultFontColor = 'white';
             let ctxLine,
@@ -209,16 +237,16 @@
                     configLine,
                     configBar,
                     configPie,
-                    lineChart;
-            barChart, pieChart;
+                    lineChart,
+                    barChart, pieChart;
             // DOM is ready
             $(function () {
-                drawLineChart(${view}); // Line Chart
+                drawLineChart(); // Line Chart
                 drawBarChart(); // Bar Chart
                 drawPieChart(); // Pie Chart
 
                 $(window).resize(function () {
-                    updateLineChart(${view});
+                    updateLineChart();
                     updateBarChart();
                 });
             })
