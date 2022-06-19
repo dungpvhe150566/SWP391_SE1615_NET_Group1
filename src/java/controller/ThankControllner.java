@@ -129,10 +129,10 @@ public class ThankControllner extends HttpServlet {
             dispatcher.forward(request, response);
 
         } catch (Exception e) {
-//            request.setAttribute("ex", e);
-//            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
-//            dispatcher2.forward(request, response);
-            e.printStackTrace();
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+            dispatcher2.forward(request, response);
+//            e.printStackTrace();
         }
     }
 

@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Pham Van Trong
  */
 @WebServlet(name = "ControllnerDasboard", urlPatterns = {"/dontrollner-dasboard"})
-public class ControllnerDasboard extends HttpServlet {
+public class DasboardControllner extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>

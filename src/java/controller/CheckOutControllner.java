@@ -160,7 +160,7 @@ public class CheckOutControllner extends HttpServlet {
             int shippingId = new ShipInfoDAOImpl().createReturnId(shipping);
 
             session.removeAttribute("carts");
-            response.sendRedirect("thankyou.jsp");
+            response.sendRedirect("thank");
         } catch (Exception e) {
           //  e.printStackTrace();
             request.setAttribute("ex", e);
