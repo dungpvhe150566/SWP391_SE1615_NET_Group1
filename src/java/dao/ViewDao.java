@@ -49,7 +49,7 @@ public class ViewDao extends DBContext{
             PreparedStatement prepare = null;
             ResultSet rs = null;
         String query = "UPDATE [dbo].[Viewss]\n"
-                + "   SET [Viewss] = ?";
+                + "   SET [vieww] = ?";
         int check = 0;
         conn =getConnection();
         try ( 
