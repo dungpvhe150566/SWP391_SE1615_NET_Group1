@@ -132,7 +132,7 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
         </script>
         <script>
-            var xValues = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+            var xValues = [30, 60, 90, 120, 150,180,210, 240, 270, 300, 330, 360];
 
             new Chart("myChart", {
                 type: "line",

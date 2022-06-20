@@ -63,17 +63,17 @@ public class CheckOutControllner extends HttpServlet {
                 Integer productId = entry.getKey();
                 Cart cart = entry.getValue();
 
-                totalMoney += (cart.getAmount() * cart.getProduct().getOriginalPrice());
+                totalMoney += (cart.getAmount() * (cart.getProduct().getOriginalPrice()));
 
             }
-            int totalMoneys = 0;
-            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
-                Integer productId = entry.getKey();
-                Cart cart = entry.getValue();
-
-                totalMoney += (cart.getAmount() * cart.getProduct().getOriginalPrice() + 50000);
-
-            }
+//            int totalMoneys = 0;
+//            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
+//                Integer productId = entry.getKey();
+//                Cart cart = entry.getValue();
+//
+//                totalMoney += (cart.getAmount() * cart.getProduct().getOriginalPrice() + 50000);
+//
+//            }
 
             request.setAttribute("totalMoney", totalMoney);
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
