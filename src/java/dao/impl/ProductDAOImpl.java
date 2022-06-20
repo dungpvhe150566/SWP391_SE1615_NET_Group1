@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ProductDAOImpl extends DBContext implements ProductDAO {
 
@@ -24,10 +22,10 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
      * @param
      * @return Vector have max 6 Product (following Pagination)
      */
-    public Vector<Product> getProductList(int cID, String productName,
+    public ArrayList<Product> getProductList(int cID, String productName,
             String[] prices, String[] mID, int start, int end, String sortby) throws Exception {
         // Create vector to store all Categories
-        Vector<Product> products = new Vector<>();
+        ArrayList<Product> products = new ArrayList<>();
 
 //        Variable to store the condition values passed to filter products in Database
         String price = "";
@@ -599,6 +597,48 @@ conn = getConnection();
             closeConnection(connection);
         }
         return null;
+    }
+    
+    public Vector<Product> searchProductByNameAndCategory(String name, String categoryID) throws Exception {
+         String query = "SELECT * FROM Product WHERE CategoryID = ? and ProductName like '%"+name+"%'";
+         Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        Vector<Product> vectorProduct = new Vector<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, categoryID);
+            rs = preparedStatement.executeQuery();
+            
+//            ps = conn.prepareStatement(query);
+//            ps.setString(1, id);
+//            rs = ps.executeQuery();
+            while (rs.next()) {
+                vectorProduct.add(new Product(rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getString("Description"),
+                        rs.getInt("OriginalPrice"),
+                        rs.getInt("SellPrice"),
+                        rs.getInt("SalePercent"),
+                        rs.getString("imageLink"),
+                        rs.getInt("CategoryID"),
+                        rs.getInt("SellerID"),
+                        rs.getInt("Amount"),
+                        rs.getInt("StatusID"),
+                        rs.getInt("ManufacturerID"),
+                        rs.getFloat("height"),
+                        rs.getFloat("width"),
+                        rs.getFloat("weight")));
+            }
+            return vectorProduct;
+        } catch (Exception e) {
+            throw e;
+        }finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
     }
 
     public static void main(String[] args) {

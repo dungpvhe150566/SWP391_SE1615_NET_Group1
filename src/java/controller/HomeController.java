@@ -10,8 +10,6 @@ import dao.CategoryDAO;
 import entity.Blog;
 import entity.Category;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -19,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.impl.BlogDAOImpl;
 import dao.impl.CategoryDAOImpl;
+import java.util.ArrayList;
 
 /**
  *
@@ -43,8 +42,8 @@ public class HomeController extends HttpServlet {
 //            Get All Category, Blog to display for User select
             BlogDAO blogDAO = new BlogDAOImpl();
             CategoryDAO categoryDAO = new CategoryDAOImpl();
-            Vector<Blog> blogs = blogDAO.getBlogList();
-            Vector<Category> categoryList = categoryDAO.getAllCategory();
+            ArrayList<Blog> blogs = blogDAO.getBlogList();
+            ArrayList<Category> categoryList = categoryDAO.getAllCategory();
 
             request.setAttribute("blogs", blogs);
             request.setAttribute("categoryList", categoryList);

@@ -24,7 +24,7 @@ public class OrderDetailDAOImpl extends DBContext implements OrderDetailDAO{
                     + "           ,[Quantity])\n"
                     + "     VALUES\n"
                     + "           (?,?,?,?,?)";
-
+            conn = getConnection();
             prepare = conn.prepareStatement(sql);
             prepare.setInt(1, orderId);
             for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {

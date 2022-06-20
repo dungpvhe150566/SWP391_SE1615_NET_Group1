@@ -44,6 +44,18 @@
         <servlet-name>searchInAccountController</servlet-name>
         <servlet-class>controller.searchInAccountController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CompareProducts</servlet-name>
+        <servlet-class>controller.CompareProducts</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CompareProductFinal</servlet-name>
+        <servlet-class>controller.CompareProductFinal</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CompareByAjax</servlet-name>
+        <servlet-class>controller.CompareByAjax</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
         <url-pattern>/ProductsController</url-pattern>
@@ -90,6 +102,18 @@
     <servlet-mapping>
         <servlet-name>searchInAccountController</servlet-name>
         <url-pattern>/searchInAccountController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompareProducts</servlet-name>
+        <url-pattern>/CompareProducts</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompareProductFinal</servlet-name>
+        <url-pattern>/CompareProductFinal</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>CompareByAjax</servlet-name>
+        <url-pattern>/CompareByAjax</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

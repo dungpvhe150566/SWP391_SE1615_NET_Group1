@@ -146,6 +146,7 @@
                                     <div class="card-footer d-flex justify-content-between bg-light border">
                                         <a href="ShopDetailController?do=ViewDetail&categoryID=${product.getCategoryID()}&productID=${product.getProductID()}" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
                                         <a href="addtocart?productId=${product.getProductID()}" class="btn btn-sm text-dark p-0"><i class="fas fa-shopping-cart text-primary mr-1"></i>Add To Cart</a>
+                                        <a href="CompareProducts?productID=${product.getProductID()}" class="btn btn-sm text-dark p-0"><i class="fas fa-search text-primary mr-1"></i>Compare</a>
                                     </div>
                                 </div>
                             </div>

@@ -7,13 +7,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class ManufacturerDAOImpl extends DBContext implements ManufacturerDAO{
 
-    public Vector<Manufacturer> getManufacturerList() throws Exception{
+    public ArrayList<Manufacturer> getManufacturerList() throws Exception{
         // Create vector to store all Categories
-        Vector<Manufacturer> manufacturers = new Vector<>();
+        ArrayList<Manufacturer> manufacturers = new ArrayList<>();
 
         // Create value atribute of each Category
         int manufacturerID;

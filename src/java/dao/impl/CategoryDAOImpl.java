@@ -7,14 +7,15 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 public class CategoryDAOImpl extends DBContext implements CategoryDAO{
     
-    public Vector<Category> getAllCategory() throws Exception{
+    public ArrayList<Category> getAllCategory() throws Exception{
         
         // Create vector to store all Categories
-        Vector<Category> categories = new Vector<>();
+        ArrayList<Category> categories = new ArrayList<>();
         
         // Create value atribute of each Category
         int categoryID;
@@ -40,7 +41,7 @@ public class CategoryDAOImpl extends DBContext implements CategoryDAO{
                 categories.add(new Category(categoryID, categoryName, icon));
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw ex;
         }
         finally {
             closeRS(rs);

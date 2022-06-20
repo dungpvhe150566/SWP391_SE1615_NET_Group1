@@ -5,7 +5,6 @@ import entity.Manufacturer;
 import entity.Product;
 import entity.ProductStatus;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Vector;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -18,6 +17,7 @@ import dao.impl.CategoryDAOImpl;
 import dao.impl.ManufacturerDAOImpl;
 import dao.impl.ProductDAOImpl;
 import dao.impl.ProductStatusDAOImpl;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 
 /**
@@ -98,8 +98,8 @@ public class EditProductController extends HttpServlet {
                 request.setAttribute("product", pro);
             }
 
-            Vector<Category> categoryList = (new CategoryDAOImpl()).getAllCategory();
-            Vector<Manufacturer> manufacturerList = (new ManufacturerDAOImpl()).getManufacturerList();
+            ArrayList<Category> categoryList = (new CategoryDAOImpl()).getAllCategory();
+            ArrayList<Manufacturer> manufacturerList = (new ManufacturerDAOImpl()).getManufacturerList();
             Vector<ProductStatus> productStatusList = (new ProductStatusDAOImpl()).getProductStatusList();
 
             request.setAttribute("message", message);

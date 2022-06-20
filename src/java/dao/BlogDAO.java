@@ -6,12 +6,12 @@
 package dao;
 
 import entity.Blog;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
  * @author Admin
  */
 public interface BlogDAO {
-    public Vector<Blog> getBlogList() throws Exception;
+    public ArrayList<Blog> getBlogList() throws Exception;
 }

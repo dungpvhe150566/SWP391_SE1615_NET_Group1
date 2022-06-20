@@ -55,17 +55,17 @@
                     <nav aria-label="Page navigation">
                         <ul class="pagination justify-content-center mb-3">
                             <li class="page-item ${indexPage==1?'disabled':''}">
-                                <a class="page-link" href="ShopController?do=${service}&indexPage=${indexPage-1}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=${sort}" aria-label="Previous">
+                                <a class="page-link" href="thank?do=${service}&indexPage=${indexPage-1}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=${sort}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                     <span class="sr-only">Previous</span>
                                 </a>
                             </li>
                             <c:forEach var="i" begin="1" end="${totalPage}"  >
                                 <li class="page-item ${indexPage==i?'active':''}">
-                                    <a class="page-link" href="ShopController?do=${service}&indexPage=${i}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=${sort}">${i}</a></li>
+                                    <a class="page-link" href="thank?do=${service}&indexPage=${i}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=${sort}">${i}</a></li>
                                 </c:forEach>
                             <li class="page-item ${indexPage==totalPage?'disabled':''}">
-                                <a class="page-link" href="ShopController?do=${service}&indexPage=${indexPage+1}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=${sort}" aria-label="Next">
+                                <a class="page-link" href="thank?do=${service}&indexPage=${indexPage+1}&productName=${productName}&categoryID=${categoryID}&listPrices=${listPrices}&manufacturers=${manufacturers}&sort=${sort}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                     <span class="sr-only">Next</span>
                                 </a>

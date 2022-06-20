@@ -6,12 +6,12 @@
 package dao;
 
 import entity.Manufacturer;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
  * @author Admin
  */
 public interface ManufacturerDAO {
-    public Vector<Manufacturer> getManufacturerList() throws Exception;
+    public ArrayList<Manufacturer> getManufacturerList() throws Exception;
 }

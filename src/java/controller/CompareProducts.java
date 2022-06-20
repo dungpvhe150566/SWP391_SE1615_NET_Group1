@@ -1,27 +1,29 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package controller;
 
-import entity.Cart;
+import dao.BlogDAO;
+import dao.ProductDAO;
+import dao.impl.BlogDAOImpl;
+import dao.impl.ProductDAOImpl;
+import entity.Blog;
+import entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
- * @author Pham Van Trong
+ * @author Admin
  */
-@WebServlet(name = "CartControllner", urlPatterns = {"/Cart"})
-public class CartControllner extends HttpServlet {
+public class CompareProducts extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,29 +37,25 @@ public class CartControllner extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-         HttpSession session = request.getSession();
-            Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
-            if(carts==null){
-                carts = new LinkedHashMap<>();
-            }
+        try {
             
-            //tinh tong tien
-            int totalMoney = 0;
-            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
-                Integer productId = entry.getKey();
-                Cart cart = entry.getValue();
-                
-                totalMoney += (cart.getAmount()* cart.getProduct().getOriginalPrice());
-                
-            }
+            BlogDAO blogDAO = new BlogDAOImpl();
+            ArrayList<Blog> blogs = blogDAO.getBlogList();
+            request.setAttribute("blogs", blogs);
             
-//            out.print(totalMoney);
-            request.setAttribute("totalMoney", totalMoney);
-            request.setAttribute("carts", carts);
-            request.getRequestDispatcher("cart.jsp").forward(request, response);
-       }
+            int productID=Integer.parseInt(request.getParameter("productID")) ;
+            ProductDAO productDAO = new ProductDAOImpl();
+            Product product = productDAO.getProductById(productID);
+            request.setAttribute("product", product);
+            
+            RequestDispatcher dispatcher = request.getRequestDispatcher("Compare.jsp");
+            dispatcher.forward(request, response);
+            
+        }catch (Exception e) {
+            request.setAttribute("ex", e);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

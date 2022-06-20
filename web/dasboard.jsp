@@ -28,77 +28,7 @@
 
     <body id="reportsPage">
         <div class="" id="home">
-            <nav class="navbar navbar-expand-xl">
-                <div class="container h-100">
-                    <a class="navbar-brand" href="index.html">
-                        <h1 class="tm-site-title mb-0">Product Admin</h1>
-                    </a>
-                    <button class="navbar-toggler ml-auto mr-0" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-bars tm-nav-icon"></i>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mx-auto h-100">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">
-                                    <i class="fas fa-tachometer-alt"></i>
-                                    Dashboard
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">
-                                    <i class="far fa-file-alt"></i>
-                                    <span>
-                                        Reports <i class="fas fa-angle-down"></i>
-                                    </span>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Daily Report</a>
-                                    <a class="dropdown-item" href="#">Weekly Report</a>
-                                    <a class="dropdown-item" href="#">Yearly Report</a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="products.html">
-                                    <i class="fas fa-shopping-cart"></i>
-                                    Products
-                                </a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="accounts.html">
-                                    <i class="far fa-user"></i>
-                                    Accounts
-                                </a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-cog"></i>
-                                    <span>
-                                        Settings <i class="fas fa-angle-down"></i>
-                                    </span>
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Profile</a>
-                                    <a class="dropdown-item" href="#">Billing</a>
-                                    <a class="dropdown-item" href="#">Customize</a>
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link d-block" href="login.html">
-                                    Admin, <b>Logout</b>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                +            </nav>
+             <%@include file="components/NavbarAdmin.jsp" %>
             <div class="container">
                 <div class="row">
                     <div class="col">
@@ -110,7 +40,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block">
                             <h2 class="tm-block-title">Latest Hits</h2>
-                            <canvas id="lineChart"></canvas>
+                            <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
@@ -139,70 +69,7 @@
                                         <span class="tm-small tm-text-color-secondary">6h ago.</span>
                                     </div>
                                 </div>
-                                <div class="media tm-notification-item">
-                                    <div class="tm-gray-circle"><img src="img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                    <div class="media-body">
-                                        <p class="mb-2"><b>Oliver Too</b> and <b>6 others</b> sent you existing <a href="#"
-                                                                                                                   class="tm-notification-link">product updates</a>. Read more reports.</p>
-                                        <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                    </div>
-                                </div>
-                                <div class="media tm-notification-item">
-                                    <div class="tm-gray-circle"><img src="img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                    <div class="media-body">
-                                        <p class="mb-2"><b>Victoria</b> and <b>6 others</b> sent you <a href="#"
-                                                                                                        class="tm-notification-link">order updates</a>. Read order information.</p>
-                                        <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                    </div>
-                                </div>
-                                <div class="media tm-notification-item">
-                                    <div class="tm-gray-circle"><img src="img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                    <div class="media-body">
-                                        <p class="mb-2"><b>Laura Cute</b> and <b>6 others</b> sent you <a href="#"
-                                                                                                          class="tm-notification-link">product records</a>.</p>
-                                        <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                    </div>
-                                </div>
-                                <div class="media tm-notification-item">
-                                    <div class="tm-gray-circle"><img src="img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                    <div class="media-body">
-                                        <p class="mb-2"><b>Samantha</b> and <b>6 others</b> sent you <a href="#"
-                                                                                                        class="tm-notification-link">order stuffs</a>.</p>
-                                        <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                    </div>
-                                </div>
-                                <div class="media tm-notification-item">
-                                    <div class="tm-gray-circle"><img src="img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                    <div class="media-body">
-                                        <p class="mb-2"><b>Sophie</b> and <b>6 others</b> sent you <a href="#"
-                                                                                                      class="tm-notification-link">product updates</a>.</p>
-                                        <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                    </div>
-                                </div>
-                                <div class="media tm-notification-item">
-                                    <div class="tm-gray-circle"><img src="img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                    <div class="media-body">
-                                        <p class="mb-2"><b>Lily A</b> and <b>6 others</b> sent you <a href="#"
-                                                                                                      class="tm-notification-link">product updates</a>.</p>
-                                        <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                    </div>
-                                </div>
-                                <div class="media tm-notification-item">
-                                    <div class="tm-gray-circle"><img src="img/notification-02.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                    <div class="media-body">
-                                        <p class="mb-2"><b>Amara</b> and <b>6 others</b> sent you <a href="#"
-                                                                                                     class="tm-notification-link">product updates</a>.</p>
-                                        <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                    </div>
-                                </div>
-                                <div class="media tm-notification-item">
-                                    <div class="tm-gray-circle"><img src="img/notification-03.jpg" alt="Avatar Image" class="rounded-circle"></div>
-                                    <div class="media-body">
-                                        <p class="mb-2"><b>Cinthela</b> and <b>6 others</b> sent you <a href="#"
-                                                                                                        class="tm-notification-link">product updates</a>.</p>
-                                        <span class="tm-small tm-text-color-secondary">6h ago.</span>
-                                    </div>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -234,7 +101,7 @@
                                         <td>16:00, 12 NOV 2018</td>
                                         <td>08:00, 18 NOV 2018</td>
                                     </tr>
-                                   
+
                                 </tbody>
                             </table>
                         </div>
@@ -261,6 +128,34 @@
         <script src="js/bootstrap.min.js"></script>
         <!-- https://getbootstrap.com/ -->
         <script src="js/tooplate-scripts.js"></script>
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+        </script>
+        <script>
+            var xValues = [30, 60, 90, 120, 150,180,210, 240, 270, 300, 330, 360];
+
+            new Chart("myChart", {
+                type: "line",
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                            data: [${view}],
+                            borderColor: "red",
+                            fill: false
+                        }, {
+                            data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000,6000,440,600],
+                            borderColor: "green",
+                            fill: false
+                        }, {
+                            data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100,6000,440,600],
+                            borderColor: "blue",
+                            fill: false
+                        }]
+                },
+                options: {
+                    legend: {display: false}
+                }
+            });</script>
         <script>
             Chart.defaults.global.defaultFontColor = 'white';
             let ctxLine,
@@ -272,8 +167,8 @@
                     configLine,
                     configBar,
                     configPie,
-                    lineChart;
-            barChart, pieChart;
+                    lineChart,
+                    barChart, pieChart;
             // DOM is ready
             $(function () {
                 drawLineChart(); // Line Chart

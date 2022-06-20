@@ -23,6 +23,7 @@ import dao.impl.ShipDAOImpl;
 import dao.impl.ShipInfoDAOImpl;
 import entity.Orders;
 import entity.ShipInfo;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 
 /**
@@ -50,44 +51,34 @@ public class CheckOutControllner extends HttpServlet {
 //            int shiptId = Integer.parseInt(request.getParameter("shiptId"));
 //             int productID = Integer.parseInt(request.getParameter("productID"));
             HttpSession session = request.getSession();
-
-            List<entity.Ship> listShips = new ShipDAOImpl().getAllShips();
+//            List<entity.Ship> listShips = new ShipDAOImpl().getAllShips();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
             if (carts == null) {
                 carts = new LinkedHashMap<>();
             }
 
             //tinh tong tien
-            double totalMoney = 0;
+            int totalMoney = 0;
             for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
                 Integer productId = entry.getKey();
                 Cart cart = entry.getValue();
 
-                totalMoney += (cart.getAmount() * cart.getProduct().getOriginalPrice());
+                totalMoney += (cart.getAmount() * (cart.getProduct().getOriginalPrice()));
 
             }
-            double totalMoneys = 0;
-            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
-                Integer productId = entry.getKey();
-                Cart cart = entry.getValue();
-
-                totalMoney += (cart.getAmount() * cart.getProduct().getOriginalPrice() + 50000);
-
-            }
-            // tinh gia shipping
-//            int shipID = Integer.parseInt(request.getParameter("shipID"));
-//            ShipDAOImpl shipDAO = new ShipDAOImpl();
-//            List<Ship> listShip = shipDAO.getAllShips();
-//            request.setAttribute("carts", carts);
-//            session.setAttribute("listShip", listShip);
-//              Ship ship =  (Ship) new ShipDAOImpl().getPricebyIDShips(shiptId);
-//            carts.put(productID, Cart.builder().ship(ship).build());
-//           request.setAttribute("listShips", listShips);
+//            int totalMoneys = 0;
+//            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
+//                Integer productId = entry.getKey();
+//                Cart cart = entry.getValue();
+//
+//                totalMoney += (cart.getAmount() * cart.getProduct().getOriginalPrice() + 50000);
+//
+//            }
 
             request.setAttribute("totalMoney", totalMoney);
-//            request.setAttribute("totalMoneys", totalMoney);
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         } catch (Exception e) {
+//            e.printStackTrace();
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
             dispatcher2.forward(request, response);
@@ -138,7 +129,7 @@ public class CheckOutControllner extends HttpServlet {
             }
 
             //tinh tong tien
-            double totalPrice = 0;
+            int totalPrice = 0;
             for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
                 Integer productId = entry.getKey();
                 Cart cart = entry.getValue();
@@ -169,8 +160,9 @@ public class CheckOutControllner extends HttpServlet {
             int shippingId = new ShipInfoDAOImpl().createReturnId(shipping);
 
             session.removeAttribute("carts");
-            response.sendRedirect("thankyou.jsp");
+            response.sendRedirect("thank");
         } catch (Exception e) {
+          //  e.printStackTrace();
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
             dispatcher2.forward(request, response);

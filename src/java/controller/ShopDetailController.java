@@ -11,7 +11,6 @@ import entity.Category;
 import entity.Feedback;
 import entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +21,7 @@ import dao.impl.CategoryDAOImpl;
 import dao.impl.FeedbackDAOImpl;
 import dao.ProductDAO;
 import dao.impl.ProductDAOImpl;
+import java.util.ArrayList;
 
 /**
  *
@@ -58,7 +58,7 @@ public class ShopDetailController extends HttpServlet {
                 request.setAttribute("product", product);
 
 //                 Get Feedback of this Product follow ProductID
-                Vector<Feedback> feedbacks = feedbackDAO.getFeedBackByPID(productID);
+                ArrayList<Feedback> feedbacks = feedbackDAO.getFeedBackByPID(productID);
                 request.setAttribute("feedbacks", feedbacks);
 
 //                Get ProductsList same Catrgory with this Product to display for Use
@@ -67,7 +67,7 @@ public class ShopDetailController extends HttpServlet {
                 request.setAttribute("productsSameCategory", productsSameCategory);
             }
 
-            Vector<Category> categories = categoryDAO.getAllCategory();
+            ArrayList<Category> categories = categoryDAO.getAllCategory();
             request.setAttribute("categories", categories);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/detail.jsp");

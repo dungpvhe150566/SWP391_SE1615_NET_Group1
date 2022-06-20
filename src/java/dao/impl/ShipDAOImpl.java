@@ -21,17 +21,15 @@ import java.util.logging.Logger;
  * @author Pham Van Trong
  */
 public class ShipDAOImpl extends DBContext implements ShipDAO{
-    
+     ResultSet rs = null;
      public List<Ship> getAllShips() throws Exception{
         List<Ship> list = new ArrayList<>();
         Connection conn =null;
             PreparedStatement preparedStatement =null;
-            ResultSet rs=null;
+           
             
         try {
             String sql = "select * from Ship";
-           
-            
             while (rs.next()) {
             preparedStatement = conn.prepareStatement(sql);
             rs = preparedStatement.executeQuery();

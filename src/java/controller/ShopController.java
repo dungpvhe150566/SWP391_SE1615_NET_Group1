@@ -5,9 +5,7 @@ import entity.Category;
 import entity.Manufacturer;
 import entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Arrays;
-import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.impl.CategoryDAOImpl;
 import dao.impl.ManufacturerDAOImpl;
 import dao.impl.ProductDAOImpl;
+import java.util.ArrayList;
 
 /**
  *
@@ -99,7 +98,7 @@ public class ShopController extends HttpServlet {
 
             ProductDAOImpl productDao = new ProductDAOImpl();
 //            Get List Products follow (CategoryID. ProductName, Price, ManufacturerID,Sort)
-            Vector<Product> productsList = productDao.getProductList(categoryID, productName, prices,
+            ArrayList<Product> productsList = productDao.getProductList(categoryID, productName, prices,
                     manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage, sort);
             request.setAttribute("products", productsList);
 
@@ -109,11 +108,11 @@ public class ShopController extends HttpServlet {
 
             CategoryDAOImpl categoryDao = new CategoryDAOImpl();
 //            Set CategoryList to display to the View Page
-            Vector<Category> categories = categoryDao.getAllCategory();
+            ArrayList<Category> categories = categoryDao.getAllCategory();
             request.setAttribute("categories", categories);
 //            Set ManufacturerList to display to the View Page
             ManufacturerDAOImpl manufacturerDAO = new ManufacturerDAOImpl();
-            Vector<Manufacturer> manufacturers = manufacturerDAO.getManufacturerList();
+            ArrayList<Manufacturer> manufacturers = manufacturerDAO.getManufacturerList();
             request.setAttribute("listManufacturers", manufacturers);
 
             RequestDispatcher dispatcher1 = request.getRequestDispatcher("shop.jsp");
