@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class ProductDAOImpl extends DBContext implements ProductDAO {
 
@@ -24,10 +22,10 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
      * @param
      * @return Vector have max 6 Product (following Pagination)
      */
-    public Vector<Product> getProductList(int cID, String productName,
+    public ArrayList<Product> getProductList(int cID, String productName,
             String[] prices, String[] mID, int start, int end, String sortby) throws Exception {
         // Create vector to store all Categories
-        Vector<Product> products = new Vector<>();
+        ArrayList<Product> products = new ArrayList<>();
 
 //        Variable to store the condition values passed to filter products in Database
         String price = "";

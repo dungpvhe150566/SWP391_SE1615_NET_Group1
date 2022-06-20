@@ -6,15 +6,15 @@
 package dao;
 
 import entity.Feedback;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 
 /**
  *
  * @author Admin
  */
 public interface FeedbackDAO {
-    public Vector<Feedback> getFeedBackByPID(int productID) throws Exception;
+    public ArrayList<Feedback> getFeedBackByPID(int productID) throws Exception;
     
     public List<Feedback> getFeedbacks() throws Exception;
     

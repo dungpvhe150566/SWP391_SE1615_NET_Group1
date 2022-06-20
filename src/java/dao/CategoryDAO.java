@@ -6,12 +6,12 @@
 package dao;
 
 import entity.Category;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
  * @author Admin
  */
 public interface CategoryDAO {
-    public Vector<Category> getAllCategory() throws Exception;
+    public ArrayList<Category> getAllCategory() throws Exception;
 }

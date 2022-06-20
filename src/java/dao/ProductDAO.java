@@ -6,6 +6,7 @@
 package dao;
 
 import entity.Product;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 
@@ -14,7 +15,7 @@ import java.util.Vector;
  * @author Admin
  */
 public interface ProductDAO {
-    public Vector<Product> getProductList(int cID, String productName,
+    public ArrayList<Product> getProductList(int cID, String productName,
             String[] prices, String[] mID, int start, int end, String sortby) throws Exception;
 //    
     public int getTotalPage(int cID, String productName,

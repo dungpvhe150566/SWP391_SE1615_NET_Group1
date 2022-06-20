@@ -12,8 +12,7 @@ import dao.impl.ProductDAOImpl;
 import entity.Blog;
 import entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Vector;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -41,7 +40,7 @@ public class CompareProducts extends HttpServlet {
         try {
             
             BlogDAO blogDAO = new BlogDAOImpl();
-            Vector<Blog> blogs = blogDAO.getBlogList();
+            ArrayList<Blog> blogs = blogDAO.getBlogList();
             request.setAttribute("blogs", blogs);
             
             int productID=Integer.parseInt(request.getParameter("productID")) ;

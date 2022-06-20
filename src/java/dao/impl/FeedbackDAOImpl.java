@@ -19,9 +19,9 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
 
     PreparedStatement ps = null; //...
     ResultSet rs = null; //Nhận kết quả trả về
-    public Vector<Feedback> getFeedBackByPID(int productID) throws Exception{
+    public ArrayList<Feedback> getFeedBackByPID(int productID) throws Exception{
         // Create vector to store all Categories
-        Vector<Feedback> feedbacks = new Vector<>();
+        ArrayList<Feedback> feedbacks = new ArrayList<>();
 
         // Query Statement to get all Categories in Database 
         String sqlQuery = "select f.ID,\n"

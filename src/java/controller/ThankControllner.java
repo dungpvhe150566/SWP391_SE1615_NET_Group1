@@ -11,9 +11,8 @@ import entity.Category;
 import entity.Manufacturer;
 import entity.Product;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,7 +49,7 @@ public class ThankControllner extends HttpServlet {
             ManufacturerDAOImpl manufacturerDAO = new ManufacturerDAOImpl();
 
 //            ProductsList variable stores a list of products
-            Vector<Product> productsList = null;
+            ArrayList<Product> productsList = null;
 
 //            Get the position of the current Page to paginate products to display to users
 //            indexPage variable is the position of the page the user is viewing
@@ -116,10 +115,10 @@ public class ThankControllner extends HttpServlet {
             }
 
 //            set information to display to the user(CategoryList, ProductsList,ManufacturingsList)
-            Vector<Category> categories = categoryDao.getAllCategory();
+            ArrayList<Category> categories = categoryDao.getAllCategory();
             request.setAttribute("products", productsList);
             request.setAttribute("categories", categories);
-            Vector<Manufacturer> manufacturers = manufacturerDAO.getManufacturerList();
+            ArrayList<Manufacturer> manufacturers = manufacturerDAO.getManufacturerList();
             request.setAttribute("listManufacturers", manufacturers);
             request.setAttribute("indexPage", indexPage);
             request.setAttribute("totalPage", totalPage);

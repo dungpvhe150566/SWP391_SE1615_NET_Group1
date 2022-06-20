@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Vector;
 
 /**
@@ -21,10 +22,10 @@ public class BlogDAOImpl extends DBContext implements BlogDAO{
      * @param
      * @return Vector Blog List
      */
-    public Vector<Blog> getBlogList() throws Exception{
+    public ArrayList<Blog> getBlogList() throws Exception{
 
         // Create vector to store all Categories
-        Vector<Blog> blogs = new Vector<>();
+        ArrayList<Blog> blogs = new ArrayList<>();
         
         // Query Statement to get all Categories in Database 
         String sqlQuery = "select * from Blog";
