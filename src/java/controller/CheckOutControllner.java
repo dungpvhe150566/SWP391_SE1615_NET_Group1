@@ -139,7 +139,7 @@ public class CheckOutControllner extends HttpServlet {
             Orders order = Orders.builder()
                     .UserID(1)
                     .TotalPrice((float) totalPrice)
-                    .Note(note)
+                    .Note(note.trim())
                     .Status(1)
                     .build();
             int orderId = new OrdersDAOImpl().createReturnId(order);
@@ -151,11 +151,11 @@ public class CheckOutControllner extends HttpServlet {
             //Lưu Shipping
             ShipInfo shipping = ShipInfo.builder()
                     .Order_ID(orderId)
-                    .CustomerName(name)
-                    .ShippingAddress(address)
+                    .CustomerName(name.trim())
+                    .ShippingAddress(address.trim())
                     .ShipCityID(CityId)
                     .PhoneNum(phone)
-                    .Note(note)
+                    .Note(note.trim())
                     .build();
             int shippingId = new ShipInfoDAOImpl().createReturnId(shipping);
 

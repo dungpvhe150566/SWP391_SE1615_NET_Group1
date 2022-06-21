@@ -56,7 +56,7 @@
 
                             <div class="col-md-6 form-group">
                                 <label>CustomerName</label>
-                                <input class="form-control"  id="name" name="name" type="text" placeholder="John"  required >
+                                <input class="form-control"  id="name" name="name" type="text" placeholder="John"    required >
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Note</label>
@@ -65,7 +65,7 @@
 
                             <div class="col-md-6 form-group">
                                 <label>Phone Number</label>
-                                <input maxlength="10" class="form-control"  id="phone"name="phone" type="text"  onkeypress="return isNumberKey(event)"placeholder="+123 456 789"  required >
+                                <input maxlength="10" class="form-control"  id="phone"name="phone" type="text"  onkeypress="return isNumberKey(event)"placeholder="+84 1 234 5678"  required pattern="(84|0[3|5|7|8|9])+([0-9]{8})\b" >
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Address Detail</label>
@@ -82,7 +82,7 @@
                                                 }"
                                         id="yourid" class="form-control" id="CityId" name="CityId"  placeholder="123 Street"  required>
                             </div>
-                         
+
                             <div hidden=""></div>
                         </div>
 
@@ -150,6 +150,7 @@
 
 
         <!-- JavaScript Libraries -->
+     
         <script>
             function isNumberKey(e) {
                 var charCode = (e.which) ? e.which : e.keyCode;
