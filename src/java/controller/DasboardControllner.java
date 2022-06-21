@@ -4,9 +4,12 @@
  */
 package controller;
 
+import dao.StatisticalOrdersDAO;
 import dao.ViewDao;
+import entity.Statistical;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -40,6 +43,17 @@ public class DasboardControllner extends HttpServlet {
              HttpSession session = request.getSession();
              int count = new ViewDao().getView();
              request.setAttribute("view", count);
+              String thu="";
+             String data="";
+             List<Statistical> listThongKe = new StatisticalOrdersDAO().getAll();
+             for (Statistical T : listThongKe) {
+                thu+="\""+T.getThu()+"\", ";
+                data+=T.getNumOfOrder()+",";
+            }
+             
+            
+            request.setAttribute("thu", thu);
+            request.setAttribute("data", data);
            request.getRequestDispatcher("dasboard.jsp").forward(request, response);
         }
     }

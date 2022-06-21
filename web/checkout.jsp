@@ -56,20 +56,20 @@
 
                             <div class="col-md-6 form-group">
                                 <label>CustomerName</label>
-                                <input class="form-control"  id="name" name="name" type="text" placeholder="John">
+                                <input class="form-control"  id="name" name="name" type="text" placeholder="John"  required >
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Note</label>
-                                <input class="form-control"  id="note "name="note" type="text" placeholder="Doe">
+                                <input class="form-control"  id="note "name="note" type="text" placeholder="Doe"  required pattern="\S+">
                             </div>
 
                             <div class="col-md-6 form-group">
                                 <label>Phone Number</label>
-                                <input maxlength="10" class="form-control"  id="phone"name="phone" type="text" placeholder="+123 456 789">
+                                <input maxlength="10" class="form-control"  id="phone"name="phone" type="text"  onkeypress="return isNumberKey(event)"placeholder="+123 456 789"  required >
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Address Detail</label>
-                                <input class="form-control" id="address" name="address" type="text" placeholder="123 Street">
+                                <input class="form-control" id="address" name="address" type="text" placeholder="123 Street"  required >
                             </div>
 
                             <div class="col-md-6 form-group">
@@ -80,7 +80,7 @@
                                                 } else if (this.value < 1) {
                                                     this.value = '1';
                                                 }"
-                                        id="yourid" class="form-control" id="CityId" name="CityId"  placeholder="123 Street">
+                                        id="yourid" class="form-control" id="CityId" name="CityId"  placeholder="123 Street"  required>
                             </div>
 
 
@@ -88,7 +88,7 @@
 
 
                     </div>
-                   
+
                 </div>
                 <div class="col-lg-4">
                     <div class="card border-secondary mb-5">
@@ -150,6 +150,14 @@
 
 
         <!-- JavaScript Libraries -->
+        <script>
+            function isNumberKey(e) {
+                var charCode = (e.which) ? e.which : e.keyCode;
+                if (charCode > 31 && (charCode < 48 || charCode > 57))
+                    return false;
+                return true;
+            }
+        </script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
         <script src="lib/easing/easing.min.js"></script>
