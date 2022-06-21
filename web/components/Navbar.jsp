@@ -57,7 +57,7 @@
                     <form action="ShopController" id="searchByProductName" method="post">
                         <input type="hidden" name="do" value="searchByName">
                         <div class="input-group">
-                            <input type="text" name="productName" class="form-control" placeholder="${productName!=null? productName:' Search by name'}">
+                            <input type="text" name="productName" maxlength="1000" class="form-control" placeholder="${productName!=null? productName:' Search by name'}">
                             <div class="input-group-append">
                                 <span class="input-group-text bg-transparent text-primary">
                                     <a onclick="document.getElementById('searchByProductName').submit();" ><i class="fa fa-search"></i></a> 

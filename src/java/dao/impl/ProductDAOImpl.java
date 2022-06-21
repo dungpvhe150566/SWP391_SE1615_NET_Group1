@@ -69,7 +69,7 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
 
         // Query Statement to get all Categories in Database 
         String sqlQuery = "with x as (	select row_number() over(order by ProductID asc) as row, * from Product "
-                + "where (ProductName like '%" + productName.trim() + "%') "
+                + "where (ProductName like '%" + productName+ "%') "
                 + manufacturersID
                 + categoryID
                 + price + " ) "

@@ -232,7 +232,7 @@
                     </table>
 
                     <form style="float:right; display:inline;" class="form-inline my-2 my-lg-0" action="">
-                        <input class="form-control mr-sm-2" type="search" placeholder="Search a product" aria-label="Search..."
+                        <input class="form-control mr-sm-2" maxlength="1000" type="search" placeholder="Search a product" aria-label="Search..."
                                oninput="searchByName(this,${product.getCategoryID()},${product.getProductID()})" value="${txtS}" name="txt">
                         <a href="#" ><i class="fa fa-search text-primary"></i></a>
                     </form>
@@ -313,7 +313,7 @@
         <script src="js/main.js"></script>
         <script>
                                         function searchByName(param, param1,param2) {
-                                            var txtSearch = param.value;
+                                            var txtSearch = param.value.trim();
                                             var cate = param1;
                                             var pID=param2;
                                             $.ajax({
