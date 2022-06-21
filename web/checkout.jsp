@@ -60,7 +60,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Note</label>
-                                <input class="form-control"  id="note "name="note" type="text" placeholder="Doe"  required pattern="\S+">
+                                <input class="form-control"  id="note "name="note" type="text" placeholder="Doe"  required >
                             </div>
 
                             <div class="col-md-6 form-group">
@@ -82,8 +82,8 @@
                                                 }"
                                         id="yourid" class="form-control" id="CityId" name="CityId"  placeholder="123 Street"  required>
                             </div>
-
-
+                         
+                            <div hidden=""></div>
                         </div>
 
 

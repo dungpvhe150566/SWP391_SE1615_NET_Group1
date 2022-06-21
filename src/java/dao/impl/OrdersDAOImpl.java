@@ -11,23 +11,25 @@ import java.util.logging.Logger;
 
 public class OrdersDAOImpl extends DBContext {
 
-    public int createReturnId(Orders order) throws Exception{
+    public int createReturnId(Orders order) throws Exception {
         Connection conn = null;
-            PreparedStatement prepare = null;
-            ResultSet rs = null;
+        PreparedStatement prepare = null;
+        ResultSet rs = null;
         try {
             String sql = "INSERT INTO [dbo].[Orders]\n"
                     + "           ([UserID]\n"
                     + "           ,[TotalPrice]\n"
-                    + "           ,[Note])\n"
-                    + "            VALUES\n"
-                    + "           (?,?,?)";
+                    + "           ,[Note]\n"
+                    + "           ,[Status])\n"
+                    + "     VALUES\n"
+                    + "           (?,?,?,?)";
             conn = getConnection();
-                prepare = conn.prepareStatement(sql);
-             prepare = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            prepare = conn.prepareStatement(sql);
+            prepare = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             prepare.setInt(1, order.getUserID());
             prepare.setDouble(2, order.getTotalPrice());
             prepare.setString(3, order.getNote());
+             prepare.setInt(4, order.getStatus());
             prepare.executeUpdate();
 
             rs = prepare.getGeneratedKeys();
@@ -37,8 +39,7 @@ public class OrdersDAOImpl extends DBContext {
 
         } catch (Exception ex) {
             throw ex;
-        }
-        finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(prepare);
             closeConnection(conn);

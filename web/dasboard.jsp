@@ -45,7 +45,7 @@
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block">
-                            <h2 class="tm-block-title">Performance</h2>
+                            <h2 class="tm-block-title"> Statistics of invoice numbers during the week</h2>
                            <canvas id="myAreaChart" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
@@ -139,7 +139,7 @@
                 data: {
                     labels: xValues,
                     datasets: [{
-                            data: [${view}],
+                            data: [${view},1300],
                             borderColor: "red",
                             fill: false
                         }, {

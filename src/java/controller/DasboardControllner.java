@@ -43,17 +43,17 @@ public class DasboardControllner extends HttpServlet {
              HttpSession session = request.getSession();
              int count = new ViewDao().getView();
              request.setAttribute("view", count);
-              String thu="";
-             String data="";
+              String thuu="";
+             String dataa="";
              List<Statistical> listThongKe = new StatisticalOrdersDAO().getAll();
              for (Statistical T : listThongKe) {
-                thu+="\""+T.getThu()+"\", ";
-                data+=T.getNumOfOrder()+",";
+                thuu+="\""+T.getThu()+"\", ";
+                dataa+=T.getNumOfOrder()+",";
             }
              
             
-            request.setAttribute("thu", thu);
-            request.setAttribute("data", data);
+            request.setAttribute("thu", thuu);
+            request.setAttribute("data", dataa);
            request.getRequestDispatcher("dasboard.jsp").forward(request, response);
         }
     }

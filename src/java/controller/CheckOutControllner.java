@@ -66,19 +66,18 @@ public class CheckOutControllner extends HttpServlet {
                 totalMoney += (cart.getAmount() * (cart.getProduct().getOriginalPrice()));
 
             }
-//            int totalMoneys = 0;
-//            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
-//                Integer productId = entry.getKey();
-//                Cart cart = entry.getValue();
-//
-//                totalMoney += (cart.getAmount() * cart.getProduct().getOriginalPrice() + 50000);
-//
-//            }
+            int totalMoneys = 0;
+            for (Map.Entry<Integer, Cart> entry : carts.entrySet()) {
+                Integer productId = entry.getKey();
+                Cart cart = entry.getValue();
+
+                totalMoney += (cart.getAmount() * cart.getProduct().getOriginalPrice() + 50000);
+
+            }
 
             request.setAttribute("totalMoney", totalMoney);
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         } catch (Exception e) {
-//            e.printStackTrace();
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
             dispatcher2.forward(request, response);
@@ -141,6 +140,7 @@ public class CheckOutControllner extends HttpServlet {
                     .UserID(1)
                     .TotalPrice((float) totalPrice)
                     .Note(note)
+                    .Status(1)
                     .build();
             int orderId = new OrdersDAOImpl().createReturnId(order);
             //Lưu OrderDetail
@@ -162,7 +162,6 @@ public class CheckOutControllner extends HttpServlet {
             session.removeAttribute("carts");
             response.sendRedirect("thank");
         } catch (Exception e) {
-          //  e.printStackTrace();
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
             dispatcher2.forward(request, response);
