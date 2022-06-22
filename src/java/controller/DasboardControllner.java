@@ -6,8 +6,13 @@ package controller;
 
 import dao.StatisticalOrdersDAO;
 import dao.ViewDao;
+import dao.impl.CategoryDAOImpl;
 import dao.impl.OrdersDAOImpl;
+import dao.impl.ProductDAOImpl;
+import dao.impl.UsersDAOImpl;
+import entity.Category;
 import entity.Orders;
+import entity.Product;
 import entity.Statistical;
 import entity.Users;
 import java.io.IOException;
@@ -44,7 +49,11 @@ public class DasboardControllner extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
              HttpSession session = request.getSession();
+             List<Product> listProduct = new ProductDAOImpl().getProductList();
+//             List<Category>
              int count = new ViewDao().getView();
+             int count2 = new ProductDAOImpl().countProduct();
+             int count3 = new  UsersDAOImpl().countAccount();
              request.setAttribute("view", count);
               String thuu="";
              String dataa="";
@@ -53,7 +62,17 @@ public class DasboardControllner extends HttpServlet {
                 thuu+="\""+T.getThu()+"\", ";
                 dataa+=T.getNumOfOrder()+",";
             }
-        
+//             String label="";
+//            String soluong="";
+//            List<Integer> soluongProduct = new ProductDAOImpl().countProductGroupByCategoryId();
+//            for (Category C : listCategory) {
+//                label+="\""+C.getCategory()+"\",";
+//            }
+//            label.substring(0,label.length()-1);
+//            for (Integer integer : soluongProduct) {
+//                soluong+=(double)Math.round((((double)integer/count2)*100)*100)/100+",";
+//            }
+//            soluong.substring(0, soluong.length()-1);
             request.setAttribute("view", count);
             request.setAttribute("thu", thuu);
             request.setAttribute("data", dataa);

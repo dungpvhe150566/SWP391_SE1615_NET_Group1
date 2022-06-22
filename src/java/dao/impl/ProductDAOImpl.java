@@ -640,6 +640,54 @@ conn = getConnection();
             closeConnection(connection);
         }
     }
+     public int countProduct() throws Exception {
+        String query = "SELECT COUNT(*) FROM dbo.Product";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        try (Connection con = getConnection();
+                PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+           rs = (ps != null) ? ps.executeQuery() : null;
+            if (rs != null && rs.next()) {
+                return rs.getInt(1);
+            }
+        }catch (Exception ex) {
+            throw ex;
+        }
+        finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return 0;
+    }
+     public List<Integer> countProductGroupByCategoryId() throws Exception {
+        String query = "SELECT COUNT(*) FROM dbo.product GROUP BY category_id ORDER BY category_id asc";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        List<Integer> list = new ArrayList<>();
+        
+        try (Connection con = getConnection();
+                PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+            if (ps != null) {
+                 rs = (ps != null) ? ps.executeQuery() : null;
+                while (rs != null && rs.next()) {
+
+                    list.add(rs.getInt(1));
+                }
+                return list;
+            }
+        }catch (Exception ex) {
+            throw ex;
+        }
+        finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         ProductDAOImpl dao = new ProductDAOImpl();

@@ -14,6 +14,9 @@ public class Category {
         this.icon = icon;
     }
 
+    public Category() {
+    }
+
     public int getCategoryID() {
         return CategoryID;
     }

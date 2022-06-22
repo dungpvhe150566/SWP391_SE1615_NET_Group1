@@ -6,6 +6,7 @@ import entity.Users;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -222,6 +223,28 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
             closeConnection(conn);
         }
         return list;
+    }
+     public int countAccount() throws Exception {
+        String query = "select * from Users";
+         Connection conn = null;
+        PreparedStatement prepare = null;
+       ResultSet rs = null;
+        conn = getConnection();
+        try ( 
+                PreparedStatement ps = (conn != null) ? conn.prepareStatement(query) : null;) {
+             rs = (ps != null) ? ps.executeQuery() : null;
+            if (rs != null && rs.next()) {
+                return rs.getInt(1);
+            }
+        }catch (Exception ex) {
+            throw ex;
+        }
+        finally {
+            closeRS(rs);
+            closePrepareStatement(prepare);
+            closeConnection(conn);
+        }
+        return 0;
     }
 
     public static void main(String[] args) {
