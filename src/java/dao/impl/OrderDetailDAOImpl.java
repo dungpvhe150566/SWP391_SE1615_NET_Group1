@@ -3,8 +3,10 @@ package dao.impl;
 import dao.DBContext;
 import dao.OrderDetailDAO;
 import entity.Cart;
+import entity.OrderDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,5 +47,32 @@ public class OrderDetailDAOImpl extends DBContext implements OrderDetailDAO{
             closeConnection(conn);
         }
     }
-
+public OrderDetail getOrderByID(String id) {
+        String query = "select * from Order_Detail where Order_ID = ?";
+        Connection conn = null;
+        PreparedStatement prepare = null;
+        OrderDetail OD = null;
+        try {
+            conn = getConnection();
+            prepare = conn.prepareStatement(query);
+            prepare.setString(1, id);
+            ResultSet rs = prepare.executeQuery();
+            while (rs.next()) {
+                OD = new OrderDetail();
+                OD.setID(rs.getInt(1));
+                OD.setOrderID(rs.getInt(2));
+                OD.setProductID(rs.getInt(3));
+                OD.setProductName(rs.getString(4));
+                OD.setProductPrice(rs.getInt(5));
+                OD.setQuantity(rs.getInt(1));
+            }
+        } catch (Exception e) {
+        }
+        return OD;
+    }
+    public static void main(String[] args) {
+        OrderDetailDAOImpl dao = new OrderDetailDAOImpl();
+        OrderDetail OD = dao.getOrderByID("8");
+        System.out.println(OD);       
+    }
 }

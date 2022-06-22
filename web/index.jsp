@@ -87,7 +87,7 @@
                             <img src="image/Other/ava1.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 30px;">
                             ${sessionScope.user.getUsername()}</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="" class="dropdown-item"><i class="fas fa-id-card"></i> YOUR PROFILE</a>
+                            <a href="profile" class="dropdown-item"><i class="fas fa-id-card"></i> YOUR PROFILE</a>
                             <a href="logout" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> LOG OUT</a>
                         </div>
                     </div>

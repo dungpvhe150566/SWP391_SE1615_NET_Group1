@@ -6,13 +6,19 @@ public class UserAddress {
 
     private int UserID;
 
-    private char ShipName;
+    private String ShipName;
 
-    private char ShipAddress;
+    private String ShipAddress;
 
     private int ShipCityID;
 
-    private char PhoneNum;
+    private String PhoneNum;
+    
+    private String Image;
+    
+    private String email;
+    
+    
 
     public int getID() {
         return ID;
@@ -30,19 +36,19 @@ public class UserAddress {
         this.UserID = UserID;
     }
 
-    public char getShipName() {
+    public String getShipName() {
         return ShipName;
     }
 
-    public void setShipName(char ShipName) {
+    public void setShipName(String ShipName) {
         this.ShipName = ShipName;
     }
 
-    public char getShipAddress() {
+    public String getShipAddress() {
         return ShipAddress;
     }
 
-    public void setShipAddress(char ShipAddress) {
+    public void setShipAddress(String ShipAddress) {
         this.ShipAddress = ShipAddress;
     }
 
@@ -54,12 +60,35 @@ public class UserAddress {
         this.ShipCityID = ShipCityID;
     }
 
-    public char getPhoneNum() {
+    public String getPhoneNum() {
         return PhoneNum;
     }
 
-    public void setPhoneNum(char PhoneNum) {
+    public void setPhoneNum(String PhoneNum) {
         this.PhoneNum = PhoneNum;
     }
 
+    public String getImage() {
+        return Image;
+    }
+
+    public void setImage(String Image) {
+        this.Image = Image;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
+
+    @Override
+    public String toString() {
+        return "UserAddress{" + "ID=" + ID + ", UserID=" + UserID + ", ShipName=" + ShipName + ", ShipAddress=" + ShipAddress + ", ShipCityID=" + ShipCityID + ", PhoneNum=" + PhoneNum + ", Image=" + Image + ", email=" + email + '}';
+    }
+
+    
 }

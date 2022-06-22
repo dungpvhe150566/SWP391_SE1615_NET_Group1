@@ -25,7 +25,47 @@
             https://templatemo.com/tm-524-product-admin
         -->
     </head>
-
+<style>
+        .pagination a.active {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .pagination a:hover:not(.active) {
+            background-color: #FFF44F;
+            color: black;
+        }
+        .search-box{
+            position: absolute;
+            height: 20px;
+            border-radius:40px;
+            padding: 10px;
+        }
+        .search-box:hover > .search-txt{
+            width: 180px;
+            padding: 0 6px;
+        }
+        .search-box:hover > .search-btn{
+            color: white
+        }
+        .search-btn{
+            color:blue;
+            width: 40px;
+            height:40px;
+            border-radius: 50%;
+            transition: 0.4s;
+        }
+        .search-txt{
+            border:none;
+            background:whitesmoke;
+            outline:none;
+            padding:0;
+            color:black;
+            font-size: 16px;
+            transition: 0.4s;
+            line-height: 40px;
+            width: 0px;
+        }
+    </style>
     <body id="reportsPage">
         <div class="" id="home">
              <%@include file="components/NavbarAdmin.jsp" %>
@@ -77,36 +117,46 @@
                         <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                             <h2 class="tm-block-title">Orders List</h2>
                             <table class="table">
-                                <thead>
+<tr>
+                                    <td>Id</td>
+                                    <td>UserID</td>
+                                    <td>TotalPrice</td>
+                                    <td>Note</td>
+                                    <td>Status</td>
+                                    <td>DayBuy</td>
+                                    <td>Details</td>
+                                </tr>
+                                <c:forEach items="${listO}" var="o">
                                     <tr>
-                                        <th scope="col">ORDER NO.</th>
-                                        <th scope="col">STATUS</th>
-                                        <th scope="col">OPERATORS</th>
-                                        <th scope="col">LOCATION</th>
-                                        <th scope="col">DISTANCE</th>
-                                        <th scope="col">START DATE</th>
-                                        <th scope="col">EST DELIVERY DUE</th>
+                                        <td>${o.ID}</td>
+                                        <td>${o.userID}</td>
+                                        <td>${o.totalPrice}</td>
+                                        <td>${o.note}</td>
+                                        <td>${o.status}</td>
+                                        <td>${o.dayBuy}</td>
+                                        <td><a href="orderdetail?id=${o.ID}">Order Details</a></td>
                                     </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row"><b>#122349</b></th>
-                                        <td>
-                                            <div class="tm-status-circle moving">
-                                            </div>Moving
-                                        </td>
-                                        <td><b>Oliver Trag</b></td>
-                                        <td><b>London, UK</b></td>
-                                        <td><b>485 km</b></td>
-                                        <td>16:00, 12 NOV 2018</td>
-                                        <td>08:00, 18 NOV 2018</td>
-                                    </tr>
-
-                                </tbody>
+                                </c:forEach>
                             </table>
                         </div>
                     </div>
                 </div>
+                <div id="content" class="col-11 justify-content-center">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <c:if test="${tag > 1}">
+                                <li style="padding:10px" class="page-item disabled"><a href="dontrollner-dasboard?index=${tag-1}">Previous</a></li>
+                                </c:if>
+                                <c:forEach begin="1" end="${endP}" var="i">  
+                                <li class="page-item"><a class="page-link ${tag == i?"active":""}" href="dontrollner-dasboard?index=${i}"class="page-link">${i}</a></li>                                   
+                                </c:forEach>   
+                                <c:if test="${tag<endP}">
+                                <li style="padding:10px" class="page-item disabled"><a href="dontrollner-dasboard?index=${tag+1}">Next</a></li>
+                                </c:if>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
             </div>
             <footer class="tm-footer row tm-mt-small">
                 <div class="col-12 font-weight-light">
