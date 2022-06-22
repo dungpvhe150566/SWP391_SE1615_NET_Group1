@@ -17,6 +17,7 @@ import entity.Statistical;
 import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -55,14 +56,16 @@ public class DasboardControllner extends HttpServlet {
              int count2 = new ProductDAOImpl().countProduct();
              int count3 = new  UsersDAOImpl().countAccount();
              request.setAttribute("view", count);
-              String thuu="";
+             // Statistical Orders in week 
+             String thuu="";
              String dataa="";
              List<Statistical> listThongKe = new StatisticalOrdersDAO().getAll();
              for (Statistical T : listThongKe) {
                 thuu+="\""+T.getThu()+"\", ";
                 dataa+=T.getNumOfOrder()+",";
             }
-             String label="";
+             // Total Product
+            String label="";
             String soluong="";
             List<Integer> soluongProduct = new ProductDAOImpl().countProductGroupByCategoryId();
             for (Category C : listCategorys) {
@@ -72,7 +75,18 @@ public class DasboardControllner extends HttpServlet {
             for (Integer integer : soluongProduct) {
                 soluong+=(double)Math.round((((double)integer/count2)*100)*100)/100+",";
             }
+            List<Double> listRevenue = new ArrayList<>();
+//            for(int i=7;i<=12;i++){
+                double a = new OrdersDAOImpl().calRevenueInMonth(6);
+                listRevenue.add(a);
+//            }
+            String revenue="";
+            for (Double double1 : listRevenue) {
+                revenue+=(double)Math.round(double1*100)/100+",";
+            }
+            revenue.substring(0, revenue.length()-1);
             soluong.substring(0, soluong.length()-1);
+            request.setAttribute("revenue", revenue);
              request.setAttribute("label", label);
             request.setAttribute("soluong", soluong);
             request.setAttribute("account", count3);

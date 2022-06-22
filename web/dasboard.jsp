@@ -162,7 +162,7 @@
                 <div class="row tm-content-row">
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block">
-                            <h2 class="tm-block-title">Latest Hits</h2>
+                            <h2 class="tm-block-title"> First 6 months of the year revenue</h2>
                             <canvas id="myBarChart" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
@@ -257,12 +257,12 @@
         var myLineChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ["July", "August", "September", "October", "November", "December"],
+                labels: ["January ", "February ", "March ", "April ", "May ", "June"],
                 datasets: [{
                         label: "Revenue",
                         backgroundColor: "rgba(2,117,216,1)",
                         borderColor: "rgba(2,117,216,1)",
-                        data: [400, 300, 900, 600, 600],
+                        data: [10000000, 7000000, 5000000, 40000000, 60000000,${revenue}],
                     }],
             },
             options: {
@@ -280,8 +280,8 @@
                         }],
                     yAxes: [{
                             ticks: {
-                                min: 0,
-                                max: 1500,
+                                min: 500000,
+                                max: 100000000,
                                 maxTicksLimit: 5
                             },
                             gridLines: {
