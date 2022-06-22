@@ -10,18 +10,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Vector;
 
-public class ManufacturerDAOImpl extends DBContext implements ManufacturerDAO{
+public class ManufacturerDAOImpl extends DBContext implements ManufacturerDAO {
 
-    public ArrayList<Manufacturer> getManufacturerList() throws Exception{
+    public ArrayList<Manufacturer> getManufacturerList() throws Exception {
         // Create vector to store all Categories
         ArrayList<Manufacturer> manufacturers = new ArrayList<>();
 
         // Create value atribute of each Category
-        int manufacturerID;
+        int manufacturerID,count;
         String manufacturerName;
 
         // Query Statement to get all Categories in Database 
-        String sqlQuery = "select * from Manufacturer";
+        String sqlQuery = "select m.ManufacturerID,m.ManufacturerName,count(p.ProductID) as [count]\n"
+                + "from Manufacturer m join Product p on p.ManufacturerID = m.ManufacturerID\n"
+                + "group by m.ManufacturerID,m.ManufacturerName";
 
         // Resultset to store all Categories 
         Connection conn = null;
@@ -35,12 +37,12 @@ public class ManufacturerDAOImpl extends DBContext implements ManufacturerDAO{
             while (rs.next()) {
                 manufacturerID = rs.getInt(1);
                 manufacturerName = rs.getString(2);
-                manufacturers.add(new Manufacturer(manufacturerID, manufacturerName));
+                count = rs.getInt(3);
+                manufacturers.add(new Manufacturer(manufacturerID, manufacturerName, count));
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
-        }
-        finally {
+            throw ex;
+        } finally {
             closeRS(rs);
             closePrepareStatement(prepare);
             closeConnection(conn);

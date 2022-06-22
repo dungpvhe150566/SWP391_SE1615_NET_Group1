@@ -5,6 +5,8 @@ public class Manufacturer {
     private int ManufacturerID;
 
     private String ManufacturerName;
+    
+    private int count;
 
     public Manufacturer() {
     }
@@ -13,6 +15,22 @@ public class Manufacturer {
         this.ManufacturerID = ManufacturerID;
         this.ManufacturerName = ManufacturerName;
     }
+
+    public Manufacturer(int ManufacturerID, String ManufacturerName, int count) {
+        this.ManufacturerID = ManufacturerID;
+        this.ManufacturerName = ManufacturerName;
+        this.count = count;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+    
+    
 
     public int getManufacturerID() {
         return ManufacturerID;
