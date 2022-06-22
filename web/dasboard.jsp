@@ -72,7 +72,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <p class="text-white mt-5 mb-5">Welcome back, <b>Admin</b></p>
+                        <p class="text-white mt-5 mb-2">Welcome back, <b>Admin</b></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <p class="text-white mt-1 mb-3"> The website had access time: <b>${view}</b></p>
                     </div>
                 </div>
                 <!-- row -->
