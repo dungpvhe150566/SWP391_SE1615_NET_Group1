@@ -3,9 +3,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
+
+
 @Builder
 @Getter
 @Setter
@@ -71,5 +71,17 @@ public class Orders {
 //    public void setDayBuy(char DayBuy) {
 //        this.DayBuy = DayBuy;
 //    }
+
+    public Orders() {
+    }
+
+    public Orders(int ID, int UserID, float TotalPrice, String Note, int Status, String DayBuy) {
+        this.ID = ID;
+        this.UserID = UserID;
+        this.TotalPrice = TotalPrice;
+        this.Note = Note;
+        this.Status = Status;
+        this.DayBuy = DayBuy;
+    }
 
 }
