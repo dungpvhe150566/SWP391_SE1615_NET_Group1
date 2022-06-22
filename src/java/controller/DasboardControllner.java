@@ -53,24 +53,8 @@ public class DasboardControllner extends HttpServlet {
                 thuu+="\""+T.getThu()+"\", ";
                 dataa+=T.getNumOfOrder()+",";
             }
-            Users U = (Users) session.getAttribute("user");
-            String id = U.getUserID() + "";
-            OrdersDAOImpl dao = new OrdersDAOImpl();
-            String indexPage = request.getParameter("index");
-            if (indexPage == null) {
-                indexPage = "1";
-            }
-            int index = Integer.parseInt(indexPage);
-            int num = dao.getTotalOrder(id);
-            int endPage = num / 6;
-            if (num % 6 != 0) {
-                endPage++;
-            }
-            List<Orders> listO = dao.pagingOrders(id, index);
-            //request.setAttribute("view", count);
-            request.setAttribute("tag", index);
-            request.setAttribute("endP", endPage);
-            request.setAttribute("listO", listO);
+        
+            request.setAttribute("view", count);
             request.setAttribute("thu", thuu);
             request.setAttribute("data", dataa);
            request.getRequestDispatcher("dasboard.jsp").forward(request, response);

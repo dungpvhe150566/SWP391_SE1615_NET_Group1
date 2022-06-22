@@ -80,7 +80,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block">
                             <h2 class="tm-block-title">Latest Hits</h2>
-                            <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+                            <canvas id="myBarChart" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
@@ -93,7 +93,7 @@
                         <div class="tm-bg-primary-dark tm-block tm-block-taller">
                             <h2 class="tm-block-title">Storage Information</h2>
                             <div id="pieChartContainer">
-                                <canvas id="pieChart" class="chartjs-render-monitor" width="200" height="200"></canvas>
+                                <canvas id="myPieChart" class="chartjs-render-monitor" style="width:100%;max-width:700px"></canvas>
                             </div>                        
                         </div>
                     </div>
@@ -113,7 +113,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 tm-block-col">
+<!--                    <div class="col-12 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                             <h2 class="tm-block-title">Orders List</h2>
                             <table class="table">
@@ -139,23 +139,9 @@
                                 </c:forEach>
                             </table>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
-                <div id="content" class="col-11 justify-content-center">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <c:if test="${tag > 1}">
-                                <li style="padding:10px" class="page-item disabled"><a href="dontrollner-dasboard?index=${tag-1}">Previous</a></li>
-                                </c:if>
-                                <c:forEach begin="1" end="${endP}" var="i">  
-                                <li class="page-item"><a class="page-link ${tag == i?"active":""}" href="dontrollner-dasboard?index=${i}"class="page-link">${i}</a></li>                                   
-                                </c:forEach>   
-                                <c:if test="${tag<endP}">
-                                <li style="padding:10px" class="page-item disabled"><a href="dontrollner-dasboard?index=${tag+1}">Next</a></li>
-                                </c:if>
-                        </ul>
-                    </nav>
-                </div>
+               
             </div>
             </div>
             <footer class="tm-footer row tm-mt-small">
@@ -182,30 +168,49 @@
             src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
         </script>
         <script>
-            var xValues = [30, 60, 90, 120, 150,180,210, 240, 270, 300, 330, 360];
-
-            new Chart("myChart", {
-                type: "line",
+            // Bar Chart Example
+            var ctx = document.getElementById("myBarChart");
+            var myLineChart = new Chart(ctx, {
+                type: 'bar',
                 data: {
-                    labels: xValues,
+                    labels: ["July", "August", "September", "October", "November", "December"],
                     datasets: [{
-                            data: [${view},1300],
-                            borderColor: "red",
-                            fill: false
-                        }, {
-                            data: [1600, 1700, 1700, 1900, 2000, 2700, 4000, 5000, 6000, 7000,6000,440,600],
-                            borderColor: "green",
-                            fill: false
-                        }, {
-                            data: [300, 700, 2000, 5000, 6000, 4000, 2000, 1000, 200, 100,6000,440,600],
-                            borderColor: "blue",
-                            fill: false
-                        }]
+                            label: "Revenue",
+                            backgroundColor: "rgba(2,117,216,1)",
+                            borderColor: "rgba(2,117,216,1)",
+                                data: [400,300,900,600,600],
+                        }],
                 },
                 options: {
-                    legend: {display: false}
+                    scales: {
+                        xAxes: [{
+                                time: {
+                                    unit: 'month'
+                                },
+                                gridLines: {
+                                    display: false
+                                },
+                                ticks: {
+                                    maxTicksLimit: 6
+                                }
+                            }],
+                        yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: 1500,
+                                    maxTicksLimit: 5
+                                },
+                                gridLines: {
+                                    display: true
+                                }
+                            }],
+                    },
+                    legend: {
+                        display: false
+                    }
                 }
-            });</script>
+            });
+        </script>
         <script>
             // Area Chart Example
             var ctx = document.getElementById("myAreaChart");
@@ -256,6 +261,23 @@
                         display: false
                     }
                 }
+            });
+        </script>
+         <script>
+            Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+            Chart.defaults.global.defaultFontColor = '#292b2c';
+
+// Pie Chart Example
+            var ctx = document.getElementById("myPieChart");
+            var myPieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: [400],
+                    datasets: [{
+                            data: [3],
+                            backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+                        }],
+                },
             });
         </script>
         <script>
