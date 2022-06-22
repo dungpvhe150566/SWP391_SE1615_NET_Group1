@@ -76,10 +76,10 @@ public class DasboardControllner extends HttpServlet {
                 soluong+=(double)Math.round((((double)integer/count2)*100)*100)/100+",";
             }
             List<Double> listRevenue = new ArrayList<>();
-//            for(int i=7;i<=12;i++){
-                double a = new OrdersDAOImpl().calRevenueInMonth(6);
+            for(int i=1;i<=6;i++){
+                double a = new OrdersDAOImpl().calRevenueInMonth(i);
                 listRevenue.add(a);
-//            }
+            }
             String revenue="";
             for (Double double1 : listRevenue) {
                 revenue+=(double)Math.round(double1*100)/100+",";

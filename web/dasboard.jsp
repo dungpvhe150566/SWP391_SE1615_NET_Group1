@@ -262,7 +262,7 @@
                         label: "Revenue",
                         backgroundColor: "rgba(2,117,216,1)",
                         borderColor: "rgba(2,117,216,1)",
-                        data: [10000000, 7000000, 5000000, 40000000, 60000000,${revenue}],
+                        data: [${revenue}],
                     }],
             },
             options: {
