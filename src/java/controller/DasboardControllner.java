@@ -50,7 +50,7 @@ public class DasboardControllner extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
              HttpSession session = request.getSession();
              List<Product> listProduct = new ProductDAOImpl().getProductList();
-//             List<Category>
+            List<Category> listCategorys = new CategoryDAOImpl().getAllCategory();
              int count = new ViewDao().getView();
              int count2 = new ProductDAOImpl().countProduct();
              int count3 = new  UsersDAOImpl().countAccount();
@@ -62,17 +62,21 @@ public class DasboardControllner extends HttpServlet {
                 thuu+="\""+T.getThu()+"\", ";
                 dataa+=T.getNumOfOrder()+",";
             }
-//             String label="";
-//            String soluong="";
-//            List<Integer> soluongProduct = new ProductDAOImpl().countProductGroupByCategoryId();
-//            for (Category C : listCategory) {
-//                label+="\""+C.getCategory()+"\",";
-//            }
-//            label.substring(0,label.length()-1);
-//            for (Integer integer : soluongProduct) {
-//                soluong+=(double)Math.round((((double)integer/count2)*100)*100)/100+",";
-//            }
-//            soluong.substring(0, soluong.length()-1);
+             String label="";
+            String soluong="";
+            List<Integer> soluongProduct = new ProductDAOImpl().countProductGroupByCategoryId();
+            for (Category C : listCategorys) {
+                label+="\""+C.getCategoryName()+"\",";
+            }
+            label.substring(0,label.length()-1);
+            for (Integer integer : soluongProduct) {
+                soluong+=(double)Math.round((((double)integer/count2)*100)*100)/100+",";
+            }
+            soluong.substring(0, soluong.length()-1);
+             request.setAttribute("label", label);
+            request.setAttribute("soluong", soluong);
+            request.setAttribute("account", count3);
+            request.setAttribute("product", count2);
             request.setAttribute("view", count);
             request.setAttribute("thu", thuu);
             request.setAttribute("data", dataa);

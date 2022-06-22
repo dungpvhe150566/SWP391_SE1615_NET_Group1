@@ -662,7 +662,7 @@ conn = getConnection();
         return 0;
     }
      public List<Integer> countProductGroupByCategoryId() throws Exception {
-        String query = "SELECT COUNT(*) FROM dbo.product GROUP BY category_id ORDER BY category_id asc";
+        String query = "SELECT COUNT(*) FROM dbo.Product GROUP BY CategoryID ORDER BY CategoryID asc";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;

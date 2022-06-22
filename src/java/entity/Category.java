@@ -7,6 +7,7 @@ public class Category {
     private String CategoryName;
 
     private String icon;
+    private String category;
 
     public Category(int CategoryID, String CategoryName, String icon) {
         this.CategoryID = CategoryID;
@@ -15,6 +16,14 @@ public class Category {
     }
 
     public Category() {
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public int getCategoryID() {

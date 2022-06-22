@@ -225,7 +225,7 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         return list;
     }
      public int countAccount() throws Exception {
-        String query = "select * from Users";
+        String query = "SELECT COUNT(*) FROM  Users";
          Connection conn = null;
         PreparedStatement prepare = null;
        ResultSet rs = null;

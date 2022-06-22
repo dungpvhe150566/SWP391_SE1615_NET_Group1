@@ -20,12 +20,15 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <!-- https://getbootstrap.com/ -->
         <link rel="stylesheet" href="css/templatemo-style.css">
+        <link
+            href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+            rel="stylesheet">
         <!--
             Product Admin CSS Template
             https://templatemo.com/tm-524-product-admin
         -->
     </head>
-<style>
+    <style>
         .pagination a.active {
             background-color: #4CAF50;
             color: white;
@@ -67,19 +70,94 @@
         }
     </style>
     <body id="reportsPage">
+      
         <div class="" id="home">
-             <%@include file="components/NavbarAdmin.jsp" %>
+            <%@include file="components/NavbarAdmin.jsp" %>
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <p class="text-white mt-5 mb-2">Welcome back, <b>Admin</b></p>
+                        <p class="text-white mt-5 mb-5">Welcome back, <b>Admin</b></p>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <p class="text-white mt-1 mb-3"> The website had access time: <b>${view}</b></p>
+                <div class="container-fluid">
+            <div class="row">  
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Accounts</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${account}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-people-carry fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                 <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-success shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                                Total products</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${product}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-project-diagram fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                 <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-info shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Access Time
+                                            </div>
+                                            <div class="row no-gutters align-items-center">
+                                                <div class="col-auto">
+                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">${view}</div>
+                                                </div>
+                                                <div class="col">
+                                                    <div class="progress progress-sm mr-2">
+                                                        <div class="progress-bar bg-info" role="progressbar"
+                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                            aria-valuemax="100"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-caret-square-up fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                 <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-warning shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                                Pending Requests</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </div>
                 <!-- row -->
                 <div class="row tm-content-row">
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
@@ -91,7 +169,7 @@
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block">
                             <h2 class="tm-block-title"> Statistics of invoice numbers during the week</h2>
-                           <canvas id="myAreaChart" style="width:100%;max-width:700px"></canvas>
+                            <canvas id="myAreaChart" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
@@ -118,197 +196,198 @@
                             </div>
                         </div>
                     </div>
-<!--                    <div class="col-12 tm-block-col">
-                        <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
-                            <h2 class="tm-block-title">Orders List</h2>
-                            <table class="table">
-<tr>
-                                    <td>Id</td>
-                                    <td>UserID</td>
-                                    <td>TotalPrice</td>
-                                    <td>Note</td>
-                                    <td>Status</td>
-                                    <td>DayBuy</td>
-                                    <td>Details</td>
-                                </tr>
-                                <c:forEach items="${listO}" var="o">
-                                    <tr>
-                                        <td>${o.ID}</td>
-                                        <td>${o.userID}</td>
-                                        <td>${o.totalPrice}</td>
-                                        <td>${o.note}</td>
-                                        <td>${o.status}</td>
-                                        <td>${o.dayBuy}</td>
-                                        <td><a href="orderdetail?id=${o.ID}">Order Details</a></td>
-                                    </tr>
-                                </c:forEach>
-                            </table>
-                        </div>
-                    </div>-->
+                      
+                    <!--                    <div class="col-12 tm-block-col">
+                                            <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                                                <h2 class="tm-block-title">Orders List</h2>
+                                                <table class="table">
+                    <tr>
+                                                        <td>Id</td>
+                                                        <td>UserID</td>
+                                                        <td>TotalPrice</td>
+                                                        <td>Note</td>
+                                                        <td>Status</td>
+                                                        <td>DayBuy</td>
+                                                        <td>Details</td>
+                                                    </tr>
+                    <c:forEach items="${listO}" var="o">
+                        <tr>
+                            <td>${o.ID}</td>
+                            <td>${o.userID}</td>
+                            <td>${o.totalPrice}</td>
+                            <td>${o.note}</td>
+                            <td>${o.status}</td>
+                            <td>${o.dayBuy}</td>
+                            <td><a href="orderdetail?id=${o.ID}">Order Details</a></td>
+                        </tr>
+                    </c:forEach>
+                </table>
+            </div>
+        </div>-->
                 </div>
-               
-            </div>
-            </div>
-            <footer class="tm-footer row tm-mt-small">
-                <div class="col-12 font-weight-light">
-                    <p class="text-center text-white mb-0 px-4 small">
-                        Copyright &copy; <b>2018</b> All rights reserved. 
 
-                        Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
-                    </p>
-                </div>
-            </footer>
+            </div>
         </div>
+        <footer class="tm-footer row tm-mt-small">
+            <div class="col-12 font-weight-light">
+                <p class="text-center text-white mb-0 px-4 small">
+                    Copyright &copy; <b>2018</b> All rights reserved. 
 
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <!-- https://jquery.com/download/ -->
-        <script src="js/moment.min.js"></script>
-        <!-- https://momentjs.com/ -->
-        <script src="js/Chart.min.js"></script>
-        <!-- http://www.chartjs.org/docs/latest/ -->
-        <script src="js/bootstrap.min.js"></script>
-        <!-- https://getbootstrap.com/ -->
-        <script src="js/tooplate-scripts.js"></script>
-        <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
-        </script>
-        <script>
-            // Bar Chart Example
-            var ctx = document.getElementById("myBarChart");
-            var myLineChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ["July", "August", "September", "October", "November", "December"],
-                    datasets: [{
-                            label: "Revenue",
-                            backgroundColor: "rgba(2,117,216,1)",
-                            borderColor: "rgba(2,117,216,1)",
-                                data: [400,300,900,600,600],
+                    Design: <a rel="nofollow noopener" href="https://templatemo.com" class="tm-footer-link">Template Mo</a>
+                </p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="js/moment.min.js"></script>
+    <!-- https://momentjs.com/ -->
+    <script src="js/Chart.min.js"></script>
+    <!-- http://www.chartjs.org/docs/latest/ -->
+    <script src="js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+    <script src="js/tooplate-scripts.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+    </script>
+    <script>
+        // Bar Chart Example
+        var ctx = document.getElementById("myBarChart");
+        var myLineChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["July", "August", "September", "October", "November", "December"],
+                datasets: [{
+                        label: "Revenue",
+                        backgroundColor: "rgba(2,117,216,1)",
+                        borderColor: "rgba(2,117,216,1)",
+                        data: [400, 300, 900, 600, 600],
+                    }],
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                            time: {
+                                unit: 'month'
+                            },
+                            gridLines: {
+                                display: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 6
+                            }
+                        }],
+                    yAxes: [{
+                            ticks: {
+                                min: 0,
+                                max: 1500,
+                                maxTicksLimit: 5
+                            },
+                            gridLines: {
+                                display: true
+                            }
                         }],
                 },
-                options: {
-                    scales: {
-                        xAxes: [{
-                                time: {
-                                    unit: 'month'
-                                },
-                                gridLines: {
-                                    display: false
-                                },
-                                ticks: {
-                                    maxTicksLimit: 6
-                                }
-                            }],
-                        yAxes: [{
-                                ticks: {
-                                    min: 0,
-                                    max: 1500,
-                                    maxTicksLimit: 5
-                                },
-                                gridLines: {
-                                    display: true
-                                }
-                            }],
-                    },
-                    legend: {
-                        display: false
-                    }
+                legend: {
+                    display: false
                 }
-            });
-        </script>
-        <script>
-            // Area Chart Example
-            var ctx = document.getElementById("myAreaChart");
-            var myLineChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: [${thu}],
-                    datasets: [{
-                            label: "Sessions",
-                            lineTension: 0.3,
-                            backgroundColor: "rgba(2,117,216,0.2)",
-                            borderColor: "rgba(2,117,216,1)",
-                            pointRadius: 5,
-                            pointBackgroundColor: "rgba(2,117,216,1)",
-                            pointBorderColor: "rgba(255,255,255,0.8)",
-                            pointHoverRadius: 5,
-                            pointHoverBackgroundColor: "rgba(2,117,216,1)",
-                            pointHitRadius: 50,
-                            pointBorderWidth: 2,
-                            data: [${data}],
+            }
+        });
+    </script>
+    <script>
+        // Area Chart Example
+        var ctx = document.getElementById("myAreaChart");
+        var myLineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: [${thu}],
+                datasets: [{
+                        label: "Sessions",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(2,117,216,0.2)",
+                        borderColor: "rgba(2,117,216,1)",
+                        pointRadius: 5,
+                        pointBackgroundColor: "rgba(2,117,216,1)",
+                        pointBorderColor: "rgba(255,255,255,0.8)",
+                        pointHoverRadius: 5,
+                        pointHoverBackgroundColor: "rgba(2,117,216,1)",
+                        pointHitRadius: 50,
+                        pointBorderWidth: 2,
+                        data: [${data}],
+                    }],
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                            time: {
+                                unit: 'date'
+                            },
+                            gridLines: {
+                                display: false
+                            },
+                            ticks: {
+                                maxTicksLimit: 7
+                            }
+                        }],
+                    yAxes: [{
+                            ticks: {
+                                min: 0,
+                                max: 20,
+                                maxTicksLimit: 4
+                            },
+                            gridLines: {
+                                color: "rgba(0, 0, 0, .125)",
+                            }
                         }],
                 },
-                options: {
-                    scales: {
-                        xAxes: [{
-                                time: {
-                                    unit: 'date'
-                                },
-                                gridLines: {
-                                    display: false
-                                },
-                                ticks: {
-                                    maxTicksLimit: 7
-                                }
-                            }],
-                        yAxes: [{
-                                ticks: {
-                                    min: 0,
-                                    max: 20,
-                                    maxTicksLimit: 4
-                                },
-                                gridLines: {
-                                    color: "rgba(0, 0, 0, .125)",
-                                }
-                            }],
-                    },
-                    legend: {
-                        display: false
-                    }
+                legend: {
+                    display: false
                 }
-            });
-        </script>
-         <script>
-            Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-            Chart.defaults.global.defaultFontColor = '#292b2c';
+            }
+        });
+    </script>
+    <script>
+        Chart.defaults.global.defaultFontFamily = '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#292b2c';
 
 // Pie Chart Example
-            var ctx = document.getElementById("myPieChart");
-            var myPieChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: [400],
-                    datasets: [{
-                            data: [3],
-                            backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
-                        }],
-                },
-            });
-        </script>
-        <script>
-            Chart.defaults.global.defaultFontColor = 'white';
-            let ctxLine,
-                    ctxBar,
-                    ctxPie,
-                    optionsLine,
-                    optionsBar,
-                    optionsPie,
-                    configLine,
-                    configBar,
-                    configPie,
-                    lineChart,
-                    barChart, pieChart;
-            // DOM is ready
-            $(function () {
-                drawLineChart(); // Line Chart
-                drawBarChart(); // Bar Chart
-                drawPieChart(); // Pie Chart
+        var ctx = document.getElementById("myPieChart");
+        var myPieChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: [${label}],
+                datasets: [{
+                        data: [${soluong}],
+                        backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+                    }],
+            },
+        });
+    </script>
+    <script>
+        Chart.defaults.global.defaultFontColor = 'white';
+        let ctxLine,
+                ctxBar,
+                ctxPie,
+                optionsLine,
+                optionsBar,
+                optionsPie,
+                configLine,
+                configBar,
+                configPie,
+                lineChart,
+                barChart, pieChart;
+        // DOM is ready
+        $(function () {
+            drawLineChart(); // Line Chart
+            drawBarChart(); // Bar Chart
+            drawPieChart(); // Pie Chart
 
-                $(window).resize(function () {
-                    updateLineChart();
-                    updateBarChart();
-                });
-            })
-        </script>
-    </body>
+            $(window).resize(function () {
+                updateLineChart();
+                updateBarChart();
+            });
+        })
+    </script>
+</body>
 </html>
