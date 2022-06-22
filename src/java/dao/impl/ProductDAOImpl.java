@@ -31,7 +31,7 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
         String price = "";
         String categoryID = "";
         String manufacturersID = "";
-        String sort = "";
+        String sort = "(select null)";
 
 //        If the product price condition is passed
 //        we will cut the chain to get the product price
@@ -50,57 +50,61 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
 
 //        Set value of CategoryID if passed in
         if (cID != 0) {
-            categoryID += " and(CategoryID = " + cID + " ) ";
+            categoryID += " and CategoryID = " + cID + " ";
         }
 
 //        Set value of ManufacturerID if passed in
         if (mID != null) {
             String msID = Arrays.toString(mID);
-            manufacturersID += " and (ManufacturerID in (" + msID.substring(1, msID.length() - 1) + ") ) ";
+            manufacturersID += " and ManufacturerID in (" + msID.substring(1, msID.length() - 1) + ") ";
         }
 
         if (sortby != null && !sortby.isEmpty()) {
             if (sortby.equals("Ascending")) {
-                sort += " order by x.OriginalPrice asc";
+                sort = " OriginalPrice asc ";
             } else {
-                sort += " order by x.OriginalPrice desc";
+                sort = " OriginalPrice desc ";
             }
+
         }
 
         // Query Statement to get all Categories in Database 
-        String sqlQuery = "with x as (	select row_number() over(order by ProductID asc) as row, * from Product "
-                + "where (ProductName like '%" + productName+ "%') "
-                + manufacturersID
+        String sqlQuery2 = "SELECT  * FROM Product where (ProductName like ?) "
                 + categoryID
-                + price + " ) "
-                + "select * from x where  row between  " + start + " and " + end + sort;
+                + manufacturersID
+                + price
+                + " ORDER BY " + sort + " \n"
+                + " OFFSET ? ROWS FETCH NEXT 6 ROWS ONLY ";
 
-        // Resultset to store all Categories 
+// Resultset to store all Categories 
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         // Get all categories store to vector
         try {
             connection = getConnection();
-            preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement = connection.prepareStatement(sqlQuery2);
+            preparedStatement.setString(1, "%" + productName + "%");
+            preparedStatement.setInt(2, start);
+//            preparedStatement.setString(2, sort);
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 // Get and store all attribute of each Product
-                int productID = rs.getInt(2);
-                String proName = rs.getString(3);
-                String description = rs.getString(4);
-                int originalPrice = rs.getInt(5);
-                int sellPrice = rs.getInt(6);
-                int salePercent = rs.getInt(7);
-                String imageLink = rs.getString(8);
-                int caID = rs.getInt(9);
-                int sellerID = rs.getInt(10);
-                int amount = rs.getInt(11);
-                int statusID = rs.getInt(12);
-                int manufacturerID = rs.getInt(13);
-                float height = rs.getFloat(14);
-                float width = rs.getFloat(15);
-                float weight = rs.getFloat(16);
+                int productID = rs.getInt(1);
+                String proName = rs.getString(2);
+                String description = rs.getString(3);
+                int originalPrice = rs.getInt(4);
+                int sellPrice = rs.getInt(5);
+                int salePercent = rs.getInt(6);
+                String imageLink = rs.getString(7);
+                int caID = rs.getInt(8);
+                int sellerID = rs.getInt(9);
+                int amount = rs.getInt(10);
+                int statusID = rs.getInt(11);
+                int manufacturerID = rs.getInt(12);
+                float height = rs.getFloat(13);
+                float width = rs.getFloat(14);
+                float weight = rs.getFloat(15);
                 // Add Product to vector 
                 products.add(new Product(productID, proName, description,
                         originalPrice, sellPrice, salePercent, imageLink,
@@ -116,6 +120,7 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
         }
         return products;
     }
+
 
     /**
      * Get Total Page Products in Database follow CategoryID Product Name Prices
