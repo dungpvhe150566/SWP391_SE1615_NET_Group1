@@ -26,6 +26,7 @@
         <!-- Customized Bootstrap Stylesheet -->
 
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/stylechat.css" rel="stylesheet">
     </head>
 
     <body>
@@ -72,7 +73,7 @@
                     <form action="ShopController" id="searchByProductName" method="post">
                         <input type="hidden" name="do" value="searchByName">
                         <div class="input-group">
-                            <input type="text" name="productName" maxlength="1000" class="form-control" placeholder="Search by name">
+                            <input type="text" name="productName" class="form-control" placeholder="Search by name">
                             <div class="input-group-append">
                                 <span class="input-group-text bg-transparent text-primary">
                                     <a onclick="document.getElementById('searchByProductName').submit();" ><i class="fa fa-search"></i></a> 
@@ -87,7 +88,7 @@
                             <img src="image/Other/ava1.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 30px;">
                             ${sessionScope.user.getUsername()}</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="profile" class="dropdown-item"><i class="fas fa-id-card"></i> YOUR PROFILE</a>
+                            <a href="" class="dropdown-item"><i class="fas fa-id-card"></i> YOUR PROFILE</a>
                             <a href="logout" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> LOG OUT</a>
                         </div>
                     </div>
@@ -272,6 +273,178 @@
             </div>
         </div>
         <!-- Offer End -->
+
+        <!--ChatBox-->
+        <div class="" id="myForm">
+        <div class="container">
+            <h3 class=" text-center">Messaging</h3>
+            <div class="messaging">
+                <div class="inbox_msg">
+                    <div class="inbox_people">
+                        <div class="headind_srch">
+                            <div class="recent_heading">
+                                <h4>Recent</h4>
+                            </div>
+                            <div class="srch_bar">
+                                <div class="stylish-input-group">
+                                    <input type="text" class="search-bar" placeholder="Search">
+                                    <span class="input-group-addon">
+                                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="inbox_chat">
+                            <div class="chat_list active_chat">
+                                <div class="chat_people">
+                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png"
+                                            alt="sunil"> </div>
+                                    <div class="chat_ib">
+                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                        <p>Test, which is a new approach to have all solutions
+                                            astrology under one roof.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat_list">
+                                <div class="chat_people">
+                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png"
+                                            alt="sunil"> </div>
+                                    <div class="chat_ib">
+                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                        <p>Test, which is a new approach to have all solutions
+                                            astrology under one roof.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mesgs">
+                        <div id="textAreaMessage" class="msg_history">
+                            <div class="incoming_msg">
+                                <div class="incoming_msg_img"> <img
+                                        src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                                <div class="received_msg">
+                                    <div class="received_withd_msg">
+                                        <p>Test which is a new approach to have all
+                                            solutions</p>
+                                        <span class="time_date"> 11:01 AM | June 9</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="outgoing_msg">
+                                <div class="sent_msg">
+                                    <p>Test which is a new approach to have all
+                                        solutions</p>
+                                    <span class="time_date"> 11:01 AM | June 9</span>
+                                </div>
+                            </div>
+                            <div class="incoming_msg">
+                                <div class="incoming_msg_img"> <img
+                                        src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                                <div class="received_msg">
+                                    <div class="received_withd_msg">
+                                        <p>Test, which is a new approach to have</p>
+                                        <span class="time_date"> 11:01 AM | Yesterday</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="outgoing_msg">
+                                <div class="sent_msg">
+                                    <p>Apollo University, Delhi, India Test</p>
+                                    <span class="time_date"> 11:01 AM | Today</span>
+                                </div>
+                            </div>
+                            <div class="incoming_msg">
+                                <div class="incoming_msg_img"> <img
+                                        src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                                <div class="received_msg">
+                                    <div class="received_withd_msg">
+                                        <p>We work directly with our designers and suppliers,</p>
+                                        <span class="time_date"> 11:01 AM | Today</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="type_msg">
+                            <div class="input_msg_write">
+                                <input type="text" id="textMessage"  class="write_msg" placeholder="Type a message" />
+                                <button onclick="sendMessage()" class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o"
+                                        aria-hidden="true"></i>SM</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        <button id="open" onclick="openForm()">Open Chat</button>
+        <button id="close" onclick="closeForm()">Close Chat</button>
+        <script>
+            function openForm() {
+                document.getElementById("myForm").style.display = "block";
+                document.getElementById("open").style.display = "none";
+                document.getElementById("close").style.display = "block";
+            }
+
+            function closeForm() {
+                document.getElementById("myForm").style.display = "none";
+                document.getElementById("open").style.display = "block";
+                document.getElementById("close").style.display = "none";
+            }
+        </script>
+        <script type="text/javascript">
+            var user = "${sessionScope.user.getUsername()}";
+//            var user = "<%=session.getAttribute("user")%>";
+//            if (user !== null) {
+//                name += "Admin";
+//            }
+//            else{
+//                name+="User";
+//            }
+            var websocket = new WebSocket("ws://localhost:8080/Update/chatRoomServer");
+            websocket.onopen = function (message) {
+                processOpen(user);
+            };
+            websocket.onmessage = function (message) {
+                processMessage(message);
+            };
+            websocket.onclose = function (message) {
+                processClose(message);
+            };
+            websocket.onerror = function (message) {
+                processError(message);
+            };
+
+            function processOpen(message) {
+                websocket.send(message);
+            }
+            function processMessage(message) {
+                console.log(message);
+                document.getElementById("textAreaMessage").innerHTML += '<div class="outgoing_msg"> <div class="sent_msg"> <p>' + message.data + '</p> <span class="time_date"> 11:01 AM | Today</span> </div></div>';
+            }
+            function processClose(message) {
+                textAreaMessage.value += "Server Disconnect... \n";
+            }
+            function processError(message) {
+                textAreaMessage.value += "Error... " + message + " \n";
+            }
+
+            function sendMessage() {
+                if (typeof websocket != 'undefined' && websocket.readyState == WebSocket.OPEN) {
+                    websocket.send(textMessage.value);
+                    textMessage.value = "";
+                }
+            }
+
+            function changeUser() {
+                if (typeof websocket != 'undefined' && websocket.readyState == WebSocket.OPEN) {
+                    websocket.send(textMessage.value);
+                    textMessage.value = "";
+                }
+            }
+
+        </script>
 
 
 
