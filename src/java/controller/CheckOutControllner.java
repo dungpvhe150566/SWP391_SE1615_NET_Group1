@@ -1,6 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+   check out
  */
 package controller;
 
@@ -48,8 +47,6 @@ public class CheckOutControllner extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-//            int shiptId = Integer.parseInt(request.getParameter("shiptId"));
-//             int productID = Integer.parseInt(request.getParameter("productID"));
             HttpSession session = request.getSession();
 //            List<entity.Ship> listShips = new ShipDAOImpl().getAllShips();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
@@ -118,7 +115,6 @@ public class CheckOutControllner extends HttpServlet {
             String address = request.getParameter("address");
             String note = request.getParameter("note");
             int CityId = Integer.parseInt(request.getParameter("CityId"));
-//        int OrderID = Integer.parseInt(request.getParameter("OrderID"));
             //trả về id tự tăng của bản ghi vừa lưu vào database
 
             HttpSession session = request.getSession();
