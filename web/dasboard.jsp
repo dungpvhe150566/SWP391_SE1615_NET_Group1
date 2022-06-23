@@ -91,8 +91,9 @@
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">${account}</div>
                                 </div>
                                 <div class="col-auto">
-                                    
+                                     <a href="accounts.jsp">
                                     <i class="fas fa-people-carry fa-2x text-gray-300"></i>
+                                     </a>
                                 </div>
                             </div>
                         </div>
@@ -108,8 +109,8 @@
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">${product}</div>
                                         </div>
                                         <div class="col-auto">
-                                            <a class="nav-link" href="ProductsController">
-                                            <i class="fas fa-project-diagram fa-2x text-gray-300"></i>
+                                            <a href="ProductsController">
+                                            <i class="fas fa-project-diagram fa-2x "></i>
                                             </a>
                                         </div>
                                     </div>
