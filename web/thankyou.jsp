@@ -103,37 +103,37 @@
         </div>
         <!-- Topbar End -->
         <br>
-        
-      <div class="container-fluid">
-                    <div class="row">  
-                        <div class="col-xl-12 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <h3 class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center">
-                                                Products you may be interested in below</h3>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
-                                        </div>
-                                        <div class="col-auto">
 
-                                                <i class="fas fa-people-carry fa-2x text-gray-300 text-center"></i>
-                                            
-                                        </div>
-                                    </div>
+        <div class="container-fluid">
+            <div class="row">  
+                <div class="col-xl-12 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <h3 class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-center">
+                                        Products you may be interested in below</h3>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                </div>
+                                <div class="col-auto">
+
+                                    <i class="fas fa-people-carry fa-2x text-gray-300 text-center"></i>
+
                                 </div>
                             </div>
                         </div>
-                       
                     </div>
                 </div>
-       
+
+            </div>
+        </div>
+
 
         <!-- Navbar Start -->
 
 
         <br><!-- comment -->
-      
+
     </div>
     <div class="col-sm-12 ">
         <div class="row pb-3 " >

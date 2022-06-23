@@ -286,7 +286,7 @@
                     yAxes: [{
                             ticks: {
                                 min: 0,
-                                max: 100000000,
+                                max: 900000000,
                                 maxTicksLimit: 5
                             },
                             gridLines: {
