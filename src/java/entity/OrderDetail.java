@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+
+
 @Builder
 @Getter
 @Setter
@@ -69,5 +71,17 @@ public class OrderDetail {
 //    public void setQuantity(int Quantity) {
 //        this.Quantity = Quantity;
 //    }
+
+    public OrderDetail() {
+    }
+
+    public OrderDetail(int ID, int OrderID, int ProductID, String ProductName, int ProductPrice, int Quantity) {
+        this.ID = ID;
+        this.OrderID = OrderID;
+        this.ProductID = ProductID;
+        this.ProductName = ProductName;
+        this.ProductPrice = ProductPrice;
+        this.Quantity = Quantity;
+    }
 
 }

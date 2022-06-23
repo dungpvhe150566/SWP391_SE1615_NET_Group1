@@ -1,6 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ suggest user buy more product
  */
 package controller;
 
@@ -102,10 +101,8 @@ public class ThankControllner extends HttpServlet {
             } //            User Search follow ProductName
             else if (service != null && service.equals("searchByName")) {
 //                Get ProductName from User Input
-                String productName = request.getParameter("productName");
-                productsList = productDao.getProductList(0, productName, prices,
-                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage, sort);
-                totalPage = productDao.getTotalPage(0, productName, prices, manufacturersID);
+                String productName ="";
+                productName = request.getParameter("productName").trim();
                 request.setAttribute("productName", productName);
             } //            List All Products
             else {

@@ -7,12 +7,18 @@ public class Category {
     private String CategoryName;
 
     private String icon;
+   
 
     public Category(int CategoryID, String CategoryName, String icon) {
         this.CategoryID = CategoryID;
         this.CategoryName = CategoryName;
         this.icon = icon;
     }
+
+    public Category() {
+    }
+
+  
 
     public int getCategoryID() {
         return CategoryID;

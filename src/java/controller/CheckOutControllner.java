@@ -1,6 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+   check out
  */
 package controller;
 
@@ -48,10 +47,8 @@ public class CheckOutControllner extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
         try {
-//            int shiptId = Integer.parseInt(request.getParameter("shiptId"));
-//             int productID = Integer.parseInt(request.getParameter("productID"));
             HttpSession session = request.getSession();
-//            List<entity.Ship> listShips = new ShipDAOImpl().getAllShips();
+            List<entity.Ship> listShips = new ShipDAOImpl().getAllShips();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
             if (carts == null) {
                 carts = new LinkedHashMap<>();
@@ -74,7 +71,7 @@ public class CheckOutControllner extends HttpServlet {
                 totalMoney += (cart.getAmount() * cart.getProduct().getOriginalPrice() + 50000);
 
             }
-
+              request.setAttribute("listShips", listShips);
             request.setAttribute("totalMoney", totalMoney);
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         } catch (Exception e) {
@@ -118,7 +115,6 @@ public class CheckOutControllner extends HttpServlet {
             String address = request.getParameter("address");
             String note = request.getParameter("note");
             int CityId = Integer.parseInt(request.getParameter("CityId"));
-//        int OrderID = Integer.parseInt(request.getParameter("OrderID"));
             //trả về id tự tăng của bản ghi vừa lưu vào database
 
             HttpSession session = request.getSession();
@@ -139,7 +135,7 @@ public class CheckOutControllner extends HttpServlet {
             Orders order = Orders.builder()
                     .UserID(1)
                     .TotalPrice((float) totalPrice)
-                    .Note(note)
+                    .Note(note.trim())
                     .Status(1)
                     .build();
             int orderId = new OrdersDAOImpl().createReturnId(order);
@@ -151,17 +147,18 @@ public class CheckOutControllner extends HttpServlet {
             //Lưu Shipping
             ShipInfo shipping = ShipInfo.builder()
                     .Order_ID(orderId)
-                    .CustomerName(name)
-                    .ShippingAddress(address)
+                    .CustomerName(name.trim())
+                    .ShippingAddress(address.trim())
                     .ShipCityID(CityId)
                     .PhoneNum(phone)
-                    .Note(note)
+                    .Note(note.trim())
                     .build();
             int shippingId = new ShipInfoDAOImpl().createReturnId(shipping);
 
             session.removeAttribute("carts");
             response.sendRedirect("thank");
         } catch (Exception e) {
+            e.printStackTrace();
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
             dispatcher2.forward(request, response);

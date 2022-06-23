@@ -42,7 +42,7 @@
                     <p style="color: red">${err}</p>
                     <input type="email" placeholder="Email" name="email" value="${email1}" required=""/>
                     <input type="text" pattern="[A-Za-z\d\.}]{6,12}" title="Username must bettween 6-12 character,contains only letters,numbers" placeholder="UserName" name="username" placeholder="UserName" name="username" value="${username1}" required="" />
-                    <input type="password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$" title="Password must more than 8 character,at least one digit,at least one upper letter,not contain space" placeholder="Password" name="password" required="" />                  
+                    <input type="password" pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\S+$).{8,}$" title="Password must more than 8 character,at least one digit,at least one upper letter,at least one special character, not contain space" placeholder="Password" name="password" required="" />                  
                     <input type="password" placeholder="rePassword" name="repassword" />
                     <button type="submit">Sign Up</button>
                 </form>

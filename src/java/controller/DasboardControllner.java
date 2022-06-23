@@ -6,9 +6,18 @@ package controller;
 
 import dao.StatisticalOrdersDAO;
 import dao.ViewDao;
+import dao.impl.CategoryDAOImpl;
+import dao.impl.OrdersDAOImpl;
+import dao.impl.ProductDAOImpl;
+import dao.impl.UsersDAOImpl;
+import entity.Category;
+import entity.Orders;
+import entity.Product;
 import entity.Statistical;
+import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -41,17 +50,54 @@ public class DasboardControllner extends HttpServlet {
         try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
              HttpSession session = request.getSession();
+             List<Product> listProduct = new ProductDAOImpl().getProductList();
+            List<Category> listCategorys = new CategoryDAOImpl().getAllCategory();
              int count = new ViewDao().getView();
+             int count2 = new ProductDAOImpl().countProduct();
+             int count3 = new  UsersDAOImpl().countAccount();
              request.setAttribute("view", count);
-              String thuu="";
+             // Statistical Orders in week 
+             String thuu="";
              String dataa="";
+             String yearString ="";
              List<Statistical> listThongKe = new StatisticalOrdersDAO().getAll();
              for (Statistical T : listThongKe) {
                 thuu+="\""+T.getThu()+"\", ";
                 dataa+=T.getNumOfOrder()+",";
+                yearString+=T.getYear();
             }
              
-            
+             // Total Product
+            String label="";
+            String soluong="";
+            List<Integer> soluongProduct = new ProductDAOImpl().countProductGroupByCategoryId();
+            for (Category C : listCategorys) {
+                label+="\""+C.getCategoryName()+"\",";
+            }
+            label.substring(0,label.length()-1);
+            for (Integer integer : soluongProduct) {
+                soluong+=(double)Math.round((((double)integer/count2)*100)*100)/100+",";
+            }
+            // First Revenue in 6 month of year
+            List<Double> listRevenue = new ArrayList<>();
+            for(int i=1;i<=6;i++){
+                double a = new OrdersDAOImpl().calRevenueInMonth(i);
+                listRevenue.add(a);
+            }
+            String revenue="";
+            for (Double double1 : listRevenue) {
+                revenue+=(double)Math.round(double1*100)/100+",";
+            }
+     
+            revenue.substring(0, revenue.length()-1);
+            soluong.substring(0, soluong.length()-1);
+            request.setAttribute("yearString", yearString);
+            request.setAttribute("revenue", revenue);
+             request.setAttribute("label", label);
+            request.setAttribute("soluong", soluong);
+            request.setAttribute("account", count3);
+            request.setAttribute("product", count2);
+            request.setAttribute("view", count);
             request.setAttribute("thu", thuu);
             request.setAttribute("data", dataa);
            request.getRequestDispatcher("dasboard.jsp").forward(request, response);

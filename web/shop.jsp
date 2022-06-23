@@ -61,32 +61,32 @@
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                 <input onchange="this.form.submit();" ${listPrices.contains('0-100000000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input" value="0-100000000" id="price-all">
                                 <label class="custom-control-label" for="price-all">All Price</label>
-                                <span class="badge border font-weight-normal">CountAll</span>
+                                <span class="badge border font-weight-normal"></span>
                             </div>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                 <input onchange="this.form.submit();" ${listPrices.contains('100000-500000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input" value="100000-500000" id="price-1">
                                 <label class="custom-control-label" for="price-1">$100.000 - $500.000</label>
-                                <span class="badge border font-weight-normal">150</span>
+                                <span class="badge border font-weight-normal"></span>
                             </div>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                 <input onchange="this.form.submit();" ${listPrices.contains('500000-1000000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input" value="500000-1000000" id="price-2">
                                 <label class="custom-control-label" for="price-2">$500.000 - $1.000.000</label>
-                                <span class="badge border font-weight-normal">295</span>
+                                <span class="badge border font-weight-normal"></span>
                             </div>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                 <input onchange="this.form.submit();" ${listPrices.contains('1000000-5000000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input" value="1000000-5000000" id="price-3">
                                 <label class="custom-control-label" for="price-3">$1.000.000 - $5.000.000</label>
-                                <span class="badge border font-weight-normal">246</span>
+                                <span class="badge border font-weight-normal"></span>
                             </div>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
                                 <input onchange="this.form.submit();" ${listPrices.contains('5000000-10000000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input" value="5000000-10000000" id="price-4">
                                 <label class="custom-control-label" for="price-4" >$5.000.000 - $10.000.000</label>
-                                <span class="badge border font-weight-normal">145</span>
+                                <span class="badge border font-weight-normal"></span>
                             </div>
                             <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
                                 <input onchange="this.form.submit();" ${listPrices.contains('10000000-800000000')? 'checked': ''} name="prices" type="checkbox" class="custom-control-input"value="10000000-800000000" id="price-5">
                                 <label class="custom-control-label" for="price-5">>$10.000.000</label>
-                                <span class="badge border font-weight-normal">168</span>
+                                <span class="badge border font-weight-normal"></span>
                             </div>
                         </div>
                         <!-- Price End -->
@@ -102,7 +102,7 @@
                                                onchange="this.form.submit();" name="manufacturer" class="custom-control-input" 
                                                id="color-${i}" value="${manufacturer.getManufacturerID()}">
                                         <label class="custom-control-label" for="color-${i}">${manufacturer.getManufacturerName()}</label>
-                                        <span class="badge border font-weight-normal">--</span>
+                                        <span class="badge border font-weight-normal">${manufacturer.getCount()}</span>
                                     </div>
                                     <c:set var="i" value="${i}+1"/>
                                 </c:forEach>
