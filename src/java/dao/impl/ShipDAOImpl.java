@@ -21,18 +21,15 @@ import java.util.logging.Logger;
  * @author Pham Van Trong
  */
 public class ShipDAOImpl extends DBContext implements ShipDAO{
-     ResultSet rs = null;
+     
      public List<Ship> getAllShips() throws Exception{
         List<Ship> list = new ArrayList<>();
-        Connection conn =null;
-            PreparedStatement preparedStatement =null;
-           
-            
         try {
             String sql = "select * from Ship";
+            Connection conn  = getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-            preparedStatement = conn.prepareStatement(sql);
-            rs = preparedStatement.executeQuery();
                 Ship product = Ship.builder()
                         .id(rs.getInt(1))
                         .CityName(rs.getString(2))
@@ -41,14 +38,11 @@ public class ShipDAOImpl extends DBContext implements ShipDAO{
                 list.add(product);
             }
         } catch (Exception ex) {
-            throw ex;
-        }finally {
-            closeRS(rs);
-            closePrepareStatement(preparedStatement);
-            closeConnection(conn);
+           ex.printStackTrace();
         }
         return list;
     }
+    
      
       public List<Ship> getPricebyIDShips(int Shipid) throws Exception{
         List<Ship> list = new ArrayList<>();
@@ -78,6 +72,17 @@ public class ShipDAOImpl extends DBContext implements ShipDAO{
         }
         return list;
     }
-      
+        public static void main(String[] args) {
+        // insert 
+       ShipDAOImpl er = new ShipDAOImpl();
+        
+         try {
+             //        String sql = "select * from Suppliers";
+             er.getAllShips();
+         } catch (Exception ex) {
+             Logger.getLogger(ShipDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+         }
+        
+    }
       
 }

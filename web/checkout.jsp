@@ -60,7 +60,7 @@
                             </div>
                             <div class="col-md-6 form-group">
                                 <label>Note</label>
-                                <input class="form-control"  id="note "name="note" type="text" placeholder="Doe"  required >
+                                <input class="form-control"  id="note "name="note" type="text" placeholder="required"  required >
                             </div>
 
                             <div class="col-md-6 form-group">
@@ -73,14 +73,13 @@
                             </div>
 
                             <div class="col-md-6 form-group">
-                                <label>City ID (1-64)</label>
-                                <input  type="number" min="1" max="64" 
-                                        onKeyUp="if (this.value > 64) {
-                                                    this.value = '64';
-                                                } else if (this.value < 1) {
-                                                    this.value = '1';
-                                                }"
-                                        id="yourid" class="form-control" id="CityId" name="CityId"  placeholder="123 Street"  required>
+                                <label ">City Name:</label>
+                                <select name="CityId" class="form-control" >
+                                    <c:forEach items="${listShips}" var="C">
+                                        <option ${C.getId() == shipping.CityId ?"selected":""} value="${C.getId()}">${C.getCityName()}</option>
+                                    </c:forEach>
+                                </select>
+
                             </div>
 
                             <div hidden=""></div>
@@ -135,7 +134,7 @@
                         <div class="card-body">
 
                             <div class="card-footer border-secondary bg-transparent">
-                                <button type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
+                                <button  onclick="myFunction()" type="submit" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3">Place Order</button>
                             </div>
                         </div>
                     </div>
@@ -150,13 +149,18 @@
 
 
         <!-- JavaScript Libraries -->
-     
+
         <script>
             function isNumberKey(e) {
                 var charCode = (e.which) ? e.which : e.keyCode;
                 if (charCode > 31 && (charCode < 48 || charCode > 57))
                     return false;
                 return true;
+            }
+        </script>
+        <script>
+            function myFunction() {
+                alert("Your Orders successfully");
             }
         </script>
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

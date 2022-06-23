@@ -48,7 +48,7 @@ public class CheckOutControllner extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         try {
             HttpSession session = request.getSession();
-//            List<entity.Ship> listShips = new ShipDAOImpl().getAllShips();
+            List<entity.Ship> listShips = new ShipDAOImpl().getAllShips();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
             if (carts == null) {
                 carts = new LinkedHashMap<>();
@@ -71,7 +71,7 @@ public class CheckOutControllner extends HttpServlet {
                 totalMoney += (cart.getAmount() * cart.getProduct().getOriginalPrice() + 50000);
 
             }
-
+              request.setAttribute("listShips", listShips);
             request.setAttribute("totalMoney", totalMoney);
             request.getRequestDispatcher("checkout.jsp").forward(request, response);
         } catch (Exception e) {
@@ -158,6 +158,7 @@ public class CheckOutControllner extends HttpServlet {
             session.removeAttribute("carts");
             response.sendRedirect("thank");
         } catch (Exception e) {
+            e.printStackTrace();
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
             dispatcher2.forward(request, response);
