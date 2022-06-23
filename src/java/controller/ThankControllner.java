@@ -101,10 +101,8 @@ public class ThankControllner extends HttpServlet {
             } //            User Search follow ProductName
             else if (service != null && service.equals("searchByName")) {
 //                Get ProductName from User Input
-                String productName = request.getParameter("productName");
-                productsList = productDao.getProductList(0, productName, prices,
-                        manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage, sort);
-                totalPage = productDao.getTotalPage(0, productName, prices, manufacturersID);
+                String productName ="";
+                productName = request.getParameter("productName").trim();
                 request.setAttribute("productName", productName);
             } //            List All Products
             else {
