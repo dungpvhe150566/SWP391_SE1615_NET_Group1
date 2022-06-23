@@ -362,7 +362,7 @@
                 labels: [${label}],
                 datasets: [{
                         data: [${soluong}],
-                        backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745'],
+                        backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745','#fefbd8','#80ced6'],
                     }],
             },
         });
