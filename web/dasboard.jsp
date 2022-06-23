@@ -70,7 +70,7 @@
         }
     </style>
     <body id="reportsPage">
-      
+
         <div class="" id="home">
             <%@include file="components/NavbarAdmin.jsp" %>
             <div class="container">
@@ -80,26 +80,26 @@
                     </div>
                 </div>
                 <div class="container-fluid">
-            <div class="row">  
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Accounts</div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">${account}</div>
-                                </div>
-                                <div class="col-auto">
-                                     <a href="accounts.jsp">
-                                    <i class="fas fa-people-carry fa-2x text-gray-300"></i>
-                                     </a>
+                    <div class="row">  
+                        <div class="col-xl-3 col-md-6 mb-4">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                                Accounts</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">${account}</div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a href="accounts.jsp">
+                                                <i class="fas fa-people-carry fa-2x text-gray-300"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                 <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -110,14 +110,14 @@
                                         </div>
                                         <div class="col-auto">
                                             <a href="ProductsController">
-                                            <i class="fas fa-project-diagram fa-2x "></i>
+                                                <i class="fas fa-project-diagram fa-2x "></i>
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                 <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-info shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -131,8 +131,8 @@
                                                 <div class="col">
                                                     <div class="progress progress-sm mr-2">
                                                         <div class="progress-bar bg-info" role="progressbar"
-                                                            style="width: 50%" aria-valuenow="50" aria-valuemin="0"
-                                                            aria-valuemax="100"></div>
+                                                             style="width: 50%" aria-valuenow="50" aria-valuemin="0"
+                                                             aria-valuemax="100"></div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -144,7 +144,7 @@
                                 </div>
                             </div>
                         </div>
-                 <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-3 col-md-6 mb-4">
                             <div class="card border-left-warning shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
@@ -160,19 +160,19 @@
                                 </div>
                             </div>
                         </div>
-            </div>
-        </div>
+                    </div>
+                </div>
                 <!-- row -->
                 <div class="row tm-content-row">
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block">
-                            <h2 class="tm-block-title"> First 6 months of the year revenue</h2>
+                            <p class="tm-block-title"   > First 6 months of the year revenue : <b class="claimedRight" maxlength="4" >${yearString}</b></p>
                             <canvas id="myBarChart" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block">
-                            <h2 class="tm-block-title"> Statistics of invoice numbers during the week</h2>
+                            <h2 class="tm-block-title"> Statistics of invoice numbers during the week : <b class="claimedRight" maxlength="4" >${yearString}</b></h2>
                             <canvas id="myAreaChart" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
@@ -200,7 +200,7 @@
                             </div>
                         </div>
                     </div>
-                      
+
                     <!--                    <div class="col-12 tm-block-col">
                                             <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                                                 <h2 class="tm-block-title">Orders List</h2>
@@ -255,6 +255,7 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     </script>
+     <script         src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>
         // Bar Chart Example
         var ctx = document.getElementById("myBarChart");
@@ -284,7 +285,7 @@
                         }],
                     yAxes: [{
                             ticks: {
-                                min: 500000,
+                                min: 0,
                                 max: 100000000,
                                 maxTicksLimit: 5
                             },
@@ -363,7 +364,7 @@
                 labels: [${label}],
                 datasets: [{
                         data: [${soluong}],
-                        backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745','#fefbd8','#80ced6'],
+                        backgroundColor: ['#007bff', '#dc3545', '#ffc107', '#28a745', '#fefbd8', '#80ced6'],
                     }],
             },
         });
@@ -390,6 +391,17 @@
             $(window).resize(function () {
                 updateLineChart();
                 updateBarChart();
+            });
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $('.claimedRight').each(function (f) {
+
+                var newstr = $(this).text().substring(0, 4);
+                $(this).text(newstr);
+
             });
         })
     </script>

@@ -59,11 +59,14 @@ public class DasboardControllner extends HttpServlet {
              // Statistical Orders in week 
              String thuu="";
              String dataa="";
+             String yearString ="";
              List<Statistical> listThongKe = new StatisticalOrdersDAO().getAll();
              for (Statistical T : listThongKe) {
                 thuu+="\""+T.getThu()+"\", ";
                 dataa+=T.getNumOfOrder()+",";
+                yearString+=T.getYear();
             }
+             
              // Total Product
             String label="";
             String soluong="";
@@ -75,6 +78,7 @@ public class DasboardControllner extends HttpServlet {
             for (Integer integer : soluongProduct) {
                 soluong+=(double)Math.round((((double)integer/count2)*100)*100)/100+",";
             }
+            // First Revenue in 6 month of year
             List<Double> listRevenue = new ArrayList<>();
             for(int i=1;i<=6;i++){
                 double a = new OrdersDAOImpl().calRevenueInMonth(i);
@@ -84,8 +88,10 @@ public class DasboardControllner extends HttpServlet {
             for (Double double1 : listRevenue) {
                 revenue+=(double)Math.round(double1*100)/100+",";
             }
+     
             revenue.substring(0, revenue.length()-1);
             soluong.substring(0, soluong.length()-1);
+            request.setAttribute("yearString", yearString);
             request.setAttribute("revenue", revenue);
              request.setAttribute("label", label);
             request.setAttribute("soluong", soluong);

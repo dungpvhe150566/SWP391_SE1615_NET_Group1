@@ -19,4 +19,5 @@ public class Statistical {
     private String thu;
     private int numOfOrder;
     private double totalMoney;
+    private int year;
 }
