@@ -5,19 +5,21 @@
  */
 package controller;
 
+import dao.impl.BlogDAOImpl;
+import entity.Blog;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.impl.UsersDAOImpl;
 
 /**
  *
  * @author Admin
  */
-public class DeleteAccountController extends HttpServlet {
+public class PagingController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,20 +33,17 @@ public class DeleteAccountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        try {
-            //Get ID from JSP
-            String id = request.getParameter("UserID");
-            System.out.println(id);
-            //Call DAO
-            UsersDAOImpl dao = new UsersDAOImpl();
-            //Use function Delete to delete by ID
-            dao.deleteAccount(id);
-
-            request.getRequestDispatcher("AccountManagerController").forward(request, response);
-        } catch (Exception e) {
-            response.sendRedirect("error.jsp");
+        String index = request.getParameter("index");
+        int indexpage = 0;
+        if (index == null) {
+            index = "1";
         }
+        indexpage = Integer.parseInt(index);
+        BlogDAOImpl dao = new BlogDAOImpl();
+        List<Blog> list = dao.paging(indexpage);
+        request.setAttribute("listP", list);
+        request.setAttribute("indexpage", indexpage);
+        request.getRequestDispatcher("HomePage.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -10,16 +10,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
+public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
 
     PreparedStatement ps = null; //...
     ResultSet rs = null; //Nhận kết quả trả về
-    public ArrayList<Feedback> getFeedBackByPID(int productID) throws Exception{
+
+    public ArrayList<Feedback> getFeedBackByPID(int productID) throws Exception {
         // Create vector to store all Categories
         ArrayList<Feedback> feedbacks = new ArrayList<>();
 
@@ -32,28 +34,27 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
                 + "		 from Feedback f join Users u on f.UserID = u.UserID where f.ProductID=" + productID;
 
         // Resultset to store all Categories 
-
-         Connection connection = null;
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         // Get all categories store to vector
         try {
-             connection = getConnection();
+            connection = getConnection();
             preparedStatement = connection.prepareStatement(sqlQuery);
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 // Get and store all attribute of each Feedback
-                int feedbackID = rs.getInt(1);
-                String userName = rs.getString(2);
-                String dayFeedBack = rs.getString(3);
-                int star = rs.getInt(4);
-                String feedbackDetails = rs.getString(5);
+                int feedbackID = rs.getInt("ID");
+                String userName = rs.getString("Username");
+                Date dayFeedBack = rs.getDate("DateComment");
+                int star = rs.getInt("Star");
+                String feedbackDetails = rs.getString("FeedbackDetail");
                 // Add FeedBack to vector 
                 feedbacks.add(new Feedback(feedbackID, userName, dayFeedBack, star, feedbackDetails));
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-        }finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
@@ -61,9 +62,9 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
         return feedbacks;
     }
 
-    public List<Feedback> getFeedbacks() throws Exception{
+    public List<Feedback> getFeedbacks() throws Exception {
         String query = "SELECT * FROM Feedback";
-         Connection connection = null;
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         try {
@@ -84,8 +85,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
             return lsFeedback;
         } catch (Exception e) {
             throw e;
-        }
-        finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
@@ -98,9 +98,9 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
      * @param id the id of the feedback
      * @return a feedback with the specified id
      */
-    public Feedback getFeedbacksById(int id) throws Exception{
+    public Feedback getFeedbacksById(int id) throws Exception {
         String query = "SELECT * FROM Feedback WHERE ID = ?";
-         Connection connection = null;
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         try {
@@ -122,8 +122,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
 
         } catch (Exception e) {
             throw e;
-        }
-        finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
@@ -137,10 +136,10 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
      * @param productId the id of the product
      * @return a list of feedback
      */
-    public List<Feedback> getFeedbacksByProductId(int productId) throws Exception{
-        String query = "SELECT * FROM Feedback f "
-                + "join Users u on f.UserID=u.UserID"
-                + " join Product p on p.ProductID=f.ProductID WHERE f.ProductID = ?";
+    public List<Feedback> getFeedbacksBySellerId(int productId) throws Exception {
+        String query = "select *from Feedback f join Product p on "
+                + "p.ProductID=f.ProductID join Users u "
+                + "on u.UserID=f.UserID where p.SellerID=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
@@ -163,8 +162,42 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
             return lsFeedback;
         } catch (Exception e) {
             throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
         }
-        finally {
+    }
+
+    public ArrayList<Feedback> getFeedbacksSort(int sellerID, String sort, String namesort, int start, int end) throws Exception {
+        String query = "with a as (	select row_number() over(order by ID  asc) as row, ID,Username,ProductName,Star,FeedbackDetail from Feedback f join Product p \n"
+                + "                on p.ProductID=f.ProductID join Users u \n"
+                + "                on u.UserID=f.UserID where p.SellerID=? \n"
+                + "                                            ) \n"
+                + "                                             select * from a where  row between " + start + " and " + end + " order by " + namesort + " " + sort;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        try {
+            ArrayList<Feedback> lsFeedback = new ArrayList<>();
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, sellerID);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Feedback f = new Feedback(
+                        rs.getInt("ID"),
+                        rs.getString("Username"),
+                        rs.getString("ProductName"),
+                        rs.getInt("Star"),
+                        rs.getString("FeedbackDetail")
+                );
+                lsFeedback.add(f);
+            }
+            return lsFeedback;
+        } catch (Exception e) {
+            throw e;
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
@@ -177,7 +210,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
      * @param userId the id of the user
      * @return a list of feedback
      */
-    public List<Feedback> getFeedbacksByUserId(int userId) throws Exception{
+    public List<Feedback> getFeedbacksByUserId(int userId) throws Exception {
         String query = "SELECT * FROM Feedback WHERE UserID = ?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -201,7 +234,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
             return lsFeedback;
         } catch (Exception e) {
             throw e;
-        }finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
@@ -240,7 +273,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
             return lsFeedback;
         } catch (Exception e) {
             throw e;
-        }finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
@@ -253,7 +286,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
      * @param orderId the id of the order
      * @return a list of feedback with the order id
      */
-    public List<Feedback> getFeedbacksByOrderId(int orderId) throws Exception{
+    public List<Feedback> getFeedbacksByOrderId(int orderId) throws Exception {
         String query = "SELECT * FROM Feedback WHERE OrderID = ? ";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -278,7 +311,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
             return lsFeedback;
         } catch (Exception e) {
             throw e;
-        }finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
@@ -291,7 +324,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
      * @param theFeedback to add to database
      * @return true if add successful, else false
      */
-    public boolean addFeedback(Feedback theFeedback) throws Exception{
+    public boolean addFeedback(Feedback theFeedback) throws Exception {
         String query = "INSERT INTO Feedback VALUES (?, ?, ?, ?, ?);";
         int check = 0;
         Connection connection = null;
@@ -310,7 +343,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
         } catch (Exception e) {
             check = -1;
             throw e;
-        }finally {
+        } finally {
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
         }
@@ -322,7 +355,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
      *
      * @return total count of all feedback
      */
-    public int countTotalFeedback() throws Exception{
+    public int countTotalFeedback() throws Exception {
         try {
             return getFeedbacks().size();
         } catch (Exception ex) {
@@ -330,11 +363,170 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO{
         }
     }
 
-//    public static void main(String[] args) {
-//        FeedbackDAOImpl feedbackDAO = new FeedbackDAOImpl();
-//        for (Feedback f : feedbackDAO.getFeedbacksByProductId(2)) {
-//            System.out.println(f);
-//        }
-//    }
+    public List<Feedback> getFeedbacksByProductId(int start, int end) throws Exception {
+        String query = "with a as (	select row_number() over(order by ID  asc) as row, ID,Username,ProductName,Star,FeedbackDetail from Feedback f \n"
+                + "                join Users u on f.UserID=u.UserID\n"
+                + "                 join Product p on p.ProductID=f.ProductID \n"
+                + "                              ) \n"
+                + "                              select * from a where  row between " + start + " and " + end;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        try {
+            List<Feedback> lsFeedback = new ArrayList<>();
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Feedback f = new Feedback(
+                        rs.getInt("ID"),
+                        rs.getString("Username"),
+                        rs.getString("ProductName"),
+                        rs.getInt("Star"),
+                        rs.getString("FeedbackDetail")
+                );
+                lsFeedback.add(f);
+            }
+            return lsFeedback;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
 
+    public int getTotalPageFeedbacks() throws Exception {
+
+        //  Variable to store the condition values passed to filter feedbacks in Database
+        int totalPage = 0;
+
+        // Query statement to get total feedbacks in Database
+        String sqlQuery = "select count(ID) from Feedback ";
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Execute query to get total feedbacks
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            rs = preparedStatement.executeQuery();
+            // set total feedbacks to variable
+            if (rs.next()) {
+                totalPage = rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            closeConnection(connection);
+            closePrepareStatement(preparedStatement);
+            closeRS(rs);
+        }
+        // convet total feedbacks to total page (each page have 6 product)
+        return (int) Math.ceil((double) totalPage / 6);
+    }
+
+    public void deleteFeedbackbyID(String id) throws Exception {
+        String query = "delete from Feedback where ID=?";
+
+        Connection conn = null;
+        PreparedStatement prepare = null;
+
+        try {
+            conn = getConnection();
+            prepare = conn.prepareStatement(query);
+            prepare.setString(1, id);
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closePrepareStatement(prepare);
+            closeConnection(conn);
+        }
+        return;
+    }
+
+    public int totalPage(int index) throws Exception {
+        //  Variable to store the condition values passed to filter feedbacks in Database
+        int totalPage = 0;
+
+        // Query statement to get total feedbacks in Database
+        String sqlQuery = "select count(ID) from Feedback f join "
+                + "Users u on f.UserID=u.UserID join Product p on"
+                + " p.ProductID=f.ProductID where p.SellerID=?";
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Get all categories store to vector
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setInt(1, index);
+
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int totalA = rs.getInt(1);
+                totalPage = totalA / 6;
+                if (totalA % 6 != 0) {
+                    totalPage++;
+                }
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            closeConnection(connection);
+            closePrepareStatement(preparedStatement);
+            closeRS(rs);
+        }
+        // convet total feedbacks to total page (each page have 6 product)
+        return totalPage;
+    }
+
+    public List<Feedback> paging(int index, String name, int sellerID) {
+        String query = "with a as (	select row_number() over(order by ID  asc) as row, ID,Username,ProductName,Star,FeedbackDetail from Feedback f join Product p \n"
+                + "                on p.ProductID=f.ProductID join Users u \n"
+                + "                on u.UserID=f.UserID where p.SellerID=? \n"
+                + "                                            ) \n"
+                + "                                             select * from a order by " + name + "\n"
+                + "                        OFFSET ? ROWS  FETCH NEXT 6 ROWS ONLY";
+        List<Feedback> list = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Get all categories store to vector
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, sellerID);
+            preparedStatement.setInt(2, (index * 6 - 6));
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                list.add(new Feedback(rs.getInt("ID"),
+                        rs.getString("Username"),
+                        rs.getString("ProductName"),
+                        rs.getInt("Star"),
+                        rs.getString("FeedbackDetail")));
+            }
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        FeedbackDAOImpl feedbackDAO = new FeedbackDAOImpl();
+        try {
+            List<Feedback> lsFeedback = new ArrayList<>();
+            lsFeedback = feedbackDAO.paging(2, "star", 3);
+            System.out.println(feedbackDAO.totalPage(3));
+            for (Feedback feedback : lsFeedback) {
+                System.out.println(feedback);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(FeedbackDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 }

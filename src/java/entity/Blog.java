@@ -55,6 +55,11 @@ public class Blog {
         return imageLink;
     }
 
+    @Override
+    public String toString() {
+        return "Blog{" + "ID=" + ID + ", Title=" + Title + ", Content=" + Content + ", imageLink=" + imageLink + ", SellerID=" + SellerID + '}';
+    }
+
     public void setImageLink(String imageLink) {
         this.imageLink = imageLink;
     }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package controller;
 
 import entity.Users;
@@ -17,7 +12,7 @@ import dao.impl.UsersDAOImpl;
 
 /**
  *
- * @author Admin
+ *Management account of user
  */
 public class AccountManagerController extends HttpServlet {
 
@@ -34,16 +29,28 @@ public class AccountManagerController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            int indexPage = 1;
+            // get the Page position being displayed to the user so that page transitions can be performed
+            String index = request.getParameter("indexPage");
+            if (index != null) {
+                indexPage = Integer.parseInt(index);
+            }
+            request.setAttribute("indexPage", indexPage);
+            //Get data from DAO
             UsersDAOImpl userDAO = new UsersDAOImpl();
-            List<Users> listAccount = userDAO.getAllAccounts();
+            // Get total Page of list product(each page have max 6 products)
 
+            List<Users> listAccount = userDAO.getUsersList(6 * (indexPage - 1) + 1, 6 * indexPage);
+            //Get total page
+            int totalPage = userDAO.getTotalPage();
+            request.setAttribute("totalPage", totalPage);
             //Set data to JSP
             request.setAttribute("list", listAccount);
             request.getRequestDispatcher("AccountManager.jsp").forward(request, response);
         } catch (Exception e) {
-            response.sendRedirect("thankyou.jsp");
+            response.sendRedirect("error.jsp");
         }
-        //Get data from DAO
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

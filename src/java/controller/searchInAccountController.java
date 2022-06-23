@@ -33,12 +33,28 @@ public class searchInAccountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         try {
             String searchText = request.getParameter("text");
-
+            int indexPage = 1;
+//            get the Page position being displayed to the user so that page transitions can be performed
+            String index = request.getParameter("indexPage");
+            if (index != null) {
+                indexPage = Integer.parseInt(index);
+            }
+            request.setAttribute("indexPage", indexPage);
+            UsersDAOImpl userDAO = new UsersDAOImpl();
+            //            Get total PAge of list product(each page have max 6 products)
+            int totalPage = userDAO.getTotalPageSearch(searchText.trim());
+            request.setAttribute("totalPage", totalPage);
+            
+            //Set data to JSP
             UsersDAOImpl UserDAO = new UsersDAOImpl();
-            List<Users> listA = UserDAO.searchAccountInManager(searchText);
+            List<Users> listA = UserDAO.searchAccountInManager(searchText.trim(), 6 * (indexPage - 1) + 1, 6 * indexPage);
+            // Set data to jsp
             request.setAttribute("list", listA);
+            request.setAttribute("mess", "Not found");
+            request.setAttribute("txt", searchText.trim());
             request.getRequestDispatcher("AccountManager.jsp").forward(request, response);
 
         } catch (Exception e) {

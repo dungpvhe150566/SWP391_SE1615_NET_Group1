@@ -55,20 +55,8 @@ public class ViewAllFeedbackController extends HttpServlet {
             UsersDAOImpl userDao = new UsersDAOImpl();
 
             // get all feedback of product of this seller
-            List<Product> lsProduct = productDao.getProductBySellID(a.getUserID());
-            List<Integer> lsId = lsProduct.stream().map(Product::getProductID).collect(Collectors.toList());
             List<Feedback> lsFeedback = new ArrayList<>();
-
-            for (Product product : lsProduct) {
-                System.out.println(product);
-
-            }
-            for (int id : lsId) {
-                lsFeedback.addAll(feedbackDao.getFeedbacksByProductId(id));
-                System.out.println(id);
-
-            }
-
+//            lsFeedback = feedbackDao.getFeedbacksBySellerId(a.getUserID());
             for (Feedback feedback : lsFeedback) {
                 // get all account that made feedback
                 Users accountMadeFeedback = userDao.getAccountByID(
@@ -85,52 +73,76 @@ public class ViewAllFeedbackController extends HttpServlet {
                 feedback.setProduct(productWithFeedback);
 
             }
-            // allow sort by name, product, star
-            if (request.getParameter("sort-flag")!=null) {
-                int sortOption = Integer.parseInt(request.getParameter("sort-order"));
-                int sortOrder = Integer.parseInt(request.getParameter("sort-by-order"));
-                switch (sortOption) {
-                    // sort by star
-                    case 1: {
-                        if (sortOrder == 1) {
-                            // sort ascending
-                            lsFeedback.sort(Comparator.comparing((Feedback::getStar)));
-                        } else {
-                            // sort descending
-                            lsFeedback.sort(Comparator.comparing((Feedback::getStar)));
-                            Collections.reverse(lsFeedback);
-                        }
-                        break;
-                    }
-                    // sort by user
-                    case 2: {
-                        if (sortOrder == 1) {
-                            // sort ascending
-                            lsFeedback.sort(Comparator.comparing((accountMadeFeedback -> accountMadeFeedback.getUserName())));
-                        } else {
-                            // sort descending
-                            lsFeedback.sort(Comparator.comparing((accountMadeFeedback -> accountMadeFeedback.getUserName())));
-                            Collections.reverse(lsFeedback);
-                        }
-                        break;
-                    }
-                    // sort by product
-                    case 3: {
-                        if (sortOrder == 1) {
-                            // sort ascending
-                            lsFeedback.sort(Comparator.comparing((productWithFeedback -> productWithFeedback.getProductName())));
-                        } else {
-                            // sort descending
-                            lsFeedback.sort(Comparator.comparing((productWithFeedback-> productWithFeedback.getProductName())));
-                            Collections.reverse(lsFeedback);
-                        }
-                        break;
-                    }
-
-                }
+            String index = request.getParameter("index");
+            int indexpage = 0;
+            if (index == null) {
+                index = "1";
+            }
+            indexpage = Integer.parseInt(index);
+            lsFeedback = feedbackDao.paging(indexpage, "ID", a.getUserID());
+            int total = feedbackDao.totalPage(a.getUserID());
+            request.setAttribute("indexpage", indexpage);
+            request.setAttribute("uid", total);
+            int sortOption = 0;
+            int sortOrder = 0; 
+            if (request.getParameter("sopt") != null || request.getParameter("sodr") != null) {
+                sortOption = Integer.parseInt(request.getParameter("sopt"));
+                sortOrder = Integer.parseInt(request.getParameter("sodr"));
+            }
+            if (request.getParameter("sort-order") != null) {
+                sortOption = Integer.parseInt(request.getParameter("sort-order"));
+            }
+            if (request.getParameter("sort-by-order") != null) {
+                sortOrder = Integer.parseInt(request.getParameter("sort-by-order"));
             }
 
+            request.setAttribute("sopt", sortOption);
+            request.setAttribute("sodr", sortOrder);
+            switch (sortOption) {
+                // sort by star
+                case 1: {
+                    if (sortOrder == 1) {
+                        // sort ascending
+                        lsFeedback = feedbackDao.paging(indexpage, "star", a.getUserID());
+                    } else {
+                        // sort descending
+                        lsFeedback = feedbackDao.paging(indexpage, "star", a.getUserID());
+                        Collections.reverse(lsFeedback);
+                    }
+                    break;
+                }
+                // sort by user
+                case 2: {
+                    if (sortOrder == 1) {
+                        // sort ascending
+                        lsFeedback = feedbackDao.paging(indexpage, "username", a.getUserID());
+
+                    } else {
+                        // sort descending
+                        lsFeedback = feedbackDao.paging(indexpage, "username", a.getUserID());
+                        Collections.reverse(lsFeedback);
+                    }
+                    break;
+                }
+                // sort by product
+                case 3: {
+                    if (sortOrder == 1) {
+                        // sort ascending
+                        lsFeedback = feedbackDao.paging(indexpage, "productname", a.getUserID());
+
+                    } else {
+                        // sort descending
+                        lsFeedback = feedbackDao.paging(indexpage, "productname", a.getUserID());
+                        Collections.reverse(lsFeedback);
+                    }
+                    break;
+                }
+
+            }
+//            }
+            //Set data to JSP
             request.setAttribute("lsFeedback", lsFeedback);
+
             request.getRequestDispatcher("ViewAllFeedbacks.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();

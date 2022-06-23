@@ -37,6 +37,8 @@ public class SubmitFeedbackControl extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+
         try {
             ProductDAOImpl productDao = new ProductDAOImpl();
             //get productId from detail
@@ -49,7 +51,7 @@ public class SubmitFeedbackControl extends HttpServlet {
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("thankyou.jsp");
+            response.sendRedirect("error.jsp");
         }
     }
 
@@ -80,6 +82,8 @@ public class SubmitFeedbackControl extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
+
         try {
 
             // get current user account
@@ -91,18 +95,16 @@ public class SubmitFeedbackControl extends HttpServlet {
 
             // get current product id
             int productId = Integer.parseInt(request.getParameter("productId"));
-            
+
             // get current product id
-            int cateid=Integer.parseInt(request.getParameter("cateID"));
-            
+            int cateid = Integer.parseInt(request.getParameter("cateID"));
+
             // get input rating
             String star = request.getParameter("star-value");
-            if(star==null){
-                star="0";
+            if (star == null) {
+                star = "0";
             }
             String feedback = request.getParameter("feedback-text");
-            feedback.trim();
-
             //get current date
             java.util.Date utilDate = new java.util.Date();
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
@@ -113,7 +115,7 @@ public class SubmitFeedbackControl extends HttpServlet {
             userFeedback.setUserID(currentAccount.getUserID());
             out.println(currentAccount.getUserID());
             userFeedback.setStar(Integer.parseInt(star));
-            userFeedback.setFeedbackDetails(feedback);
+            userFeedback.setFeedbackDetails(feedback.trim());
             userFeedback.setDateFeedback(sqlDate);
             System.out.println(userFeedback);
 
@@ -122,11 +124,11 @@ public class SubmitFeedbackControl extends HttpServlet {
 
             // redirect to Home
             if (addFeedback) {
-                request.getRequestDispatcher("ShopDetailController?do=ViewDetail&categoryID="+cateid+"&productID=" + productId).forward(request, response);
+                request.getRequestDispatcher("ShopDetailController?do=ViewDetail&categoryID=" + cateid + "&productID=" + productId).forward(request, response);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("thankyou.jsp");
+            response.sendRedirect("error.jsp");
         }
     }
 

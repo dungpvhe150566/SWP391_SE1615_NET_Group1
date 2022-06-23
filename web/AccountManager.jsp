@@ -5,7 +5,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title></title>
+        <title>Management Account</title>
         <link href="css/Dashboard.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
@@ -33,6 +33,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-2" style="background-color: #ebebf2;">
+                    <a class="navbar-brand" href="HomeController"><img src="image/Other/AccountDashboard.jpg" width="200px"></a>
+
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -42,59 +44,50 @@
                             <a class="nav-link" href="HomeController"><i class="fas fa-home"></i>Home</a>
                             <hr class="line">
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="AccountManagerController">AccountManager</a>
-                            <hr class="line">
-                        </li>
-<!--                        <li class="nav-item">
-                            <a class="nav-link" href="dashBoard"><i class="far fa-chart-bar"></i>Dashboard overview</a>
-                            <hr class="line">
-                        </li>-->
                         <c:if test="${sessionScope.user == null}">
                             <li class="nav-item">
-                                <a class="nav-link" href="LoginController">Login</a>
+                                <a class="nav-link" href="login">Login</a>
                             </li>
                         </c:if>
                         <c:if test = "${sessionScope.user != null}">
-                            <li id="drop">
-                                <a class="nav-link" href="profile" id="profileOption"><i class="fas fa-user-circle"></i>Hello ${sessionScope.acc.user}</a>
-                                <div class="dropdownContent">
-                                    <a href="profile">View my profile</a></br>
-                                    <a href="LogoutController">LogOut</a>
-                                </div>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#"><i class="fas fa-user-circle"></i>Hello ${sessionScope.acc.user}</a>
                                 <hr class="line">
                             </li>
 
-                            <c:if test="${sessionScope.acc.isSell == 1}">
+                            <c:if test="${sessionScope.user.getIsSeller() == 1}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="manager"><i class="fas fa-tasks"></i>Manager Product</a>
-                                    <a class="nav-link" href="blogManager"><i class="fas fa-tasks"></i>Manager Blog</a>
-                                    <a class="nav-link" href="manage-feedback"><i class="fas fa-tasks"></i>Manage Feedback</a>
+                                    <a class="nav-link" href="ProductsController"><i class="fas fa-tasks"></i>Manager Product</a>
+                                    <hr class="line">
+                                    <a class="nav-link" href="#"><i class="fas fa-tasks"></i>Manager Blog</a>
+                                    <hr class="line">
+                                    <a class="nav-link" href="ViewAllFeedbackController"><i class="fas fa-tasks"></i>Manage Feedback</a>
                                     <hr class="line">
                                 </li> 
                             </c:if>
 
-                            <c:if test="${sessionScope.acc.isAdmin == 1}">
+                            <c:if test="${sessionScope.user.getIsAdmin() == 1}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="accountManager"><i class="fas fa-tasks"></i>Manager Account</a>
+                                    <a class="nav-link" href="AccountManagerController"><i class="fas fa-tasks"></i>Manager Account</a>
                                     <hr class="line">
                                 </li> 
                             </c:if>
                             <li class="nav-item">
-                                <a class="nav-link" href="viewAllNotifications"><i class="fas fa-bell"></i>Notifications (${numberNoti})</a>
+                                <a class="nav-link" href="#"><i class="fas fa-bell"></i>Notifications (${numberNoti})</a>
                             </li> 
                         </c:if>
 
                         <li class="nav-item">&nbsp;
                         </li> 
                     </ul>
+                    <a class="nav-link" href="logout" style="position: fixed; right: 10px;">LogOut</a>
 
                 </div>
                 <div class="col-10">
                     <div class="container">
                         <div class="d-flex justify-content-center h-100">
                             <div class="searchbar">
-                                <input class="search_input" type="text" id="search_Account" placeholder="Search..."value="">
+                                <input class="search_input" type="text" id="search_Account" maxlength="50" placeholder="Search..." value="${txt}">
                                 <button onclick="search();" class="search_icon"><i class="fas fa-search"></i></button>
                             </div>
                         </div>
@@ -109,7 +102,10 @@
                                                 <th>ID</th>
                                                 <th>UserName</th>						
                                                 <th>Role</th>
-                                                <th>Action</th>
+                                                    <c:if test="${sessionScope.user.getIsAdmin() == 1}">
+                                                    <th>Action</th>
+
+                                                </c:if>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -125,22 +121,52 @@
                                                             <a href="#" class="btn btn-secondary btn-sm active" role="button" aria-pressed="true">Admin</a>
                                                         </c:if>
                                                     </td>
-                                                    <td>
-                                                        <a target="blank" href="EditAccountController?UserID=${o.getUserID()}"><button type="button" class="btn btn-outline-info  btn-sm">Edit</button></a>
-                                                        <form action="deleteAccount" method="POST" style="display:inline">
-                                                            <a> <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="if (confirm('Are you sure you want to delete?'))
-                                                                        form.action = 'DeleteAccountController?UserID=${o.getUserID()}';
-                                                                    else
-                                                                        return false;"/>  
-                                                            </a>
-                                                        </form>
-                                                    </td>
+                                                    <c:if test="${sessionScope.user.getIsAdmin() == 1}">
+                                                        <td>
+                                                            <a href="EditAccountController?UserID=${o.getUserID()}"><button type="button" class="btn btn-outline-info  btn-sm">Edit</button></a>
+                                                            <form action="deleteAccount" method="POST" style="display:inline">
+                                                                <a> <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete" onclick="if (confirm('Are you sure you want to delete?'))
+                                                                            form.action = 'DeleteAccountController?UserID=${o.getUserID()}';
+                                                                        else
+                                                                            return false;"/>  
+                                                                </a>
+                                                            </form>
+                                                        </td>
+                                                    </c:if>
+
                                                 </tr>
                                             </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                            <c:if test="${totalPage!=0}">
+                            <div class="col-12 pb-1">
+                                <nav aria-label="Page navigation">
+                                    <ul class="pagination justify-content-center mb-3">
+                                        <li class="page-item ${indexPage==1?'disabled':''}">
+                                            <a class="page-link" href="AccountManagerController?indexPage=${indexPage-1}" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                                <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+                                        <c:forEach var="i" begin="1" end="${totalPage}"  >
+                                            <li class="page-item ${indexPage==i?'active':''}">
+                                                <a class="page-link" href="AccountManagerController?indexPage=${i}">${i}</a></li>
+                                            </c:forEach>
+                                        <li class="page-item ${indexPage==totalPage?'disabled':''}">
+                                            <a class="page-link" href="AccountManagerController?indexPage=${indexPage+1}" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                                <span class="sr-only">Next</span>
+                                            </a>  
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                                                </c:if>
+                            <c:if test="${totalPage==0}">
+                                ${mess}
+                            </c:if>               
                         </div>
                     </div>
 

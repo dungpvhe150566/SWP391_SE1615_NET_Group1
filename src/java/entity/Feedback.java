@@ -148,7 +148,7 @@ public class Feedback {
 
     @Override
     public String toString() {
-        return ID + " " + UserName + " " + ProductName + " " + Star + " " + FeedbackDetails;
+        return ID + " " + UserName + " " + ProductName + " " + Star + " " + FeedbackDetails+"\n";
     }
 
     

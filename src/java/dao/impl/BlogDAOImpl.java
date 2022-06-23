@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -57,6 +58,64 @@ public class BlogDAOImpl extends DBContext implements BlogDAO{
             closeConnection(connection);
         }
         return blogs;
-    } 
+    }
+    public int totalPage() {
+        int total = 0;
+        String query = "select count(*)\n" +
+"               from Blog";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Get all categories store to vector
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int totalA = rs.getInt(1);
+                total = totalA / 5;
+                if (totalA % 5 != 0) {
+                    total++;
+                }
+            }
+        } catch (Exception e) {
+        }
+        return total;
+    }            
+
+    public List<Blog> paging(int index) {
+        String query = "SELECT * FROM Blog \n" +
+"                order by ID\n" +
+"                OFFSET ? ROWS  FETCH NEXT 5 ROWS ONLY";
+        List<Blog> list = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Get all categories store to vector
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, (index * 5 - 5));
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                list.add(new Blog(rs.getInt("ID"),
+                        rs.getString("Title"),
+                        rs.getString("Content"),
+                        rs.getString("imageLink"),
+                        rs.getInt("SellerID")));
+            }
+            return list;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    public static void main(String[] args) {
+        BlogDAOImpl f = new BlogDAOImpl();
+        List<Blog> list = new ArrayList<>();
+        list=f.paging(1);
+        for (Blog blog : list) {
+            System.out.println(blog);
+        }
+    }
     
 }

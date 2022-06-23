@@ -56,6 +56,14 @@
         <servlet-name>CompareByAjax</servlet-name>
         <servlet-class>controller.CompareByAjax</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteFeedbackController</servlet-name>
+        <servlet-class>controller.DeleteFeedbackController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PagingController</servlet-name>
+        <servlet-class>controller.PagingController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
         <url-pattern>/ProductsController</url-pattern>
@@ -114,6 +122,14 @@
     <servlet-mapping>
         <servlet-name>CompareByAjax</servlet-name>
         <url-pattern>/CompareByAjax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteFeedbackController</servlet-name>
+        <url-pattern>/DeleteFeedbackController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PagingController</servlet-name>
+        <url-pattern>/PagingController</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

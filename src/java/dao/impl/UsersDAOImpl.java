@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,6 +39,10 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
                 U.setEmail(rs.getString(4));
                 U.setPassword(rs.getString(3));
                 U.setUserID(rs.getInt(1));
+                U.setIsAdmin(rs.getInt("isSeller"));
+                U.setIsAdmin(rs.getInt("isAdmin"));
+                U.setActiveCode(rs.getString("ActiveCode"));
+                U.setStatusID(rs.getInt("StatusID"));
                 list.add(U);
             }
         } catch (Exception ex) {
@@ -50,10 +55,11 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         return list;
     }
 
-    public List<Users> searchAccountInManager(String name) {
-        List<Users> list = new ArrayList<>();
-        String query = "SELECT * FROM Users \n"
-                + "WHERE Username LIKE ?";
+    public ArrayList<Users> searchAccountInManager(String name, int start, int end) {
+        ArrayList<Users> list = new ArrayList<>();
+        String query = "with x as (	select row_number() over(order by UserID  asc) as row, * from Users WHERE Username LIKE ?\n"
+                + "                           ) \n"
+                + "                           select * from x where  row between " + start + " and " + end;
         Connection conn = null;
         PreparedStatement prepare = null;
         ResultSet rs = null;
@@ -63,14 +69,44 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
             prepare.setString(1, "%" + name + "%");
             rs = prepare.executeQuery();
             while (rs.next()) {
-                list.add(new Users(rs.getInt(1), rs.getString(2),
-                        rs.getString(3), rs.getString(4),
-                        rs.getString(5), rs.getInt(6),
-                        rs.getInt(7), rs.getInt(8)));
+                list.add(new Users(rs.getInt(2), rs.getString(3),
+                        rs.getString(4), rs.getString(5),
+                        rs.getString(6), rs.getInt(7),
+                        rs.getInt(8), rs.getInt(9)));
             }
         } catch (Exception e) {
         }
         return list;
+    }
+
+    public Users getAccountByID(int id) throws Exception {
+        String query = "SELECT * FROM Users WHERE UserID = ?";
+        Connection conn = null;
+        PreparedStatement prepare = null;
+        ResultSet rs = null;
+        try {
+//            ps = conn.prepareStatement(query);
+//            ps.setString(1, id);
+//            rs = ps.executeQuery();
+
+            conn = getConnection();
+            prepare = conn.prepareStatement(query);
+            prepare.setInt(1, id);
+            rs = prepare.executeQuery();
+            while (rs.next()) {
+                return new Users(rs.getInt(1), rs.getString(2),
+                        rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getInt(6),
+                        rs.getInt(7), rs.getInt(8));
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(prepare);
+            closeConnection(conn);
+        }
+        return null;
     }
 
     public Users getAccountByID(String id) throws Exception {
@@ -224,15 +260,119 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         return list;
     }
 
+    public ArrayList<Users> getUsersList(int start, int end) throws Exception {
+        // Create ArrayList to store all User
+        ArrayList<Users> user = new ArrayList<>();
+
+        // Query Statement to get all Categories in Database 
+        String sqlQuery = "with x as (	select row_number() over(order by UserID  asc) as row, * from Users \n"
+                + "                ) \n"
+                + "                select * from x where  row between " + start + " and " + end;
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                // Get and store all attribute of each User
+                int UserID = rs.getInt("UserID");
+                String Username = rs.getString("Username");
+                String Password = rs.getString("Password");
+                String email = rs.getString("email");
+                String activecode = rs.getString("ActiveCode");
+                int sellerID = rs.getInt("isSeller");
+                int isAdmin = rs.getInt("isAdmin");
+                int StatusID = rs.getInt("StatusID");
+                // Add User to Arraylist 
+                user.add(new Users(UserID, Username, Password, email, activecode, sellerID, isAdmin, StatusID));
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return user;
+    }
+
+    public int getTotalPage() throws Exception {
+
+        //  Variable to store the condition values passed to filter products in Database
+        int totalPage = 0;
+
+        // Query statement to get total Product in Database
+        String sqlQuery = "select count(UserID) from Users";
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Execute query to get total Product
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            rs = preparedStatement.executeQuery();
+            // set total Product to variable
+            if (rs.next()) {
+                totalPage = rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            closeConnection(connection);
+            closePrepareStatement(preparedStatement);
+            closeRS(rs);
+        }
+        // convet total product to total page (each page have 6 product)
+        return (int) Math.ceil((double) totalPage / 6);
+    }
+
+    public int getTotalPageSearch(String name) throws Exception {
+
+        //  Variable to store the condition values passed to filter products in Database
+        int totalPage = 0;
+
+        // Query statement to get total Product in Database
+        String sqlQuery = "select count(UserID) from Users WHERE Username LIKE ?";
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Execute query to get total Product
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, "%" + name + "%");
+
+            rs = preparedStatement.executeQuery();
+            // set total Product to variable
+            if (rs.next()) {
+                totalPage = rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            closeConnection(connection);
+            closePrepareStatement(preparedStatement);
+            closeRS(rs);
+        }
+        // convet total product to total page (each page have 6 product)
+        return (int) Math.ceil((double) totalPage / 6);
+    }
+
     public static void main(String[] args) {
         UsersDAOImpl dao = new UsersDAOImpl();
         try {
-            dao.deleteAccount("7");
-//        List<Users> list = dao.getAll();
-//        for (Users student : list) {
-//            System.out.println(student.getUsername());
-//        }
-// dao.insert("anhem", "olamigo", "anhdungzoo9");
+            ArrayList<Users> u= new ArrayList<Users>();
+            u=dao.searchAccountInManager("kmkmmkmk",1, 6);
+            System.out.println(u.isEmpty());
+            for (Users users : u) {
+                System.out.println(users);
+            }
+            
         } catch (Exception ex) {
             Logger.getLogger(UsersDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

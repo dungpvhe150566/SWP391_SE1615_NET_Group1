@@ -20,7 +20,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-        <title></title>
+        <title>View Feedbacks Detail</title>
+
     </head>
     <body>
 
@@ -29,6 +30,7 @@
             <div class="row">
                 <div class="col-md-2" style="background-color: #ebebf2">
                     <nav class="navbar navbar-expand-lg navbar-light flex-column">
+                        <a class="navbar-brand" href="HomeController"><img src="image/Other/AccountDashboard.jpg" width="200px"></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <span class="navbar-toggler-icon"></span>
                         </button>
@@ -40,14 +42,35 @@
                             </li>
                             <c:if test="${sessionScope.user == null}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="LoginController">Login</a>
+                                    <a class="nav-link" href="login">Login</a>
                                 </li>
                             </c:if>
                             <c:if test = "${sessionScope.user != null}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="profile"><i class="fas fa-user-circle"></i>Hello</a>
+                                    <a class="nav-link" href="#"><i class="fas fa-user-circle"></i>Hello ${sessionScope.acc.user}</a>
                                     <hr class="line">
                                 </li>
+
+                                <c:if test="${sessionScope.user.getIsSeller() == 1}">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="ProductsController"><i class="fas fa-tasks"></i>Manager Product</a>
+                                        <hr class="line">
+                                        <a class="nav-link" href="#"><i class="fas fa-tasks"></i>Manager Blog</a>
+                                        <hr class="line">
+                                        <a class="nav-link" href="ViewAllFeedbackController"><i class="fas fa-tasks"></i>Manage Feedback</a>
+                                        <hr class="line">
+                                    </li> 
+                                </c:if>
+
+                                <c:if test="${sessionScope.user.getIsAdmin() == 1}">
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="AccountManagerController"><i class="fas fa-tasks"></i>Manager Account</a>
+                                        <hr class="line">
+                                    </li> 
+                                </c:if>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#"><i class="fas fa-bell"></i>Notifications (${numberNoti})</a>
+                                </li> 
                             </c:if>
 
                             <li class="nav-item">&nbsp;

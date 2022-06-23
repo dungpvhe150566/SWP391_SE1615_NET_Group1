@@ -70,6 +70,7 @@ public class LoginController extends HttpServlet {
             List<Users> list = dao.getAll(); //Lay ra list user
             for (Users users : list) {
                 if (users.getEmail().equals(email) && users.getPassword().equals(password)) {  //Kiem tra email va password nhap vao co trung trong database khong
+                    users=dao.getAccountByID(users.getUserID());
                     HttpSession session = request.getSession();
                     session.setAttribute("user", users);
                     request.getRequestDispatcher("HomeController").forward(request, response); //Neu dang nhap thanh cong chuyen den home

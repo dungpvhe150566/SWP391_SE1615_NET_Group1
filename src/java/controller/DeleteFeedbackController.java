@@ -5,19 +5,20 @@
  */
 package controller;
 
+import dao.impl.FeedbackDAOImpl;
+import dao.impl.UsersDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.impl.UsersDAOImpl;
 
 /**
  *
  * @author Admin
  */
-public class DeleteAccountController extends HttpServlet {
+public class DeleteFeedbackController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,17 +32,16 @@ public class DeleteAccountController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         try {
             //Get ID from JSP
-            String id = request.getParameter("UserID");
+            String id = request.getParameter("fbID");
             System.out.println(id);
             //Call DAO
-            UsersDAOImpl dao = new UsersDAOImpl();
+            FeedbackDAOImpl dao = new FeedbackDAOImpl();
             //Use function Delete to delete by ID
-            dao.deleteAccount(id);
+            dao.deleteFeedbackbyID(id);
 
-            request.getRequestDispatcher("AccountManagerController").forward(request, response);
+            request.getRequestDispatcher("ViewAllFeedbackController").forward(request, response);
         } catch (Exception e) {
             response.sendRedirect("error.jsp");
         }
