@@ -60,11 +60,14 @@ public class DasboardControllner extends HttpServlet {
              String thuu="";
              String dataa="";
              String yearString ="";
+             
+             String monthString ="";
              List<Statistical> listThongKe = new StatisticalOrdersDAO().getAll();
              for (Statistical T : listThongKe) {
                 thuu+="\""+T.getThu()+"\", ";
                 dataa+=T.getNumOfOrder()+",";
                 yearString+=T.getYear();
+                monthString+=T.getMonth();
             }
              
              // Total Product
@@ -91,6 +94,7 @@ public class DasboardControllner extends HttpServlet {
      
             revenue.substring(0, revenue.length()-1);
             soluong.substring(0, soluong.length()-1);
+            request.setAttribute("monthString", monthString);
             request.setAttribute("yearString", yearString);
             request.setAttribute("revenue", revenue);
              request.setAttribute("label", label);

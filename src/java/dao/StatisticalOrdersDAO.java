@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class StatisticalOrdersDAO extends DBContext{
     public List<Statistical> getAll() throws Exception {
-        String sql = "SELECT DAY(DayBuy) AS [day],DATENAME(dw,DayBuy) AS [weekday],COUNT(DayBuy)AS numOfOrder,SUM(TotalPrice) AS totalMoney, year(DayBuy) as [Year] FROM dbo.[Orders] WHERE Day(GETDATE())-Day(DayBuy)<7  and year(DayBuy) = year(getdate()) GROUP BY DayBuy,DAY(DayBuy)";
+        String sql = "SELECT DAY(DayBuy) AS [day],DATENAME(dw,DayBuy) AS [weekday],COUNT(DayBuy)AS numOfOrder,SUM(TotalPrice) AS totalMoney, year(DayBuy) as [Year] ,month(DayBuy) as [month] FROM dbo.[Orders] WHERE Day(GETDATE())-Day(DayBuy)<7  and year(DayBuy) = year(getdate()) and month(DayBuy) = month(getdate())  GROUP BY DayBuy,DAY(DayBuy)";
         List<Statistical> list = new ArrayList<>();
         Connection conn = null;
             PreparedStatement prepare = null;
@@ -33,6 +33,7 @@ public class StatisticalOrdersDAO extends DBContext{
                         .numOfOrder(rs.getInt(3))
                         .totalMoney(rs.getDouble(4))
                         .year(rs.getInt(5))
+                        .month(rs.getInt(6))
                         .build();
                 list.add(thongkeOrder);
             }

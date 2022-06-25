@@ -172,7 +172,7 @@
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block">
-                            <h2 class="tm-block-title"> Statistics of invoice numbers during the week : <b class="claimedRight" maxlength="4" >${yearString}</b></h2>
+                            <h2 class="tm-block-title"> Statistics of invoice numbers during the week  at  month <b class="claimedRights" max="1" >${monthString}</b> : <b class="claimedRight" maxlength="4" >${yearString}</b></h2>
                             <canvas id="myAreaChart" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
@@ -242,7 +242,22 @@
             </div>
         </footer>
     </div>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+
+    <!-- Demo scripts for this page-->
+    <script src="js/demo/datatables-demo.js"></script>
     <script src="js/jquery-3.3.1.min.js"></script>
     <!-- https://jquery.com/download/ -->
     <script src="js/moment.min.js"></script>
@@ -255,50 +270,50 @@
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     </script>
-     <script         src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script         src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script>
-        // Bar Chart Example
-        var ctx = document.getElementById("myBarChart");
-        var myLineChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ["January ", "February ", "March ", "April ", "May ", "June"],
-                datasets: [{
-                        label: "Revenue",
-                        backgroundColor: "rgba(2,117,216,1)",
-                        borderColor: "rgba(2,117,216,1)",
-                        data: [${revenue}],
-                    }],
-            },
-            options: {
-                scales: {
-                    xAxes: [{
-                            time: {
-                                unit: 'month'
-                            },
-                            gridLines: {
-                                display: false
-                            },
-                            ticks: {
-                                maxTicksLimit: 6
-                            }
-                        }],
-                    yAxes: [{
-                            ticks: {
-                                min: 0,
-                                max: 900000000,
-                                maxTicksLimit: 5
-                            },
-                            gridLines: {
-                                display: true
-                            }
+            // Bar Chart Example
+            var ctx = document.getElementById("myBarChart");
+            var myLineChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ["January ", "February ", "March ", "April ", "May ", "June"],
+                    datasets: [{
+                            label: "Revenue",
+                            backgroundColor: "rgba(2,117,216,1)",
+                            borderColor: "rgba(2,117,216,1)",
+                            data: [${revenue}],
                         }],
                 },
-                legend: {
-                    display: false
+                options: {
+                    scales: {
+                        xAxes: [{
+                                time: {
+                                    unit: 'month'
+                                },
+                                gridLines: {
+                                    display: false
+                                },
+                                ticks: {
+                                    maxTicksLimit: 6
+                                }
+                            }],
+                        yAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    max: 900000000,
+                                    maxTicksLimit: 5
+                                },
+                                gridLines: {
+                                    display: true
+                                }
+                            }],
+                    },
+                    legend: {
+                        display: false
+                    }
                 }
-            }
-        });
+            });
     </script>
     <script>
         // Area Chart Example
@@ -400,6 +415,17 @@
             $('.claimedRight').each(function (f) {
 
                 var newstr = $(this).text().substring(0, 4);
+                $(this).text(newstr);
+
+            });
+        })
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $('.claimedRights').each(function (f) {
+
+                var newstr = $(this).text().substring(0, 1);
                 $(this).text(newstr);
 
             });

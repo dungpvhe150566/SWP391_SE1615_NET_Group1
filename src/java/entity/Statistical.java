@@ -20,4 +20,5 @@ public class Statistical {
     private int numOfOrder;
     private double totalMoney;
     private int year;
+    private int month;
 }
