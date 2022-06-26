@@ -171,9 +171,9 @@
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
-                        <div class="tm-bg-primary-dark tm-block">
+                        <div class="tm-bg-primary-dark tm-block tm-block-taller">
                             <h2 class="tm-block-title"> Statistics of invoice numbers during the week  at  month <b class="claimedRights" max="1" >${monthString}</b> : <b class="claimedRight" maxlength="4" >${yearString}</b></h2>
-                            <canvas id="myAreaChart" style="width:100%;max-width:700px"></canvas>
+                            <canvas id="myAreaChart" class ="chartjs-render-monitor" style="width:100%;max-width:700px"></canvas>
                         </div>
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
@@ -186,16 +186,34 @@
                     </div>
                     <div class="col-sm-12 col-md-12 col-lg-6 col-xl-6 tm-block-col">
                         <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-overflow">
-                            <h2 class="tm-block-title">Notification List</h2>
+                            <h2 class="tm-block-title">Notification List  <span class="badge badge-danger">${numOfOrder}</span>
+                                <i class="fas fa-bell fa-fw"></i> </h2>
                             <div class="tm-notification-items">
                                 <div class="media tm-notification-item">
-                                    <div class="tm-gray-circle"><img src="img/notification-01.jpg" alt="Avatar Image" class="rounded-circle"></div>
+
                                     <div class="media-body">
-                                        <p class="mb-2"><b>Jessica</b> and <b>6 others</b> sent you new <a href="#"
-                                                                                                           class="tm-notification-link">product updates</a>. Check new orders.</p>
-                                        <span class="tm-small tm-text-color-secondary">6h ago.</span>
+                                        <p class="mb-2"><b>Order Watting</b>  <a href="ProcessOrders?check=1"
+                                                                                 class="tm-notification-link">Orders updates</a>. Check new orders.</p>
+
                                     </div>
                                 </div>
+                                <div class="media tm-notification-item">
+
+                                    <div class="media-body">
+                                        <p class="mb-2"><b>Order Shipping</b> <a href="ProcessOrders?check=2"
+                                                                                 class="tm-notification-link">Detail</a>. Check new orders.</p>
+
+                                    </div>
+                                </div>
+                                <div class="media tm-notification-item">
+
+                                    <div class="media-body">
+                                        <p class="mb-2"><b>Order Success</b> and <a href="ProcessOrders?check=3"
+                                                                                    class="tm-notification-link">Detail</a>. Check new orders.</p>
+
+                                    </div>
+                                </div>
+
 
                             </div>
                         </div>

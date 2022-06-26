@@ -124,4 +124,20 @@ public class OrdersDAOImpl extends DBContext {
         }
         return 0;
     }
+    public int countOrderWatting() throws Exception {
+        String query = "select COUNT(*) from Orders WHERE dbo.[Orders].status = 1";
+        try (Connection con = getConnection();
+                PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+            if (ps != null) {
+                ResultSet rs = ps.executeQuery();
+                if (rs != null && rs.next()) {
+                    return rs.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return 0;
+
+    }
 }

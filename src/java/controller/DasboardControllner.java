@@ -91,7 +91,8 @@ public class DasboardControllner extends HttpServlet {
             for (Double double1 : listRevenue) {
                 revenue+=(double)Math.round(double1*100)/100+",";
             }
-     
+             int numOfOrder = new OrdersDAOImpl().countOrderWatting();
+            request.setAttribute("numOfOrder", numOfOrder);
             revenue.substring(0, revenue.length()-1);
             soluong.substring(0, soluong.length()-1);
             request.setAttribute("monthString", monthString);
