@@ -145,6 +145,9 @@ public class OrdersDAOImpl extends DBContext {
     }
 
     public List<Orders> getAllOrderNotAcceptYet() throws Exception {
+        Connection conn = null;
+        PreparedStatement prepare = null;
+        ResultSet rs = null;
         String query = "SELECT dbo.[Orders].*,dbo.ShipInfo.CustomerName,dbo.ShipInfo.PhoneNum,dbo.ShipInfo.ShippingAddress,Order_Status.Name\n"
                 + "                 FROM dbo.[Orders] INNER JOIN dbo.ShipInfo\n"
                 + "                  ON ShipInfo.Order_ID = [Orders].ID INNER JOIN Order_Status\n"
@@ -152,7 +155,7 @@ public class OrdersDAOImpl extends DBContext {
         List<Orders> list = new ArrayList<>();
         try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
             if (ps != null) {
-                ResultSet rs = ps.executeQuery();
+                 rs = ps.executeQuery();
                 while (rs != null && rs.next()) {
                     ShipInfo shipping = ShipInfo.builder()
                             
@@ -174,8 +177,12 @@ public class OrdersDAOImpl extends DBContext {
                 }
                 return list;
             }
-        } catch (SQLException e) {
-            e.printStackTrace(System.out);
+        } catch (Exception e) {
+            throw e;
+        }finally {
+            closeRS(rs);
+            closePrepareStatement(prepare);
+            closeConnection(conn);
         }
         return null;
     }
