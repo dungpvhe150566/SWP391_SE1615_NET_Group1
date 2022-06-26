@@ -200,7 +200,7 @@
                                 <div class="media tm-notification-item">
 
                                     <div class="media-body">
-                                        <p class="mb-2"><b>Order Shipping</b> <a href="ProcessOrders?check=2"
+                                        <p class="mb-2"><b>Order Shipping</b>   <a href="ProcessOrders?check=2"
                                                                                  class="tm-notification-link">Detail</a>. Check new orders.</p>
 
                                     </div>
@@ -208,7 +208,7 @@
                                 <div class="media tm-notification-item">
 
                                     <div class="media-body">
-                                        <p class="mb-2"><b>Order Success</b> and <a href="ProcessOrders?check=3"
+                                        <p class="mb-2"><b>Order Success</b> and <a href="ProcessOrders?check=0"
                                                                                     class="tm-notification-link">Detail</a>. Check new orders.</p>
 
                                     </div>

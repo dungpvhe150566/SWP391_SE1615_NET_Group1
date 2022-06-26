@@ -1,7 +1,9 @@
 package dao.impl;
 
 import dao.DBContext;
+import entity.OrderStatus;
 import entity.Orders;
+import entity.ShipInfo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class OrdersDAOImpl extends DBContext {
 
@@ -93,14 +97,13 @@ public class OrdersDAOImpl extends DBContext {
         return list;
     }
 
-    public static void main(String[] args) {
-        OrdersDAOImpl dao = new OrdersDAOImpl();
-        List<Orders> listO = dao.pagingOrders("7", 1);
-        for (Orders orders : listO) {
-            System.out.println(orders);
-        }
-    }
-
+//    public static void main(String[] args) {
+//        OrdersDAOImpl dao = new OrdersDAOImpl();
+//        List<Orders> listO = dao.pagingOrders("7", 1);
+//        for (Orders orders : listO) {
+//            System.out.println(orders);
+//        }
+//    }
     public double calRevenueInMonth(int month) throws Exception {
         Connection conn = null;
         PreparedStatement prepare = null;
@@ -124,10 +127,10 @@ public class OrdersDAOImpl extends DBContext {
         }
         return 0;
     }
+
     public int countOrderWatting() throws Exception {
         String query = "select COUNT(*) from Orders WHERE dbo.[Orders].status = 1";
-        try (Connection con = getConnection();
-                PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+        try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
             if (ps != null) {
                 ResultSet rs = ps.executeQuery();
                 if (rs != null && rs.next()) {
@@ -139,5 +142,124 @@ public class OrdersDAOImpl extends DBContext {
         }
         return 0;
 
+    }
+
+    public List<Orders> getAllOrderNotAcceptYet() throws Exception {
+        String query = "SELECT dbo.[Orders].*,dbo.ShipInfo.CustomerName,dbo.ShipInfo.PhoneNum,dbo.ShipInfo.ShippingAddress,Order_Status.Name\n"
+                + "                 FROM dbo.[Orders] INNER JOIN dbo.ShipInfo\n"
+                + "                  ON ShipInfo.Order_ID = [Orders].ID INNER JOIN Order_Status\n"
+                + "                  ON Order_Status.ID = dbo.[Orders].status WHERE dbo.[Orders].status =1";
+        List<Orders> list = new ArrayList<>();
+        try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+            if (ps != null) {
+                ResultSet rs = ps.executeQuery();
+                while (rs != null && rs.next()) {
+                    ShipInfo shipping = ShipInfo.builder()
+                            
+                            .CustomerName(rs.getString(7))
+                            .PhoneNum(rs.getString(8)).ShippingAddress(rs.getString(9)).build();
+                    OrderStatus statusOrder = OrderStatus.builder().ID(rs.getInt(5))
+                            .Name(rs.getString(10)).build();
+                    Orders order = Orders.builder()
+                            .ID(rs.getInt(1))
+                            .UserID(rs.getInt(2))
+                            .TotalPrice(rs.getFloat(3))
+                            .Note(rs.getString(4))
+                            .Status(rs.getInt(5))
+                            .DayBuy(rs.getString(6))
+                            .Shipp(shipping)
+                            .orderStatus(statusOrder)
+                            .build();
+                    list.add(order);
+                }
+                return list;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public static void main(String[] args) {
+        OrdersDAOImpl ott = new OrdersDAOImpl();
+        try {
+            List<Orders> listO = ott.getAllSucces();
+            System.out.println(listO);
+        } catch (Exception ex) {
+            Logger.getLogger(OrdersDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public List<Orders> getAllSucces() throws Exception {
+        String query = "SELECT dbo.[Orders].*,dbo.ShipInfo.CustomerName,dbo.ShipInfo.PhoneNum,dbo.ShipInfo.ShippingAddress,Order_Status.Name\n"
+                + "                 FROM dbo.[Orders] INNER JOIN dbo.ShipInfo\n"
+                + "                  ON ShipInfo.Order_ID = [Orders].ID INNER JOIN Order_Status\n"
+                + "                  ON Order_Status.ID = dbo.[Orders].status WHERE dbo.[Orders].status =5";
+        List<Orders> list = new ArrayList<>();
+        try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+            if (ps != null) {
+                ResultSet rs = ps.executeQuery();
+                while (rs != null && rs.next()) {
+                    ShipInfo shipping = ShipInfo.builder()
+                            .ID(rs.getInt(3))
+                            .CustomerName(rs.getString(7))
+                            .PhoneNum(rs.getString(8)).ShippingAddress(rs.getString(9)).build();
+                    OrderStatus statusOrder = OrderStatus.builder().ID(rs.getInt(5))
+                            .Name(rs.getString(10)).build();
+                    Orders order = Orders.builder()
+                            .ID(rs.getInt(1))
+                            .UserID(rs.getInt(2))
+                            .TotalPrice(rs.getFloat(3))
+                            .Note(rs.getString(4))
+                            .Status(rs.getInt(5))
+                            .DayBuy(rs.getString(6))
+                            .Shipp(shipping)
+                            .orderStatus(statusOrder)
+                            .build();
+                    list.add(order);
+                }
+                return list;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public List<Orders> getAllOrderShipping() throws Exception {
+        String query = "SELECT dbo.[Orders].*,dbo.ShipInfo.CustomerName,dbo.ShipInfo.PhoneNum,dbo.ShipInfo.ShippingAddress,Order_Status.Name\n"
+                + "                 FROM dbo.[Orders] INNER JOIN dbo.ShipInfo\n"
+                + "                  ON ShipInfo.Order_ID = [Orders].ID INNER JOIN Order_Status\n"
+                + "                  ON Order_Status.ID = dbo.[Orders].status WHERE dbo.[Orders].status =3";
+        List<Orders> list = new ArrayList<>();
+        try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+            if (ps != null) {
+                ResultSet rs = ps.executeQuery();
+                while (rs != null && rs.next()) {
+                    ShipInfo shipping = ShipInfo.builder()
+                            .ID(rs.getInt(3))
+                            .CustomerName(rs.getString(7))
+                            .PhoneNum(rs.getString(8)).ShippingAddress(rs.getString(9)).build();
+                    OrderStatus statusOrder = OrderStatus.builder().ID(rs.getInt(5))
+                            .Name(rs.getString(10)).build();
+                    Orders order = Orders.builder()
+                            .ID(rs.getInt(1))
+                            .UserID(rs.getInt(2))
+                            .TotalPrice(rs.getInt(3))
+                            .Note(rs.getString(4))
+                            .Status(rs.getInt(5))
+                            .DayBuy(rs.getString(6))
+                            .Shipp(shipping)
+                            .orderStatus(statusOrder)
+                            .build();
+                    list.add(order);
+                }
+                return list;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
     }
 }

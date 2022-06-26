@@ -23,6 +23,12 @@ public class Orders {
     private int Status;
 
     private String DayBuy;
+     private ShipInfo Shipp;
+     private OrderStatus orderStatus;
+
+//    public OrderStatus getOrderStatus() {
+//        return orderStatus;
+//    }
 
 //    public int getID() {
 //        return ID;
@@ -75,13 +81,18 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(int ID, int UserID, float TotalPrice, String Note, int Status, String DayBuy) {
+    public Orders(int ID, int UserID, float TotalPrice, String Note, int Status, String DayBuy, ShipInfo Shipp, OrderStatus orderStatus) {
         this.ID = ID;
         this.UserID = UserID;
         this.TotalPrice = TotalPrice;
         this.Note = Note;
         this.Status = Status;
         this.DayBuy = DayBuy;
+        this.Shipp = Shipp;
+        this.orderStatus = orderStatus;
+    }
     }
 
-}
+   
+
+
