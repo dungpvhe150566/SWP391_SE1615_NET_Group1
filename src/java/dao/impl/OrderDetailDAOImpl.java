@@ -7,13 +7,14 @@ import entity.OrderDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class OrderDetailDAOImpl extends DBContext implements OrderDetailDAO{
+public class OrderDetailDAOImpl extends DBContext implements OrderDetailDAO {
 
-    public void saveCart(int orderId, Map<Integer, Cart> carts) throws Exception{
+    public void saveCart(int orderId, Map<Integer, Cart> carts) throws Exception {
         Connection conn = null;
         PreparedStatement prepare = null;
         try {
@@ -41,13 +42,13 @@ public class OrderDetailDAOImpl extends DBContext implements OrderDetailDAO{
 
         } catch (Exception ex) {
             throw ex;
-        }
-        finally {
+        } finally {
             closePrepareStatement(prepare);
             closeConnection(conn);
         }
     }
-public OrderDetail getOrderByID(String id) {
+
+    public OrderDetail getOrderByID(String id) {
         String query = "select * from Order_Detail where Order_ID = ?";
         Connection conn = null;
         PreparedStatement prepare = null;
@@ -70,9 +71,27 @@ public OrderDetail getOrderByID(String id) {
         }
         return OD;
     }
-    public static void main(String[] args) {
-        OrderDetailDAOImpl dao = new OrderDetailDAOImpl();
-        OrderDetail OD = dao.getOrderByID("8");
-        System.out.println(OD);       
+
+    public boolean removeByOrderId(int orderID) throws Exception {
+        String query = "DELETE dbo.Order_Detail WHERE Order_ID=?";
+        try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+            if (ps != null) {
+                ps.setObject(1, orderID);
+                return ps.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
+
+//    public static void main(String[] args) {
+//        OrderDetailDAOImpl dao = new OrderDetailDAOImpl();
+//        try {
+//            boolean OD = dao.removeByOrderId(1013);
+//        } catch (Exception ex) {
+//            Logger.getLogger(OrderDetailDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        System.out.println("ok");
+//    }
 }

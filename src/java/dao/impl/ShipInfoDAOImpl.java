@@ -6,6 +6,7 @@ import entity.ShipInfo;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,5 +54,17 @@ public class ShipInfoDAOImpl extends DBContext implements ShipInfoDAO{
         }
         return 0;
     }
-
+    public boolean removeShip(int id) throws Exception {
+        String query = "DELETE dbo.ShipInfo WHERE Order_ID=?";
+        try (Connection con = getConnection();
+                PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+            if (ps != null) {
+                ps.setObject(1, id);
+                return ps.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

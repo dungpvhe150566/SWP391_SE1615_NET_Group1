@@ -98,7 +98,7 @@
                                 <td>${order.getShipp().getCustomerName()}</td>
                                 <td>${order.getShipp().getPhoneNum()}</td>
                                 <td>${order.getShipp().getShippingAddress()}</td>
-                                <td>${order.totalPrice}</td>
+                                <td>${order.totalPrice} (VND)</td>
                                 <td>${order.getDayBuy()}</td>
                                 <td <c:if test="${order.getStatus() ne 1}">style="color: orange"</c:if>>${order.getOrderStatus().getName()}</td>
                                 <c:if test="${check ne 0}">

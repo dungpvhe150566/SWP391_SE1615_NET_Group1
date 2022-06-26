@@ -269,4 +269,36 @@ public class OrdersDAOImpl extends DBContext {
         }
         return null;
     }
+       public boolean remove(int id) throws Exception {
+        String query = "DELETE FROM Orders WHERE ID = ?";
+        try (Connection con = getConnection();
+                PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+            if (ps != null) {
+                ps.setObject(1, id);
+                return ps.execute();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+     
+       public boolean updateStatus(int status, int id) throws Exception {
+        String query = "UPDATE [dbo].[Orders]\n"
+                + "   SET [Status] = ?\n"
+                + " WHERE ID = ?";
+        int check = 0;
+        try (Connection con = getConnection();
+                PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+            if (ps != null) {
+                ps.setObject(1, status);
+                ps.setObject(2, id);
+                check = ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
+    }
+       
 }
