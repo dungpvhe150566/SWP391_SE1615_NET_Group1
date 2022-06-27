@@ -40,7 +40,7 @@ public class AcceptOrderController extends HttpServlet {
             int id =NumberHelper.getInt(request.getParameter("id"));
             boolean check = new OrdersDAOImpl().updateStatus(3, id);
             if(check){
-               response.sendRedirect("processOrder.jsp");
+               response.sendRedirect("ProcessOrders");
             }else{
                 response.getWriter().println("Accept failed!");
             }
