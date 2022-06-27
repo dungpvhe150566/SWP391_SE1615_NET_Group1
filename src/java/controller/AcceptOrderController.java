@@ -39,11 +39,10 @@ public class AcceptOrderController extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             int id =NumberHelper.getInt(request.getParameter("id"));
             boolean check = new OrdersDAOImpl().updateStatus(3, id);
-            if(check){
-               response.sendRedirect("ProcessOrders");
-            }else{
-                response.getWriter().println("Accept failed!");
-            }
+            
+        
+               response.sendRedirect("dontrollner-dasboard");
+           
         } catch (Exception ex) {
            ex.printStackTrace();
         }

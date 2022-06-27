@@ -48,7 +48,7 @@ public class DeleteOrder extends HttpServlet {
               
                boolean check2 = new OrdersDAOImpl().remove(id);
            }
-           response.sendRedirect("processOrder.jsp");
+           response.sendRedirect("dontrollner-dasboard");
         }
     }
 

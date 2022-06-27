@@ -86,7 +86,7 @@
                     <h2 class="tm-block-title">Orders List Process</h2>
                     <table class="table">
                         <tr>
-                            <td>#</td>
+                           
                             <td>Customer</td>
                             <td>phone</td>
                             <td>Address</td>
@@ -100,13 +100,13 @@
                         </tr>
                         <c:forEach items="${listOrderWatting}" var="order">
                             <tr>
-                                <td>${order.getID()}</td>
+                                
                                 <td>${order.getShipp().getCustomerName()}</td>
                                 <td>${order.getShipp().getPhoneNum()}</td>
                                 <td>${order.getShipp().getShippingAddress()}</td>
                                 <td>${order.totalPrice} (VND)</td>
                                 <td>${order.getDayBuy()}</td>
-                                <td <c:if test="${order.getStatus() ne 1}">style="color: orange"</c:if>>${order.getOrderStatus().getName()}</td>
+                                <td <c:if test="${order.getStatus() ne 1}">style="color: orange"</c:if> >${order.getOrderStatus().getName()}</td>
                                 <c:if test="${check ne 0}">
                                     <td><a href="accept-order?id=${order.getID()}" class="btn btn-outline-info">Accept</a></td>
                                 </c:if>
