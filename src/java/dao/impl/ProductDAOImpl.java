@@ -338,21 +338,21 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
     }
 
     public Product getProductById(int productId) throws Exception {
-            String sql = "select *  from Product  where  ProductID = ?";
+        String sql = "select *  from Product  where  ProductID = ?";
         Connection conn = null;
-            PreparedStatement prepare = null;
-            ResultSet rs = null;
-            try {
+        PreparedStatement prepare = null;
+        ResultSet rs = null;
+        try {
 //            PreparedStatement ps = conn.prepareStatement(sql);
 //            ps.setInt(1, productId);
 //            ResultSet rs = ps.executeQuery();
 
-                conn = getConnection();
-                prepare = conn.prepareStatement(sql);
-                prepare.setInt(1, productId);
-                rs = prepare.executeQuery();
+            conn = getConnection();
+            prepare = conn.prepareStatement(sql);
+            prepare.setInt(1, productId);
+            rs = prepare.executeQuery();
             while (rs.next()) {
-                
+
                 int pId = rs.getInt(1);
                 String ProductName = rs.getString(2);
                 String Description = rs.getNString(3);
@@ -375,7 +375,7 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-        }finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(prepare);
             closeConnection(conn);
@@ -409,7 +409,7 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
 
             conn = getConnection();
             prepare = conn.prepareStatement(preSql);
-            
+
             prepare.setString(1, pro.getProductName());
             prepare.setString(2, pro.getDescription());
             prepare.setInt(3, pro.getOriginalPrice());
@@ -424,7 +424,7 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
             prepare.setFloat(12, pro.getHeight());
             prepare.setFloat(13, pro.getWidth());
             prepare.setFloat(14, pro.getWeight());
-            
+
             n = prepare.executeUpdate();
 
 //            n = pre.executeUpdate();
@@ -458,12 +458,12 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
         Connection conn = null;
         PreparedStatement pre = null;
         ResultSet rs = null;
-        
+
         try {
 //            PreparedStatement pre = conn.prepareStatement(preSql);
-conn = getConnection();
+            conn = getConnection();
             pre = conn.prepareStatement(preSql);
-            
+
             pre.setString(1, pro.getProductName());
             pre.setString(2, pro.getDescription());
             pre.setInt(3, pro.getOriginalPrice());
@@ -479,11 +479,11 @@ conn = getConnection();
             pre.setFloat(13, pro.getWidth());
             pre.setFloat(14, pro.getWeight());
 
-                        n = pre.executeUpdate();
+            n = pre.executeUpdate();
 //            n = pre.executeUpdate();
         } catch (SQLException ex) {
             throw ex;
-        }finally {
+        } finally {
             closePrepareStatement(pre);
             closeConnection(conn);
         }
@@ -507,7 +507,6 @@ conn = getConnection();
 //        Connection conn = null;
 //        PreparedStatement prepare = null;
 //        ResultSet rs = null;
-        
         try {
             Statement state = getConnection().createStatement();
 
@@ -544,6 +543,7 @@ conn = getConnection();
         }
         return n;
     }
+
     PreparedStatement ps = null; //...
     ResultSet rs = null; //Nhận kết quả trả về
 
@@ -558,7 +558,7 @@ conn = getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
             rs = preparedStatement.executeQuery();
-            
+
 //            ps = conn.prepareStatement(query);
 //            ps.setInt(1, id);
 //            rs = ps.executeQuery();
@@ -567,7 +567,7 @@ conn = getConnection();
             }
         } catch (Exception e) {
             throw e;
-        }finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
@@ -577,7 +577,7 @@ conn = getConnection();
 
     public Product getProductByID(String id) throws Exception { //Must be int type because when saving to Session, it is still int
         String query = "SELECT * FROM Product WHERE ProductID = ?";
-         Connection connection = null;
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         try {
@@ -585,7 +585,7 @@ conn = getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, id);
             rs = preparedStatement.executeQuery();
-            
+
 //            ps = conn.prepareStatement(query);
 //            ps.setString(1, id);
 //            rs = ps.executeQuery();
@@ -596,17 +596,17 @@ conn = getConnection();
             }
         } catch (Exception e) {
             throw e;
-        }finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
         }
         return null;
     }
-    
+
     public Vector<Product> searchProductByNameAndCategory(String name, String categoryID) throws Exception {
-         String query = "SELECT * FROM Product WHERE CategoryID = ? and ProductName like '%"+name+"%'";
-         Connection connection = null;
+        String query = "SELECT * FROM Product WHERE CategoryID = ? and ProductName like '%" + name + "%'";
+        Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         Vector<Product> vectorProduct = new Vector<>();
@@ -615,7 +615,7 @@ conn = getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, categoryID);
             rs = preparedStatement.executeQuery();
-            
+
 //            ps = conn.prepareStatement(query);
 //            ps.setString(1, id);
 //            rs = ps.executeQuery();
@@ -639,7 +639,7 @@ conn = getConnection();
             return vectorProduct;
         } catch (Exception e) {
             throw e;
-        }finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(connection);

@@ -35,6 +35,13 @@ public class ProductsController extends HttpServlet {
             /* TODO output your page here. You may use following sample code. */
             String service = request.getParameter("do");
             String categoryID = request.getParameter("CategoryID");
+            ProductDAOImpl productDAO = new ProductDAOImpl();
+            
+            String name = "";
+            if (request.getParameter("name") != null) {
+                name = request.getParameter("name");
+            }
+            
             String message = "";
 
             if (service != null) {
@@ -69,24 +76,45 @@ public class ProductsController extends HttpServlet {
                 }
             }
 
-            Vector<Product> productList = new Vector<Product>();
-            //Get Product List if categoryID is exist or categoryID = 0, if not list all product
-            if (categoryID != null && !categoryID.equals("0")) {
-                productList = (new ProductDAOImpl()).getProductListByCategoryID(categoryID);
+            int page = 1;
+            if (request.getParameter("page") != null) {
+                page = Integer.parseInt(
+                        request.getParameter("page"));
+            }
+
+            ArrayList<Product> productList = null;
+            int totalPage;
+            int numOfRecord = 6;
+            int endRow = page * numOfRecord;
+            int startRow = endRow - numOfRecord + 1;
+            
+            if (categoryID != null && !categoryID.equals("0") && !categoryID.equals("undefined")) {
+                productList = productDAO.getProductList(Integer.parseInt(categoryID), name, null, null, startRow, endRow, null);
+                totalPage = productDAO.getTotalPage(Integer.parseInt(categoryID), name, null, null);
             } else {
-                productList = (new ProductDAOImpl()).getProductList();
+                productList = productDAO.getProductList(0, name, null, null, startRow, endRow, null);
+                totalPage = productDAO.getTotalPage(0, name, null, null);
+            }
+
+            int pageNumbers[] = new int[totalPage];
+            
+            for (int i = 0; i < pageNumbers.length; i++) {
+                pageNumbers[i] = i + 1;
             }
 
             //Get Category List
             ArrayList<Category> categoryList = (new CategoryDAOImpl()).getAllCategory();
 
+            request.setAttribute("pageNumbers", pageNumbers);
+            request.setAttribute("page", page);
+            request.setAttribute("name", name);
             request.setAttribute("message", message);
             request.setAttribute("categoryID", categoryID);
             request.setAttribute("categoryList", categoryList);
             request.setAttribute("productList", productList);
 
             request.getRequestDispatcher("products.jsp").forward(request, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
             dispatcher2.forward(request, response);

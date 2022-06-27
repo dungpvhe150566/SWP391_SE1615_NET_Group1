@@ -6,6 +6,7 @@
 package dao;
 
 import entity.Orders;
+import java.util.Vector;
 
 /**
  *
@@ -13,4 +14,10 @@ import entity.Orders;
  */
 public interface OrdersDAO {
     int createReturnId(Orders order) throws Exception;
+    
+    public Vector<Orders> getOrdersList() throws Exception;
+    public Vector<Orders> getOrdersList(int userID) throws Exception;
+    public Vector<Orders> getOrdersList(int startRow, int endRow) throws Exception;
+    public Vector<Orders> getOrdersList(int startRow, int endRow, int userID, int statusID, String date, String sortBy) throws Exception;
+    public int getTotalPage(int userID, int statusID, String date,int numOfRecord) throws Exception;
 }

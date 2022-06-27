@@ -2,6 +2,7 @@ package dao.impl;
 
 import dao.DBContext;
 import entity.OrderStatus;
+import dao.OrdersDAO;
 import entity.Orders;
 import entity.ShipInfo;
 import java.sql.Connection;
@@ -11,12 +12,178 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class OrdersDAOImpl extends DBContext {
+public class OrdersDAOImpl extends DBContext implements OrdersDAO{
+    
+    public Vector<Orders> getOrdersList() throws Exception{
+        String query = "SELECT * FROM Orders";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        Vector<Orders> vectorOrder = new Vector<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            rs = preparedStatement.executeQuery();
 
-    public int createReturnId(Orders order) throws Exception {
+            while (rs.next()) {
+                vectorOrder.add(new Orders(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getFloat("TotalPrice"),
+                        rs.getString("Note"),
+                        rs.getInt("Status"),
+                        rs.getString("DayBuy")
+                ));
+            }
+            return vectorOrder;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+    
+    public Vector<Orders> getOrdersList(int userID) throws Exception{
+        String query = "SELECT * FROM Orders WHERE UserID = " + userID;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        Vector<Orders> vectorOrder = new Vector<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                vectorOrder.add(new Orders(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getFloat("TotalPrice"),
+                        rs.getString("Note"),
+                        rs.getInt("Status"),
+                        rs.getString("DayBuy")
+                ));
+            }
+            return vectorOrder;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+    
+    @Override
+    public Vector<Orders> getOrdersList(int startRow, int endRow) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public Vector<Orders> getOrdersList(int startRow, int endRow, int userID, int statusID, String date, String sortBy) throws Exception {
+        String statusQuery = "";
+        if (statusID != 0) {
+            statusQuery = " AND Status = " + statusID;
+        }
+        
+        String sortByQuery = "";
+        if (sortBy != null && sortBy.length() > 0) {
+            sortByQuery = " ORDER BY " + sortBy + " ASC ";
+        }
+        
+        String dateQuery = "";
+        if (date.length() > 0) {
+            dateQuery = " AND CONVERT(DATE, DayBuy) = '" + date + "'";
+        }
+        
+        String query = "SELECT * \n"
+                + "FROM (\n"
+                + "	SELECT [ID]\n"
+                + "      ,[UserID]\n"
+                + "      ,[TotalPrice]\n"
+                + "      ,[Note]\n"
+                + "      ,[Status]\n"
+                + "      ,[DayBuy],\n"
+                + "      ROW_NUMBER() OVER (ORDER BY ID) AS RowNum\n"
+                + "	FROM Orders WHERE UserID=" + userID + statusQuery + dateQuery +") as CTEResults\n"
+                + "WHERE CTEResults.RowNum BETWEEN " + startRow + " AND " + endRow + sortByQuery;
+        
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        Vector<Orders> vectorOrder = new Vector<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                vectorOrder.add(new Orders(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getFloat("TotalPrice"),
+                        rs.getString("Note"),
+                        rs.getInt("Status"),
+                        rs.getString("DayBuy")
+                ));
+            }
+            return vectorOrder;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+
+    @Override
+    public int getTotalPage(int userID, int statusID, String date, int numOfRecord) throws Exception {
+        int totalPage = 0;
+        String statusQuery = "";
+        if (statusID != 0) {
+            statusQuery = " AND Status = " + statusID;
+        }
+        
+        String dateQuery = "";
+        if (date.length() > 0) {
+            dateQuery = " AND CONVERT(DATE, DayBuy) = '" + date + "'";
+        }
+
+        // Query statement to get total Orders in Database
+        String sqlQuery = "select count(ID) from Orders "
+                + " where UserID = " + userID + statusQuery + dateQuery;
+
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Execute query to get total Order
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            rs = preparedStatement.executeQuery();
+            // set total Product to variable
+            if (rs.next()) {
+                totalPage = rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            closeConnection(connection);
+            closePrepareStatement(preparedStatement);
+            closeRS(rs);
+        }
+        // convet total product to total page (each page have "numOfRecord" product)
+        return (int) Math.ceil((double) totalPage / numOfRecord);
+    }
+    
+    public int createReturnId(Orders order) throws Exception{
         Connection conn = null;
         PreparedStatement prepare = null;
         ResultSet rs = null;
@@ -301,4 +468,5 @@ public class OrdersDAOImpl extends DBContext {
         return check > 0;
     }
        
+
 }

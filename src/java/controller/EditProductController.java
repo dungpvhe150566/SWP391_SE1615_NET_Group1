@@ -59,21 +59,21 @@ public class EditProductController extends HttpServlet {
 
                 //Get and store all attribute of each Product
                 try {
-                    int productID = Integer.parseInt(request.getParameter("productID"));
-                    String productName = request.getParameter("product_name");
-                    String description = request.getParameter("description");
-                    int originalPrice = Integer.parseInt(request.getParameter("original_price"));
-                    int sellPrice = Integer.parseInt(request.getParameter("sell_price"));
-                    int salePercent = Integer.parseInt(request.getParameter("sale_percent"));
+                    int productID = Integer.parseInt(request.getParameter("productID").trim());
+                    String productName = request.getParameter("product_name").trim();
+                    String description = request.getParameter("description").trim();
+                    int originalPrice = Integer.parseInt(request.getParameter("original_price").trim());
+                    int sellPrice = Integer.parseInt(request.getParameter("sell_price").trim());
+                    int salePercent = Integer.parseInt(request.getParameter("sale_percent").trim());
                     String imageLink = fileName;
-                    int category = Integer.parseInt(request.getParameter("category"));
+                    int category = Integer.parseInt(request.getParameter("category").trim());
                     int seller = 1;
-                    int amount = Integer.parseInt(request.getParameter("amount"));
+                    int amount = Integer.parseInt(request.getParameter("amount").trim());
                     int statusID = 1;
-                    int manufacture = Integer.parseInt(request.getParameter("manufacture"));
-                    float height = Float.parseFloat(request.getParameter("height"));
-                    float width = Float.parseFloat(request.getParameter("width"));
-                    float weight = Float.parseFloat(request.getParameter("weight"));
+                    int manufacture = Integer.parseInt(request.getParameter("manufacture").trim());
+                    float height = Float.parseFloat(request.getParameter("height").trim());
+                    float width = Float.parseFloat(request.getParameter("width").trim());
+                    float weight = Float.parseFloat(request.getParameter("weight").trim());
 
                     Product pro = new Product(productID, productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight);
 

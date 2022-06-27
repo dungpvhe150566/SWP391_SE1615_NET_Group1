@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
-
 @Builder
 @Getter
 @Setter
@@ -15,6 +13,11 @@ public class OrderStatus {
     private int ID;
 
     private String Name;
+
+    public OrderStatus(int ID, String Name) {
+        this.ID = ID;
+        this.Name = Name;
+    }
 
 //    public int getID() {
 //        return ID;
@@ -31,5 +34,12 @@ public class OrderStatus {
 //    public void setName(char Name) {
 //        this.Name = Name;
 //    }
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String Name) {
+        this.Name = Name;
+    }
 
 }

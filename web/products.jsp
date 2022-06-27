@@ -21,24 +21,27 @@
             https://templatemo.com/tm-524-product-admin
         -->
         <!--Datatables-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.22/css/dataTables.bootstrap4.min.css">
-        <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.22/js/dataTables.bootstrap4.min.js"></script>
     </head>
 
     <body id="reportsPage" >
-          <%@include file="components/NavbarAdmin.jsp" %>
+        <%@include file="components/NavbarAdmin.jsp" %>
         <div class="container mt-5">
             <div class="row tm-content-row">
                 <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-products" style="min-height: 900px">
                         <h2 class="tm-block-title">Product List</h2>
                         <div class="form-outline mb-3">
-                            <input class="form-control" type="text" id="myInput" onkeyup="searchName()" placeholder="Search for names..">
+                            <div class="row">
+                                <div class="col-xl-10 col-lg-10 col-md-12">
+                                    <input class="form-control" type="text" id="myInput" placeholder="Search for names.." value="${name}">
+                                </div>
+                                <div class="col-xl-2 col-lg-2 col-md-12">
+                                    <button onclick="selectPage(${page}, ${categoryID})" class="btn-primary" style="width: 100%; height:100%;">Search</button>
+                                </div>
+                            </div>
                         </div>
                         <form id="products" actiopn="ProductsController" method="POST">
-                            <div class="">
+                            <div class="tm-product-table-container">
                                 <input type="hidden" value="deleteProducts" name="do">
                                 <table id="sortTable" class="table table-hover tm-table-small tm-product-table">
                                     <thead>
@@ -69,24 +72,16 @@
                                     </tbody>
                                 </table>
 
-                                <script>
-                                    $.fn.DataTable.ext.pager.numbers_length = 5;
-                                    $('#sortTable').DataTable({
-                                        "searching": false,
-                                        "autoWidth": false,
-                                        "scrollY": 400,
-                                        "lengthChange": false,
-                                        "paging": true,
-                                        "info": true,
-                                        "language": {
-                                            "paginate": {
-                                                'previous': '<span><</span>',
-                                                'next': '<span>></span>'
-                                            }
-                                        }
-                                    });
-                                </script>
                             </div>
+
+                            <ul class="pagination pagination-sm justify-content-center">
+                                <li class="page-item mr-0"><a class="page-link" onclick="selectPage(${page > 1 ? page - 1:page}, ${categoryID})">Previous</a></li>
+                                    <c:forEach items="${pageNumbers}" var="pageNum">
+                                    <li class="page-item mr-0 ${page.equals(pageNum) ? "active":""}"><a class="page-link" onclick="selectPage(${pageNum}, ${categoryID})">${pageNum}</a></li>
+                                        <c:set var="lastPage" value="${pageNum}"></c:set>
+                                    </c:forEach>
+                                <li class="page-item mr-0"><a class="page-link" onclick="selectPage(${page == lastPage ? page:page+1}, ${categoryID})">Next</a></li>
+                            </ul>
                             <!-- table container -->
                             <a
                                 href="addproduct"
@@ -111,7 +106,7 @@
                                         <td>All</td>
                                     </tr>
                                     <c:forEach items="${categoryList}" var="category">
-                                        <tr onclick="searchCategory(${category.getCategoryID()})" ${categoryID == category.getCategoryID() ? "":""}>
+                                        <tr onclick="searchCategory(${category.getCategoryID()})">
                                             <td>${category.getCategoryID()}</td>
                                             <td>${category.getCategoryName()}</td>
                                         </tr>
@@ -139,32 +134,6 @@
         <script src="js/bootstrap.min.js"></script>
         <!-- https://getbootstrap.com/ -->
 
-        <style>
-            .page-item {
-                margin-right: 0px !important;
-                margin-bottom: 3px;
-                margin-top: 3px;
-            }
-
-            .pagination .page-item .page-link { 
-                background-color: #50697f; 
-                border: 0px;
-                color: white;
-            }
-            
-            .pagination .page-item .page-link span{ 
-                margin: 0 auto !important;
-            }
-
-            div.dataTables_wrapper div.dataTables_paginate ul.pagination .page-item.active .page-link:focus {
-                background-color: #394f62;
-            }
-
-            .pagination .page-item.active .page-link:hover {
-                background-color: #394f62;
-            }
-        </style>
-
         <script>
                                             function searchName() {
                                                 let input = document.getElementById('myInput').value;
@@ -185,7 +154,7 @@
                                             }
 
                                             function deleteProduct(productID) {
-                                                if (confirm("Are you sure delete product ?")) {
+                                                if (confirm("Are you sure you want to delete? \nThis will delete all data related to the product.")) {
                                                     window.location.href = "ProductsController?do=deleteProduct&productID=" + productID;
                                                 } else {
                                                     return false;
@@ -195,13 +164,18 @@
                                             function editProduct(productID) {
                                                 window.location.href = "editproduct?productID=" + productID;
                                             }
-                                            
+
                                             function deleteProducts() {
-                                                if (confirm("Are you sure delete seleted products ?")) {
+                                                if (confirm("Are you sure you want to delete? \nThis will delete all data related to the product.")) {
                                                     document.getElementById('products').submit();
                                                 } else {
                                                     return false;
                                                 }
+                                            }
+
+                                            function selectPage(page, categoryID) {
+                                                let name = document.getElementById('myInput').value;
+                                                window.location.href = "ProductsController?page=" + page + "&CategoryID=" + categoryID + "&name=" +name;
                                             }
         </script>
     </body>

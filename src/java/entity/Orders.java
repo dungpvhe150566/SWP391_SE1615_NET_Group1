@@ -1,10 +1,9 @@
 package entity;
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-
 
 @Builder
 @Getter
@@ -13,23 +12,17 @@ import lombok.ToString;
 public class Orders {
 
     private int ID;
-
     private int UserID;
-
     private float TotalPrice;
-
     private String Note;
-
     private int Status;
-
     private String DayBuy;
-     private ShipInfo Shipp;
-     private OrderStatus orderStatus;
+    private ShipInfo Shipp;
+    private OrderStatus orderStatus;
 
 //    public OrderStatus getOrderStatus() {
 //        return orderStatus;
 //    }
-
 //    public int getID() {
 //        return ID;
 //    }
@@ -77,7 +70,6 @@ public class Orders {
 //    public void setDayBuy(char DayBuy) {
 //        this.DayBuy = DayBuy;
 //    }
-
     public Orders() {
     }
 
@@ -91,8 +83,24 @@ public class Orders {
         this.Shipp = Shipp;
         this.orderStatus = orderStatus;
     }
+
+
+    public Orders(int ID, int UserID, float TotalPrice, String Note, int Status, String DayBuy) {
+        this.ID = ID;
+        this.UserID = UserID;
+        this.TotalPrice = TotalPrice;
+        this.Note = Note;
+        this.Status = Status;
+        this.DayBuy = DayBuy;
+        this.Shipp = Shipp;
+        this.orderStatus = orderStatus;
     }
 
-   
-
-
+    public Orders(int UserID, float TotalPrice, String Note, int Status, String DayBuy) {
+        this.UserID = UserID;
+        this.TotalPrice = TotalPrice;
+        this.Note = Note;
+        this.Status = Status;
+        this.DayBuy = DayBuy;
+    }
+}
