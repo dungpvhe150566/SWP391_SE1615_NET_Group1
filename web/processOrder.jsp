@@ -112,7 +112,7 @@
                             <td>Customer</td>
                             <td>phone</td>
                             <td>Address</td>
-                            <td>TotalPrice</td>
+                            <td>TotalPrice (VND)</td>
                             <td>Date</td>
                             <td>Status</td>
                             <c:if test="${check ne 0}">
@@ -126,7 +126,7 @@
                                 <td>${order.getShipp().getCustomerName()}</td>
                                 <td>${order.getShipp().getPhoneNum()}</td>
                                 <td>${order.getShipp().getShippingAddress()}</td>
-                                <td>${order.totalPrice} (VND)</td>
+                                <td>${order.totalPrice} </td>
                                 <td>${order.getDayBuy()}</td>
                                 <td <c:if test="${order.getStatus() ne 1}">style="color: orange"</c:if> >${order.getOrderStatus().getName()}</td>
                                 <c:if test="${check ne 0}">
