@@ -13,7 +13,7 @@ public class Orders {
 
     private int ID;
     private int UserID;
-    private float TotalPrice;
+    private int TotalPrice;
     private String Note;
     private int Status;
     private String DayBuy;
@@ -73,7 +73,7 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(int ID, int UserID, float TotalPrice, String Note, int Status, String DayBuy, ShipInfo Shipp, OrderStatus orderStatus) {
+    public Orders(int ID, int UserID, int TotalPrice, String Note, int Status, String DayBuy, ShipInfo Shipp, OrderStatus orderStatus) {
         this.ID = ID;
         this.UserID = UserID;
         this.TotalPrice = TotalPrice;
@@ -85,7 +85,7 @@ public class Orders {
     }
 
 
-    public Orders(int ID, int UserID, float TotalPrice, String Note, int Status, String DayBuy) {
+    public Orders(int ID, int UserID, int TotalPrice, String Note, int Status, String DayBuy) {
         this.ID = ID;
         this.UserID = UserID;
         this.TotalPrice = TotalPrice;
@@ -96,7 +96,7 @@ public class Orders {
         this.orderStatus = orderStatus;
     }
 
-    public Orders(int UserID, float TotalPrice, String Note, int Status, String DayBuy) {
+    public Orders(int UserID, int TotalPrice, String Note, int Status, String DayBuy) {
         this.UserID = UserID;
         this.TotalPrice = TotalPrice;
         this.Note = Note;

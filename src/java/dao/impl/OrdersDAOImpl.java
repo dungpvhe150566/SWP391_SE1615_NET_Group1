@@ -33,7 +33,7 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
                 vectorOrder.add(new Orders(
                         rs.getInt("ID"),
                         rs.getInt("UserID"),
-                        rs.getFloat("TotalPrice"),
+                        rs.getInt("TotalPrice"),
                         rs.getString("Note"),
                         rs.getInt("Status"),
                         rs.getString("DayBuy")
@@ -64,7 +64,7 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
                 vectorOrder.add(new Orders(
                         rs.getInt("ID"),
                         rs.getInt("UserID"),
-                        rs.getFloat("TotalPrice"),
+                        rs.getInt("TotalPrice"),
                         rs.getString("Note"),
                         rs.getInt("Status"),
                         rs.getString("DayBuy")
@@ -127,7 +127,7 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
                 vectorOrder.add(new Orders(
                         rs.getInt("ID"),
                         rs.getInt("UserID"),
-                        rs.getFloat("TotalPrice"),
+                        rs.getInt("TotalPrice"),
                         rs.getString("Note"),
                         rs.getInt("Status"),
                         rs.getString("DayBuy")
@@ -255,7 +255,7 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
                 O.setID(rs.getInt(1));
                 O.setNote(rs.getString(4));
                 O.setStatus(rs.getInt(5));
-                O.setTotalPrice(rs.getFloat(3));
+                O.setTotalPrice(rs.getInt(3));
                 O.setUserID(rs.getInt(2));
                 list.add(O);
             }
@@ -333,7 +333,7 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
                     Orders order = Orders.builder()
                             .ID(rs.getInt(1))
                             .UserID(rs.getInt(2))
-                            .TotalPrice(rs.getFloat(3))
+                            .TotalPrice(rs.getInt(3))
                             .Note(rs.getString(4))
                             .Status(rs.getInt(5))
                             .DayBuy(rs.getString(6))
@@ -384,7 +384,7 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
                     Orders order = Orders.builder()
                             .ID(rs.getInt(1))
                             .UserID(rs.getInt(2))
-                            .TotalPrice(rs.getFloat(3))
+                            .TotalPrice(rs.getInt(3))
                             .Note(rs.getString(4))
                             .Status(rs.getInt(5))
                             .DayBuy(rs.getString(6))

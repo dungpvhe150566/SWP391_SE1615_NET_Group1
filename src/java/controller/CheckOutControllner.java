@@ -134,7 +134,7 @@ public class CheckOutControllner extends HttpServlet {
             }
             Orders order = Orders.builder()
                     .UserID(1)
-                    .TotalPrice((float) totalPrice)
+                    .TotalPrice((int) totalPrice)
                     .Note(note.trim())
                     .Status(1)
                     .build();
