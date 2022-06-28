@@ -74,19 +74,41 @@
             line-height: 40px;
             width: 0px;
         }
+        .form-control::-webkit-input-placeholder {
+            color: white;
+            width: 250px;
+        }
+        h1 {
+            color: red;
+        }
     </style>
     <body id="reportsPage">
 
         <div class="" id="home">
             <%@include file="components/NavbarAdmin.jsp" %>
 
-
+            <div class="container-fluid">
+                <div class="col-lg-2 col-2 text-left">
+                    <form action="ProcessOrders" id="searchByProductName" method="post">
+                        <input  type="hidden" name="do" value="searchByName">
+                        <div class="input-group">
+                            <input  style="border: 3px solid white "  type="text" name="productName" class="form-control" placeholder="Search by name">
+                            <div class="input-group-append">
+                                <span class="input-group-text bg-transparent text-primary">
+                                    <a onclick="document.getElementById('searchByProductName').submit();" ><i class="fa fa-search"></i></a> 
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
             <div class="col-12 tm-block-col">
+
                 <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                     <h2 class="tm-block-title">Orders List Process</h2>
                     <table class="table">
                         <tr>
-                           
+
                             <td>Customer</td>
                             <td>phone</td>
                             <td>Address</td>
@@ -100,7 +122,7 @@
                         </tr>
                         <c:forEach items="${listOrderWatting}" var="order">
                             <tr>
-                                
+
                                 <td>${order.getShipp().getCustomerName()}</td>
                                 <td>${order.getShipp().getPhoneNum()}</td>
                                 <td>${order.getShipp().getShippingAddress()}</td>
