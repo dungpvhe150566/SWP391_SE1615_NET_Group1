@@ -38,7 +38,7 @@ public class AcceptOrderController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             int id =NumberHelper.getInt(request.getParameter("id"));
-            boolean check = new OrdersDAOImpl().updateStatus(3, id);
+            boolean check = new OrdersDAOImpl().updateStatus(2, id);
             
         
                response.sendRedirect("dontrollner-dasboard");

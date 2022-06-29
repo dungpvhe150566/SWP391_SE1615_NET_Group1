@@ -467,6 +467,40 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
         }
         return check > 0;
     }
-       
+       public List<Orders> getAllOrderPackaging() throws Exception {
+        String query = "SELECT dbo.[Orders].*,dbo.ShipInfo.CustomerName,dbo.ShipInfo.PhoneNum,dbo.ShipInfo.ShippingAddress,Order_Status.Name\n"
+                + "                 FROM dbo.[Orders] INNER JOIN dbo.ShipInfo\n"
+                + "                  ON ShipInfo.Order_ID = [Orders].ID INNER JOIN Order_Status\n"
+                + "                  ON Order_Status.ID = dbo.[Orders].status WHERE dbo.[Orders].status =2";
+        List<Orders> list = new ArrayList<>();
+        try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+            if (ps != null) {
+                ResultSet rs = ps.executeQuery();
+                while (rs != null && rs.next()) {
+                    ShipInfo shipping = ShipInfo.builder()
+                            .ID(rs.getInt(3))
+                            .CustomerName(rs.getString(7))
+                            .PhoneNum(rs.getString(8)).ShippingAddress(rs.getString(9)).build();
+                    OrderStatus statusOrder = OrderStatus.builder().ID(rs.getInt(5))
+                            .Name(rs.getString(10)).build();
+                    Orders order = Orders.builder()
+                            .ID(rs.getInt(1))
+                            .UserID(rs.getInt(2))
+                            .TotalPrice(rs.getInt(3))
+                            .Note(rs.getString(4))
+                            .Status(rs.getInt(5))
+                            .DayBuy(rs.getString(6))
+                            .Shipp(shipping)
+                            .orderStatus(statusOrder)
+                            .build();
+                    list.add(order);
+                }
+                return list;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
 
 }

@@ -115,7 +115,7 @@
                             <td>TotalPrice (VND)</td>
                             <td>Date</td>
                             <td>Status</td>
-                            <c:if test="${check ne 0}">
+                            <c:if test="${check ne 2}">
                                 <th>Accept</th>
                                 </c:if>
                             <th>Delete</th>
@@ -129,9 +129,12 @@
                                 <td>${order.totalPrice} </td>
                                 <td>${order.getDayBuy()}</td>
                                 <td <c:if test="${order.getStatus() ne 1}">style="color: orange"</c:if> >${order.getOrderStatus().getName()}</td>
-                                <c:if test="${check ne 0}">
+                                <c:if test="${check ne 2}">
                                     <td><a href="accept-order?id=${order.getID()}" class="btn btn-outline-info">Accept</a></td>
                                 </c:if>
+                                    
+                                    
+                                
                                 <td><a  href="delete-order?id=${order.getID()}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-outline-danger"><i class="fas fa-trash mr-2"></i>Delete</a></td>
                             </tr>
                         </c:forEach>

@@ -193,7 +193,15 @@
 
                                     <div class="media-body">
                                         <p class="mb-2"><b>Order Watting</b>  <a href="ProcessOrders?check=1"
-                                                                                 class="tm-notification-link">Orders updates</a>. Check new orders.</p>
+                                                                                 class="tm-notification-link">Detail</a>. Check new orders.</p>
+
+                                    </div>
+                                </div>
+                                 <div class="media tm-notification-item">
+
+                                    <div class="media-body">
+                                        <p class="mb-2"><b>Order Packaging</b>   <a href="ProcessOrders?check=3"
+                                                                                 class="tm-notification-link">Detail</a>. Check new orders.</p>
 
                                     </div>
                                 </div>

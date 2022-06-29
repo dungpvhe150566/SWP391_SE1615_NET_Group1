@@ -5,13 +5,8 @@
 package controller;
 
 import dao.impl.OrdersDAOImpl;
-import dao.impl.ProductDAOImpl;
-import entity.Orders;
-import entity.Product;
-import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,8 +18,8 @@ import util.NumberHelper;
  *
  * @author Pham Van Trong
  */
-@WebServlet(name = "ProcessOrdersControllner", urlPatterns = {"/ProcessOrders"})
-public class ProcessOrdersControllner extends HttpServlet {
+@WebServlet(name = "AccepToShipingControllner", urlPatterns = {"/accept-orders"})
+public class AccepToShipingControllner extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,41 +33,16 @@ public class ProcessOrdersControllner extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            Users account = (Users) request.getSession().getAttribute("account");
-//            List<Product> listProduct = new ProductDAOImpl().getAll();
-            int check = NumberHelper.getInt(request.getParameter("check"));
-            List<Orders> listOrderWatting = null;
-//            if (check == 0) {
-//                listOrderWatting = new OrdersDAOImpl().getAllSucces();
-//            } else {
-//                if (check == 1) {
-//                    listOrderWatting = new OrdersDAOImpl().getAllOrderNotAcceptYet();
-//                } else if(check == 2) {
-//                    listOrderWatting = new OrdersDAOImpl().getAllOrderShipping();
-//                } else{
-//                     listOrderWatting = new OrdersDAOImpl().getAllOrderPackaging();
-//                    }
-//            }
+        try ( PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+           int id =NumberHelper.getInt(request.getParameter("id"));
+            boolean check = new OrdersDAOImpl().updateStatus(3, id);
             
-            if (check == 0) {
-                listOrderWatting = new OrdersDAOImpl().getAllSucces();
-            }
-            if (check == 1) {
-                listOrderWatting = new OrdersDAOImpl().getAllOrderNotAcceptYet();
-            }
-            if (check == 2) {
-                listOrderWatting = new OrdersDAOImpl().getAllOrderShipping();
-            }
-            if (check == 3) {
-                listOrderWatting = new OrdersDAOImpl().getAllOrderPackaging();
-            }
-
-            request.setAttribute("listOrderWatting", listOrderWatting);
-            request.setAttribute("check", check);
-            request.getRequestDispatcher("processOrder.jsp").forward(request, response);
-        } catch (Exception e) {
-            e.printStackTrace();
+        
+               response.sendRedirect("dontrollner-dasboard");
+           
+        } catch (Exception ex) {
+           ex.printStackTrace();
         }
     }
 
