@@ -115,9 +115,14 @@
                             <td>TotalPrice (VND)</td>
                             <td>Date</td>
                             <td>Status</td>
-                            <c:if test="${check ne 2}">
-                                <th>Accept</th>
-                                </c:if>
+                            <c:choose>
+                                <c:when test="${check =='2' || check =='0' }">
+                                </c:when>    
+                                <c:otherwise>
+                                    <th>Accept</th>
+                                    </c:otherwise>
+                                </c:choose>
+
                             <th>Delete</th>
                         </tr>
                         <c:forEach items="${listOrderWatting}" var="order">
@@ -129,12 +134,17 @@
                                 <td>${order.totalPrice} </td>
                                 <td>${order.getDayBuy()}</td>
                                 <td <c:if test="${order.getStatus() ne 1}">style="color: orange"</c:if> >${order.getOrderStatus().getName()}</td>
-                                <c:if test="${check ne 2}">
-                                    <td><a href="accept-order?id=${order.getID()}" class="btn btn-outline-info">Accept</a></td>
-                                </c:if>
-                                    
-                                    
-                                
+                                <c:choose>
+                                    <c:when test="${check =='2' || check =='0' }">
+                                    </c:when>    
+                                    <c:otherwise>
+                                        <td><a href="accept-order?id=${order.getID()}" class="btn btn-outline-info">Accept</a></td>
+                                        </c:otherwise>
+                                    </c:choose>
+                                  
+
+
+
                                 <td><a  href="delete-order?id=${order.getID()}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-outline-danger"><i class="fas fa-trash mr-2"></i>Delete</a></td>
                             </tr>
                         </c:forEach>
