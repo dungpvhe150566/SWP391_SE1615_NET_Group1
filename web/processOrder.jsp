@@ -81,6 +81,11 @@
         h1 {
             color: red;
         }
+        .outputLI {
+            text-align: center;
+             color: #0069d9;
+        
+            }
     </style>
     <body id="reportsPage">
 
@@ -89,25 +94,28 @@
 
             <div class="container-fluid">
                 <form action="ProcessOrders" class="d-flex mx-auto">
-                <input
-                    class="form-control me-2"
-                    type="search"
-                    placeholder="Search"
-                    aria-label="Search"
-                    name="key"
-                    style=" border: 3px solid #05728f;"
-                    />
-                
-                <button class="btn btn-outline-info" type="submit">
-                    Search
-                </button>
-            </form>
+                    <input
+                        class="form-control me-2"
+                        type="search"
+                        placeholder="Search"
+                        aria-label="Search"
+                        name="key"
+                        style=" border: 3px solid #05728f;" required
+                        />
+
+                    <button class="btn btn-outline-info" type="submit">
+                        Search
+                    </button>
+                </form>
             </div>
             <div class="col-12 tm-block-col">
 
+
                 <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                     <h2 class="tm-block-title">Orders List Process</h2>
+
                     <table class="table">
+
                         <tr>
 
                             <td>Customer</td>
@@ -126,6 +134,7 @@
 
                             <th>Delete</th>
                         </tr>
+                       
                         <c:forEach items="${listOrderWatting}" var="order">
                             <tr>
 
@@ -138,8 +147,8 @@
                                 <c:choose>
                                     <c:when test="${check =='2' || check =='0' }">
                                     </c:when>    
-                                      <c:when test="${check =='3'}">
-                                           <td><a href="accept-orders?id=${order.getID()}" class="btn btn-outline-info">Accept</a></td>
+                                    <c:when test="${check =='3'}">
+                                        <td><a href="accept-orders?id=${order.getID()}" class="btn btn-outline-info">Accept</a></td>
                                     </c:when> 
                                     <c:otherwise>
                                         <td><a href="accept-order?id=${order.getID()}" class="btn btn-outline-info">Accept</a></td>
@@ -148,7 +157,17 @@
                                 <td><a  href="delete-order?id=${order.getID()}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-outline-danger"><i class="fas fa-trash mr-2"></i>Delete</a></td>
                             </tr>
                         </c:forEach>
+                            
                     </table>
+                     <c:choose>
+                            <c:when test="${listOrderWatting==null || listOrderWatting.size()==0}">
+                                <br>
+                                <h5 class="outputLI">Not founds</h5>
+                            </c:when>
+                            <c:otherwise>
+
+                            </c:otherwise>
+                        </c:choose>
                 </div>
             </div>
         </div>
