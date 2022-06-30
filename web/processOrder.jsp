@@ -137,14 +137,13 @@
                                 <c:choose>
                                     <c:when test="${check =='2' || check =='0' }">
                                     </c:when>    
+                                      <c:when test="${check =='3'}">
+                                           <td><a href="accept-orders?id=${order.getID()}" class="btn btn-outline-info">Accept</a></td>
+                                    </c:when> 
                                     <c:otherwise>
                                         <td><a href="accept-order?id=${order.getID()}" class="btn btn-outline-info">Accept</a></td>
-                                        </c:otherwise>
-                                    </c:choose>
-                                  
-
-
-
+                                    </c:otherwise>
+                                </c:choose>
                                 <td><a  href="delete-order?id=${order.getID()}" onclick="return confirm('Are you sure you want to delete this item?');" class="btn btn-outline-danger"><i class="fas fa-trash mr-2"></i>Delete</a></td>
                             </tr>
                         </c:forEach>
