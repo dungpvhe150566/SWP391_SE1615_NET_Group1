@@ -1,12 +1,11 @@
 package controller;
 
-import dao.impl.OrderStatusDAOImpl;
-import dao.impl.OrdersDAOImpl;
-import entity.OrderStatus;
-import entity.Orders;
+import dao.impl.UserAddressDAOImpl;
+import entity.UserAddress;
 import entity.Users;
 import java.io.IOException;
-import java.util.Vector;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +17,9 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Dung
  */
-@WebServlet(name = "MyOrderController", urlPatterns = {"/myorder"})
-public class MyOrderController extends HttpServlet {
+@WebServlet(name = "MyAddressController", urlPatterns = {"/myaddress"})
+public class MyAddressController extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -33,47 +33,18 @@ public class MyOrderController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            OrdersDAOImpl orderDAO = new OrdersDAOImpl();
-
-            //Get User has been login from session
+            UserAddressDAOImpl userAddressDAO = new UserAddressDAOImpl();
+            
             Users user = (Users) request.getSession().getAttribute("user");
             if (user == null) {
                 throw new Exception("Please login first");
             }
             int userID = user.getUserID();
-
-            //Get Status ID from request
-            int statusID = 0;
-            if (request.getParameter("status") != null) {
-                statusID = Integer.parseInt(request.getParameter("status"));
-            }
-
-            String sortBy = "";
-            if (request.getParameter("sortby") != null) {
-                sortBy = request.getParameter("sortby");
-            }
-
-            String date = "";
-            if (request.getParameter("date") != null) {
-                date = request.getParameter("date");
-            }
-
-            int page = 1;
-            MyOrderByAjax.page = 2;
-            int numOfRecord = 2;
-            int endRow = page * numOfRecord;
-            int startRow = endRow - numOfRecord + 1;
-
-            Vector<Orders> vecOrder = orderDAO.getOrdersList(startRow, endRow, userID, statusID, date, sortBy);
-            Vector<OrderStatus> vecOrderStatus = (new OrderStatusDAOImpl()).getOrderStatusList();
-
-            request.setAttribute("date", date);
-            request.setAttribute("user", user);
-            request.setAttribute("statusID", statusID);
-            request.setAttribute("page", page);
-            request.setAttribute("vecOrderStatus", vecOrderStatus);
-            request.setAttribute("vecOrder", vecOrder);
-            request.getRequestDispatcher("myorder.jsp").forward(request, response);
+            
+            ArrayList<UserAddress> arrUserAddress = userAddressDAO.getUserAddressListByUserID(userID);
+            
+            request.setAttribute("arrUserAddress", arrUserAddress);
+            request.getRequestDispatcher("myaddress.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");

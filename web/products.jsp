@@ -27,7 +27,7 @@
         <%@include file="components/NavbarAdmin.jsp" %>
         <div class="container mt-5">
             <div class="row tm-content-row">
-                <div class="col-sm-12 col-md-12 col-lg-8 col-xl-8 tm-block-col">
+                <div class="col-sm-12 col-md-12 col-lg-9 col-xl-9 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-products" style="min-height: 900px">
                         <h2 class="tm-block-title">Product List</h2>
                         <div class="form-outline mb-3">
@@ -47,10 +47,10 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">&nbsp;</th>
-                                            <th scope="col">PRODUCT NAME</th>
-                                            <th scope="col">Sell Price</th>
-                                            <th scope="col">Original Price</th>
-                                            <th scope="col">Amount</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Sell Price (VND)</th>
+                                            <th scope="col">Original Price (VND)</th>
+                                            <th scope="col">Quantity</th>
                                             <th scope="col">&nbsp;</th>
                                         </tr>
                                     </thead>
@@ -94,7 +94,7 @@
                     </div>
 
                 </div>
-                <div class="col-sm-12 col-md-12 col-lg-4 col-xl-4 tm-block-col">
+                <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3 tm-block-col">
                     <div class="tm-bg-primary-dark tm-block tm-block-product-categories">
                         <h2 class="tm-block-title">Product Categories</h2>
 
@@ -102,12 +102,10 @@
                             <table class="table tm-table-small tm-product-table">
                                 <tbody>
                                     <tr onclick="searchCategory(0)">
-                                        <td>0</td>
                                         <td>All</td>
                                     </tr>
                                     <c:forEach items="${categoryList}" var="category">
                                         <tr onclick="searchCategory(${category.getCategoryID()})">
-                                            <td>${category.getCategoryID()}</td>
                                             <td>${category.getCategoryName()}</td>
                                         </tr>
                                     </c:forEach>
@@ -134,49 +132,53 @@
         <script src="js/bootstrap.min.js"></script>
         <!-- https://getbootstrap.com/ -->
 
-        <script>
-                                            function searchName() {
-                                                let input = document.getElementById('myInput').value;
-                                                input = input.toLowerCase();
-                                                let x = document.getElementsByClassName('product-tr');
+        <style>
+            th { white-space: nowrap; overflow: hidden; text-overflow:ellipsis; }
+        </style>
 
-                                                for (i = 0; i < x.length; i++) {
-                                                    if (!x[i].getElementsByTagName("td")[0].innerHTML.toLowerCase().includes(input)) {
-                                                        x[i].style.display = "none";
-                                                    } else {
-                                                        x[i].style.display = "";
+        <script>
+                                                function searchName() {
+                                                    let input = document.getElementById('myInput').value;
+                                                    input = input.toLowerCase();
+                                                    let x = document.getElementsByClassName('product-tr');
+
+                                                    for (i = 0; i < x.length; i++) {
+                                                        if (!x[i].getElementsByTagName("td")[0].innerHTML.toLowerCase().includes(input)) {
+                                                            x[i].style.display = "none";
+                                                        } else {
+                                                            x[i].style.display = "";
+                                                        }
                                                     }
                                                 }
-                                            }
 
-                                            function searchCategory(categoryID) {
-                                                window.location.href = "ProductsController?CategoryID=" + categoryID;
-                                            }
-
-                                            function deleteProduct(productID) {
-                                                if (confirm("Are you sure you want to delete? \nThis will delete all data related to the product.")) {
-                                                    window.location.href = "ProductsController?do=deleteProduct&productID=" + productID;
-                                                } else {
-                                                    return false;
+                                                function searchCategory(categoryID) {
+                                                    window.location.href = "ProductsController?CategoryID=" + categoryID;
                                                 }
-                                            }
 
-                                            function editProduct(productID) {
-                                                window.location.href = "editproduct?productID=" + productID;
-                                            }
-
-                                            function deleteProducts() {
-                                                if (confirm("Are you sure you want to delete? \nThis will delete all data related to the product.")) {
-                                                    document.getElementById('products').submit();
-                                                } else {
-                                                    return false;
+                                                function deleteProduct(productID) {
+                                                    if (confirm("Are you sure you want to delete? \nThis will delete all data related to the product.")) {
+                                                        window.location.href = "ProductsController?do=deleteProduct&productID=" + productID;
+                                                    } else {
+                                                        return false;
+                                                    }
                                                 }
-                                            }
 
-                                            function selectPage(page, categoryID) {
-                                                let name = document.getElementById('myInput').value;
-                                                window.location.href = "ProductsController?page=" + page + "&CategoryID=" + categoryID + "&name=" +name;
-                                            }
+                                                function editProduct(productID) {
+                                                    window.location.href = "editproduct?productID=" + productID;
+                                                }
+
+                                                function deleteProducts() {
+                                                    if (confirm("Are you sure you want to delete? \nThis will delete all data related to the product.")) {
+                                                        document.getElementById('products').submit();
+                                                    } else {
+                                                        return false;
+                                                    }
+                                                }
+
+                                                function selectPage(page, categoryID) {
+                                                    let name = document.getElementById('myInput').value;
+                                                    window.location.href = "ProductsController?page=" + page + "&CategoryID=" + categoryID + "&name=" + name;
+                                                }
         </script>
     </body>
 </html>

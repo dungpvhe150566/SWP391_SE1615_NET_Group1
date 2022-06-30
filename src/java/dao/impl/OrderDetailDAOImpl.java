@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class OrderDetailDAOImpl extends DBContext implements OrderDetailDAO {
@@ -81,6 +82,37 @@ public class OrderDetailDAOImpl extends DBContext implements OrderDetailDAO {
             e.printStackTrace();
         }
         return false;
+    }
+    
+    public ArrayList<OrderDetail> getOrderDetailByOrderID(int orderID) throws Exception{
+        String query = "SELECT * FROM [Order_Detail] WHERE [Order_ID] = " + orderID;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        ArrayList<OrderDetail> arrOrder = new ArrayList<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                arrOrder.add(new OrderDetail(
+                        rs.getInt("ID"),
+                        rs.getInt("Order_ID"),
+                        rs.getInt("ProductID"),
+                        rs.getString("ProductName"),
+                        rs.getInt("ProductPrice"),
+                        rs.getInt("Quantity")
+                ));
+            }
+            return arrOrder;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
     }
 
 //    public static void main(String[] args) {

@@ -1,5 +1,6 @@
 package entity;
 
+import java.util.ArrayList;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,8 +10,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Orders {
 
+public class Orders {
     private int ID;
     private int UserID;
     private int TotalPrice;
@@ -19,6 +20,7 @@ public class Orders {
     private String DayBuy;
     private ShipInfo Shipp;
     private OrderStatus orderStatus;
+    private ArrayList<OrderDetail> OrderDetail;
 
 //    public OrderStatus getOrderStatus() {
 //        return orderStatus;
@@ -73,6 +75,29 @@ public class Orders {
     public Orders() {
     }
 
+    public Orders(int ID, int UserID, int TotalPrice, String Note, int Status, String DayBuy, ShipInfo Shipp, OrderStatus orderStatus, ArrayList<OrderDetail> OrderDetail) {
+        this.ID = ID;
+        this.UserID = UserID;
+        this.TotalPrice = TotalPrice;
+        this.Note = Note;
+        this.Status = Status;
+        this.DayBuy = DayBuy;
+        this.Shipp = Shipp;
+        this.orderStatus = orderStatus;
+        this.OrderDetail = OrderDetail;
+    }
+
+    
+    public Orders(int ID, int UserID, int TotalPrice, String Note, int Status, String DayBuy, ArrayList<OrderDetail> OrderDetail) {
+        this.ID = ID;
+        this.UserID = UserID;
+        this.TotalPrice = TotalPrice;
+        this.Note = Note;
+        this.Status = Status;
+        this.DayBuy = DayBuy;
+        this.OrderDetail = OrderDetail;
+    }
+    
     public Orders(int ID, int UserID, int TotalPrice, String Note, int Status, String DayBuy, ShipInfo Shipp, OrderStatus orderStatus) {
         this.ID = ID;
         this.UserID = UserID;
