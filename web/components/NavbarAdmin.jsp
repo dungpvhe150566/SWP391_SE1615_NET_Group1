@@ -13,7 +13,7 @@
         <title>JSP Page</title>
     </head>
     <body>
-       <nav class="navbar navbar-expand-xl">
+        <nav class="navbar navbar-expand-xl">
             <div class="container h-100">
                 <a class="navbar-brand" href="HomeController">
                     <h1 class="tm-site-title mb-0">Product Admin</h1>
@@ -68,13 +68,24 @@
                             </div>
                         </li>
                     </ul>
-                    <ul class="navbar-nav">
+                    <c:if test="${sessionScope.user!=null}">
+                       <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link d-block" href="">
-                                Admin, <b>Logout</b>
+                            <a class="nav-link d-block"  href="logout">
+                                ${sessionScope.user.getUsername()}, <b>Logout</b>
                             </a>
                         </li>
                     </ul>
+                    </c:if>
+                    <c:if test="${sessionScope.user==null}">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link d-block" href="">
+                                Admin, <b>Login</b>
+                            </a>
+                        </li>
+                    </ul>
+                    </c:if>
                 </div>
             </div>
         </nav>
