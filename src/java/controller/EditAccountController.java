@@ -65,7 +65,6 @@ public class EditAccountController extends HttpServlet {
             //Get ID from jsp
             String id = request.getParameter("UserID");
             UsersDAOImpl dao = new UsersDAOImpl();
-            UserAddressDAO UserAddressDAO = new UserAddressDAO();
             //select users from id 
             Users x = dao.getAccountByID(id);
 

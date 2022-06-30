@@ -28,7 +28,7 @@
                                 <h3 class="h2">
                                     Look like you're lost
                                 </h3>
-
+                                ${ex}
                                 <p>An error has occurred in the system, you can come back later or contact the system administrator</p>
 
                                 <a href="HomeController" class="link_404">Go to Home</a>

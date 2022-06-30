@@ -6,17 +6,19 @@
 package dao.impl;
 
 import dao.DBContext;
+import dao.UserAddressDAO;
 import entity.UserAddress;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
  * @author viet
  */
-public class UserAddressDAOImpl extends DBContext {
+public class UserAddressDAOImpl extends DBContext implements UserAddressDAO{
 
     public UserAddress getAll(String id) { //Get user data in the database
         String sql = "select * from UserAddress UA full outer join Users U on UA.UserID = U.UserID where U.UserID = ?";
@@ -74,5 +76,69 @@ public class UserAddressDAOImpl extends DBContext {
 //        dao.edit("lg.png","Nguyen Viet","nviet0139@gmail.com","0349175696","Ha Noi","10");
         UserAddress us = dao.getAll("10");
         System.out.println(us);
+    }
+
+    @Override
+    public ArrayList<UserAddress> getUserAddressList() throws Exception {
+        String query = "SELECT * FROM UserAddress";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        ArrayList<UserAddress> arrUserAddress = new ArrayList<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                arrUserAddress.add(new UserAddress(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getString("ShipName"),
+                        rs.getString("ShipAddress"),
+                        rs.getInt("ShipCity"),
+                        rs.getString("PhoneNum")
+                ));
+            }
+            return arrUserAddress;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+    
+    @Override
+    public ArrayList<UserAddress> getUserAddressListByUserID(int userID) throws Exception {
+        String query = "SELECT * FROM UserAddress WHERE UserID = " + userID;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        ArrayList<UserAddress> arrUserAddress = new ArrayList<>();
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                arrUserAddress.add(new UserAddress(
+                        rs.getInt("ID"),
+                        rs.getInt("UserID"),
+                        rs.getString("ShipName"),
+                        rs.getString("ShipAddress"),
+                        rs.getInt("ShipCityID"),
+                        rs.getString("PhoneNum")
+                ));
+            }
+            return arrUserAddress;
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
     }
 }

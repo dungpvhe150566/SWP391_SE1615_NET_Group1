@@ -130,7 +130,8 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
                         rs.getInt("TotalPrice"),
                         rs.getString("Note"),
                         rs.getInt("Status"),
-                        rs.getString("DayBuy")
+                        rs.getString("DayBuy"),
+                        ((new OrderDetailDAOImpl()).getOrderDetailByOrderID(rs.getInt("ID")))
                 ));
             }
             return vectorOrder;

@@ -17,9 +17,34 @@ public class UserAddress {
     private String Image;
     
     private String email;
+
+    public UserAddress() {
+    }
     
     
 
+    public UserAddress(int ID, int UserID, String ShipName, String ShipAddress, int ShipCityID, String PhoneNum, String Image, String email) {
+        this.ID = ID;
+        this.UserID = UserID;
+        this.ShipName = ShipName;
+        this.ShipAddress = ShipAddress;
+        this.ShipCityID = ShipCityID;
+        this.PhoneNum = PhoneNum;
+        this.Image = Image;
+        this.email = email;
+    }
+
+    public UserAddress(int ID, int UserID, String ShipName, String ShipAddress, int ShipCityID, String PhoneNum) {
+        this.ID = ID;
+        this.UserID = UserID;
+        this.ShipName = ShipName;
+        this.ShipAddress = ShipAddress;
+        this.ShipCityID = ShipCityID;
+        this.PhoneNum = PhoneNum;
+    }
+
+    
+    
     public int getID() {
         return ID;
     }
