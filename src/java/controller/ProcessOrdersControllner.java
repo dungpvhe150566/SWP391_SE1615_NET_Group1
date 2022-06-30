@@ -42,6 +42,7 @@ public class ProcessOrdersControllner extends HttpServlet {
             Users account = (Users) request.getSession().getAttribute("account");
 //            List<Product> listProduct = new ProductDAOImpl().getAll();
             int check = NumberHelper.getInt(request.getParameter("check"));
+             String keyword = request.getParameter("key");
             List<Orders> listOrderWatting = null;
 //            if (check == 0) {
 //                listOrderWatting = new OrdersDAOImpl().getAllSucces();
@@ -54,7 +55,7 @@ public class ProcessOrdersControllner extends HttpServlet {
 //                     listOrderWatting = new OrdersDAOImpl().getAllOrderPackaging();
 //                    }
 //            }
-            
+             listOrderWatting = new OrdersDAOImpl().search(keyword);
             if (check == 0) {
                 listOrderWatting = new OrdersDAOImpl().getAllSucces();
             }
@@ -67,7 +68,14 @@ public class ProcessOrdersControllner extends HttpServlet {
             if (check == 3) {
                 listOrderWatting = new OrdersDAOImpl().getAllOrderPackaging();
             }
-
+           
+               
+            
+             
+          
+             
+            request.setAttribute("key", keyword);
+           
             request.setAttribute("listOrderWatting", listOrderWatting);
             request.setAttribute("check", check);
             request.getRequestDispatcher("processOrder.jsp").forward(request, response);

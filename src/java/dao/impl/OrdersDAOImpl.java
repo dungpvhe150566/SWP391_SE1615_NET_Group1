@@ -16,9 +16,9 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class OrdersDAOImpl extends DBContext implements OrdersDAO{
-    
-    public Vector<Orders> getOrdersList() throws Exception{
+public class OrdersDAOImpl extends DBContext implements OrdersDAO {
+
+    public Vector<Orders> getOrdersList() throws Exception {
         String query = "SELECT * FROM Orders";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -48,8 +48,8 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
             closeConnection(connection);
         }
     }
-    
-    public Vector<Orders> getOrdersList(int userID) throws Exception{
+
+    public Vector<Orders> getOrdersList(int userID) throws Exception {
         String query = "SELECT * FROM Orders WHERE UserID = " + userID;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -79,29 +79,29 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
             closeConnection(connection);
         }
     }
-    
+
     @Override
     public Vector<Orders> getOrdersList(int startRow, int endRow) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
     @Override
     public Vector<Orders> getOrdersList(int startRow, int endRow, int userID, int statusID, String date, String sortBy) throws Exception {
         String statusQuery = "";
         if (statusID != 0) {
             statusQuery = " AND Status = " + statusID;
         }
-        
+
         String sortByQuery = "";
         if (sortBy != null && sortBy.length() > 0) {
             sortByQuery = " ORDER BY " + sortBy + " ASC ";
         }
-        
+
         String dateQuery = "";
         if (date.length() > 0) {
             dateQuery = " AND CONVERT(DATE, DayBuy) = '" + date + "'";
         }
-        
+
         String query = "SELECT * \n"
                 + "FROM (\n"
                 + "	SELECT [ID]\n"
@@ -111,9 +111,9 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
                 + "      ,[Status]\n"
                 + "      ,[DayBuy],\n"
                 + "      ROW_NUMBER() OVER (ORDER BY ID) AS RowNum\n"
-                + "	FROM Orders WHERE UserID=" + userID + statusQuery + dateQuery +") as CTEResults\n"
+                + "	FROM Orders WHERE UserID=" + userID + statusQuery + dateQuery + ") as CTEResults\n"
                 + "WHERE CTEResults.RowNum BETWEEN " + startRow + " AND " + endRow + sortByQuery;
-        
+
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
@@ -151,7 +151,7 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
         if (statusID != 0) {
             statusQuery = " AND Status = " + statusID;
         }
-        
+
         String dateQuery = "";
         if (date.length() > 0) {
             dateQuery = " AND CONVERT(DATE, DayBuy) = '" + date + "'";
@@ -183,8 +183,8 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
         // convet total product to total page (each page have "numOfRecord" product)
         return (int) Math.ceil((double) totalPage / numOfRecord);
     }
-    
-    public int createReturnId(Orders order) throws Exception{
+
+    public int createReturnId(Orders order) throws Exception {
         Connection conn = null;
         PreparedStatement prepare = null;
         ResultSet rs = null;
@@ -297,7 +297,7 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
     }
 
     public int countOrderWatting() throws Exception {
-        String query = "select COUNT(*) from Orders WHERE dbo.[Orders].status = 1";
+        String query = "select COUNT(*) from Orders WHERE dbo.[Orders].status = 1 ";
         try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
             if (ps != null) {
                 ResultSet rs = ps.executeQuery();
@@ -323,10 +323,9 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
         List<Orders> list = new ArrayList<>();
         try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
             if (ps != null) {
-                 rs = ps.executeQuery();
+                rs = ps.executeQuery();
                 while (rs != null && rs.next()) {
                     ShipInfo shipping = ShipInfo.builder()
-                            
                             .CustomerName(rs.getString(7))
                             .PhoneNum(rs.getString(8)).ShippingAddress(rs.getString(9)).build();
                     OrderStatus statusOrder = OrderStatus.builder().ID(rs.getInt(5))
@@ -347,7 +346,7 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
             }
         } catch (Exception e) {
             throw e;
-        }finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(prepare);
             closeConnection(conn);
@@ -358,7 +357,8 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
     public static void main(String[] args) {
         OrdersDAOImpl ott = new OrdersDAOImpl();
         try {
-            List<Orders> listO = ott.getAllSucces();
+            String s = "Dam";
+            List<Orders> listO = ott.search(s);
             System.out.println(listO);
         } catch (Exception ex) {
             Logger.getLogger(OrdersDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -437,10 +437,10 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
         }
         return null;
     }
-       public boolean remove(int id) throws Exception {
+
+    public boolean remove(int id) throws Exception {
         String query = "DELETE FROM Orders WHERE ID = ?";
-        try (Connection con = getConnection();
-                PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+        try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
             if (ps != null) {
                 ps.setObject(1, id);
                 return ps.execute();
@@ -450,14 +450,13 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
         }
         return false;
     }
-     
-       public boolean updateStatus(int status, int id) throws Exception {
+
+    public boolean updateStatus(int status, int id) throws Exception {
         String query = "UPDATE [dbo].[Orders]\n"
                 + "   SET [Status] = ?\n"
                 + " WHERE ID = ?";
         int check = 0;
-        try (Connection con = getConnection();
-                PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
+        try ( Connection con = getConnection();  PreparedStatement ps = (con != null) ? con.prepareStatement(query) : null;) {
             if (ps != null) {
                 ps.setObject(1, status);
                 ps.setObject(2, id);
@@ -468,7 +467,8 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
         }
         return check > 0;
     }
-       public List<Orders> getAllOrderPackaging() throws Exception {
+
+    public List<Orders> getAllOrderPackaging() throws Exception {
         String query = "SELECT dbo.[Orders].*,dbo.ShipInfo.CustomerName,dbo.ShipInfo.PhoneNum,dbo.ShipInfo.ShippingAddress,Order_Status.Name\n"
                 + "                 FROM dbo.[Orders] INNER JOIN dbo.ShipInfo\n"
                 + "                  ON ShipInfo.Order_ID = [Orders].ID INNER JOIN Order_Status\n"
@@ -504,4 +504,46 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO{
         return null;
     }
 
+    public List<Orders> search(String keyword) throws Exception {
+          Connection conn = null;
+        PreparedStatement prepare = null;
+        ResultSet rs = null;
+        List<Orders> list = new ArrayList<>();
+        try {
+            String sql = "SELECT dbo.[Orders].*,dbo.ShipInfo.CustomerName,dbo.ShipInfo.PhoneNum,dbo.ShipInfo.ShippingAddress,Order_Status.Name\n"
+                + "                 FROM dbo.[Orders] INNER JOIN dbo.ShipInfo\n"
+                + "                  ON ShipInfo.Order_ID = [Orders].ID INNER JOIN Order_Status\n"
+                + "                  ON Order_Status.ID = dbo.[Orders].status WHERE dbo.ShipInfo.CustomerName like ?";
+           conn = getConnection();
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setString(1, "%" + keyword + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+               ShipInfo shipping = ShipInfo.builder()
+                            .CustomerName(rs.getString(7).trim())
+                            .PhoneNum(rs.getString(8)).ShippingAddress(rs.getString(9)).build();
+                    OrderStatus statusOrder = OrderStatus.builder().ID(rs.getInt(5))
+                            .Name(rs.getString(10)).build();
+                    Orders order = Orders.builder()
+                            .ID(rs.getInt(1))
+                            .UserID(rs.getInt(2))
+                            .TotalPrice(rs.getInt(3))
+                            .Note(rs.getString(4))
+                            .Status(rs.getInt(5))
+                            .DayBuy(rs.getString(6))
+                            .Shipp(shipping)
+                            .orderStatus(statusOrder)
+                            .build();
+                    list.add(order);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(prepare);
+            closeConnection(conn);
+        }
+        return list;
+    }
+   
 }

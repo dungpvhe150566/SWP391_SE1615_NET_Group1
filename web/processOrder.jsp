@@ -88,19 +88,20 @@
             <%@include file="components/NavbarAdmin.jsp" %>
 
             <div class="container-fluid">
-                <div class="col-lg-2 col-2 text-left">
-                    <form action="ProcessOrders" id="searchByProductName" method="post">
-                        <input  type="hidden" name="do" value="searchByName">
-                        <div class="input-group">
-                            <input  style="border: 3px solid white "  type="text" name="productName" class="form-control" placeholder="Search by name">
-                            <div class="input-group-append">
-                                <span class="input-group-text bg-transparent text-primary">
-                                    <a onclick="document.getElementById('searchByProductName').submit();" ><i class="fa fa-search"></i></a> 
-                                </span>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                <form action="ProcessOrders" class="d-flex mx-auto">
+                <input
+                    class="form-control me-2"
+                    type="search"
+                    placeholder="Search"
+                    aria-label="Search"
+                    name="key"
+                    style=" border: 3px solid #05728f;"
+                    />
+                
+                <button class="btn btn-outline-info" type="submit">
+                    Search
+                </button>
+            </form>
             </div>
             <div class="col-12 tm-block-col">
 
