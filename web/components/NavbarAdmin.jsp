@@ -80,7 +80,7 @@
                     <c:if test="${sessionScope.user==null}">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link d-block" href="">
+                            <a class="nav-link d-block" href="login.jsp">
                                 Admin, <b>Login</b>
                             </a>
                         </li>
