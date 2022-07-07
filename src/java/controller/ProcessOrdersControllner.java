@@ -1,6 +1,5 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+  ProcessOrders
  */
 package controller;
 
@@ -12,6 +11,7 @@ import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,47 +40,34 @@ public class ProcessOrdersControllner extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
             Users account = (Users) request.getSession().getAttribute("account");
-//            List<Product> listProduct = new ProductDAOImpl().getAll();
             int check = NumberHelper.getInt(request.getParameter("check"));
              String keyword = request.getParameter("key");
             List<Orders> listOrderWatting = null;
-//            if (check == 0) {
-//                listOrderWatting = new OrdersDAOImpl().getAllSucces();
-//            } else {
-//                if (check == 1) {
-//                    listOrderWatting = new OrdersDAOImpl().getAllOrderNotAcceptYet();
-//                } else if(check == 2) {
-//                    listOrderWatting = new OrdersDAOImpl().getAllOrderShipping();
-//                } else{
-//                     listOrderWatting = new OrdersDAOImpl().getAllOrderPackaging();
-//                    }
-//            }
              listOrderWatting = new OrdersDAOImpl().search(keyword);
+             // List orders completed
             if (check == 0) {
                 listOrderWatting = new OrdersDAOImpl().getAllSucces();
             }
+            // List orders Waitting
             if (check == 1) {
                 listOrderWatting = new OrdersDAOImpl().getAllOrderNotAcceptYet();
             }
+            // List orders completed
             if (check == 2) {
                 listOrderWatting = new OrdersDAOImpl().getAllOrderShipping();
             }
+            // List orders Packaging
             if (check == 3) {
                 listOrderWatting = new OrdersDAOImpl().getAllOrderPackaging();
             }
-           
-               
-            
-             
-          
-             
             request.setAttribute("key", keyword);
-           
             request.setAttribute("listOrderWatting", listOrderWatting);
             request.setAttribute("check", check);
             request.getRequestDispatcher("processOrder.jsp").forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
+             request.setAttribute("ex", e);
+            RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
+            dispatcher2.forward(request, response);
         }
     }
 
