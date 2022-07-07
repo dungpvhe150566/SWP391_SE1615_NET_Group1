@@ -212,33 +212,6 @@
                         </div>
                     </div>
 
-                    <!--                    <div class="col-12 tm-block-col">
-                                            <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
-                                                <h2 class="tm-block-title">Orders List</h2>
-                                                <table class="table">
-                    <tr>
-                                                        <td>Id</td>
-                                                        <td>UserID</td>
-                                                        <td>TotalPrice</td>
-                                                        <td>Note</td>
-                                                        <td>Status</td>
-                                                        <td>DayBuy</td>
-                                                        <td>Details</td>
-                                                    </tr>
-                    <c:forEach items="${listO}" var="o">
-                        <tr>
-                            <td>${o.ID}</td>
-                            <td>${o.userID}</td>
-                            <td>${o.totalPrice}</td>
-                            <td>${o.note}</td>
-                            <td>${o.status}</td>
-                            <td>${o.dayBuy}</td>
-                            <td><a href="orderdetail?id=${o.ID}">Order Details</a></td>
-                        </tr>
-                    </c:forEach>
-                </table>
-            </div>
-        </div>-->
                 </div>
 
             </div>
