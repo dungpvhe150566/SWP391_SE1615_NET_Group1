@@ -5,8 +5,11 @@
  */
 package controller;
 
+import dao.impl.NotificationsDAOImpl;
+import entity.Notifications;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,7 +37,11 @@ public class MyNotifyContronller extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            NotificationsDAOImpl dao = new NotificationsDAOImpl();
+            ArrayList<Notifications> arrNotifications = dao.getListNotificationByUser(1);
             
+            
+            request.setAttribute("arrNotifications", arrNotifications);
             request.getRequestDispatcher("mynotify.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("ex", e);

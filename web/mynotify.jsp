@@ -182,44 +182,19 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="list-group-item">
-                                    
-                                </li>
-                                <c:forEach items="${arrUserAddress}" var="userAddress">
+                                <c:forEach items="${arrNotifications}" var="userNotify">
                                     <li class="list-group-item">
-                                        <div class="row  mb-3 mt-3">
-                                            <div class="col-md-9">
-                                                <div class="row">
-                                                    <div class="col-md-4 text-right">
-                                                        <span>Name</span>
-                                                    </div>
-                                                    <div class="col-md-8" style="color: black;">${userAddress.getShipName()}</div>
+                                        <span class="row">
+                                            <div class="row col-md-12 my-auto">
+                                                <div class="col-md-2 my-auto">
+                                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="border" width="100%">
                                                 </div>
-                                                <br>
-                                                <div class="row">
-                                                    <div class="col-md-4 text-right">
-                                                        <span>Phone</span>
-                                                    </div>
-                                                    <div class="col-md-8" style="color: black;">${userAddress.getPhoneNum()}</div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4 text-right">
-                                                        <span>Address</span>
-                                                    </div>
-                                                    <div class="col-md-8" style="color: black;">${userAddress.getShipAddress()}</div>
+                                                <div class="col-md-10 pl-0">
+                                                    <span>${userNotify.getContent()}</span>
+                                                    <div>${userNotify.getTime()}</div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 text-right">
-                                                <div>
-                                                    <a onclick="deleteAddress(${userAddress.getID()})" href="#">Delete</a>
-                                                    <a onclick="showFormEdit('${userAddress.getShipName()}', '${userAddress.getPhoneNum()}', '${userAddress.getID()}')" href="#" style="margin-left: 20px">Edit</a>
-                                                </div>
-                                                <br>
-                                                <div>
-                                                    <button type="submit" class="btn btn-secondary">Set Default</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </span>
                                     </li>
                                 </c:forEach>
                             </ul>
@@ -275,69 +250,69 @@
     </style>
 
     <script>
-                                                        function showFormAddress() {
-                                                            document.getElementById('title').innerHTML = "New Addresss";
-                                                            document.getElementById('do').value = "add";
-                                                            document.getElementById('shipName').value = "";
-                                                            document.getElementById('phone').value = "";
-                                                            document.getElementById('form-address').style.display = "block";
-                                                        }
+                                                function showFormAddress() {
+                                                    document.getElementById('title').innerHTML = "New Addresss";
+                                                    document.getElementById('do').value = "add";
+                                                    document.getElementById('shipName').value = "";
+                                                    document.getElementById('phone').value = "";
+                                                    document.getElementById('form-address').style.display = "block";
+                                                }
 
-                                                        function hideFormAddress() {
-                                                            document.getElementById('form-address').style.display = "none";
-                                                        }
+                                                function hideFormAddress() {
+                                                    document.getElementById('form-address').style.display = "none";
+                                                }
 
-                                                        function showAddress() {
-                                                            var iframe = document.getElementById("maps");
-                                                            var input = document.getElementById("address").value;
+                                                function showAddress() {
+                                                    var iframe = document.getElementById("maps");
+                                                    var input = document.getElementById("address").value;
 
-                                                            input = input.replace(" ", "%20");
-                                                            console.log(iframe.src);
-                                                            iframe.src = "https://maps.google.com/maps?width=100%25&height=600&hl=en&q=" + input + "&t=&z=14&ie=UTF8&iwloc=B&output=embed";
-                                                            console.log(iframe.src);
-                                                        }
+                                                    input = input.replace(" ", "%20");
+                                                    console.log(iframe.src);
+                                                    iframe.src = "https://maps.google.com/maps?width=100%25&height=600&hl=en&q=" + input + "&t=&z=14&ie=UTF8&iwloc=B&output=embed";
+                                                    console.log(iframe.src);
+                                                }
 
-                                                        function showFormEdit(name, phone, userAddressID) {
-                                                            document.getElementById('title').innerHTML = "Edit Addresss";
-                                                            document.getElementById('do').value = "edit";
-                                                            document.getElementById('shipName').value = name;
-                                                            document.getElementById('phone').value = phone;
-                                                            document.getElementById('userAddressID').value = userAddressID;
-                                                            document.getElementById('form-address').style.display = "block";
-                                                        }
+                                                function showFormEdit(name, phone, userAddressID) {
+                                                    document.getElementById('title').innerHTML = "Edit Addresss";
+                                                    document.getElementById('do').value = "edit";
+                                                    document.getElementById('shipName').value = name;
+                                                    document.getElementById('phone').value = phone;
+                                                    document.getElementById('userAddressID').value = userAddressID;
+                                                    document.getElementById('form-address').style.display = "block";
+                                                }
 
-                                                        function deleteAddress(addressID) {
-                                                            if (confirm("Are you sure to delete this addess ?")) {
-                                                                window.location.href = "myaddress?do=delete&id=" + addressID;
-                                                            }
-                                                        }
+                                                function deleteAddress(addressID) {
+                                                    if (confirm("Are you sure to delete this addess ?")) {
+                                                        window.location.href = "myaddress?do=delete&id=" + addressID;
+                                                    }
+                                                }
 
-                                                        function validateForm() {
-                                                            var x = document.forms["addressForm"]["shipName"].value;
-                                                            if (x == "") {
-                                                                alert("Name must be filled out");
-                                                                return false;
-                                                            }
-                                                            
-                                                            x = document.forms["addressForm"]["phone"].value;
-                                                            if (x == "") {
-                                                                alert("Phone must be filled out");
-                                                                return false;
-                                                            }
-                                                            
-                                                            x = document.forms["addressForm"]["shipCity"].value;
-                                                            if (x == "-1") {
-                                                                alert("Select a city !");
-                                                                return false;
-                                                            }
-                                                            
-                                                            x = document.forms["addressForm"]["shipAddress"].value;
-                                                            if (x == "") {
-                                                                alert("Address must be filled out");
-                                                                return false;
-                                                            }
-                                                            
-                                                            return true;
-                                                        }
+                                                function validateForm() {
+                                                    var x = document.forms["addressForm"]["shipName"].value;
+                                                    if (x == "") {
+                                                        alert("Name must be filled out");
+                                                        return false;
+                                                    }
+
+                                                    x = document.forms["addressForm"]["phone"].value;
+                                                    if (x == "") {
+                                                        alert("Phone must be filled out");
+                                                        return false;
+                                                    }
+
+                                                    x = document.forms["addressForm"]["shipCity"].value;
+                                                    if (x == "-1") {
+                                                        alert("Select a city !");
+                                                        return false;
+                                                    }
+
+                                                    x = document.forms["addressForm"]["shipAddress"].value;
+                                                    if (x == "") {
+                                                        alert("Address must be filled out");
+                                                        return false;
+                                                    }
+
+                                                    return true;
+                                                }
     </script>
 </html>

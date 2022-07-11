@@ -8,11 +8,22 @@ public class Notifications {
 
     private int OrderID;
 
-    private char content;
+    private String content;
 
-    private char status;
+    private String status;
 
-    private char time;
+    private String time;
+
+    public Notifications(int ID, int UserID, int OrderID, String content, String status, String time) {
+        this.ID = ID;
+        this.UserID = UserID;
+        this.OrderID = OrderID;
+        this.content = content;
+        this.status = status;
+        this.time = time;
+    }
+    
+    
 
     public int getID() {
         return ID;
@@ -38,27 +49,27 @@ public class Notifications {
         this.OrderID = OrderID;
     }
 
-    public char getContent() {
+    public String getContent() {
         return content;
     }
 
-    public void setContent(char content) {
+    public void setContent(String content) {
         this.content = content;
     }
 
-    public char getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(char status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public char getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(char time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
