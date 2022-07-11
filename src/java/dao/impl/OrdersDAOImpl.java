@@ -220,14 +220,13 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO {
         return 0;
     }
 
-    public int getTotalOrder(String id) {
-        String query = "select count(*) from Orders where UserID = ?";
+    public int getTotalOrder() {
+        String query = "select count(*) from Orders";
         Connection conn = null;
         PreparedStatement prepare = null;
         try {
             conn = getConnection();
             prepare = conn.prepareStatement(query);
-            prepare.setString(1, id);
             ResultSet rs = prepare.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
@@ -238,17 +237,16 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO {
         return 0;
     }
 
-    public List<Orders> pagingOrders(String id, int index) {
+    public List<Orders> pagingOrders(int index) {
         List<Orders> list = new ArrayList<>();
-        String query = "select * from Orders where UserID = ? order by ID  offset ?  rows fetch next 5 rows only";
+        String query = "select * from Orders order by ID  offset ?  rows fetch next 5 rows only";
         Connection conn = null;
         PreparedStatement prepare = null;
 
         try {
             conn = getConnection();
             prepare = conn.prepareStatement(query);
-            prepare.setString(1, id);
-            prepare.setInt(2, (index - 1) * 6);
+            prepare.setInt(1, (index - 1) * 6);
             ResultSet rs = prepare.executeQuery();
             while (rs.next()) {
                 Orders O = new Orders();
@@ -265,13 +263,8 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO {
         return list;
     }
 
-//    public static void main(String[] args) {
-//        OrdersDAOImpl dao = new OrdersDAOImpl();
-//        List<Orders> listO = dao.pagingOrders("7", 1);
-//        for (Orders orders : listO) {
-//            System.out.println(orders);
-//        }
-//    }
+
+
     public double calRevenueInMonth(int month) throws Exception {
         Connection conn = null;
         PreparedStatement prepare = null;
@@ -359,13 +352,8 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO {
 
     public static void main(String[] args) {
         OrdersDAOImpl ott = new OrdersDAOImpl();
-        try {
-            String s = "Dam";
-            List<Orders> listO = ott.search(s);
-            System.out.println(listO);
-        } catch (Exception ex) {
-            Logger.getLogger(OrdersDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        int num = ott.getTotalOrder();
+        System.out.println(num);
 
     }
 

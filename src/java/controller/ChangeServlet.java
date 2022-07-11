@@ -5,8 +5,7 @@
  */
 package controller;
 
-import dao.impl.UserAddressDAOImpl;
-import entity.Users;
+import dao.impl.UsersDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -15,13 +14,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import entity.Users;
 
 /**
  *
  * @author HP
  */
-@WebServlet(name = "EditProfieController", urlPatterns = {"/editprofile"})
-public class EditProfileController extends HttpServlet {
+@WebServlet(name = "ChangeServlet", urlPatterns = {"/change"})
+public class ChangeServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +40,10 @@ public class EditProfileController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProfieController</title>");            
+            out.println("<title>Servlet ChangeServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditProfieController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangeServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,18 +61,7 @@ public class EditProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String email = request.getParameter("email");
-            String name = request.getParameter("name");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            String image = request.getParameter("image");
-            if(image==null || image==""){
-                image="AccountIcon.jpg";
-            }
-            String id = request.getParameter("id");
-            UserAddressDAOImpl dao = new UserAddressDAOImpl();
-            dao.edit(image, name, email, phone, address, id);
-            response.sendRedirect("profile");
+        response.sendRedirect("change.jsp");
     }
 
     /**
@@ -86,7 +75,24 @@ public class EditProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+            HttpSession session = request.getSession();
+            String pass = request.getParameter("opass");
+            String npass = request.getParameter("npass");
+            String cpass = request.getParameter("cpass");
+            Users U = (Users)session.getAttribute("user");
+            if(!U.getPassword().equalsIgnoreCase(pass)){
+                String alert = "You enter the wrong password";
+                request.setAttribute("err", alert);
+                request.getRequestDispatcher("change.jsp").forward(request, response);
+            }
+            if(!npass.equalsIgnoreCase(cpass)){
+                String alert = "Your confirm password is wrong";
+                request.setAttribute("err", alert);
+                request.getRequestDispatcher("change.jsp").forward(request, response);
+            }
+            UsersDAOImpl dao = new UsersDAOImpl();
+            dao.resetPassword(npass, U.getEmail());
+            request.getRequestDispatcher("login.jsp").forward(request, response);
     }
 
     /**

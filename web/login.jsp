@@ -58,7 +58,7 @@
                     <p style="color: red">${alert}</p>
                     <input type="email" placeholder="Email" name="email"/>
                     <input type="password" placeholder="Password" name="password" />
-                    <a href="#">Forgot your password?</a>
+                    <a href="reset.jsp">Forgot your password?</a>
                     <button type="submit">Sign In</button>
                 </form>
             </div>

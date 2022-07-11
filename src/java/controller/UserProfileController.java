@@ -69,7 +69,7 @@ public class UserProfileController extends HttpServlet {
             UserAddressDAOImpl dao = new UserAddressDAOImpl();
             UserAddress currentU = dao.getAll(id);
             request.setAttribute("U", currentU);
-            request.getRequestDispatcher("userprofile.jsp").forward(request, response);
+            request.getRequestDispatcher("myprofile.jsp").forward(request, response);
     }
 
     /**

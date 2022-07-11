@@ -48,7 +48,7 @@ public class SendEmail {
             message.setFrom(new InternetAddress(account));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(infor));
             message.setSubject("Email Verification");
-            message.setText("Thank you for using our service click here to start \nhttp://localhost:8080/confirm.jsp");
+            message.setText("Thank you for using our service click here to change your pass \nhttp://localhost:8080/confirm_reset.jsp");
             return message;           
         } catch (MessagingException ex) {
             Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);

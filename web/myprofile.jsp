@@ -123,11 +123,10 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="d-flex flex-column align-items-center text-center">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150">
+                                        <img src="image/${U.image}" alt="Admin" class="rounded-circle" width="150">
                                         <div class="mt-3">
                                             <h4>${user.getUsername()}</h4>
-                                            <p class="text-secondary mb-1">Full Stack Developer</p>
-                                            <p class="text-muted font-size-sm">Bay Area, San Francisco, CA</p>
+                                            <p class="text-muted font-size-sm">${U.shipAddress}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -159,7 +158,7 @@
                                             <div class="col-md-3">
                                                 <i class="fas fa-clipboard-list" style="color: black"></i>
                                             </div>
-                                            <div class="col-md-9" onclick="window.location.href = 'myorder'">
+                                            <div class="col-md-9" onclick="window.location.href = 'order'">
                                                 <h6 class="mb-0">My Orders</h6>
                                             </div>
                                         </div>
@@ -169,7 +168,7 @@
                         </div>
 
                         <div class="col-md-9 mb-3">
-                            <form>
+                            <form action="editprofile">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <div class="row">
@@ -185,58 +184,61 @@
 
                                     <li class="list-group-item">
                                         <div class="row  mb-3 mt-3">
-                                            <div class="col-md-8">
-                                                <div class="row">
-                                                    <div class="col-md-4 text-right">
-                                                        <span>User name</span>
-                                                    </div>
-                                                    <div class="col-md-8" style="color: black;">nguyenthegiang</div>
+
+
+                                            <div class="row mt-3">
+                                                <div class="col-md-4 text-right my-auto">
+                                                    <span>User Name</span>
                                                 </div>
-                                                <div class="row mt-3">
-                                                    <div class="col-md-4 text-right my-auto">
-                                                        <span>Email</span>
-                                                    </div>
-                                                    <div class="col-md-8" style="color: black;">
-                                                        <input class="form-control" type="email" name="email">
-                                                    </div>
-                                                </div>
-                                                <div class="row mt-3">
-                                                    <div class="col-md-4 text-right my-auto">
-                                                        <span>Active Code</span>
-                                                    </div>
-                                                    <div class="col-md-8" style="color: black;">
-                                                        <input class="form-control" type="text" name="activecode">
-                                                    </div>
-                                                </div>
-                                                <!-- Add more information here!-->
-                                                <div class="row mt-3">
-                                                    <div class="col-md-4 text-right my-auto">
-                                                    </div>
-                                                    <div class="col-md-8" style="color: black;">
-                                                        <button type="submit" class="btn btn-primary">Save</button>
-                                                    </div>
+                                                <div class="col-md-8" style="color: black;">
+                                                    <input class="form-control" type="text" pattern="[A-Za-z\d\.}]{6,12}" title="Username must bettween 6-12 character,contains only letters,numbers" name="name" value="${U.shipName}">
+                                                    <input class="form-control" type="text" name="id" value="${U.userID}" hidden="">
                                                 </div>
                                             </div>
-
+                                            <div class="row mt-3">
+                                                <div class="col-md-4 text-right my-auto">
+                                                    <span>Phone Number</span>
+                                                </div>
+                                                <div class="col-md-8" style="color: black;">
+                                                    <input class="form-control" type="text" pattern="(?=0{1})[0-9]{10}$" title="PhoneNumber must start with 0,only numbers"  name="phone" value="${U.phoneNum}">
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-md-4 text-right my-auto">
+                                                    <span>User Address</span>
+                                                </div>
+                                                <div class="col-md-8" style="color: black;">
+                                                    <input class="form-control" type="text" name="address" value="${U.shipAddress}">
+                                                </div>
+                                            </div>
+                                            <div class="row mt-3">
+                                                <div class="col-md-4 text-right my-auto">
+                                                    <span>Email</span>
+                                                </div>
+                                                <div class="col-md-8" style="color: black;">
+                                                    <input class="form-control" type="email" name="email" value="${U.email}" >
+                                                </div>
+                                            </div>
+                                            <!-- Add more information here!-->
+                                            <div class="row mt-3">
+                                                <div class="col-md-8" style="color: black;">
+                                                    
+                                                    <button type="submit" class="btn btn-primary">Save</button>
+                                                </div>
+                                            </div>
                                             <div class="col-md-4 border-left my-auto">
                                                 <div class="form-group">
                                                     <div class="tm-product-img-dummy mx-auto">
                                                         <img
-                                                            src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                                                            src="image/${U.image}"
                                                             id="previewImage"
                                                             style="max-height: 100%; width: 100%;"
                                                             >
                                                     </div>
-                                                </div>
-
-                                                <div class="custom-file mt-1 mb-3">
-                                                    <input name="fileInput" id="fileInput" type="file" onchange="showPreview(event)" style="display:none;" />
-                                                    <input
-                                                        type="button"
-                                                        class="btn btn-primary btn-block mx-auto btn-sm"
-                                                        value="UPLOAD IMAGE"
-                                                        onclick="document.getElementById('fileInput').click();"
-                                                        />
+                                                    <div class="custom-file mt-1 mb-3">
+                                                        <input class="btn btn-primary btn-block mx-auto btn-sm" type="file" name="image"  accept="imgs/*" src="image/${U.image}"/>
+                                                    </div>
+                                                    <a href="change.jsp">Change your password</a>
                                                 </div>
                                             </div>
                                         </div>

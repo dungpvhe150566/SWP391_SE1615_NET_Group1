@@ -5,10 +5,14 @@
  */
 package controller;
 
-import dao.impl.UserAddressDAOImpl;
+import dao.impl.OrdersDAOImpl;
+import entity.Orders;
 import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -20,8 +24,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author HP
  */
-@WebServlet(name = "EditProfieController", urlPatterns = {"/editprofile"})
-public class EditProfileController extends HttpServlet {
+@WebServlet(name = "OrderServlet", urlPatterns = {"/order"})
+public class OrderServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +44,10 @@ public class EditProfileController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProfieController</title>");            
+            out.println("<title>Servlet OrderServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditProfieController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet OrderServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,18 +65,23 @@ public class EditProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String email = request.getParameter("email");
-            String name = request.getParameter("name");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            String image = request.getParameter("image");
-            if(image==null || image==""){
-                image="AccountIcon.jpg";
+         HttpSession session = request.getSession();
+            OrdersDAOImpl dao = new OrdersDAOImpl();
+            String indexPage = request.getParameter("index");
+            if (indexPage == null) {
+                indexPage = "1";
             }
-            String id = request.getParameter("id");
-            UserAddressDAOImpl dao = new UserAddressDAOImpl();
-            dao.edit(image, name, email, phone, address, id);
-            response.sendRedirect("profile");
+            int index = Integer.parseInt(indexPage);
+            int num = dao.getTotalOrder();
+            int endPage = num / 6;
+            if (num % 6 != 0) {
+                endPage++;
+            }
+            List<Orders> listO = dao.pagingOrders(index);
+            request.setAttribute("tag", index);
+            request.setAttribute("endP", endPage);
+            request.setAttribute("listO", listO);
+           request.getRequestDispatcher("allorder.jsp").forward(request, response);
     }
 
     /**

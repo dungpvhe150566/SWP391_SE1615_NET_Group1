@@ -5,23 +5,29 @@
  */
 package controller;
 
-import dao.impl.UserAddressDAOImpl;
-import entity.Users;
+import dao.impl.UsersDAOImpl;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.mail.MessagingException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import entity.SendEmail;
+import entity.Users;
 
 /**
  *
  * @author HP
  */
-@WebServlet(name = "EditProfieController", urlPatterns = {"/editprofile"})
-public class EditProfileController extends HttpServlet {
+@WebServlet(name = "ResetServlet", urlPatterns = {"/reset"})
+public class ResetServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +46,10 @@ public class EditProfileController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet EditProfieController</title>");            
+            out.println("<title>Servlet ResetServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet EditProfieController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ResetServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,18 +67,28 @@ public class EditProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
             String email = request.getParameter("email");
-            String name = request.getParameter("name");
-            String address = request.getParameter("address");
-            String phone = request.getParameter("phone");
-            String image = request.getParameter("image");
-            if(image==null || image==""){
-                image="AccountIcon.jpg";
+            UsersDAOImpl dao = new UsersDAOImpl();
+            List<Users> list = dao.getAll();
+            for (Users users : list) {
+                if (users.getEmail().equalsIgnoreCase(email)) {
+                    try {
+                        SendEmail SE = new SendEmail();
+                        SE.sendEmail(email);
+                        HttpSession session = request.getSession();
+                        session.setAttribute("email", email);
+                        request.getRequestDispatcher("thankyou.jsp").forward(request, response);
+                    } catch (MessagingException ex) {
+                    }
+                }
             }
-            String id = request.getParameter("id");
-            UserAddressDAOImpl dao = new UserAddressDAOImpl();
-            dao.edit(image, name, email, phone, address, id);
-            response.sendRedirect("profile");
+            String text = "Your email doesn't exits";
+            request.setAttribute("alert", text);
+            request.getRequestDispatcher("reset.jsp").forward(request, response);
+        } catch (Exception ex) {
+            Logger.getLogger(ResetServlet.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -86,7 +102,19 @@ public class EditProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String password = request.getParameter("password");
+        String repassword = request.getParameter("repassword");
+        if (!password.equalsIgnoreCase(repassword)) {
+            String alert = "The password and repassword doesn't match";
+            request.setAttribute("alert", alert);
+            request.getRequestDispatcher("confirm_reset.jsp").forward(request, response);
+        } else {
+            HttpSession session = request.getSession();
+            String email = (String) session.getAttribute("email");
+            UsersDAOImpl dao = new UsersDAOImpl();
+            dao.resetPassword(password, email);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
+        }
     }
 
     /**

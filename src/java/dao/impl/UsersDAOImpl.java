@@ -55,6 +55,20 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         }
         return list;
     }
+    public void resetPassword(String pass,String email){
+        String sql = "update [Users] set Password = ? where email = ?";
+        Connection conn = null;
+        PreparedStatement prepare = null;
+        try {
+            conn = getConnection();
+            prepare = conn.prepareStatement(sql);
+            prepare.setString(1, pass);
+            prepare.setString(2, email);
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     public ArrayList<Users> searchAccountInManager(String name, int start, int end) {
         ArrayList<Users> list = new ArrayList<>();
