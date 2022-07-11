@@ -20,6 +20,14 @@ public class UserAddress {
 
     public UserAddress() {
     }
+
+    public UserAddress(int UserID, String ShipName, String ShipAddress, int ShipCityID, String PhoneNum) {
+        this.UserID = UserID;
+        this.ShipName = ShipName;
+        this.ShipAddress = ShipAddress;
+        this.ShipCityID = ShipCityID;
+        this.PhoneNum = PhoneNum;
+    }
     
     
 

@@ -20,13 +20,13 @@ import java.util.logging.Logger;
  *
  * @author Pham Van Trong
  */
-public class ShipDAOImpl extends DBContext implements ShipDAO{
-     
-     public List<Ship> getAllShips() throws Exception{
+public class ShipDAOImpl extends DBContext implements ShipDAO {
+
+    public List<Ship> getAllShips() throws Exception {
         List<Ship> list = new ArrayList<>();
         try {
             String sql = "select * from Ship";
-            Connection conn  = getConnection();
+            Connection conn = getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -38,20 +38,19 @@ public class ShipDAOImpl extends DBContext implements ShipDAO{
                 list.add(product);
             }
         } catch (Exception ex) {
-           ex.printStackTrace();
+            ex.printStackTrace();
         }
         return list;
     }
-    
-     
-      public List<Ship> getPricebyIDShips(int Shipid) throws Exception{
+
+    public List<Ship> getPricebyIDShips(int Shipid) throws Exception {
         List<Ship> list = new ArrayList<>();
-        Connection conn =null;
-            PreparedStatement preparedStatement =null;
-            ResultSet rs=null;
+        Connection conn = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
         try {
             String sql = "select * from Ship where id = ?";
-           
+
             preparedStatement = conn.prepareStatement(sql);
             preparedStatement.setInt(1, Shipid);
             rs = preparedStatement.executeQuery();
@@ -65,24 +64,25 @@ public class ShipDAOImpl extends DBContext implements ShipDAO{
             }
         } catch (Exception ex) {
             throw ex;
-        }finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(preparedStatement);
             closeConnection(conn);
         }
         return list;
     }
-        public static void main(String[] args) {
+
+    public static void main(String[] args) {
         // insert 
-       ShipDAOImpl er = new ShipDAOImpl();
-        
-         try {
-             //        String sql = "select * from Suppliers";
-             er.getAllShips();
-         } catch (Exception ex) {
-             Logger.getLogger(ShipDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
-         }
-        
+        ShipDAOImpl er = new ShipDAOImpl();
+
+        try {
+            //        String sql = "select * from Suppliers";
+            er.getAllShips();
+        } catch (Exception ex) {
+            Logger.getLogger(ShipDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
-      
+
 }

@@ -106,7 +106,7 @@ public class MyOrderByAjax extends HttpServlet {
                             + "                                    <div class=\"text-right\">\n"
                             + "                                        <div class=\"btn-group mb-3 mt-2\" role=\"group\" aria-label=\"Basic example\">\n"
                             + "                                            <button type=\"button\" class=\"btn btn-secondary btn-lg mr-3\">Feedback</button>\n"
-                            + "                                            <button type=\"button\" class=\"btn btn-secondary btn-lg mr-3\">Buy Again</button>\n"
+                            + "                                            <button type=\"button\" class=\"btn btn-primary btn-lg mr-3\">Buy Again</button>\n"
                             + "                                        </div>\n"
                             + "                                    </div>\n"
                             + "                                </div>\n";

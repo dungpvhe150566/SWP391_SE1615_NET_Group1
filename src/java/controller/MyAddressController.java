@@ -1,11 +1,14 @@
 package controller;
 
+import dao.impl.ShipDAOImpl;
 import dao.impl.UserAddressDAOImpl;
+import entity.Ship;
 import entity.UserAddress;
 import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -32,17 +35,47 @@ public class MyAddressController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         try {
+            String service = request.getParameter("do");
             UserAddressDAOImpl userAddressDAO = new UserAddressDAOImpl();
-            
+            ShipDAOImpl shipDAO = new ShipDAOImpl();
+
             Users user = (Users) request.getSession().getAttribute("user");
             if (user == null) {
                 throw new Exception("Please login first");
             }
             int userID = user.getUserID();
+
+            if (service != null && service.equals("add")) {
+                String shipName = request.getParameter("shipName");
+                String shipAddress = request.getParameter("shipAddress");
+                int shipCity = Integer.parseInt(request.getParameter("shipCity"));
+                String phoneNumber = request.getParameter("phone");
+
+                userAddressDAO.addUserAddress(new UserAddress(userID, shipName, shipAddress, shipCity, phoneNumber));
+            }
             
+            if (service != null && service.equals("delete")) {
+                int userAddressID = Integer.parseInt(request.getParameter("id"));
+                
+                userAddressDAO.deleteUserAddress(userAddressID);
+            }
+            
+            if (service != null && service.equals("edit")) {
+                int userAddressID = Integer.parseInt(request.getParameter("userAddressID"));
+                String shipName = request.getParameter("shipName");
+                String shipAddress = request.getParameter("shipAddress");
+                int shipCity = Integer.parseInt(request.getParameter("shipCity"));
+                String phoneNumber = request.getParameter("phone");
+                
+                userAddressDAO.editUserAddress(new UserAddress(userAddressID, userID, shipName, shipAddress, shipCity, phoneNumber));
+            }
+
             ArrayList<UserAddress> arrUserAddress = userAddressDAO.getUserAddressListByUserID(userID);
-            
+            List<Ship> arrShip = shipDAO.getAllShips();
+
+            request.setAttribute("arrShip", arrShip);
             request.setAttribute("arrUserAddress", arrUserAddress);
             request.getRequestDispatcher("myaddress.jsp").forward(request, response);
         } catch (Exception e) {

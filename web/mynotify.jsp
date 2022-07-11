@@ -1,5 +1,5 @@
 <%-- 
-    Document   : My Order
+    Document   : userprofile
     Created on : Jun 14, 2022, 9:01:16 PM
     Author     : Dung
 --%>
@@ -7,9 +7,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"> 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -24,7 +26,10 @@
         <link href="css/style.css" rel="stylesheet">
         <!-- fontawesome.com -->
         <script src="https://kit.fontawesome.com/bdc207907f.js" crossorigin="anonymous"></script>
+
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB8xJ9PxnU_GzDixMc-om06stZUsDSiTSw&sensor=true&callback=initMap" async defer></script>
     <body>
+
         <!-- Topbar Start -->
         <div class="container-fluid">
             <div class="row bg-secondary py-2 px-xl-5">
@@ -144,7 +149,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap active">
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <i class="fas fa-address-book" style="color: black"></i>
@@ -154,7 +159,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap active">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <i class="fas fa-clipboard-list" style="color: black"></i>
@@ -168,82 +173,56 @@
                             </div>
                         </div>
 
-                        <div class="col-md-9">
-                            <ul class="mb-3 nav nav-tabs justify-content-center nav-pills nav-fill" style="background-color: #ffffff;">
-                                <li class="nav-item" style="width: 14%">
-                                    <a href="myorder?page=${page}&status=0&date=${date}" class="nav-link ${statusID == 0 ? "active":""}">All</a>
+                        <div class="col-md-9 mb-3">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-md-9 my-auto">
+                                            <h5 class="mb-0">My Notify</h5>
+                                        </div>
+                                    </div>
                                 </li>
-                                <c:forEach items="${vecOrderStatus}" var="status">
-                                    <li class="nav-item">
-                                        <a href="myorder?page=${page}&status=${status.getID()}&date=${date}" class="nav-link ${status.getID() == statusID ? "active":""}">${status.getName()}</a>
+                                <li class="list-group-item">
+                                    
+                                </li>
+                                <c:forEach items="${arrUserAddress}" var="userAddress">
+                                    <li class="list-group-item">
+                                        <div class="row  mb-3 mt-3">
+                                            <div class="col-md-9">
+                                                <div class="row">
+                                                    <div class="col-md-4 text-right">
+                                                        <span>Name</span>
+                                                    </div>
+                                                    <div class="col-md-8" style="color: black;">${userAddress.getShipName()}</div>
+                                                </div>
+                                                <br>
+                                                <div class="row">
+                                                    <div class="col-md-4 text-right">
+                                                        <span>Phone</span>
+                                                    </div>
+                                                    <div class="col-md-8" style="color: black;">${userAddress.getPhoneNum()}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4 text-right">
+                                                        <span>Address</span>
+                                                    </div>
+                                                    <div class="col-md-8" style="color: black;">${userAddress.getShipAddress()}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 text-right">
+                                                <div>
+                                                    <a onclick="deleteAddress(${userAddress.getID()})" href="#">Delete</a>
+                                                    <a onclick="showFormEdit('${userAddress.getShipName()}', '${userAddress.getPhoneNum()}', '${userAddress.getID()}')" href="#" style="margin-left: 20px">Edit</a>
+                                                </div>
+                                                <br>
+                                                <div>
+                                                    <button type="submit" class="btn btn-secondary">Set Default</button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </li>
                                 </c:forEach>
                             </ul>
-
-                            <c:if test="${statusID == 0}">
-                                <div class="input-group mb-3">
-                                    <input type="text" name="productName" class="form-control" placeholder="${productName!=null? productName:' Search by name'}">
-                                    <div class="input-group-append">
-                                        <span class="input-group-text text-primary">
-                                            <a><i class="fa fa-search"></i></a> 
-                                        </span>
-                                    </div>
-                                </div>
-                            </c:if>
-                                
-                            <c:if test="${fn:length(vecOrder) == 0}">
-                                <div class="row ml-0" style="background-color: #ffffff; width: 100%; height:85%">
-                                    <div class="my-auto mx-auto" style="height: 25%">
-                                        <img src="image/Other/order.png" alt="order" style="max-height:100%; max-width:100%;">
-                                        <div class="text-center">
-                                            <span>No orders yet</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <div id="orderList"> 
-                                <c:forEach items="${vecOrder}" var="order">
-                                    <div class="pb-1" style="background-color: #ffffff">
-                                        <ul class="list-group list-group-flush ml-2 mr-2">
-                                            <li class="list-group-item">
-                                                <p class="my-auto">${vecOrderStatus[order.getStatus()-1].getName()}</p>
-                                            </li>
-                                            <c:forEach items="${order.getOrderDetail()}" var="orderDetail">
-                                                <li class="list-group-item">
-                                                    <span class="row">
-                                                        <div class="row col-md-11 my-auto">
-                                                            <div class="col-md-2 my-auto">
-                                                                <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="border" width="100%">
-                                                            </div>
-                                                            <div class="col-md-10 pl-0">
-                                                                <span>${orderDetail.getProductName()}</span>
-                                                                <div>x${orderDetail.getQuantity()}</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-1 my-auto">
-                                                            <span class="">${orderDetail.getProductPrice()}</span>
-                                                        </div>
-                                                    </span>
-                                                </li>
-                                            </c:forEach>
-                                        </ul>
-                                    </div>
-                                    <div class="rounded-top border-top mb-3" style="background-color: #fffefb">
-                                        <div class="text-right mt-3 mb-3">
-                                            <span class="mr-3">Total Price: d ${order.getTotalPrice()}</span>
-                                        </div>
-                                        <div class="text-right">
-                                            <div class="btn-group mb-3 mt-2" role="group" aria-label="Basic example">
-                                                <button type="button" class="btn btn-secondary btn-lg mr-3">Feedback</button>
-                                                <button type="button" class="btn btn-primary btn-lg mr-3">Buy Again</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </c:forEach>
-
-                                <input id="statusID" type="hidden" value="${statusID}">
-                            </div>
-                            <div id="lds-ellipsis" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
                         </div>
                     </div>
                 </div>
@@ -264,102 +243,101 @@
     <script src="js/main.js"></script>
 
     <style>
-        .lds-ellipsis {
+        #form-address {
             display: none;
-            position: relative;
-            margin-left: 45%;
-            width: 80px;
-            height: 80px;
         }
-        .lds-ellipsis div {
-            position: absolute;
-            top: 33px;
-            width: 13px;
-            height: 13px;
-            border-radius: 50%;
-            background: #d19c97;
-            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        .layer-gray {
+            display: block;
+            z-index: 1000;
+            position: fixed;
+            background-color: gray;
+            opacity: 0.5;
+            min-height: 100vh;
         }
-        .lds-ellipsis div:nth-child(1) {
-            left: 8px;
-            animation: lds-ellipsis1 0.6s infinite;
+
+        .addAddress {
+            display: inline-block;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            z-index: 1001;
+            box-sizing: border-box;
+            border-radius: 3px;
+            background-color: #fff;
         }
-        .lds-ellipsis div:nth-child(2) {
-            left: 8px;
-            animation: lds-ellipsis2 0.6s infinite;
-        }
-        .lds-ellipsis div:nth-child(3) {
-            left: 32px;
-            animation: lds-ellipsis2 0.6s infinite;
-        }
-        .lds-ellipsis div:nth-child(4) {
-            left: 56px;
-            animation: lds-ellipsis3 0.6s infinite;
-        }
-        @keyframes lds-ellipsis1 {
-            0% {
-                transform: scale(0);
-            }
-            100% {
-                transform: scale(1);
-            }
-        }
-        @keyframes lds-ellipsis3 {
-            0% {
-                transform: scale(1);
-            }
-            100% {
-                transform: scale(0);
-            }
-        }
-        @keyframes lds-ellipsis2 {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(24px, 0);
-            }
+
+        .addAddress .row {
+            margin-left: 20px;
+            margin-right: 20px;
         }
     </style>
 
     <script>
-                                        var isLoading = true;
+                                                        function showFormAddress() {
+                                                            document.getElementById('title').innerHTML = "New Addresss";
+                                                            document.getElementById('do').value = "add";
+                                                            document.getElementById('shipName').value = "";
+                                                            document.getElementById('phone').value = "";
+                                                            document.getElementById('form-address').style.display = "block";
+                                                        }
 
-                                        function selectPage(page) {
-                                            window.location.href = "myorder?page=" + page;
-                                        }
+                                                        function hideFormAddress() {
+                                                            document.getElementById('form-address').style.display = "none";
+                                                        }
 
-                                        function search(sortBy, page, status) {
-                                            var date = document.getElementById('date').value;
-                                            window.location.href = "myorder?page=" + page + "&status=" + status + "&sortby=" + sortBy + "&date=" + date;
-                                        }
+                                                        function showAddress() {
+                                                            var iframe = document.getElementById("maps");
+                                                            var input = document.getElementById("address").value;
 
-                                        function loadData() {
-                                            document.getElementById('lds-ellipsis').style.display = "none";
-                                            var statusID = document.getElementById('statusID').value;
-                                            $.ajax({
-                                                type: "GET",
-                                                url: "Update/myorder",
-                                                data: {
-                                                    isAjax: "1",
-                                                    status: statusID
-                                                },
-                                                success: function (responseText) {
-                                                    var row = document.getElementById('orderList');
-                                                    if (responseText.length <= 0)
-                                                        isLoading = false;
-                                                    row.innerHTML += responseText;
-                                                }
-                                            });
-                                        }
+                                                            input = input.replace(" ", "%20");
+                                                            console.log(iframe.src);
+                                                            iframe.src = "https://maps.google.com/maps?width=100%25&height=600&hl=en&q=" + input + "&t=&z=14&ie=UTF8&iwloc=B&output=embed";
+                                                            console.log(iframe.src);
+                                                        }
 
-                                        window.onscroll = function (ev) {
-                                            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                                                if (isLoading) {
-                                                    document.getElementById("lds-ellipsis").style.display = "inline-block";
-                                                    setTimeout(loadData, 1000);
-                                                }
-                                            }
-                                        };
+                                                        function showFormEdit(name, phone, userAddressID) {
+                                                            document.getElementById('title').innerHTML = "Edit Addresss";
+                                                            document.getElementById('do').value = "edit";
+                                                            document.getElementById('shipName').value = name;
+                                                            document.getElementById('phone').value = phone;
+                                                            document.getElementById('userAddressID').value = userAddressID;
+                                                            document.getElementById('form-address').style.display = "block";
+                                                        }
+
+                                                        function deleteAddress(addressID) {
+                                                            if (confirm("Are you sure to delete this addess ?")) {
+                                                                window.location.href = "myaddress?do=delete&id=" + addressID;
+                                                            }
+                                                        }
+
+                                                        function validateForm() {
+                                                            var x = document.forms["addressForm"]["shipName"].value;
+                                                            if (x == "") {
+                                                                alert("Name must be filled out");
+                                                                return false;
+                                                            }
+                                                            
+                                                            x = document.forms["addressForm"]["phone"].value;
+                                                            if (x == "") {
+                                                                alert("Phone must be filled out");
+                                                                return false;
+                                                            }
+                                                            
+                                                            x = document.forms["addressForm"]["shipCity"].value;
+                                                            if (x == "-1") {
+                                                                alert("Select a city !");
+                                                                return false;
+                                                            }
+                                                            
+                                                            x = document.forms["addressForm"]["shipAddress"].value;
+                                                            if (x == "") {
+                                                                alert("Address must be filled out");
+                                                                return false;
+                                                            }
+                                                            
+                                                            return true;
+                                                        }
     </script>
 </html>

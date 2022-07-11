@@ -11,6 +11,8 @@ import entity.UserAddress;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
  *
  * @author viet
  */
-public class UserAddressDAOImpl extends DBContext implements UserAddressDAO{
+public class UserAddressDAOImpl extends DBContext implements UserAddressDAO {
 
     public UserAddress getAll(String id) { //Get user data in the database
         String sql = "select * from UserAddress UA full outer join Users U on UA.UserID = U.UserID where U.UserID = ?";
@@ -54,7 +56,7 @@ public class UserAddressDAOImpl extends DBContext implements UserAddressDAO{
         Connection conn = null;
         PreparedStatement prepare = null;
         PreparedStatement prepare1 = null;
-        try {        
+        try {
             conn = getConnection();
             prepare = conn.prepareStatement(sql);
             prepare.setString(1, email);
@@ -71,6 +73,7 @@ public class UserAddressDAOImpl extends DBContext implements UserAddressDAO{
             System.out.println(E);
         }
     }
+
     public static void main(String[] args) {
         UserAddressDAOImpl dao = new UserAddressDAOImpl();
 //        dao.edit("lg.png","Nguyen Viet","nviet0139@gmail.com","0349175696","Ha Noi","10");
@@ -109,10 +112,10 @@ public class UserAddressDAOImpl extends DBContext implements UserAddressDAO{
             closeConnection(connection);
         }
     }
-    
+
     @Override
     public ArrayList<UserAddress> getUserAddressListByUserID(int userID) throws Exception {
-        String query = "SELECT * FROM UserAddress WHERE UserID = " + userID;
+        String query = "SELECT * FROM UserAddress WHERE UserID = " + userID + " Order By ID DESC";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
@@ -140,5 +143,93 @@ public class UserAddressDAOImpl extends DBContext implements UserAddressDAO{
             closePrepareStatement(preparedStatement);
             closeConnection(connection);
         }
+    }
+
+    @Override
+    public int addUserAddress(UserAddress userAddress) throws Exception {
+        int n = 0;
+        String preSql = "INSERT INTO [UserAddress]\n"
+                + "           ([UserID]\n"
+                + "           ,[ShipName]\n"
+                + "           ,[ShipAddress]\n"
+                + "           ,[ShipCityID]\n"
+                + "           ,[PhoneNum])\n"
+                + "     VALUES\n"
+                + "           (?,?,?,?,?)";
+
+        Connection conn = null;
+        PreparedStatement prepare = null;
+        try {
+
+            conn = getConnection();
+            prepare = conn.prepareStatement(preSql);
+
+            prepare.setInt(1, userAddress.getUserID());
+            prepare.setString(2, userAddress.getShipName());
+            prepare.setString(3, userAddress.getShipAddress());
+            prepare.setInt(4, userAddress.getShipCityID());
+            prepare.setString(5, userAddress.getPhoneNum());
+
+            n = prepare.executeUpdate();
+
+//            n = pre.executeUpdate();
+        } finally {
+            closePrepareStatement(prepare);
+            closeConnection(conn);
+        }
+
+        return n;
+    }
+
+    @Override
+    public int deleteUserAddress(int userAddressID) throws Exception {
+        int n = 0;
+        String sql = "DELETE FROM [ElectronicShop].[dbo].[UserAddress]\n"
+                + "      WHERE ID = " + userAddressID;
+
+        try {
+            Statement state = getConnection().createStatement();
+
+            n = state.executeUpdate(sql);
+        } catch (SQLException ex) {
+            throw ex;
+        }
+        return n;
+    }
+
+    @Override
+    public int editUserAddress(UserAddress userAddress) throws Exception{
+        int n = 0;
+        String preSql = "UPDATE [ElectronicShop].[dbo].[UserAddress]\n"
+                + "   SET [UserID] = ?\n"
+                + "      ,[ShipName] = ?\n"
+                + "      ,[ShipAddress] = ?\n"
+                + "      ,[ShipCityID] = ?\n"
+                + "      ,[PhoneNum] = ?\n"
+                + " WHERE ID = ?";
+
+        Connection conn = null;
+        PreparedStatement pre = null;
+
+        try {
+            conn = getConnection();
+            pre = conn.prepareStatement(preSql);
+
+            pre.setInt(1, userAddress.getUserID());
+            pre.setString(2, userAddress.getShipName());
+            pre.setString(3, userAddress.getShipAddress());
+            pre.setInt(4, userAddress.getShipCityID());
+            pre.setString(5, userAddress.getPhoneNum());
+            pre.setInt(6, userAddress.getID());
+            
+            n = pre.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            closePrepareStatement(pre);
+            closeConnection(conn);
+        }
+
+        return n;
     }
 }
