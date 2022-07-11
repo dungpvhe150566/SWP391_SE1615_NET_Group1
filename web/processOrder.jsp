@@ -100,7 +100,7 @@
                         placeholder="Search"
                         aria-label="Search"
                         name="key"
-                        style=" border: 3px solid #05728f;" required
+                        style=" border: 3px solid #05728f;" required pattern="^[^ ].+[^ ]$"
                         />
 
                     <button class="btn btn-outline-info" type="submit">
