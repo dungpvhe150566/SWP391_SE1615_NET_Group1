@@ -114,7 +114,6 @@
             </div>
         </div>
         <!-- Topbar End -->
-
         <div class="pt-2" style="background-color: #f5f5f5">
             <div class="container mt-3">
                 <div class="main-body">
@@ -124,6 +123,10 @@
                                 <div class="col-12 tm-block-col">
                                     <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                                         <h2 class="tm-block-title">Orders List</h2>
+                                        <form action="searchO">
+                                            <input type="text" name="total">
+                                            <input type="submit" value="Search">
+                                        </form>
                                         <table class="table">
                                             <tr>
                                                 <td>Id</td>
@@ -133,6 +136,8 @@
                                                 <td>Status</td>
                                                 <td>DayBuy</td>
                                                 <td>Details</td>
+                                                <td>Edit</td>
+                                                <td>Delete</td>
                                             </tr>
                                             <c:forEach items="${listO}" var="o">
                                                 <tr>
@@ -143,26 +148,28 @@
                                                     <td>${o.status}</td>
                                                     <td>${o.dayBuy}</td>
                                                     <td><a href="orderdetail?id=${o.ID}">Order Details</a></td>
+                                                    <td><a href="editO?id=${o.ID}&&userID=${o.userID}&&total=${o.totalPrice}&&note=${o.note}&&status=${o.status}">Edit</a></td>
+                                                    <td><a href="deleteO?id=${o.ID}">Delete</a></td>
                                                 </tr>
                                             </c:forEach>
                                         </table>
                                     </div>
                                 </div>
                                 <div id="content" class="col-11 justify-content-center">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <c:if test="${tag > 1}">
-                                <li style="padding:10px" class="page-item disabled"><a href="order?index=${tag-1}">Previous</a></li>
-                                </c:if>
-                                <c:forEach begin="1" end="${endP}" var="i">  
-                                <li class="page-item"><a class="page-link ${tag == i?"active":""}" href="order?index=${i}"class="page-link">${i}</a></li>                                   
-                                </c:forEach>   
-                                <c:if test="${tag<endP}">
-                                <li style="padding:10px" class="page-item disabled"><a href="order?index=${tag+1}">Next</a></li>
-                                </c:if>
-                        </ul>
-                    </nav>
-                </div>
+                                    <nav aria-label="Page navigation example">
+                                        <ul class="pagination">
+                                            <c:if test="${tag > 1}">
+                                                <li style="padding:10px" class="page-item disabled"><a href="order?index=${tag-1}">Previous</a></li>
+                                                </c:if>
+                                                <c:forEach begin="1" end="${endP}" var="i">  
+                                                <li class="page-item"><a class="page-link ${tag == i?"active":""}" href="order?index=${i}"class="page-link">${i}</a></li>                                   
+                                                </c:forEach>   
+                                                <c:if test="${tag<endP}">
+                                                <li style="padding:10px" class="page-item disabled"><a href="order?index=${tag+1}">Next</a></li>
+                                                </c:if>
+                                        </ul>
+                                    </nav>
+                                </div>
                                 <input id="statusID" type="hidden" value="">
                             </div>
                             <div id="lds-ellipsis" class="lds-ellipsis"><div></div><div></div><div></div><div></div></div>
@@ -244,43 +251,43 @@
     </style>
 
     <script>
-                                                var isLoading = true;
+                                                                var isLoading = true;
 
-                                                function selectPage(page) {
-                                                    window.location.href = "myorder?page=" + page;
-                                                }
+                                                                function selectPage(page) {
+                                                                    window.location.href = "myorder?page=" + page;
+                                                                }
 
-                                                function search(sortBy, page, status) {
-                                                    var date = document.getElementById('date').value;
-                                                    window.location.href = "myorder?page=" + page + "&status=" + status + "&sortby=" + sortBy + "&date=" + date;
-                                                }
+                                                                function search(sortBy, page, status) {
+                                                                    var date = document.getElementById('date').value;
+                                                                    window.location.href = "myorder?page=" + page + "&status=" + status + "&sortby=" + sortBy + "&date=" + date;
+                                                                }
 
-                                                function loadData() {
-                                                    document.getElementById('lds-ellipsis').style.display = "none";
-                                                    var statusID = document.getElementById('statusID').value;
-                                                    $.ajax({
-                                                        type: "GET",
-                                                        url: "Update/myorder",
-                                                        data: {
-                                                            isAjax: "1",
-                                                            status: statusID
-                                                        },
-                                                        success: function (responseText) {
-                                                            var row = document.getElementById('orderList');
-                                                            if (responseText.length <= 0)
-                                                                isLoading = false;
-                                                            row.innerHTML += responseText;
-                                                        }
-                                                    });
-                                                }
+                                                                function loadData() {
+                                                                    document.getElementById('lds-ellipsis').style.display = "none";
+                                                                    var statusID = document.getElementById('statusID').value;
+                                                                    $.ajax({
+                                                                        type: "GET",
+                                                                        url: "Update/myorder",
+                                                                        data: {
+                                                                            isAjax: "1",
+                                                                            status: statusID
+                                                                        },
+                                                                        success: function (responseText) {
+                                                                            var row = document.getElementById('orderList');
+                                                                            if (responseText.length <= 0)
+                                                                                isLoading = false;
+                                                                            row.innerHTML += responseText;
+                                                                        }
+                                                                    });
+                                                                }
 
-                                                window.onscroll = function (ev) {
-                                                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-                                                        if (isLoading) {
-                                                            document.getElementById("lds-ellipsis").style.display = "inline-block";
-                                                            setTimeout(loadData, 1000);
-                                                        }
-                                                    }
-                                                };
+                                                                window.onscroll = function (ev) {
+                                                                    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+                                                                        if (isLoading) {
+                                                                            document.getElementById("lds-ellipsis").style.display = "inline-block";
+                                                                            setTimeout(loadData, 1000);
+                                                                        }
+                                                                    }
+                                                                };
     </script>
 </html>

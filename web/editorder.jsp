@@ -119,68 +119,16 @@
             <div class="container mt-3">
                 <div class="main-body">
                     <div class="row gutters-sm">
-                        <div class="col-md-3 mb-3">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="d-flex flex-column align-items-center text-center">
-                                        <img src="image/${U.image}" alt="Admin" class="rounded-circle" width="150">
-                                        <div class="mt-3">
-                                            <h4>${user.getUsername()}</h4>
-                                            <p class="text-muted font-size-sm">${U.shipAddress}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card mt-3">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap active">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <i class="fas fa-user" style="color: black"></i>
-                                            </div>
-                                            <div class="col-md-9" onclick="window.location.href = 'myprofile'">
-                                                <h6 class="mb-0">User Profile</h6>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <i class="fas fa-address-book" style="color: black"></i>
-                                            </div>
-                                            <div class="col-md-9" onclick="window.location.href = 'myaddress'">
-                                                <h6 class="mb-0">User Address</h6>
-                                            </div>
-                                        </div>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <i class="fas fa-clipboard-list" style="color: black"></i>
-                                            </div>
-                                            <div class="col-md-9" onclick="window.location.href = 'myorder'">
-                                                <h6 class="mb-0">My Orders</h6>
-                                            </div>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+
 
                         <div class="col-md-9 mb-3">
-                            <form action="editprofile">
+                            <form action="editO" method="post">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item">
                                         <div class="row">
                                             <div class="col-md-12 my-auto">
-                                                <h5 class="mb-0">My Profile</h5>
+                                                <h5 class="mb-0">Edit order</h5>
                                             </div>
-                                            <div class="col-md-12 my-auto">
-                                                <span>Manage profile information for account security</span>
-                                            </div>
-
-                                        </div>
-                                    </li>
 
                                     <li class="list-group-item">
                                         <div class="row  mb-3 mt-3">
@@ -188,35 +136,34 @@
 
                                             <div class="row mt-3">
                                                 <div class="col-md-4 text-right my-auto">
-                                                    <span>User Name</span>
+                                                    <span>Id</span>
                                                 </div>
                                                 <div class="col-md-8" style="color: black;">
-                                                    <input class="form-control" type="text" pattern="[A-Za-z\d\.}]{6,12}" title="Username must bettween 6-12 character,contains only letters,numbers" name="name" value="${U.shipName}">
-                                                    <input class="form-control" type="text" name="id" value="${U.userID}" hidden="">
+                                                    <input class="form-control" type="text" name="id" value="${id}" readonly="">
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-4 text-right my-auto">
-                                                    <span>Phone Number</span>
+                                                    <span>Total</span>
                                                 </div>
                                                 <div class="col-md-8" style="color: black;">
-                                                    <input class="form-control" type="text" pattern="(?=0{1})[0-9]{10}$" title="PhoneNumber must start with 0,only numbers"  name="phone" value="${U.phoneNum}">
+                                                    <input class="form-control" type="text" name="total" value="${total}">
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-4 text-right my-auto">
-                                                    <span>User Address</span>
+                                                    <span>Note</span>
                                                 </div>
                                                 <div class="col-md-8" style="color: black;">
-                                                    <input class="form-control" type="text" name="address" value="${U.shipAddress}">
+                                                    <input class="form-control" type="text" name="note" value="${note}">
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-4 text-right my-auto">
-                                                    <span>Email</span>
+                                                    <span>Status</span>
                                                 </div>
                                                 <div class="col-md-8" style="color: black;">
-                                                    <input class="form-control" type="email" name="email" value="${U.email}" >
+                                                    <input class="form-control" type="text" name="status" value="${status}" >
                                                 </div>
                                             </div>
                                             <!-- Add more information here!-->
@@ -224,21 +171,6 @@
                                                 <div class="col-md-8" style="color: black;">
                                                     
                                                     <button type="submit" class="btn btn-primary">Save</button>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-4 border-left my-auto">
-                                                <div class="form-group">
-                                                    <div class="tm-product-img-dummy mx-auto">
-                                                        <img
-                                                            src="image/${U.image}"
-                                                            id="previewImage"
-                                                            style="max-height: 100%; width: 100%;"
-                                                            >
-                                                    </div>
-                                                    <div class="custom-file mt-1 mb-3">
-                                                        <input class="btn btn-primary btn-block mx-auto btn-sm" type="file" name="image"  accept="imgs/*" src="image/${U.image}"/>
-                                                    </div>
-                                                    <a href="change.jsp">Change your password</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -250,7 +182,6 @@
                 </div>
             </div>
         </div>
-        <%@include file="components/Footer.jsp" %>
     </body>
 
     <!-- JavaScript Libraries -->

@@ -269,6 +269,60 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO {
         }
         return 0;
     }
+     public void deleteOrder(String id) {
+        String query = "delete from orders where id = ?";
+        Connection conn = null;
+        PreparedStatement prepare = null;
+        try {
+            conn = getConnection();
+            prepare = conn.prepareStatement(query);
+            prepare.setString(1, id);
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+     public void EditOrder(String id,String note,String total,String status) {
+        String query = "update [orders] set TotalPrice = ?,note=?,[status] = ? where id = ?";
+        Connection conn = null;
+        PreparedStatement prepare = null;
+        try {
+            conn = getConnection();
+            prepare = conn.prepareStatement(query);
+            prepare.setString(1, total);
+            prepare.setString(2, note);
+            prepare.setString(3, status);
+            prepare.setString(4, id);
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+     public List<Orders> searchTotal(String total) {
+         List<Orders> list = new ArrayList<>();
+        String query = "select * from [orders] where TotalPrice < ?";
+        Connection conn = null;
+        PreparedStatement prepare = null;
+        try {
+            conn = getConnection();
+            prepare = conn.prepareStatement(query);
+            prepare.setString(1, total);
+            ResultSet rs = prepare.executeQuery();
+            while(rs.next()){
+                Orders O = new Orders();
+                O.setDayBuy(rs.getString(6));
+                O.setID(rs.getInt(1));
+                O.setNote(rs.getString(4));
+                O.setStatus(rs.getInt(5));
+                O.setTotalPrice(rs.getInt(3));
+                O.setUserID(rs.getInt(2));
+                list.add(O);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return list;
+    }
 
     public List<Orders> pagingOrders(int index) {
         List<Orders> list = new ArrayList<>();
@@ -385,9 +439,10 @@ public class OrdersDAOImpl extends DBContext implements OrdersDAO {
 
     public static void main(String[] args) {
         OrdersDAOImpl ott = new OrdersDAOImpl();
-        int num = ott.getTotalOrder();
-        System.out.println(num);
-
+        List<Orders> listO = ott.searchTotal("1000000");
+        for (Orders orders : listO) {
+            System.out.println(orders);
+        }
     }
 
     public List<Orders> getAllSucces() throws Exception {
