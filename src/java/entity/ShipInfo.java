@@ -23,6 +23,8 @@ public class ShipInfo {
     private String PhoneNum;
 
     private String Note;
+    
+    
 
 //    public int getID() {
 //        return ID;
@@ -79,5 +81,15 @@ public class ShipInfo {
 //    public void setNote(char Note) {
 //        this.Note = Note;
 //    }
+
+    public ShipInfo(int ID, int Order_ID, String CustomerName, String ShippingAddress, int ShipCityID, String PhoneNum, String Note) {
+        this.ID = ID;
+        this.Order_ID = Order_ID;
+        this.CustomerName = CustomerName;
+        this.ShippingAddress = ShippingAddress;
+        this.ShipCityID = ShipCityID;
+        this.PhoneNum = PhoneNum;
+        this.Note = Note;
+    }
 
 }

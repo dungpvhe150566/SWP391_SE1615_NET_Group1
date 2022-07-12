@@ -11,6 +11,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <script src="https://kit.fontawesome.com/bdc207907f.js" crossorigin="anonymous"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-xl">
@@ -47,6 +48,11 @@
                         <li class="nav-item">
                             <a class="nav-link" href="accounts.jsp">
                                 <i class="far fa-user"></i> Accounts
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blogs">
+                                <i class="fas fa-blog"></i> Blogs
                             </a>
                         </li>
                         <li class="nav-item dropdown">

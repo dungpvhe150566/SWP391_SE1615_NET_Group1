@@ -19,6 +19,13 @@ public class Blog {
     public Blog() {
     }
 
+    public Blog(String Title, String Content, String imageLink, int SellerID) {
+        this.Title = Title;
+        this.Content = Content;
+        this.imageLink = imageLink;
+        this.SellerID = SellerID;
+    }
+
     public Blog(int ID, String Title, String Content, String imageLink, int SellerID) {
         this.ID = ID;
         this.Title = Title;

@@ -5,10 +5,12 @@
  */
 package dao;
 
+import entity.ShipInfo;
+
 /**
  *
  * @author Admin
  */
 public interface ShipInfoDAO {
-    
+    public ShipInfo getShipInforByOrderID(int orderID) throws Exception;
 }

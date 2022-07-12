@@ -226,6 +226,16 @@
                                             </div>
                                         </div>
                                     </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <i class="fas fa-clipboard-list" style="color: black"></i>
+                                            </div>
+                                            <div class="col-md-9" onclick="window.location.href = 'mynotify'">
+                                                <h6 class="mb-0">Notification</h6>
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>

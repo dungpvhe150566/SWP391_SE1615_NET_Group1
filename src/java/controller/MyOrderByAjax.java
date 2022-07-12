@@ -51,7 +51,7 @@ public class MyOrderByAjax extends HttpServlet {
             if (request.getParameter("status") != null) {
                 statusID = Integer.parseInt(request.getParameter("status"));
             }
-            
+
             String sortBy = "";
             if (request.getParameter("sortby") != null) {
                 sortBy = request.getParameter("sortby");
@@ -62,12 +62,13 @@ public class MyOrderByAjax extends HttpServlet {
                 date = request.getParameter("date");
             }
 
-            int numOfRecord = 2;
+            int numOfRecord = 5;
             int endRow = page * numOfRecord;
             int startRow = endRow - numOfRecord + 1;
 
             Vector<Orders> vecOrder = orderDAO.getOrdersList(startRow, endRow, userID, statusID, date, sortBy);
             Vector<OrderStatus> vecOrderStatus = (new OrderStatusDAOImpl()).getOrderStatusList();
+            
             String result = "";
 
             if (vecOrder.size() > 0) {
@@ -75,11 +76,18 @@ public class MyOrderByAjax extends HttpServlet {
                     result += "<div class=\"pb-1\" style=\"background-color: #ffffff\">\n"
                             + "                                    <ul class=\"list-group list-group-flush ml-2 mr-2\">\n"
                             + "                                        <li class=\"list-group-item\">\n"
-                            + "                                            <p class=\"my-auto\">" + vecOrderStatus.elementAt(order.getStatus() - 1).getName() + "</p>\n"
+                            + "<div class=\"row\">\n"
+                            + "                                                    <div class=\"col-md-8\">\n"
+                            + "                                                        <p class=\"my-auto\">"+vecOrderStatus.elementAt(order.getStatus() - 1).getName()+"</p>\n"
+                            + "                                                    </div>\n"
+                            + "                                                    <div class=\"col-md-4\">\n"
+                            + "                                                        <p class=\"my-auto text-right\">"+order.getDayBuy()+"</p>\n"
+                            + "                                                    </div>\n"
+                            + "                                                </div>"
                             + "                                        </li>\n";
 
                     for (OrderDetail orderDetail : order.getOrderDetail()) {
-                        result += "<li class=\"list-group-item\">\n"
+                        result += "<li class=\"list-group-item\" onclick=\"viewDetails(" + order.getID() + ")\">\n"
                                 + "                                                <span class=\"row\">\n"
                                 + "                                                    <div class=\"row col-md-11 my-auto\">\n"
                                 + "                                                        <div class=\"col-md-2 my-auto\">\n"

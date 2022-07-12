@@ -1,23 +1,28 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
-import entity.Category;
-import entity.Product;
+import dao.impl.BlogDAOImpl;
+import entity.Blog;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.impl.CategoryDAOImpl;
-import dao.impl.ProductDAOImpl;
-import dao.impl.ProductOldDAOImpl;
-import java.util.ArrayList;
-import javax.servlet.RequestDispatcher;
 
 /**
  *
  * @author Dung
  */
-public class ProductsController extends HttpServlet {
+@WebServlet(name = "BlogsController", urlPatterns = {"/blogs"})
+public class BlogsController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,24 +37,16 @@ public class ProductsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            /* TODO output your page here. You may use following sample code. */
+            BlogDAOImpl blogDAO = new BlogDAOImpl();
             String service = request.getParameter("do");
-            String categoryID = request.getParameter("CategoryID");
-            ProductOldDAOImpl productDAO = new ProductOldDAOImpl();
-            
-            String name = "";
-            if (request.getParameter("name") != null) {
-                name = request.getParameter("name");
-            }
             
             String message = "";
-
             if (service != null) {
                 //Delete one product 
-                if (service.equals("deleteProduct")) {
+                if (service.equals("deleteBlog")) {
                     try {
-                        int productID = Integer.parseInt(request.getParameter("productID"));
-                        if ((new ProductDAOImpl()).deleteProduct(productID) > 0) {
+                        int blogID = Integer.parseInt(request.getParameter("blogID"));
+                        if (blogDAO.deleteBlog(blogID) > 0) {
                             message = "<p style=\"color: green\">Succesful</p>";
                         } else {
                             message = "<p style=\"color: red\">Fail to add products</p>";
@@ -61,10 +58,10 @@ public class ProductsController extends HttpServlet {
                 }
 
                 //Delete products has been checked
-                if (service.equals("deleteProducts")) {
+                if (service.equals("deleteBlogs")) {
                     try {
-                        String[] arrProductID = request.getParameterValues("productID");
-                        if ((new ProductDAOImpl()).deleteProducts(arrProductID) > 0) {
+                        String[] arrBlogID = request.getParameterValues("blogID");
+                        if (blogDAO.deleteBlogs(arrBlogID) > 0) {
                             message = "<p style=\"color: green\">Succesful</p>";
                         } else {
                             message = "<p style=\"color: red\">Fail to add products</p>";
@@ -75,45 +72,40 @@ public class ProductsController extends HttpServlet {
                     };
                 }
             }
-
+            
             int page = 1;
             if (request.getParameter("page") != null) {
                 page = Integer.parseInt(
                         request.getParameter("page"));
             }
-
-            ArrayList<Product> productList = null;
+            
+            String title = "";
+            if (request.getParameter("title") != null) {
+                title = request.getParameter("title");
+            }
+            
+            ArrayList<Blog> blogList = null;
             int totalPage;
             int numOfRecord = 6;
             int endRow = page * numOfRecord;
             int startRow = endRow - numOfRecord + 1;
             
-            if (categoryID != null && !categoryID.equals("0") && !categoryID.equals("undefined")) {
-                productList = productDAO.getProductList(Integer.parseInt(categoryID), name, null, null, startRow, endRow, null);
-                totalPage = productDAO.getTotalPage(Integer.parseInt(categoryID), name, null, null);
-            } else {
-                productList = productDAO.getProductList(0, name, null, null, startRow, endRow, null);
-                totalPage = productDAO.getTotalPage(0, name, null, null);
-            }
-
+            blogList = blogDAO.getBlogList(title, startRow, endRow);
+            totalPage = blogDAO.getTotalPage(title, numOfRecord);
+            
             int pageNumbers[] = new int[totalPage];
             
             for (int i = 0; i < pageNumbers.length; i++) {
                 pageNumbers[i] = i + 1;
             }
-
-            //Get Category List
-            ArrayList<Category> categoryList = (new CategoryDAOImpl()).getAllCategory();
-
+            
+            request.setAttribute("message", message);
             request.setAttribute("pageNumbers", pageNumbers);
             request.setAttribute("page", page);
-            request.setAttribute("name", name);
-            request.setAttribute("message", message);
-            request.setAttribute("categoryID", categoryID);
-            request.setAttribute("categoryList", categoryList);
-            request.setAttribute("productList", productList);
-
-            request.getRequestDispatcher("products.jsp").forward(request, response);
+            request.setAttribute("title", title);
+            request.setAttribute("blogList", blogList);
+            
+            request.getRequestDispatcher("blogs.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");

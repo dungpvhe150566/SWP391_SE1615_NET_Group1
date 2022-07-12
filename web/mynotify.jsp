@@ -149,7 +149,7 @@
                                             </div>
                                         </div>
                                     </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap active">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <i class="fas fa-address-book" style="color: black"></i>
@@ -169,6 +169,16 @@
                                             </div>
                                         </div>
                                     </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap active">
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <i class="fas fa-clipboard-list" style="color: black"></i>
+                                            </div>
+                                            <div class="col-md-9" onclick="window.location.href = 'mynotify'">
+                                                <h6 class="mb-0">Notification</h6>
+                                            </div>
+                                        </div>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -182,6 +192,20 @@
                                         </div>
                                     </div>
                                 </li>
+                                
+                                <c:if test="${fn:length(arrNotifications) == 0}">
+                                    <li class="list-group-item">
+                                        <div class="row ml-0" style="background-color: #ffffff; width: 100%; height:100vh">
+                                            <div class="my-auto mx-auto" style="height: 25%">
+                                                <img src="image/Other/order.png" alt="order" style="max-height:100%; max-width:100%;">
+                                                <div class="text-center">
+                                                    <span>No Notify yet</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </c:if>
+                                    
                                 <c:forEach items="${arrNotifications}" var="userNotify">
                                     <li class="list-group-item">
                                         <span class="row">
@@ -216,103 +240,4 @@
     <script src="mail/contact.js"></script>
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-    <style>
-        #form-address {
-            display: none;
-        }
-        .layer-gray {
-            display: block;
-            z-index: 1000;
-            position: fixed;
-            background-color: gray;
-            opacity: 0.5;
-            min-height: 100vh;
-        }
-
-        .addAddress {
-            display: inline-block;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 500px;
-            z-index: 1001;
-            box-sizing: border-box;
-            border-radius: 3px;
-            background-color: #fff;
-        }
-
-        .addAddress .row {
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-    </style>
-
-    <script>
-                                                function showFormAddress() {
-                                                    document.getElementById('title').innerHTML = "New Addresss";
-                                                    document.getElementById('do').value = "add";
-                                                    document.getElementById('shipName').value = "";
-                                                    document.getElementById('phone').value = "";
-                                                    document.getElementById('form-address').style.display = "block";
-                                                }
-
-                                                function hideFormAddress() {
-                                                    document.getElementById('form-address').style.display = "none";
-                                                }
-
-                                                function showAddress() {
-                                                    var iframe = document.getElementById("maps");
-                                                    var input = document.getElementById("address").value;
-
-                                                    input = input.replace(" ", "%20");
-                                                    console.log(iframe.src);
-                                                    iframe.src = "https://maps.google.com/maps?width=100%25&height=600&hl=en&q=" + input + "&t=&z=14&ie=UTF8&iwloc=B&output=embed";
-                                                    console.log(iframe.src);
-                                                }
-
-                                                function showFormEdit(name, phone, userAddressID) {
-                                                    document.getElementById('title').innerHTML = "Edit Addresss";
-                                                    document.getElementById('do').value = "edit";
-                                                    document.getElementById('shipName').value = name;
-                                                    document.getElementById('phone').value = phone;
-                                                    document.getElementById('userAddressID').value = userAddressID;
-                                                    document.getElementById('form-address').style.display = "block";
-                                                }
-
-                                                function deleteAddress(addressID) {
-                                                    if (confirm("Are you sure to delete this addess ?")) {
-                                                        window.location.href = "myaddress?do=delete&id=" + addressID;
-                                                    }
-                                                }
-
-                                                function validateForm() {
-                                                    var x = document.forms["addressForm"]["shipName"].value;
-                                                    if (x == "") {
-                                                        alert("Name must be filled out");
-                                                        return false;
-                                                    }
-
-                                                    x = document.forms["addressForm"]["phone"].value;
-                                                    if (x == "") {
-                                                        alert("Phone must be filled out");
-                                                        return false;
-                                                    }
-
-                                                    x = document.forms["addressForm"]["shipCity"].value;
-                                                    if (x == "-1") {
-                                                        alert("Select a city !");
-                                                        return false;
-                                                    }
-
-                                                    x = document.forms["addressForm"]["shipAddress"].value;
-                                                    if (x == "") {
-                                                        alert("Address must be filled out");
-                                                        return false;
-                                                    }
-
-                                                    return true;
-                                                }
-    </script>
 </html>

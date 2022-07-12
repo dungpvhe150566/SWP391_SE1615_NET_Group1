@@ -1,25 +1,34 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
-import dao.impl.OrderStatusDAOImpl;
-import dao.impl.OrdersDAOImpl;
-import entity.OrderStatus;
-import entity.Orders;
-import entity.Users;
+import dao.impl.BlogDAOImpl;
+import entity.Blog;
 import java.io.IOException;
-import java.util.Vector;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 /**
  *
  * @author Dung
  */
-@WebServlet(name = "MyOrderController", urlPatterns = {"/myorder"})
-public class MyOrderController extends HttpServlet {
+@WebServlet(name = "AddBlogController", urlPatterns = {"/addblog"})
+@MultipartConfig(
+        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
+        maxFileSize = 1024 * 1024 * 10, // 10 MB
+        maxRequestSize = 1024 * 1024 * 100 // 100 MB
+)
+public class AddBlogController extends HttpServlet {
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -32,48 +41,39 @@ public class MyOrderController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        request.setCharacterEncoding("utf-8");
         try {
-            OrdersDAOImpl orderDAO = new OrdersDAOImpl();
+            String service = request.getParameter("do");
+            String message = "";
 
-            //Get User has been login from session
-            Users user = (Users) request.getSession().getAttribute("user");
-            if (user == null) {
-                throw new Exception("Please login first");
+            if (service != null) {
+                if (service.equals("addblog")) {
+                    Part filePart = request.getPart("fileInput");
+                    String fileName = filePart.getSubmittedFileName();
+
+                    //Get and store all attribute of each Blog
+                    try {
+                        String title = request.getParameter("title").trim();
+                        String content = request.getParameter("content").trim();
+                        String imageLink = fileName;
+                        int sellerID = 1;
+
+                        Blog blog = new Blog(title, content, imageLink, sellerID);
+
+                        if ((new BlogDAOImpl()).addBlog(blog) > 0) {
+                            message = "<p style=\"color: green\">Succesful</p>";
+                        } else {
+                            message = "<p style=\"color: green\">Fail to add products</p>";
+                        }
+                    } catch (NumberFormatException e) {
+                        message = "<p style=\"color: red\">Wrong format input</p>";
+                        e.printStackTrace();
+                    }
+                }
             }
-            int userID = user.getUserID();
 
-            //Get Status ID from request
-            int statusID = 0;
-            if (request.getParameter("status") != null) {
-                statusID = Integer.parseInt(request.getParameter("status"));
-            }
-
-            String sortBy = "";
-            if (request.getParameter("sortby") != null) {
-                sortBy = request.getParameter("sortby");
-            }
-
-            String date = "";
-            if (request.getParameter("date") != null) {
-                date = request.getParameter("date");
-            }
-
-            int page = 1;
-            MyOrderByAjax.page = 2;
-            int numOfRecord = 5;
-            int endRow = page * numOfRecord;
-            int startRow = endRow - numOfRecord + 1;
-
-            Vector<Orders> vecOrder = orderDAO.getOrdersList(startRow, endRow, userID, statusID, date, sortBy);
-            Vector<OrderStatus> vecOrderStatus = (new OrderStatusDAOImpl()).getOrderStatusList();
-
-            request.setAttribute("date", date);
-            request.setAttribute("user", user);
-            request.setAttribute("statusID", statusID);
-            request.setAttribute("page", page);
-            request.setAttribute("vecOrderStatus", vecOrderStatus);
-            request.setAttribute("vecOrder", vecOrder);
-            request.getRequestDispatcher("myorder.jsp").forward(request, response);
+            request.setAttribute("message", message);
+            request.getRequestDispatcher("add-blog.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
