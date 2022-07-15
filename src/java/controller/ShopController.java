@@ -1,4 +1,16 @@
-
+/**
+ * Copyright(C) 2022,Group1-NETSE1615.<p>
+ * Shopping Web:
+ * <p>
+ *
+ * Electronic Shop<p>
+ *
+ * Record of change:
+ * <p>
+ *
+ * DATE Version AUTHOR DESCRIPTION<p>
+ * 2022-08-16 01 SangLT Update Code Convention<p>
+ */
 package controller;
 
 import entity.Category;
@@ -17,8 +29,12 @@ import dao.impl.ProductDAOImpl;
 import java.util.ArrayList;
 
 /**
+ * This class implements user handling from Shop Page to process and display
+ * according to user request<p>
+ * Bugs: Errors that occur will be received and processed and returned to Error
+ * Page<p>
  *
- * @author Sang
+ * @author SangLT
  */
 public class ShopController extends HttpServlet {
 
@@ -35,77 +51,78 @@ public class ShopController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
-        try{
+        try {
 
-            // Get and Set service from User to 
+            /* Get and Set service from User */
             String service = request.getParameter("do");
             request.setAttribute("service", service);
 
-//            Get the position of the current Page to paginate products to display to users
-//            indexPage variable is the position of the page the user is viewing
-//            totalPage is variable is the total number of product pages requested by the user
-            int indexPage = 1;
-//            get the Page position being displayed to the user so that page transitions can be performed
-            String index = request.getParameter("indexPage");
-            if (index != null) {
-                indexPage = Integer.parseInt(index);
+            /* Get and Set of selected page position from user */
+            int indexPage = 1;// Set default index page is 1
+            String index = request.getParameter("indexPage");// Get page selected by User
+            if (index != null) {// In case the user selects page
+                indexPage = Integer.parseInt(index);// Convert String page to Integer
             }
-            request.setAttribute("indexPage", indexPage);
+            request.setAttribute("indexPage", indexPage);// Set page to View page
 
-//            Filter follow Manufacturers
-//            get the ManufacturersID selected from the user
-            String[] manufacturersID = request.getParameterValues("manufacturer");
+            /* Filter Products follow Manufacturers*/
+            String[] manufacturersID = request.getParameterValues("manufacturer");// Get list manufacturersID selected by User from View page
             String msID = request.getParameter("manufacturers");
-            if (msID != null && !msID.isEmpty()) {
-//                list ManufacturersID have form "[...,...]" so need split 
+            if (msID != null && !msID.isEmpty()) {// In case users filter by Manufacturer 
+                //list ManufacturersID have form "[...,...]" so need split 
                 manufacturersID = msID.substring(1, msID.length() - 1).split(",");
             }
             if (manufacturersID != null) {
+                // Set manufacturersID selected by User to View page
                 request.setAttribute("manufacturers", Arrays.toString(manufacturersID));
             }
 
-//            Filter follow Price
-//            get the prices selected from the user
+            /* Filter Products follow Price */
             String[] prices = request.getParameterValues("prices");
             String listPrices = request.getParameter("listPrices");
-            if (listPrices != null && !listPrices.isEmpty()) {
-//                list prices have form "[...,...]" so need split 
+            if (listPrices != null && !listPrices.isEmpty()) {// In case users filter by Price 
+                //list prices have form "[...,...]" so need split 
                 prices = listPrices.substring(1, listPrices.length() - 1).split(",");
             }
             if (prices != null) {
+                // Set Price selected by User to View page
                 request.setAttribute("listPrices", Arrays.toString(prices));
             }
 
-//            User Search follow Category
+            /* User Search follow Category */
             int categoryID = 0;
             if (service != null && service.equals("searchByCategory")) {
                 categoryID = Integer.parseInt(request.getParameter("categoryID"));
                 request.setAttribute("categoryID", categoryID);
             }
 
-//            User Search follow ProductName
+            /* User Search follow ProductName */
             String productName = "";
-            if (service != null && service.equals("searchByName")) {
-//                Get ProductName from User Input
+            if (service != null && service.equals("searchByName")) {// In case the user searches by the name of the product
+                // Get ProductName User Input from View page
                 productName = request.getParameter("productName").trim();
+                // Set ProductName User Input to View page
                 request.setAttribute("productName", productName);
-            }
 
-//            Sort product follow Price(Ascending/Descending)
-            String sort = request.getParameter("sort");
-            if (sort != null && !sort.isEmpty()) {
+            }
+           
+            /* Sort product follow Price(Ascending/Descending) */
+            String sort = request.getParameter("sort");// Get type sort clicked by User from View page
+            if (sort != null && !sort.isEmpty()) {// In case users search by price increase or decrease
+                // Set type sort clicked by User to View page
                 request.setAttribute("sort", sort);
             }
 
-            ProductDAOImpl productDao = new ProductDAOImpl();
-//            Get List Products follow (CategoryID. ProductName, Price, ManufacturerID,Sort)
+            /* Get products according to requests from users */
+            ProductDAOImpl productDao = new ProductDAOImpl();// create a DAO object to get the Products table data from the Database
+            //Get List Products follow (CategoryID. ProductName, Price, ManufacturerID,Sort)
             ArrayList<Product> productsList = productDao.getProductList(categoryID, productName, prices,
                     manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage, sort);
-            request.setAttribute("products", productsList);
+            request.setAttribute("products", productsList);// Set list Products to View page
 
-//            Get total PAge of list product(each page have max 6 products)
+            /* Get total PAge of list product(each page have max 6 products) */
             int totalPage = productDao.getTotalPage(categoryID, productName, prices, manufacturersID);
-            request.setAttribute("totalPage", totalPage);
+            request.setAttribute("totalPage", totalPage);// Set total number of Page to View page
 
             CategoryDAOImpl categoryDao = new CategoryDAOImpl();
 //            Set CategoryList to display to the View Page
@@ -119,11 +136,13 @@ public class ShopController extends HttpServlet {
             RequestDispatcher dispatcher1 = request.getRequestDispatcher("shop.jsp");
             dispatcher1.forward(request, response);
 
-        }
-        catch(Exception e){
+        } catch (Exception e) {// In case an Exception occurs
+
+            /* Make requests and properties to Error Page */
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
             dispatcher2.forward(request, response);
+
         }
     }
 

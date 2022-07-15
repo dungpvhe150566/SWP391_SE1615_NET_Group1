@@ -1,7 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright(C) 2022,Group1-NETSE1615.<p>
+ * Shopping Web:
+ * <p>
+ * Electronic Shop<p>
+ *
+ * Record of change:
+ * <p>
+ * DATE Version AUTHOR DESCRIPTION<p>
+ * 2022-08-16 01 SangLT Update Code Convention<p>
  */
 package controller;
 
@@ -20,8 +26,12 @@ import dao.impl.CategoryDAOImpl;
 import java.util.ArrayList;
 
 /**
+ * This class implements user handling from HomePage to process and display
+ * according to user request<p>
+ * Bugs: Errors that occur will be received and processed and returned to Error
+ * Page<p>
  *
- * @author Admin
+ * @author SangLT
  */
 public class HomeController extends HttpServlet {
 
@@ -38,22 +48,30 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            
+            /* Create variable to get data from database */
+            BlogDAO blogDAO = new BlogDAOImpl();// Create a DAO object to get the Blog table data from the Database
+            CategoryDAO categoryDAO = new CategoryDAOImpl();// Create a DAO object to get the Category table data from the Database
 
-//            Get All Category, Blog to display for User select
-            BlogDAO blogDAO = new BlogDAOImpl();
-            CategoryDAO categoryDAO = new CategoryDAOImpl();
-            ArrayList<Blog> blogs = blogDAO.getBlogList();
-            ArrayList<Category> categoryList = categoryDAO.getAllCategory();
+            /* Create variable to store data after being retrieved from database */
+            ArrayList<Blog> blogs = blogDAO.getBlogList();// Get Blog List
+            ArrayList<Category> categoryList = categoryDAO.getAllCategory();// Get Category List
 
-            request.setAttribute("blogs", blogs);
-            request.setAttribute("categoryList", categoryList);
-
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-            dispatcher.forward(request, response);
-        } catch (Exception e) {
-            request.setAttribute("ex", e);
+            /* Create variable to store data after being retrieved from database */
+            request.setAttribute("blogs", blogs);// Set the Blog List in the application scope
+            request.setAttribute("categoryList", categoryList);// Set the Category List in the application scope
+            
+            /* Make requests and properties to View Page */
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");// Set URL path of View Page
+            dispatcher.forward(request, response);// Make a move to the View page 
+            
+        } catch (Exception e) {// In case an Exception occurs
+            
+            /* Make requests and properties to Error Page */
+            request.setAttribute("ex", e);// Send type Error to Error Page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
             dispatcher.forward(request, response);
+            
         }
     }
 
