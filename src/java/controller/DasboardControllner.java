@@ -33,16 +33,6 @@ import javax.servlet.http.HttpSession;
  */
 @WebServlet(name = "ControllnerDasboard", urlPatterns = {"/dontrollner-dasboard"})
 public class DasboardControllner extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, Exception {
         response.setContentType("text/html;charset=UTF-8");
@@ -57,8 +47,7 @@ public class DasboardControllner extends HttpServlet {
              // Statistical Orders in week 
              String thuu="";
              String dataa="";
-             String yearString ="";
-             
+             String yearString ="";   
              String monthString ="";
              List<Statistical> listThongKe = new StatisticalOrdersDAO().getAll();
              for (Statistical T : listThongKe) {
@@ -67,7 +56,6 @@ public class DasboardControllner extends HttpServlet {
                 yearString+=T.getYear();
                 monthString+=T.getMonth();
             }
-             
              // Total Product
             String label="";
             String soluong="";

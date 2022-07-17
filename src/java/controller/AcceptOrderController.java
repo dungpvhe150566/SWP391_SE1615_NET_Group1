@@ -23,24 +23,13 @@ import util.NumberHelper;
  */
 @WebServlet(name = "UpdateOrder", urlPatterns = {"/accept-order"})
 public class AcceptOrderController extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             int id =NumberHelper.getInt(request.getParameter("id"));
+            // update stautus to packging
             boolean check = new OrdersDAOImpl().updateStatus(2, id);
-            
-        
                response.sendRedirect("dontrollner-dasboard");
            
         } catch (Exception ex) {

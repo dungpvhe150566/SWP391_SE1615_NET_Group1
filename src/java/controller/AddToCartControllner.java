@@ -27,43 +27,24 @@ import javax.servlet.RequestDispatcher;
  */
 @WebServlet(name = "AddToCartControllner", urlPatterns = {"/addtocart"})
 public class AddToCartControllner extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try  {
-            /* TODO output your page here. You may use following sample code. */
+        try  {   
              int productId = Integer.parseInt(request.getParameter("productId"));
-             
             //map    productId | cart
             HttpSession session = request.getSession();
             Map<Integer, Cart> carts = (Map<Integer, Cart>) session.getAttribute("carts");
             if (carts == null) {
                 carts = new LinkedHashMap<>();
             }
-           
             if (carts.containsKey(productId)) {//sản phẩm đã có trên giỏ hàng
                 int oldQuantity = carts.get(productId).getAmount();
                 carts.get(productId).setAmount(oldQuantity + 1);
-                
-               
-               
             } else {//sản phẩm chưa có trên giỏ hàng
                 Product product = new ProductDAOImpl().getProductById(productId);
                 carts.put(productId, Cart.builder().product(product).Amount(1).build());
             }
-           
-           
-//h
             session.setAttribute("carts", carts);
             response.sendRedirect("ShopController");
         }catch(Exception e){
