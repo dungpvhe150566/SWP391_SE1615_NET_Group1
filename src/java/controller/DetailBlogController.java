@@ -1,22 +1,27 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
 import dao.impl.BlogDAOImpl;
 import entity.Blog;
-import entity.Users;
+import entity.CommentBlog;
+import entity.Feedback;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Admin
  */
-public class PagingController extends HttpServlet {
+public class DetailBlogController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,24 +36,19 @@ public class PagingController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            HttpSession session = request.getSession();
-            Users a = (Users) session.getAttribute("user");
-
-            String index = request.getParameter("index");
-            int indexpage = 0;
-            if (index == null) {
-                index = "1";
-            }
-            indexpage = Integer.parseInt(index);
+            //Get ID back
+            String id = request.getParameter("ID");
+            //CAll DAO
             BlogDAOImpl dao = new BlogDAOImpl();
-            List<Blog> list = dao.paging(indexpage);
-            request.setAttribute("listP", list);
-            request.setAttribute("user", a);
-            request.setAttribute("indexpage", indexpage);
-            request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+            Blog b = dao.getBlogByID(id);
+            //  Get Comment of this blog follow blogID
+                ArrayList<CommentBlog> Comment = dao.getCommentBlog(id);
+                request.setAttribute("comment", Comment);
+            //PUSH to JSP
+            request.setAttribute("detailBlog", b);
+            request.getRequestDispatcher("BlogDetail.jsp").forward(request, response);
         } catch (Exception e) {
-            e.printStackTrace();
-            response.sendRedirect("error.jsp");
+            response.sendRedirect("Error.jsp");
         }
     }
 

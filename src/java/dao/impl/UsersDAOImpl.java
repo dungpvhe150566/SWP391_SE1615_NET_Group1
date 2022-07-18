@@ -178,7 +178,7 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         }
     }
 
-    public void deleteAccount(String id) throws Exception {
+    public boolean deleteAccount(String id) throws Exception {
         String query = "	delete from Orders where UserID = ?\n"
                 + "delete from Product where SellerID = ?\n"
                 + "delete from Cart where UserID = ?\n"
@@ -203,20 +203,22 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
             prepare.setString(6, id);
             prepare.setString(7, id);
             prepare.executeUpdate();
+            return true;
         } catch (Exception e) {
             throw e;
         } finally {
             closePrepareStatement(prepare);
             closeConnection(conn);
+            return false;
         }
-        return;
+
     }
 
-    public void updateUser(String id, String user, String password, String email, String isSell, String isAdmin, String activeCode, int status) throws Exception {
-        String preSql = "update Users set Username=? ,Password=? "
-                + ",email=? ,ActiveCode=? "
-                + ",isSeller=? ,isAdmin=? ,"
-                + "StatusID=?  where UserID=" + id;
+    public void updateUser(int id, String user, String email, String isSell, String isAdmin) throws Exception {
+        String preSql = "update Users set Username=? \n"
+                + "               ,email=?  \n"
+                + "                ,isSeller=? ,isAdmin=? \n"
+                + "                 where UserID=" + id;
 
         Connection conn = null;
         PreparedStatement prepare = null;
@@ -227,12 +229,9 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
             prepare = conn.prepareStatement(preSql);
 
             prepare.setString(1, user);
-            prepare.setString(2, password);
-            prepare.setString(3, email);
-            prepare.setString(4, activeCode);
-            prepare.setString(5, isSell);
-            prepare.setString(6, isAdmin);
-            prepare.setInt(7, status);
+            prepare.setString(2, email);
+            prepare.setString(3, isSell);
+            prepare.setString(4, isAdmin);
             prepare.execute();
         } catch (Exception e) {
             throw e;
@@ -252,9 +251,6 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         ResultSet rs = null;
 
         try {
-//            ps = conn.prepareStatement(query);
-//            rs = ps.executeQuery();
-
             conn = getConnection();
             prepare = conn.prepareStatement(query);
             rs = prepare.executeQuery();
@@ -274,22 +270,22 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         }
         return list;
     }
-     public int countAccount() throws Exception {
+
+    public int countAccount() throws Exception {
         String query = "SELECT COUNT(*) FROM  Users";
-         Connection conn = null;
+        Connection conn = null;
         PreparedStatement prepare = null;
-       ResultSet rs = null;
+        ResultSet rs = null;
         conn = getConnection();
-        try ( 
+        try (
                 PreparedStatement ps = (conn != null) ? conn.prepareStatement(query) : null;) {
-             rs = (ps != null) ? ps.executeQuery() : null;
+            rs = (ps != null) ? ps.executeQuery() : null;
             if (rs != null && rs.next()) {
                 return rs.getInt(1);
             }
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             throw ex;
-        }
-        finally {
+        } finally {
             closeRS(rs);
             closePrepareStatement(prepare);
             closeConnection(conn);
@@ -403,13 +399,13 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
     public static void main(String[] args) {
         UsersDAOImpl dao = new UsersDAOImpl();
         try {
-            ArrayList<Users> u= new ArrayList<Users>();
-            u=dao.searchAccountInManager("kmkmmkmk",1, 6);
+            ArrayList<Users> u = new ArrayList<Users>();
+            u = dao.searchAccountInManager("kmkmmkmk", 1, 6);
             System.out.println(u.isEmpty());
             for (Users users : u) {
                 System.out.println(users);
             }
-            
+
         } catch (Exception ex) {
             Logger.getLogger(UsersDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -16,28 +16,22 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     </head>
     <body>
-            <!-- Edit Product -->
-            <div id="editEmployeeModal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <form action="EditAccountController" method="POST">
-                            <div class="modal-header">						
-                                <h4 class="modal-title">Edit Account</h4>
-                                <a type="button" class="close" href="AccountManagerController" aria-hidden="true">&times;</a>                                                         
-                            </div>
-                            <div class="modal-body">	
-                                <div class="form-group">
-                                    <label>ID</label>
-                                    <input type="text"  class="form-control" name="id" value="${id}" readonly>
-                            </div>
+        <!-- Edit Product -->
+        <div id="editEmployeeModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <form action="EditAccountController" method="POST">
+                        <div class="modal-header">						
+                            <h4 class="modal-title">Edit Account</h4>
+                            <a type="button" class="close" href="AccountManagerController" aria-hidden="true">&times;</a>                                                         
+                        </div>
+                        <div class="modal-body">	
+
                             <div class="form-group">
                                 <label>UserName</label>
                                 <input type="text" class="form-control" required name="user" value="${user}"readonly>
                             </div>
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input type="password" class="form-control" required name="pass" value="${pass}"readonly>
-                            </div>
+
                             <div class="form-group">
                                 <label>Email</label>
                                 <input type="text" class="form-control" required name="email" value="${email}"readonly>

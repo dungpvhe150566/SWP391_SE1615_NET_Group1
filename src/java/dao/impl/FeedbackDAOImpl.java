@@ -485,12 +485,12 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
         return totalPage;
     }
 
-    public List<Feedback> paging(int index, String name, int sellerID) {
+    public List<Feedback> paging(int index, String name, String sort, int sellerID) throws Exception {
         String query = "with a as (	select row_number() over(order by ID  asc) as row, ID,Username,ProductName,Star,FeedbackDetail from Feedback f join Product p \n"
                 + "                on p.ProductID=f.ProductID join Users u \n"
                 + "                on u.UserID=f.UserID where p.SellerID=? \n"
                 + "                                            ) \n"
-                + "                                             select * from a order by " + name + "\n"
+                + "                                             select * from a order by " + name + " " + sort + "\n"
                 + "                        OFFSET ? ROWS  FETCH NEXT 6 ROWS ONLY";
         List<Feedback> list = new ArrayList<>();
         Connection connection = null;
@@ -511,16 +511,20 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
                         rs.getString("FeedbackDetail")));
             }
             return list;
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            closeConnection(connection);
+            closePrepareStatement(preparedStatement);
+            closeRS(rs);
         }
-        return null;
     }
 
     public static void main(String[] args) {
         FeedbackDAOImpl feedbackDAO = new FeedbackDAOImpl();
         try {
             List<Feedback> lsFeedback = new ArrayList<>();
-            lsFeedback = feedbackDAO.paging(2, "star", 3);
+            lsFeedback = feedbackDAO.paging(1, "star","desc", 3);
             System.out.println(feedbackDAO.totalPage(3));
             for (Feedback feedback : lsFeedback) {
                 System.out.println(feedback);

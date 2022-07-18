@@ -1,10 +1,15 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
 import dao.impl.BlogDAOImpl;
-import entity.Blog;
 import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Admin
  */
-public class PagingController extends HttpServlet {
+public class LikeBlogController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,21 +36,13 @@ public class PagingController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
+            int aid = Integer.parseInt(request.getParameter("aid"));
             HttpSession session = request.getSession();
             Users a = (Users) session.getAttribute("user");
-
-            String index = request.getParameter("index");
-            int indexpage = 0;
-            if (index == null) {
-                index = "1";
-            }
-            indexpage = Integer.parseInt(index);
             BlogDAOImpl dao = new BlogDAOImpl();
-            List<Blog> list = dao.paging(indexpage);
-            request.setAttribute("listP", list);
-            request.setAttribute("user", a);
-            request.setAttribute("indexpage", indexpage);
-            request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+            dao.insertlike(a.getUserID(), aid);
+            response.sendRedirect("PagingController");
+
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("error.jsp");

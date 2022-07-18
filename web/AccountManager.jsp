@@ -85,22 +85,23 @@
                 </div>
                 <div class="col-10">
                     <div class="container">
-                        <div class="d-flex justify-content-center h-100">
-                            <div class="searchbar">
-                                <input class="search_input" type="text" id="search_Account" maxlength="50" placeholder="Search..." value="${txt}">
-                                <button onclick="search();" class="search_icon"><i class="fas fa-search"></i></button>
-                            </div>
-                        </div>
+
                         <div class="row">
                             <div class="table-responsive">
                                 <div class="table-wrapper">
                                     <h2 style="font-family: Brush Script MT; text-align: center; font-size: 60px">Account manager</h2>
                                     <br>
                                     <table class="table table-striped table-hover">
+                                        <div class="d-flex justify-content-center h-100">
+                                            <div class="searchbar">
+                                                <input class="search_input" type="text" id="search_Account" maxlength="50" placeholder="Search by user name..." value="${txt}">
+                                                <button onclick="search();" class="search_icon"><i class="fas fa-search"></i></button>
+                                            </div>
+                                        </div>
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>UserName</th>						
+                                                <th>User Name</th>						
                                                 <th>Role</th>
                                                     <c:if test="${sessionScope.user.getIsAdmin() == 1}">
                                                     <th>Action</th>
@@ -129,41 +130,43 @@
                                                                             form.action = 'DeleteAccountController?UserID=${o.getUserID()}';
                                                                         else
                                                                             return false;"/>  
-                                                                </a>
+                                                                </a>   
                                                             </form>
                                                         </td>
-                                                    </c:if>
+                                                
+                                            </c:if>
 
-                                                </tr>
-                                            </c:forEach>
+                                            </tr>
+                                        </c:forEach>
+                                        <input id="eDelete" value="${test}" hidden="true"/>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
                             <c:if test="${totalPage!=0}">
-                            <div class="col-12 pb-1">
-                                <nav aria-label="Page navigation">
-                                    <ul class="pagination justify-content-center mb-3">
-                                        <li class="page-item ${indexPage==1?'disabled':''}">
-                                            <a class="page-link" href="AccountManagerController?indexPage=${indexPage-1}" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                                <span class="sr-only">Previous</span>
-                                            </a>
-                                        </li>
-                                        <c:forEach var="i" begin="1" end="${totalPage}"  >
-                                            <li class="page-item ${indexPage==i?'active':''}">
-                                                <a class="page-link" href="AccountManagerController?indexPage=${i}">${i}</a></li>
-                                            </c:forEach>
-                                        <li class="page-item ${indexPage==totalPage?'disabled':''}">
-                                            <a class="page-link" href="AccountManagerController?indexPage=${indexPage+1}" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                                <span class="sr-only">Next</span>
-                                            </a>  
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                                                </c:if>
+                                <div class="col-12 pb-1">
+                                    <nav aria-label="Page navigation">
+                                        <ul class="pagination justify-content-center mb-3">
+                                            <li class="page-item ${indexPage==1?'disabled':''}">
+                                                <a class="page-link" href="AccountManagerController?indexPage=${indexPage-1}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                            </li>
+                                            <c:forEach var="i" begin="1" end="${totalPage}"  >
+                                                <li class="page-item ${indexPage==i?'active':''}">
+                                                    <a class="page-link" href="AccountManagerController?indexPage=${i}">${i}</a></li>
+                                                </c:forEach>
+                                            <li class="page-item ${indexPage==totalPage?'disabled':''}">
+                                                <a class="page-link" href="AccountManagerController?indexPage=${indexPage+1}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>  
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </c:if>
                             <c:if test="${totalPage==0}">
                                 ${mess}
                             </c:if>               
@@ -173,5 +176,11 @@
                 </div>  
             </div>
         </div>
+        <script>
+            var eDelete = document.getElementById("eDelete").value;
+            if (eDelete == "false") {
+                window.alert("Can't delete account!!!");
+            }
+        </script>
     </body>
 </html>

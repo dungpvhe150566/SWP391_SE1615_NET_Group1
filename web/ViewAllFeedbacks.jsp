@@ -23,23 +23,145 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <title>View All Feedbacks</title>
-        </head>
-        <body>
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-2" style="background-color: #ebebf2">
-                        <nav class="navbar navbar-expand-lg navbar-light flex-column">
-                            <a class="navbar-brand" href="HomeController"><img src="image/Other/AccountDashboard.jpg" width="200px"></a>
-                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button>
+        <style>
+            .content{
+                margin: auto;
+                padding: 15px;
+                max-width: 800px;
+            }
+            .dpx{
+                display:flex;
+                align-items:center;
+                justify-content:space-around;
+            }
+            h1{
+                font-size:28px;
+                line-height:28px;
+                margin-bottom:15px;
+            }
+            label{
+                display:block;
+                line-height:40px;
+            }
+            .option-input {
+                -webkit-appearance: none;
+                -moz-appearance: none;
+                -ms-appearance: none;
+                -o-appearance: none;
+                appearance: none;
+                position: relative;
+                top: 13.33333px;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                height: 40px;
+                width: 40px;
+                transition: all 0.15s ease-out 0s;
+                background: #cbd1d8;
+                border: none;
+                color: #fff;
+                cursor: pointer;
+                display: inline-block;
+                margin-right: 0.5rem;
+                outline: none;
+                position: relative;
+                z-index: 1000;
+            }
+            .option-input:hover {
+                background: #9faab7;
+            }
+            .option-input:checked {
+                background: #40e0d0;
+            }
+            .option-input:checked::before {
+                width: 40px;
+                height: 40px;
+                display:flex;
+                content: '\f00c';
+                font-size: 25px;
+                font-weight:bold;
+                position: absolute;
+                align-items:center;
+                justify-content:center;
+                font-family:'Font Awesome 5 Free';
+            }
+            .option-input:checked::after {
+                -webkit-animation: click-wave 0.65s;
+                -moz-animation: click-wave 0.65s;
+                animation: click-wave 0.65s;
+                background: #40e0d0;
+                content: '';
+                display: block;
+                position: relative;
+                z-index: 100;
+            }
+            .option-input.radio {
+                border-radius: 50%;
+            }
+            .option-input.radio::after {
+                border-radius: 50%;
+            }
 
-                            <ul class="nav flex-column">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="HomeController"><i class="fas fa-home"></i>Home</a>
-                                    <hr class="line">
-                                </li>
+            @keyframes click-wave {
+                0% {
+                    height: 40px;
+                    width: 40px;
+                    opacity: 0.35;
+                    position: relative;
+                }
+                100% {
+                    height: 200px;
+                    width: 200px;
+                    margin-left: -80px;
+                    margin-top: -80px;
+                    opacity: 0;
+                }
+            }
+
+            .button {
+                background-color: #4CAF50;
+                border: none;
+                color: white;
+                padding: 8px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                transition-duration: 0.4s;
+                cursor: pointer;
+                border-radius: 8px;
+            }
+
+            .button2 {
+                background-color: white; 
+                color: black; 
+                border: 2px solid #008CBA;
+            }
+
+            .button2:hover {
+                background-color: #008CBA;
+                color: white;
+            }
+        </style>
+    </head>
+    <body>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2" style="background-color: #ebebf2">
+                    <nav class="navbar navbar-expand-lg navbar-light flex-column">
+                        <a class="navbar-brand" href="HomeController"><img src="image/Other/AccountDashboard.jpg" width="200px"></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <ul class="nav flex-column">
+                            <li class="nav-item">
+                                <a class="nav-link" href="HomeController"><i class="fas fa-home"></i>Home</a>
+                                <hr class="line">
+                            </li>
                             <c:if test="${sessionScope.user == null}">
                                 <li class="nav-item">
                                     <a class="nav-link" href="login">Login</a>
@@ -82,24 +204,43 @@
                 <div class="col-md-10">
                     <hr>
                     <div class="row">
-                        <p>Choose your sort options and order: </p>
                         <form class="sort-form" action="ViewAllFeedbackController" method="POST">
-<!--                            <input type="hidden" name="sort-flag" value="true" />-->
-                            <input type="radio" id="sort-star" name="sort-order" value="1" checked="true">
-                            <label for="sort-star">Sort by star</label><br>
-                            <input type="radio" id="sort-name" name="sort-order" value="2">
-                            <label for="sort-name">Sort by user name</label><br>
-                            <input type="radio" id="sort-product" name="sort-order" value="3">
-                            <label for="sort-product">Sort by product</label>
-                            <br><br>
-                            <input type="radio" id="sort-order" name="sort-by-order" value="1" checked="true">
-                            <label for="sort-order">Ascending</label><br>
-                            <input type="radio" id="sort-order" name="sort-by-order" value="2">
-                            <label for="sort-order">Descending</label><br>
-                            <br>
-                            <input type="submit" value="Submit">
+                            <div class='content'>
+                                <h1 style="text-align: center">Choose your sort options and order:</h1>
+                                <div class="dpx">
+                                    <div class='px'>
+                                        <label>
+                                            <input type="radio" class="option-input radio" id="sort-star" name="sort-order" value="1" ${sopt==1?"checked":""} />
+                                            Sort by star
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="option-input radio" id="sort-name" name="sort-order" value="2" ${sopt==2?"checked":""} />
+                                            Sort by name
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="option-input radio" id="sort-product" name="sort-order" value="3" ${sopt==3?"checked":""} />
+                                            Sort by product
+                                        </label>
+                                    </div>
+                                    <div class='py'>
+                                        <label>
+                                            <input type="radio" class="option-input radio" id="sort-order" name="sort-by-order" value="1" ${sodr==1?"checked":""} />
+                                            Ascending
+                                        </label>
+                                        <label>
+                                            <input type="radio" class="option-input radio" id="sort-order" name="sort-by-order" value="2" ${sodr==2?"checked":""} />
+                                            Descending
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="width: 100%; text-align: center;">
+                                <input type="submit" id="btn1" value="Sort" class="button button2">
+                            </div>
+
                         </form>
                     </div>
+
                     <div class="row-fluid">
                         <div class="col-md-12">
                             <table id="feedback" style=" border: 1px solid;">
@@ -155,5 +296,6 @@
                 </div>
             </div>      
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+
     </body>
 </html>

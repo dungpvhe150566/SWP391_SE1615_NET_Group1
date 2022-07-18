@@ -94,10 +94,10 @@
         </script>
     </head>
     <body>
-            <div class="container">
-                <div class="row mt-3">
-                    <div class="col-md-6">
-                        <img src="image/${product.getImageLink()}" style="width: 500px">
+        <div class="container">
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <img src="image/${product.getImageLink()}" style="width: 500px">
                     <div class="card-body p-5">
                         <h3 class="title mb-3">${product.getProductName()}</h3>
 
@@ -154,21 +154,31 @@
 
                             <div class="feedback-text">
                                 <form action="SubmitFeedbackControl" id="submit-feedback" method="POST" onsubmit="submitFeedback()" >                                    
-                                        <label for="feedback-text" class="form-label">Your Feedback(*): </label>
-                                        <textarea name="feedback-text" maxlength="1000" class="form-control" id="feedback-text" rows="5" placeholder="Your Feedback here(*)" required=""></textarea>
-                                        <input type="hidden" id="star-value" name="star-value">
-                                        <input type="hidden" id="productId" name="productId" value="${product.getProductID()}">
-                                        <input type="hidden" id="productId" name="cateID" value="${product.getCategoryID()}">
-                                        <input type="submit" class="btn btn-success mt-5" value="Submit">   
-                                        <a href="ShopController" class="btn btn-success mt-5" >Home</a>
+                                    <label for="feedback-text" class="form-label">Your Feedback(*): </label>
+                                    <textarea name="feedback-text" maxlength="1000" class="form-control" id="feedback-text" rows="5" placeholder="Your Feedback here(*)" required=""></textarea>
+                                    <input type="hidden" id="star-value" name="star-value">
+                                    <input type="hidden" id="productId" name="productId" value="${product.getProductID()}">
+                                    <input type="hidden" id="productId" name="cateID" value="${product.getCategoryID()}">
+                                    <input type="submit" class="btn btn-success mt-5" value="Submit">   
+                                    <a href="ShopController" class="btn btn-success mt-5" >Home</a>
                                 </form>
+                                <c:if test="${fb==""}">
+                                    ${mess}
+                                </c:if> 
                             </div>
+
                         </div>
-                                        
+
                     </div>
                 </div>
             </div>
 
         </div>
+        <script>
+            var eDelete = document.getElementById("feedback-text").value;
+            if (eDelete == "") {
+                window.alert("Please enter feedback detail");
+            }
+        </script>
     </body>
 </html>

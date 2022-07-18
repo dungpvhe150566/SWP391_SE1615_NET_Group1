@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package controller;
 
 import dao.impl.BlogDAOImpl;
@@ -16,7 +21,7 @@ import javax.servlet.http.HttpSession;
  *
  * @author Admin
  */
-public class PagingController extends HttpServlet {
+public class ViewlistfavoriteController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,11 +46,11 @@ public class PagingController extends HttpServlet {
             }
             indexpage = Integer.parseInt(index);
             BlogDAOImpl dao = new BlogDAOImpl();
-            List<Blog> list = dao.paging(indexpage);
+            List<Blog> list = dao.pagingFavorite(indexpage,a.getUserID());
             request.setAttribute("listP", list);
             request.setAttribute("user", a);
             request.setAttribute("indexpage", indexpage);
-            request.getRequestDispatcher("HomePage.jsp").forward(request, response);
+            request.getRequestDispatcher("Viewlistfavorite.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
             response.sendRedirect("error.jsp");

@@ -33,16 +33,19 @@ public class DeleteAccountController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         try {
+            boolean t;
             //Get ID from JSP
             String id = request.getParameter("UserID");
             System.out.println(id);
             //Call DAO
             UsersDAOImpl dao = new UsersDAOImpl();
             //Use function Delete to delete by ID
-            dao.deleteAccount(id);
-
+            t = dao.deleteAccount(id);
+            System.out.println("------------------"+t);
+            request.setAttribute("test", t);
             request.getRequestDispatcher("AccountManagerController").forward(request, response);
         } catch (Exception e) {
+
             response.sendRedirect("error.jsp");
         }
     }

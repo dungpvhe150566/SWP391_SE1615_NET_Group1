@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.UserAddressDAO;
 import dao.impl.UsersDAOImpl;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -69,6 +70,8 @@ public class EditAccountController extends HttpServlet {
             Users x = dao.getAccountByID(id);
 
             //Push data to jsp
+            HttpSession session = request.getSession();
+            session.setAttribute("userid", x.getUserID());
             request.setAttribute("id", x.getUserID());
             request.setAttribute("user", x.getUsername());
             request.setAttribute("pass", x.getPassword());
@@ -78,7 +81,7 @@ public class EditAccountController extends HttpServlet {
 
             request.getRequestDispatcher("EditAccount.jsp").forward(request, response);
         } catch (Exception e) {
-            response.sendRedirect("thankyou.jsp");
+            response.sendRedirect("error.jsp");
         }
     }
 
@@ -97,7 +100,8 @@ public class EditAccountController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         try {
             //Step 1: get data from jsp
-            String id = request.getParameter("id");
+            HttpSession session = request.getSession();
+            int uid = (int) session.getAttribute("userid");
             String user = request.getParameter("user"); //Get by name
             String password = request.getParameter("pass");
             String email = request.getParameter("email");
@@ -113,8 +117,8 @@ public class EditAccountController extends HttpServlet {
             System.out.println(isSell);
             //Step 2: update to database
             UsersDAOImpl dao = new UsersDAOImpl();
-            Users x = dao.getAccountByID(id);
-            dao.updateUser(id, user, password, email, isSell, isAdmin,x.getActiveCode(), x.getStatusID());
+            Users x = dao.getAccountByID(uid);
+            dao.updateUser(uid, user, email, isSell, isAdmin);
             request.getRequestDispatcher("AccountManagerController").forward(request, response);
 
         } catch (Exception e) {

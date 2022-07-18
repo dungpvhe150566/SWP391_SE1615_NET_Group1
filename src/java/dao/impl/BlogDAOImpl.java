@@ -3,6 +3,7 @@ package dao.impl;
 import dao.BlogDAO;
 import dao.DBContext;
 import entity.Blog;
+import entity.CommentBlog;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,6 +12,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -59,7 +62,171 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         }
         return blogs;
     }
+     public void dislikeBlog(int user, String blogId) throws Exception {
+        String sql = "delete from Like_Blog where userID=? and BlogID = ?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, user);
+            preparedStatement.setString(2, blogId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+     public void insertlike(int uid, int bid) throws Exception {
+        String sql = "insert into Like_Blog values(?,?)";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, uid);
+            preparedStatement.setInt(2, bid);
+            preparedStatement.executeUpdate();
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+     
+     public List<Blog> pagingFavorite(int index, int id) throws Exception {
+        String query = "SELECT * FROM Blog b join [Like_Blog] u on b.ID=u.BlogID where u.userID=?\n"
+                + "                               order by ID\n"
+                + "                               OFFSET ? ROWS  FETCH NEXT 5 ROWS ONLY";
+        List<Blog> list = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Get all categories store to vector
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(2, (index * 5 - 5));
+            preparedStatement.setInt(1, id);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                list.add(new Blog(rs.getInt("ID"),
+                        rs.getString("Title"),
+                        rs.getString("Content"),
+                        rs.getString("imageLink"),
+                        rs.getInt("SellerID"),
+                        rs.getString("Modife")));
+            }
+            return list;
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+    }
+     
+     public boolean addComment(CommentBlog theFeedback) throws Exception {
+        String query = "INSERT INTO Comment_Blogs VALUES (?, ?, ?, ?, ?);";
+        int check = 0;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            //Set data to the "?"
+            preparedStatement.setInt(1, theFeedback.getUserID());
+            preparedStatement.setInt(2, theFeedback.getBlogID());
+            preparedStatement.setString(3, theFeedback.getUserName());
+            preparedStatement.setString(4, theFeedback.getCommentDetail());
+            preparedStatement.setDate(5, theFeedback.getDateComment());
+            check = preparedStatement.executeUpdate();
 
+        } catch (Exception e) {
+            check = -1;
+
+            throw e;
+        } finally {
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return check > 0;
+
+    }
+
+    public Blog getBlogByID(String id) throws Exception { //Must be int type because when saving to Session, it is still int
+        String query = "SELECT * FROM Blog WHERE ID = ?";
+        List<Blog> list = new ArrayList<>();
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, id);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                return (new Blog(rs.getInt("ID"),
+                        rs.getString("Title"),
+                        rs.getString("Content"),
+                        rs.getString("imageLink"),
+                        rs.getInt("SellerID"),
+                        rs.getString("Modife")));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return null;
+    }
+    public ArrayList<CommentBlog> getCommentBlog(String id) throws Exception {
+
+        // Create vector to store all Categories
+        ArrayList<CommentBlog> blogs = new ArrayList<>();
+
+        // Query Statement to get all Categories in Database 
+        String sqlQuery = "select *from Comment_Blogs where BlogID=?";
+
+        // Resultset to store all Categories 
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Get all categories store to vector
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            preparedStatement.setString(1, id);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                // Get and store all attribute of each Product
+                blogs.add(new CommentBlog(
+                        rs.getInt("CommentID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("BlogID"),
+                        rs.getString("UserName"),
+                        rs.getString("CommentDetail"),
+                        rs.getDate("DateComment")));
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return blogs;
+    }
     public int totalPage() {
         int total = 0;
         String query = "select count(*)\n"
@@ -84,7 +251,7 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         return total;
     }
 
-    public List<Blog> paging(int index) {
+    public List<Blog> paging(int index) throws Exception {
         String query = "SELECT * FROM Blog \n"
                 + "                order by ID\n"
                 + "                OFFSET ? ROWS  FETCH NEXT 5 ROWS ONLY";
@@ -103,18 +270,99 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
                         rs.getString("Title"),
                         rs.getString("Content"),
                         rs.getString("imageLink"),
-                        rs.getInt("SellerID")));
+                        rs.getInt("SellerID"),
+                        rs.getString("Modife")));
             }
             return list;
-        } catch (Exception e) {
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
         }
-        return null;
     }
+    public boolean checkLikeBlog(String user, String blogId) throws Exception {
+        String sql = "Select * from Like_Blog where userID = ? and BlogID= ?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, user);
+            preparedStatement.setString(2, blogId);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+
+                return true;
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return false;
+    }
+    public void deleteCommentbyID(String id) throws Exception {
+        String query = "delete from Comment_Blogs where CommentID=?";
+
+        Connection conn = null;
+        PreparedStatement prepare = null;
+
+        try {
+            conn = getConnection();
+            prepare = conn.prepareStatement(query);
+            prepare.setString(1, id);
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closePrepareStatement(prepare);
+            closeConnection(conn);
+        }
+        return;
+    }
+    public int totalPagefavorite(int id) throws Exception {
+        int total = 0;
+        String query = "Select *from Blog b join [Like_Blog] u on b.ID=u.BlogID where u.userID=?";
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Get all Blogs store to vector
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setInt(1, id);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                int totalA = rs.getInt(1);
+                total = totalA / 5;
+                if (totalA % 5 != 0) {
+                    total++;
+                }
+            }
+        } catch (SQLException ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        return total;
+    }
+
 
     public static void main(String[] args) {
         BlogDAOImpl f = new BlogDAOImpl();
         List<Blog> list = new ArrayList<>();
-        list = f.paging(1);
+        try {
+            System.out.println(f.checkLikeBlog("4", "1"));
+        } catch (Exception ex) {
+            Logger.getLogger(BlogDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
         for (Blog blog : list) {
             System.out.println(blog);
         }
@@ -332,5 +580,8 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             closeConnection(connection);
         }
         return blog;
+        
     }
+    
+    
 }

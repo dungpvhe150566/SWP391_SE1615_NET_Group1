@@ -15,6 +15,9 @@ public class Blog {
     String Content;
     String imageLink;
     int SellerID;
+    String MOdife;
+
+  
 
     public Blog() {
     }
@@ -24,6 +27,15 @@ public class Blog {
         this.Content = Content;
         this.imageLink = imageLink;
         this.SellerID = SellerID;
+    }
+
+    public Blog(int ID, String Title, String Content, String imageLink, int SellerID, String MOdife) {
+        this.ID = ID;
+        this.Title = Title;
+        this.Content = Content;
+        this.imageLink = imageLink;
+        this.SellerID = SellerID;
+        this.MOdife = MOdife;
     }
 
     public Blog(int ID, String Title, String Content, String imageLink, int SellerID) {
@@ -77,6 +89,13 @@ public class Blog {
 
     public void setSellerID(int SellerID) {
         this.SellerID = SellerID;
+    }
+      public String getMOdife() {
+        return MOdife;
+    }
+
+    public void setMOdife(String MOdife) {
+        this.MOdife = MOdife;
     }
     
     

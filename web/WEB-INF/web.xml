@@ -64,6 +64,30 @@
         <servlet-name>PagingController</servlet-name>
         <servlet-class>controller.PagingController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DetailBlogController</servlet-name>
+        <servlet-class>controller.DetailBlogController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LikeBlogController</servlet-name>
+        <servlet-class>controller.LikeBlogController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DisLikeBlogController</servlet-name>
+        <servlet-class>controller.DisLikeBlogController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DislikeFavoriteController</servlet-name>
+        <servlet-class>controller.DislikeFavoriteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewlistfavoriteController</servlet-name>
+        <servlet-class>controller.ViewlistfavoriteController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SubmitCommentControl</servlet-name>
+        <servlet-class>controller.SubmitCommentControl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ProductsController</servlet-name>
         <url-pattern>/ProductsController</url-pattern>
@@ -130,6 +154,30 @@
     <servlet-mapping>
         <servlet-name>PagingController</servlet-name>
         <url-pattern>/PagingController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DetailBlogController</servlet-name>
+        <url-pattern>/DetailBlogController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LikeBlogController</servlet-name>
+        <url-pattern>/LikeBlogController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DisLikeBlogController</servlet-name>
+        <url-pattern>/DisLikeBlogController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DislikeFavoriteController</servlet-name>
+        <url-pattern>/DislikeFavoriteController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewlistfavoriteController</servlet-name>
+        <url-pattern>/ViewlistfavoriteController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SubmitCommentControl</servlet-name>
+        <url-pattern>/SubmitCommentControl</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

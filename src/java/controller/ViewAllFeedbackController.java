@@ -79,7 +79,7 @@ public class ViewAllFeedbackController extends HttpServlet {
                 index = "1";
             }
             indexpage = Integer.parseInt(index);
-            lsFeedback = feedbackDao.paging(indexpage, "ID", a.getUserID());
+            lsFeedback = feedbackDao.paging(indexpage, "ID","asc", a.getUserID());
             int total = feedbackDao.totalPage(a.getUserID());
             request.setAttribute("indexpage", indexpage);
             request.setAttribute("uid", total);
@@ -103,11 +103,10 @@ public class ViewAllFeedbackController extends HttpServlet {
                 case 1: {
                     if (sortOrder == 1) {
                         // sort ascending
-                        lsFeedback = feedbackDao.paging(indexpage, "star", a.getUserID());
+                        lsFeedback = feedbackDao.paging(indexpage, "star","asc", a.getUserID());
                     } else {
                         // sort descending
-                        lsFeedback = feedbackDao.paging(indexpage, "star", a.getUserID());
-                        Collections.reverse(lsFeedback);
+                        lsFeedback = feedbackDao.paging(indexpage, "star","desc", a.getUserID());
                     }
                     break;
                 }
@@ -115,12 +114,11 @@ public class ViewAllFeedbackController extends HttpServlet {
                 case 2: {
                     if (sortOrder == 1) {
                         // sort ascending
-                        lsFeedback = feedbackDao.paging(indexpage, "username", a.getUserID());
+                        lsFeedback = feedbackDao.paging(indexpage, "username","asc", a.getUserID());
 
                     } else {
                         // sort descending
-                        lsFeedback = feedbackDao.paging(indexpage, "username", a.getUserID());
-                        Collections.reverse(lsFeedback);
+                        lsFeedback = feedbackDao.paging(indexpage, "username","desc", a.getUserID());
                     }
                     break;
                 }
@@ -128,12 +126,11 @@ public class ViewAllFeedbackController extends HttpServlet {
                 case 3: {
                     if (sortOrder == 1) {
                         // sort ascending
-                        lsFeedback = feedbackDao.paging(indexpage, "productname", a.getUserID());
+                        lsFeedback = feedbackDao.paging(indexpage, "productname","asc", a.getUserID());
 
                     } else {
                         // sort descending
-                        lsFeedback = feedbackDao.paging(indexpage, "productname", a.getUserID());
-                        Collections.reverse(lsFeedback);
+                        lsFeedback = feedbackDao.paging(indexpage, "productname","desc", a.getUserID());
                     }
                     break;
                 }

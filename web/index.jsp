@@ -88,7 +88,7 @@
                             <img src="image/Other/ava1.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 30px;">
                             ${sessionScope.user.getUsername()}</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="profile" class="dropdown-item"><i class="fas fa-id-card"></i> YOUR PROFILE</a>
+                            <a href="" class="dropdown-item"><i class="fas fa-id-card"></i> YOUR PROFILE</a>
                             <a href="logout" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> LOG OUT</a>
                         </div>
                     </div>
@@ -139,7 +139,9 @@
                                 <a href="contact.html" class="nav-item nav-link">Contact</a>
                                 <a href="ViewAllFeedbackController" class="nav-item nav-link">Feedbacks Management</a>
                                 <a href="AccountManagerController" class="nav-item nav-link">Account Management</a>
-                                <a href="order" class="nav-item nav-link">Order Management</a>
+                                <a href="PagingController" class="nav-item nav-link">Blogs</a>
+                                <a href="ViewlistfavoriteController" class="nav-item nav-link">View List Favorite</a>
+
                             </div>
                             <div class="navbar-nav ml-auto py-0">
                                 <c:if test="${sessionScope.user==null}">
@@ -238,7 +240,7 @@
                     <div class="owl-carousel vendor-carousel">
                         <c:forEach items="${blogs}" var="blog">
                             <div class="mx-auto vendor-items border row align-items-center " style="height: 300px;">
-                                <a class="text-center" href="#"><img src="image/${blog.getImageLink()}" alt="">${blog.getTitle()}</a>
+                                <a class="text-center" href="DetailBlogController?ID=${blog.getID()}"><img src="image/${blog.getImageLink()}" alt="">${blog.getTitle()}</a>
                             </div>
                         </c:forEach>
                     </div>

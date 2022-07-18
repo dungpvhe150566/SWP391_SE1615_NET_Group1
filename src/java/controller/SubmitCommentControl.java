@@ -5,6 +5,11 @@
  */
 package controller;
 
+import dao.impl.BlogDAOImpl;
+import dao.impl.FeedbackDAOImpl;
+import dao.impl.ProductDAOImpl;
+import entity.Blog;
+import entity.CommentBlog;
 import entity.Feedback;
 import entity.Product;
 import entity.Users;
@@ -16,14 +21,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import dao.impl.FeedbackDAOImpl;
-import dao.impl.ProductDAOImpl;
 
 /**
  *
  * @author Admin
  */
-public class SubmitFeedbackControl extends HttpServlet {
+public class SubmitCommentControl extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,18 +39,18 @@ public class SubmitFeedbackControl extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+       response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("utf-8");
 
         try {
-            ProductDAOImpl productDao = new ProductDAOImpl();
+            BlogDAOImpl BlogDao = new BlogDAOImpl();
             //get productId from detail
-            String productId = request.getParameter("productId");
+            String BlogId = request.getParameter("BlogId");
             //get product from Id
-            Product p = productDao.getProductByID(productId);
+            Blog p = BlogDao.getBlogByID(BlogId);
             //Set product to FeedbackForm.jsp
-            request.setAttribute("product", p);
-            request.getRequestDispatcher("FeedbackForm.jsp").forward(request, response);
+            request.setAttribute("blog", p);
+            request.getRequestDispatcher("CommentBlog.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,24 +93,17 @@ public class SubmitFeedbackControl extends HttpServlet {
             HttpSession session = request.getSession();
             Users currentAccount = (Users) session.getAttribute("user");
 
-            // get FeedbackDAOImpl
-            FeedbackDAOImpl feedbackDAO = new FeedbackDAOImpl();
+            // get BlogDAOImpl
+            BlogDAOImpl blogDAO = new BlogDAOImpl();
 
-            // get current product id
-            int productId = Integer.parseInt(request.getParameter("productId"));
+            // get current blog id
+            int BlogId = Integer.parseInt(request.getParameter("blogId"));
+            System.out.println(BlogId);
 
-            // get current product id
-            int cateid = Integer.parseInt(request.getParameter("cateID"));
-
-            // get input rating
-            String star = request.getParameter("star-value");
-            if (star == null) {
-                star = "0";
-            }
-            String feedback = request.getParameter("feedback-text");
-            if (feedback.trim().compareTo("") == 0) {
+            String Comment = request.getParameter("Comment-text");
+            if (Comment.trim().compareTo("") == 0) {
                 request.setAttribute("mess", "Please enter feedback detail");
-                request.setAttribute("fb", feedback);
+                request.setAttribute("fb", Comment);
                 request.getRequestDispatcher("FeedbackForm");
 
             } else {
@@ -116,21 +112,22 @@ public class SubmitFeedbackControl extends HttpServlet {
                 java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 
                 // create feedback
-                Feedback userFeedback = new Feedback();
-                userFeedback.setProductID(productId);
+                CommentBlog userFeedback = new CommentBlog();
+                userFeedback.setBlogID(BlogId);
                 userFeedback.setUserID(currentAccount.getUserID());
+                userFeedback.setUserName(currentAccount.getUsername());
                 out.println(currentAccount.getUserID());
-                userFeedback.setStar(Integer.parseInt(star));
-                userFeedback.setFeedbackDetails(feedback.trim());
-                userFeedback.setDateFeedback(sqlDate);
+                userFeedback.setCommentDetail(Comment.trim());
+                userFeedback.setDateComment(sqlDate);
+                System.out.println(sqlDate);
                 System.out.println(userFeedback);
 
                 // add feedback to database
-                boolean addFeedback = feedbackDAO.addFeedback(userFeedback);
+                boolean addComment = blogDAO.addComment(userFeedback);
 
                 // redirect to Home
-                if (addFeedback) {
-                    request.getRequestDispatcher("ShopDetailController?do=ViewDetail&categoryID=" + cateid + "&productID=" + productId).forward(request, response);
+                if (addComment) {//DetailBlogController?ID=1
+                    request.getRequestDispatcher("DetailBlogController?ID=" + BlogId).forward(request, response);
                 }
             }
         } catch (Exception e) {
@@ -148,4 +145,5 @@ public class SubmitFeedbackControl extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }
