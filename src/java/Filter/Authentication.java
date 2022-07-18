@@ -112,12 +112,17 @@ public class Authentication implements Filter {
         HttpServletResponse httpresponse = (HttpServletResponse) response;
         String url = httprequest.getServletPath();
 
+        // admin /dontrollner-dasboard  /ProductsController  /blogs /ProcessOrders
         HttpSession session = httprequest.getSession();
         Users user = (Users) session.getAttribute("user");
         if (user == null) {
             if (url.equals("/ViewAllFeedbackController")
                     || url.equals("/AccountManagerController")
-                    || url.equals("/ViewlistfavoriteController")) {
+                    || url.equals("/ViewlistfavoriteController")
+                    || url.equals("/dontrollner-dasboard")
+                    || url.equals("/ProductsController")
+                    || url.equals("/blogs")
+                    || url.equals("/ProcessOrders")) {
                 httpresponse.sendRedirect("error.jsp");
             }
         } else {
@@ -126,42 +131,25 @@ public class Authentication implements Filter {
                     httpresponse.sendRedirect("error.jsp");
                 }
             } else if (user.getIsSeller() == 1) {
-                if (url.equals("/ViewlistfavoriteController")) {
+                if (url.equals("/ViewlistfavoriteController")
+                        || url.equals("/dontrollner-dasboard")
+                        || url.equals("/ProductsController")
+                        || url.equals("/blogs")
+                        || url.equals("/ProcessOrders")) {
                     httpresponse.sendRedirect("error.jsp");
                 }
             } else {
                 if (url.equals("/ViewAllFeedbackController")
-                        || url.equals("/AccountManagerController")) {
+                        || url.equals("/AccountManagerController")
+                        || url.equals("/dontrollner-dasboard")
+                        || url.equals("/ProductsController")
+                        || url.equals("/blogs")
+                        || url.equals("/ProcessOrders")) {
                     httpresponse.sendRedirect("error.jsp");
                 }
             }
         }
 
-//        if (url.equals("/ViewAllFeedbackController")
-//                || url.equals("/AccountManagerController")) {
-//            if(session.getAttribute("user")==null){
-//                    httpresponse.sendRedirect("error.jsp");
-//            }
-//            if(session.getAttribute("user")!=null){
-//                Users user = (Users)session.getAttribute("user");
-//                if(user.getIsAdmin()!=1){
-//                    System.out.println(user.getIsAdmin());
-//                    httpresponse.sendRedirect("error.jsp");
-//                }
-//            }
-//        }
-//        if(url.equals("/ViewlistfavoriteController")){
-//            if(session.getAttribute("user")!=null){
-//                Users user = (Users)session.getAttribute("user");
-//                if(user.getIsAdmin()==1){
-//                    System.out.println(user.getIsAdmin());
-//                    httpresponse.sendRedirect("error.jsp");
-//                }
-//            }
-//            if(session.getAttribute("user")==null){
-//                    httpresponse.sendRedirect("error.jsp");
-//            }
-//        }
         Throwable problem = null;
         try {
             chain.doFilter(request, response);
