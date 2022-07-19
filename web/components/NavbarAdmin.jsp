@@ -55,6 +55,11 @@
                                 <i class="fas fa-blog"></i> Blogs
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="order">
+                                <i class="fa-thin"></i> Order
+                            </a>
+                        </li>
                         <li class="nav-item dropdown">
                             <a
                                 class="nav-link dropdown-toggle"

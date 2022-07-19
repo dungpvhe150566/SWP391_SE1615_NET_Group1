@@ -84,6 +84,7 @@ FACEBOOK: https://www.facebook.com/themefisher
     =====================================-->
     
     <!-- Main jQuery -->
+    
     <script src="plugins/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 3.1 -->
     <script src="plugins/bootstrap/js/bootstrap.min.js"></script>

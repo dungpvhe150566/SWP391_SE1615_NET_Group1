@@ -81,7 +81,7 @@ public class OrderServlet extends HttpServlet {
             request.setAttribute("tag", index);
             request.setAttribute("endP", endPage);
             request.setAttribute("listO", listO);
-           request.getRequestDispatcher("allorder.jsp").forward(request, response);
+           request.getRequestDispatcher("finalorder.jsp").forward(request, response);
     }
 
     /**

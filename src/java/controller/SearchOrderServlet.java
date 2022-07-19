@@ -65,7 +65,7 @@ public class SearchOrderServlet extends HttpServlet {
         OrdersDAOImpl dao = new OrdersDAOImpl();
         List<Orders> listO = dao.searchTotal(text);
         request.setAttribute("listO", listO);
-        request.getRequestDispatcher("allorder.jsp").forward(request, response);
+        request.getRequestDispatcher("finalorder.jsp").forward(request, response);
     }
 
     /**

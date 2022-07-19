@@ -22,7 +22,7 @@ import javax.mail.internet.MimeMessage;
  *
  * @author HP
  */
-public class SendEmail {
+public class SendEmail1 {
     public void sendEmail(String email) throws MessagingException {
         Properties pr = new Properties();
         System.out.println("Preparing to send main");
@@ -48,10 +48,10 @@ public class SendEmail {
             message.setFrom(new InternetAddress(account));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(infor));
             message.setSubject("Email Verification");
-            message.setText("Thank you for using our service click here to change your pass \nhttp://localhost:8080/confirm_reset.jsp");
+            message.setText("Thank you for using our service click here to register your account \nhttp://localhost:8080/confirm.jsp");
             return message;           
         } catch (MessagingException ex) {
-            Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SendEmail1.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }

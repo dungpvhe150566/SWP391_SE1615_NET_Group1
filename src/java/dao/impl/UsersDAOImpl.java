@@ -399,10 +399,8 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
     public static void main(String[] args) {
         UsersDAOImpl dao = new UsersDAOImpl();
         try {
-            ArrayList<Users> u = new ArrayList<Users>();
-            u = dao.searchAccountInManager("kmkmmkmk", 1, 6);
-            System.out.println(u.isEmpty());
-            for (Users users : u) {
+            List<Users> listU = dao.getAll();
+            for (Users users : listU) {
                 System.out.println(users);
             }
 

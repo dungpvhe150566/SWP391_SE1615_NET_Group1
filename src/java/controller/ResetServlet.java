@@ -69,23 +69,24 @@ public class ResetServlet extends HttpServlet {
             throws ServletException, IOException {
         try {
             String email = request.getParameter("email");
+
             UsersDAOImpl dao = new UsersDAOImpl();
             List<Users> list = dao.getAll();
             for (Users users : list) {
-                if (users.getEmail().equalsIgnoreCase(email)) {
+                if (users.getEmail().equalsIgnoreCase("nviet0139@gmail.com")) {
                     try {
                         SendEmail SE = new SendEmail();
                         SE.sendEmail(email);
                         HttpSession session = request.getSession();
                         session.setAttribute("email", email);
-                        request.getRequestDispatcher("thankyou.jsp").forward(request, response);
+                        request.getRequestDispatcher("thank1.jsp").forward(request, response);
                     } catch (MessagingException ex) {
                     }
                 }
             }
             String text = "Your email doesn't exits";
             request.setAttribute("alert", text);
-            request.getRequestDispatcher("reset.jsp").forward(request, response);
+            request.getRequestDispatcher("reset.jsp").forward(request, response);                  
         } catch (Exception ex) {
             Logger.getLogger(ResetServlet.class.getName()).log(Level.SEVERE, null, ex);
         }

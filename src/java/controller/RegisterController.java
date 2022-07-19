@@ -7,6 +7,7 @@ package controller;
 
 import dao.impl.UsersDAOImpl;
 import entity.SendEmail;
+import entity.SendEmail1;
 import entity.Users;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -109,7 +110,7 @@ public class RegisterController extends HttpServlet {
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
             try {
-                SendEmail SE = new SendEmail();  //Truong hop dang nhap thanh cong 
+                SendEmail1 SE = new SendEmail1();  //Truong hop dang nhap thanh cong 
                 SE.sendEmail(email); //Gui email
                 HttpSession session = request.getSession(); //Day email,username,password len session
 //            PrintWriter out = response.getWriter();
@@ -117,7 +118,7 @@ public class RegisterController extends HttpServlet {
                 session.setAttribute("email2", email);
                 session.setAttribute("username2", username);
                 session.setAttribute("password", password);
-                request.getRequestDispatcher("thankyou.jsp").forward(request, response); //Chuyen den trang thankyou.jsp
+                request.getRequestDispatcher("thank1.jsp").forward(request, response); //Chuyen den trang thankyou.jsp
             } catch (Exception e) {
                 System.out.println(e);
             }
