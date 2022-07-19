@@ -117,7 +117,7 @@ public class ShopController extends HttpServlet {
             ProductDAOImpl productDao = new ProductDAOImpl();// create a DAO object to get the Products table data from the Database
             //Get List Products follow (CategoryID. ProductName, Price, ManufacturerID,Sort)
             ArrayList<Product> productsList = productDao.getProductList(categoryID, productName, prices,
-                    manufacturersID, 6 * (indexPage - 1) + 1, 6 * indexPage, sort);
+                    manufacturersID, 6 * (indexPage - 1), 6 * indexPage, sort);
             request.setAttribute("products", productsList);// Set list Products to View page
 
             /* Get total PAge of list product(each page have max 6 products) */
