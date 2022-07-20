@@ -101,7 +101,12 @@ public class SubmitCommentControl extends HttpServlet {
             if (Comment.trim().compareTo("") == 0) {
                 request.setAttribute("mess", "Please enter feedback detail");
                 request.setAttribute("fb", Comment);
-                request.getRequestDispatcher("FeedbackForm");
+                BlogDAOImpl BlogDao = new BlogDAOImpl();
+                //get Blog from Id
+                Blog p = BlogDao.getBlogByID(BlogId+"");
+                //Set Blog to CommentBlog.jsp
+                request.setAttribute("blog", p);
+                request.getRequestDispatcher("CommentBlog.jsp").forward(request, response);
 
             } else {
                 //get current date

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.impl.UsersDAOImpl;
+import entity.Users;
 
 /**
  * This class makes handling requirements for users to manage the user list
@@ -34,17 +35,26 @@ public class DeleteAccountController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         try {
-            boolean t;
             //Get UserID from JSP
             String id = request.getParameter("UserID");
             System.out.println(id);
             //Call DAO
             UsersDAOImpl dao = new UsersDAOImpl();
+            Users u= dao.getAccountByID(id);
             //Use function Delete to delete by ID
-            t = dao.deleteAccount(id);
-            System.out.println("------------------" + t);
+            int countOrder = dao.checkExistOrder(id);
+            System.out.println(countOrder);
+            if (countOrder == 0) {
+                dao.deleteAccount(id);
+            } else {
+                request.setAttribute("test", countOrder);
+                request.setAttribute("isseller", u.getIsSeller());
+                request.setAttribute("isadmin", u.getIsAdmin());
+                request.setAttribute("mes", "Can't delete account");
+                request.getRequestDispatcher("AccountManagerController").forward(request, response);
+
+            }
             //Put data to JSP
-            request.setAttribute("test", t);
             request.getRequestDispatcher("AccountManagerController").forward(request, response);
         } catch (Exception e) {
 

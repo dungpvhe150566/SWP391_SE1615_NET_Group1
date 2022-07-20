@@ -109,7 +109,12 @@ public class SubmitFeedbackControl extends HttpServlet {
             if (feedback.trim().compareTo("") == 0) {
                 request.setAttribute("mess", "Please enter feedback detail");
                 request.setAttribute("fb", feedback);
-                request.getRequestDispatcher("FeedbackForm");
+                ProductDAOImpl productDao = new ProductDAOImpl();//Call ProductDAOImpl
+                //get product from Id
+                Product p = productDao.getProductByID(productId + "");
+                //Set product to FeedbackForm.jsp
+                request.setAttribute("product", p);
+                request.getRequestDispatcher("FeedbackForm.jsp").forward(request, response);
 
             } else {
                 //get current date

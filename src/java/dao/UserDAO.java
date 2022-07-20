@@ -27,7 +27,7 @@ public interface UserDAO {
 
     void insert(String email, String username, String password) throws Exception;
 
-    boolean deleteAccount(String id) throws Exception;
+    void deleteAccount(String id) throws Exception;
 
     void updateUser(int id, String user, String email, String isSell, String isAdmin) throws Exception;
 

@@ -197,15 +197,11 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         PreparedStatement prepare = null;
         try {
             int result = 0;
-//            PreparedStatement st = conn.prepareStatement(query);
-
             conn = getConnection();
             prepare = conn.prepareStatement(query);
-
             prepare.setString(1, username);
             prepare.setString(2, password);
             prepare.setString(3, email);
-//            st.executeUpdate();
             prepare.executeUpdate();
         } catch (Exception e) {
             throw e;
@@ -221,14 +217,47 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
      * @param String id
      * @return
      */
-    public boolean deleteAccount(String id) throws Exception {
-        String query = "	delete from Orders where UserID = ?\n"
-                + "delete from Product where SellerID = ?\n"
-                + "delete from Cart where UserID = ?\n"
-                + "delete from Feedback where UserID = ?\n"
-                + "delete from Blog where SellerID=?\n"
-                + "delete from UserAddress where UserID=?\n"
-                + "delete from Users where UserID = ?";
+    public int checkExistOrder(String id) throws Exception {
+        String query = "select count(ID) from orders where userID=?";
+        int count = 0;
+        Connection conn = null;
+        PreparedStatement prepare = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            prepare = conn.prepareStatement(query);
+            prepare.setString(1, id);
+            rs = prepare.executeQuery();
+            // set count order to variable
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+
+        } catch (Exception e) {
+            throw e;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(prepare);
+            closeConnection(conn);
+        }
+        return count;
+    }
+
+    /**
+     * delete Account
+     *
+     * @param String id
+     * @return
+     */
+    public void deleteAccount(String id) throws Exception {
+        String query = "	delete from Product where SellerID =?\n"
+                + "                delete from Cart where UserID = ?\n"
+                + "                delete from Feedback where UserID = ?\n"
+                + "                delete from Blog where SellerID=?\n"
+                + "                delete from UserAddress where UserID=?\n"
+                + "				delete from Comment_Blogs where UserID=\n"
+                + "                delete from Users where UserID = ?";
 
         Connection conn = null;
         PreparedStatement prepare = null;
@@ -246,13 +275,11 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
             prepare.setString(6, id);
             prepare.setString(7, id);
             prepare.executeUpdate();
-            return true;
         } catch (Exception e) {
             throw e;
         } finally {
             closePrepareStatement(prepare);
             closeConnection(conn);
-            return false;
         }
 
     }
@@ -478,10 +505,7 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
     public static void main(String[] args) {
         UsersDAOImpl dao = new UsersDAOImpl();
         try {
-            List<Users> listU = dao.getAll();
-            for (Users users : listU) {
-                System.out.println(users);
-            }
+            System.out.println(dao.checkExistOrder("7"));
 
         } catch (Exception ex) {
             Logger.getLogger(UsersDAOImpl.class.getName()).log(Level.SEVERE, null, ex);

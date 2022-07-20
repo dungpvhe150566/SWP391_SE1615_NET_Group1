@@ -112,6 +112,9 @@
                                     <input type="hidden" id="blogId" name="blogId" value="${blog.getID()}">
                                     <input type="submit" class="btn btn-success mt-5" value="Submit">   
                                     <a href="ShopController" class="btn btn-success mt-5" >Home</a>
+                                    <c:if test="${fb==""}">
+                                        ${mess}
+                                    </c:if> 
                                 </form>
                             </div>
 

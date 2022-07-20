@@ -161,10 +161,10 @@
                                     <input type="hidden" id="productId" name="cateID" value="${product.getCategoryID()}">
                                     <input type="submit" class="btn btn-success mt-5" value="Submit">   
                                     <a href="ShopController" class="btn btn-success mt-5" >Home</a>
+                                    <c:if test="${fb==""}">
+                                        ${mess}
+                                    </c:if> 
                                 </form>
-                                <c:if test="${fb==""}">
-                                    ${mess}
-                                </c:if> 
                             </div>
 
                         </div>
@@ -174,11 +174,5 @@
             </div>
 
         </div>
-        <script>
-            var eDelete = document.getElementById("feedback-text").value;
-            if (eDelete === "") {
-                window.alert("Please enter feedback detail");
-            }
-        </script>
     </body>
 </html>

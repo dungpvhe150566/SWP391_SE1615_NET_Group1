@@ -133,12 +133,11 @@
                                                                 </a>   
                                                             </form>
                                                         </td>
-                                                
-                                            </c:if>
 
-                                            </tr>
-                                        </c:forEach>
-                                        <input id="eDelete" value="${test}" hidden="true"/>
+                                                    </c:if>
+
+                                                </tr>
+                                            </c:forEach>
                                         </tbody>
                                     </table>
                                 </div>
@@ -169,18 +168,15 @@
                             </c:if>
                             <c:if test="${totalPage==0}">
                                 ${mess}
-                            </c:if>               
+                            </c:if>  
+                            <c:if test="${test!=0|| isseller!=0 ||isadmin!=0}">
+                                ${mes}
+                            </c:if> 
                         </div>
                     </div>
 
                 </div>  
             </div>
         </div>
-        <script>
-            var eDelete = document.getElementById("eDelete").value;
-            if (eDelete == "false") {
-                window.alert("Can't delete account!!!");
-            }
-        </script>
     </body>
 </html>

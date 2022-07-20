@@ -73,7 +73,7 @@
                             <div class="tab-pane fade" id="tab-pane-3">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <h4 class="mb-4">${comment.size()} Review for this Product</h4>
+                                        <h4 class="mb-4">${comment.size()} Review for this Blog</h4>
 
 
                                         <c:forEach items="${comment}" var="c">
