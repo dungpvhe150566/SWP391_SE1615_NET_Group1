@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -62,12 +61,21 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         }
         return blogs;
     }
-     public void dislikeBlog(int user, String blogId) throws Exception {
+
+    /**
+     * Dislike a blog
+     *
+     * @param int user, String blogId
+     */
+    public void dislikeBlog(int user, String blogId) throws Exception {
+        // Query Statement to get all Categories in Database 
+
         String sql = "delete from Like_Blog where userID=? and BlogID = ?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         try {
+            //open connect
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, user);
@@ -81,12 +89,22 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             closeConnection(connection);
         }
     }
-     public void insertlike(int uid, int bid) throws Exception {
+
+    /**
+     * insertlike a blog
+     *
+     * @param int uid, int bid
+     */
+    public void insertlike(int uid, int bid) throws Exception {
+        // Query Statement to get all Categories in Database 
+
         String sql = "insert into Like_Blog values(?,?)";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         try {
+            //open connect
+
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, uid);
@@ -100,8 +118,16 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             closeConnection(connection);
         }
     }
-     
-     public List<Blog> pagingFavorite(int index, int id) throws Exception {
+
+    /**
+     * all blog in list favorite from database
+     *
+     * @param int index, int id
+     * @return list
+     */
+    public List<Blog> pagingFavorite(int index, int id) throws Exception {
+        // Query Statement to get all Categories in Database 
+
         String query = "SELECT * FROM Blog b join [Like_Blog] u on b.ID=u.BlogID where u.userID=?\n"
                 + "                               order by ID\n"
                 + "                               OFFSET ? ROWS  FETCH NEXT 5 ROWS ONLY";
@@ -110,7 +136,8 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         // Get all categories store to vector
-        try {
+        try {            //open connect
+
             connection = getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(2, (index * 5 - 5));
@@ -133,13 +160,22 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             closeConnection(connection);
         }
     }
-     
-     public boolean addComment(CommentBlog theFeedback) throws Exception {
+
+    /**
+     * add comment a blog
+     *
+     * @param CommentBlog theFeedback
+     * @return boolean
+     */
+    public boolean addComment(CommentBlog theFeedback) throws Exception {
+        // Query Statement to get all Categories in Database 
+
         String query = "INSERT INTO Comment_Blogs VALUES (?, ?, ?, ?, ?);";
         int check = 0;
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        try {
+        try {            //open connect
+
             connection = getConnection();
             preparedStatement = connection.prepareStatement(query);
             //Set data to the "?"
@@ -162,13 +198,22 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
 
     }
 
+    /**
+     * get blog by ID
+     *
+     * @param String id
+     * @return Blog
+     */
     public Blog getBlogByID(String id) throws Exception { //Must be int type because when saving to Session, it is still int
+        // Query Statement to get all Categories in Database 
+
         String query = "SELECT * FROM Blog WHERE ID = ?";
         List<Blog> list = new ArrayList<>();
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
-        try {
+        try {            //open connect
+
             connection = getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, id);
@@ -190,6 +235,13 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         }
         return null;
     }
+
+    /**
+     * get comment blog by ID
+     *
+     * @param String id
+     * @return Arraylist
+     */
     public ArrayList<CommentBlog> getCommentBlog(String id) throws Exception {
 
         // Create vector to store all Categories
@@ -227,15 +279,24 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         }
         return blogs;
     }
+
+    /**
+     * get total page
+     *
+     * @param
+     * @return int
+     */
     public int totalPage() {
         int total = 0;
+        // Query Statement to get all Categories in Database 
+
         String query = "select count(*)\n"
                 + "               from Blog";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
-        // Get all categories store to vector
-        try {
+        try {            //open connect
+
             connection = getConnection();
             preparedStatement = connection.prepareStatement(query);
             rs = preparedStatement.executeQuery();
@@ -251,7 +312,15 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         return total;
     }
 
+    /**
+     * get list Blog
+     *
+     * @param int index
+     * @return List
+     */
     public List<Blog> paging(int index) throws Exception {
+        // Query Statement to get all Categories in Database 
+
         String query = "SELECT * FROM Blog \n"
                 + "                order by ID\n"
                 + "                OFFSET ? ROWS  FETCH NEXT 5 ROWS ONLY";
@@ -260,7 +329,8 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         // Get all categories store to vector
-        try {
+        try {            //open connect
+
             connection = getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, (index * 5 - 5));
@@ -282,12 +352,22 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             closeConnection(connection);
         }
     }
+
+    /**
+     * check like blog
+     *
+     * @param String user, String blogId
+     * @return boolean
+     */
     public boolean checkLikeBlog(String user, String blogId) throws Exception {
+        // Query Statement to get all Categories in Database 
+
         String sql = "Select * from Like_Blog where userID = ? and BlogID= ?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
-        try {
+        try {            //open connect
+
             connection = getConnection();
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, user);
@@ -306,13 +386,23 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         }
         return false;
     }
+
+    /**
+     * delete comment blog
+     *
+     * @param String id
+     * @return
+     */
     public void deleteCommentbyID(String id) throws Exception {
+        // Query Statement to get all Categories in Database 
+
         String query = "delete from Comment_Blogs where CommentID=?";
 
         Connection conn = null;
         PreparedStatement prepare = null;
 
-        try {
+        try {            //open connect
+
             conn = getConnection();
             prepare = conn.prepareStatement(query);
             prepare.setString(1, id);
@@ -325,14 +415,24 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         }
         return;
     }
+
+    /**
+     * get totalPagefavorite
+     *
+     * @param int id
+     * @return int
+     */
     public int totalPagefavorite(int id) throws Exception {
         int total = 0;
-        String query = "Select *from Blog b join [Like_Blog] u on b.ID=u.BlogID where u.userID=?";
+        // Query Statement to get all Categories in Database 
+
+        String query = "Select count(ID) from Blog b join [Like_Blog] u on b.ID=u.BlogID where u.userID=?";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         // Get all Blogs store to vector
-        try {
+        try {            //open connect
+
             connection = getConnection();
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, id);
@@ -354,12 +454,11 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         return total;
     }
 
-
     public static void main(String[] args) {
         BlogDAOImpl f = new BlogDAOImpl();
         List<Blog> list = new ArrayList<>();
         try {
-            System.out.println(f.checkLikeBlog("4", "1"));
+            System.out.println(f.totalPagefavorite(4));
         } catch (Exception ex) {
             Logger.getLogger(BlogDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -580,8 +679,7 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             closeConnection(connection);
         }
         return blog;
-        
+
     }
-    
-    
+
 }

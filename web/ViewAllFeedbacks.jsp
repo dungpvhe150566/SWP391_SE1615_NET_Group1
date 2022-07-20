@@ -169,7 +169,7 @@
                             </c:if>
                             <c:if test = "${sessionScope.user != null}">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#"><i class="fas fa-user-circle"></i>Hello ${sessionScope.acc.user}</a>
+                                    <a class="nav-link" href="#"><i class="fas fa-user-circle"></i>Hello ${sessionScope.user.getUsername()}</a>
                                     <hr class="line">
                                 </li>
 
@@ -246,7 +246,6 @@
                             <table id="feedback" style=" border: 1px solid;">
                                 <thead >
                                     <tr>
-                                        <th style="text-align: center;">FeedbackID</th>
                                         <th style="text-align: center;">User</th>
                                         <th style="text-align: center;">Star</th>
                                         <th style="text-align: center;">Product</th>
@@ -258,7 +257,6 @@
                                 <tbody>
                                     <c:forEach var="item" items="${lsFeedback}" >
                                         <tr style="padding:2px; border: 1px solid">
-                                            <td>${item.getID()}</td>
                                             <td>${item.getUserName()}</td>
                                             <td>
                                                 <c:forEach begin="1" end="${item.getStar()}">

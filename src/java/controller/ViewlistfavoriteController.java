@@ -1,7 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright(C) 2022,Group1-NETSE1615.<p>
+ * Shopping Web:
+ * <p>
+ * Electronic Shop<p>
+ *
+ * Record of change:
+ * <p>
+ * DATE Version AUTHOR DESCRIPTION<p>
+ * 2022-08-16 01 HaiPM Update Code Convention<p>
  */
 package controller;
 
@@ -9,7 +15,6 @@ import dao.impl.BlogDAOImpl;
 import entity.Blog;
 import entity.Users;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,20 +23,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
- * @author Admin
- */
+   * This class makes handling requirements for users to view the favorite blog list
+*View favorite blog list
+<p>
+   * Error: Error occurs will be received and processed and handled errors
+   * Page <p>
+   *
+   * @Author haipm
+   */
 public class ViewlistfavoriteController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");

@@ -1,10 +1,20 @@
+/**
+ * Copyright(C) 2022,Group1-NETSE1615.<p>
+ * Shopping Web:
+ * <p>
+ * Electronic Shop<p>
+ *
+ * Record of change:
+ * <p>
+ * DATE Version AUTHOR DESCRIPTION<p>
+ * 2022-08-16 01 HaiPM Update Code Convention<p>
+ */
 package controller;
 
 import dao.impl.BlogDAOImpl;
 import entity.Blog;
 import entity.Users;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,20 +23,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
+ * This class makes the user requirement is view list blog View List Blog
+ * <p>
+ * Error: Error occurs will be received and processed and handled errors Page
+ * <p>
  *
- * @author Admin
+ * @Author haipm
  */
 public class PagingController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");

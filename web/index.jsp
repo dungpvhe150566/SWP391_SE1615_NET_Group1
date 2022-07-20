@@ -137,10 +137,11 @@
                                 <a href="HomeController" class="nav-item nav-link active">Home</a>
                                 <a href="ShopController" class="nav-item nav-link">Shop</a>
                                 <a href="contact.html" class="nav-item nav-link">Contact</a>
-                                <a href="ViewAllFeedbackController" class="nav-item nav-link">Feedbacks Management</a>
-                                <a href="AccountManagerController" class="nav-item nav-link">Account Management</a>
                                 <a href="PagingController" class="nav-item nav-link">Blogs</a>
-                                <a href="ViewlistfavoriteController" class="nav-item nav-link">View List Favorite</a>
+                                <c:if test="${sessionScope.user.getIsAdmin()==0 && sessionScope.user.getIsSeller()==0 }">
+                                    <a href="ViewlistfavoriteController" class="nav-item nav-link">View List Favorite</a>
+
+                                </c:if>
 
                             </div>
                             <div class="navbar-nav ml-auto py-0">
@@ -278,108 +279,108 @@
 
         <!--ChatBox-->
         <div class="" id="myForm">
-        <div class="container">
-            <h3 class=" text-center">Messaging</h3>
-            <div class="messaging">
-                <div class="inbox_msg">
-                    <div class="inbox_people">
-                        <div class="headind_srch">
-                            <div class="recent_heading">
-                                <h4>Recent</h4>
-                            </div>
-                            <div class="srch_bar">
-                                <div class="stylish-input-group">
-                                    <input type="text" class="search-bar" placeholder="Search">
-                                    <span class="input-group-addon">
-                                        <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                                    </span>
+            <div class="container">
+                <h3 class=" text-center">Messaging</h3>
+                <div class="messaging">
+                    <div class="inbox_msg">
+                        <div class="inbox_people">
+                            <div class="headind_srch">
+                                <div class="recent_heading">
+                                    <h4>Recent</h4>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="inbox_chat">
-                            <div class="chat_list active_chat">
-                                <div class="chat_people">
-                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png"
-                                            alt="sunil"> </div>
-                                    <div class="chat_ib">
-                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                        <p>Test, which is a new approach to have all solutions
-                                            astrology under one roof.</p>
+                                <div class="srch_bar">
+                                    <div class="stylish-input-group">
+                                        <input type="text" class="search-bar" placeholder="Search">
+                                        <span class="input-group-addon">
+                                            <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            <div class="chat_list">
-                                <div class="chat_people">
-                                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png"
-                                            alt="sunil"> </div>
-                                    <div class="chat_ib">
-                                        <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                        <p>Test, which is a new approach to have all solutions
-                                            astrology under one roof.</p>
+                            <div class="inbox_chat">
+                                <div class="chat_list active_chat">
+                                    <div class="chat_people">
+                                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png"
+                                                                    alt="sunil"> </div>
+                                        <div class="chat_ib">
+                                            <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                            <p>Test, which is a new approach to have all solutions
+                                                astrology under one roof.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="chat_list">
+                                    <div class="chat_people">
+                                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png"
+                                                                    alt="sunil"> </div>
+                                        <div class="chat_ib">
+                                            <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
+                                            <p>Test, which is a new approach to have all solutions
+                                                astrology under one roof.</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mesgs">
-                        <div id="textAreaMessage" class="msg_history">
-                            <div class="incoming_msg">
-                                <div class="incoming_msg_img"> <img
-                                        src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                <div class="received_msg">
-                                    <div class="received_withd_msg">
+                        <div class="mesgs">
+                            <div id="textAreaMessage" class="msg_history">
+                                <div class="incoming_msg">
+                                    <div class="incoming_msg_img"> <img
+                                            src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                                    <div class="received_msg">
+                                        <div class="received_withd_msg">
+                                            <p>Test which is a new approach to have all
+                                                solutions</p>
+                                            <span class="time_date"> 11:01 AM | June 9</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="outgoing_msg">
+                                    <div class="sent_msg">
                                         <p>Test which is a new approach to have all
                                             solutions</p>
                                         <span class="time_date"> 11:01 AM | June 9</span>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="outgoing_msg">
-                                <div class="sent_msg">
-                                    <p>Test which is a new approach to have all
-                                        solutions</p>
-                                    <span class="time_date"> 11:01 AM | June 9</span>
-                                </div>
-                            </div>
-                            <div class="incoming_msg">
-                                <div class="incoming_msg_img"> <img
-                                        src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                <div class="received_msg">
-                                    <div class="received_withd_msg">
-                                        <p>Test, which is a new approach to have</p>
-                                        <span class="time_date"> 11:01 AM | Yesterday</span>
+                                <div class="incoming_msg">
+                                    <div class="incoming_msg_img"> <img
+                                            src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                                    <div class="received_msg">
+                                        <div class="received_withd_msg">
+                                            <p>Test, which is a new approach to have</p>
+                                            <span class="time_date"> 11:01 AM | Yesterday</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="outgoing_msg">
-                                <div class="sent_msg">
-                                    <p>Apollo University, Delhi, India Test</p>
-                                    <span class="time_date"> 11:01 AM | Today</span>
-                                </div>
-                            </div>
-                            <div class="incoming_msg">
-                                <div class="incoming_msg_img"> <img
-                                        src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                <div class="received_msg">
-                                    <div class="received_withd_msg">
-                                        <p>We work directly with our designers and suppliers,</p>
+                                <div class="outgoing_msg">
+                                    <div class="sent_msg">
+                                        <p>Apollo University, Delhi, India Test</p>
                                         <span class="time_date"> 11:01 AM | Today</span>
                                     </div>
                                 </div>
+                                <div class="incoming_msg">
+                                    <div class="incoming_msg_img"> <img
+                                            src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                                    <div class="received_msg">
+                                        <div class="received_withd_msg">
+                                            <p>We work directly with our designers and suppliers,</p>
+                                            <span class="time_date"> 11:01 AM | Today</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="type_msg">
-                            <div class="input_msg_write">
-                                <input type="text" id="textMessage"  class="write_msg" placeholder="Type a message" />
-                                <button onclick="sendMessage()" class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o"
-                                        aria-hidden="true"></i>SM</button>
+                            <div class="type_msg">
+                                <div class="input_msg_write">
+                                    <input type="text" id="textMessage"  class="write_msg" placeholder="Type a message" />
+                                    <button onclick="sendMessage()" class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o"
+                                                                                                          aria-hidden="true"></i>SM</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
         <button id="open" onclick="openForm()">Open Chat</button>
         <button id="close" onclick="closeForm()">Close Chat</button>
         <script>

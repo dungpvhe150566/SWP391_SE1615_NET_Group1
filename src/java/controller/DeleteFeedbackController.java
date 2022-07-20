@@ -1,34 +1,35 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright(C) 2022,Group1-NETSE1615.<p>
+ * Shopping Web:
+ * <p>
+ * Electronic Shop<p>
+ *
+ * Record of change:
+ * <p>
+ * DATE Version AUTHOR DESCRIPTION<p>
+ * 2022-08-16 01 HaiPM Update Code Convention<p>
  */
 package controller;
 
 import dao.impl.FeedbackDAOImpl;
-import dao.impl.UsersDAOImpl;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * This class will handle user requirements as Seller to manage the list of
+ * Feedbacks of the products that Seller manages Delete a feedback of the user
+ * for a product
+ * <p>
+ * Error: Error occurs will be received and processed and handled errors Page
+ * <p>
  *
- * @author Admin
+ * @Author haipm
  */
 public class DeleteFeedbackController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -40,7 +41,7 @@ public class DeleteFeedbackController extends HttpServlet {
             FeedbackDAOImpl dao = new FeedbackDAOImpl();
             //Use function Delete to delete by ID
             dao.deleteFeedbackbyID(id);
-
+            //Set data to JSP
             request.getRequestDispatcher("ViewAllFeedbackController").forward(request, response);
         } catch (Exception e) {
             response.sendRedirect("error.jsp");

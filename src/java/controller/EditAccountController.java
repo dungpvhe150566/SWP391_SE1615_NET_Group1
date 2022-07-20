@@ -1,7 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright(C) 2022,Group1-NETSE1615.<p>
+ * Shopping Web:
+ * <p>
+ * Electronic Shop<p>
+ *
+ * Record of change:
+ * <p>
+ * DATE Version AUTHOR DESCRIPTION<p>
+ * 2022-08-16 01 HaiPM Update Code Convention<p>
  */
 package controller;
 
@@ -12,25 +18,21 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dao.UserAddressDAO;
 import dao.impl.UsersDAOImpl;
 import javax.servlet.http.HttpSession;
 
 /**
+ * This class will handle the admin user to edit an account of a user Edit
+ * account in the user's account list
+ * <p>
+ * Error: Error occurs will be received and processed and handled errors Page
+ * <p>
  *
- * @author Admin
+ * @Author haipm
  */
 public class EditAccountController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");

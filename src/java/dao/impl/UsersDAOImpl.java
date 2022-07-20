@@ -21,6 +21,12 @@ import static jdk.nashorn.internal.runtime.regexp.joni.constants.AsmConstants.S;
  */
 public class UsersDAOImpl extends DBContext implements UserDAO {
 
+    /**
+     * get all user
+     *
+     * @param
+     * @return list
+     */
     public List<Users> getAll() throws Exception { //Get user data in the database
         List<Users> list = new ArrayList<>();
         String sql = "select * from Users";
@@ -55,7 +61,14 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         }
         return list;
     }
-    public void resetPassword(String pass,String email){
+
+    /**
+     * get all user
+     *
+     * @param
+     * @return list
+     */
+    public void resetPassword(String pass, String email) {
         String sql = "update [Users] set Password = ? where email = ?";
         Connection conn = null;
         PreparedStatement prepare = null;
@@ -70,6 +83,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         }
     }
 
+    /**
+     * search Account In Manager
+     *
+     * @param String name, int start, int end
+     * @return ArrayList
+     */
     public ArrayList<Users> searchAccountInManager(String name, int start, int end) {
         ArrayList<Users> list = new ArrayList<>();
         String query = "with x as (	select row_number() over(order by UserID  asc) as row, * from Users WHERE Username LIKE ?\n"
@@ -94,6 +113,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         return list;
     }
 
+    /**
+     * get Account By ID
+     *
+     * @param int id
+     * @return Users
+     */
     public Users getAccountByID(int id) throws Exception {
         String query = "SELECT * FROM Users WHERE UserID = ?";
         Connection conn = null;
@@ -124,6 +149,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         return null;
     }
 
+    /**
+     * get Account By ID
+     *
+     * @param String id
+     * @return Users
+     */
     public Users getAccountByID(String id) throws Exception {
         String query = "SELECT * FROM Users WHERE UserID = ?";
         Connection conn = null;
@@ -154,6 +185,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         return null;
     }
 
+    /**
+     * insert user
+     *
+     * @param String email, String username, String password
+     * @return
+     */
     public void insert(String email, String username, String password) throws Exception { // insert user information into database
         String query = "insert into Users(Username,Password,email) values (?,?,?) ";
         Connection conn = null;
@@ -178,6 +215,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         }
     }
 
+    /**
+     * delete Account
+     *
+     * @param String id
+     * @return
+     */
     public boolean deleteAccount(String id) throws Exception {
         String query = "	delete from Orders where UserID = ?\n"
                 + "delete from Product where SellerID = ?\n"
@@ -214,6 +257,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
 
     }
 
+    /**
+     * update Account
+     *
+     * @param int id, String user, String email, String isSell, String isAdmin
+     * @return
+     */
     public void updateUser(int id, String user, String email, String isSell, String isAdmin) throws Exception {
         String preSql = "update Users set Username=? \n"
                 + "               ,email=?  \n"
@@ -242,6 +291,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
 
     }
 
+    /**
+     * get All Accounts
+     *
+     * @param
+     * @return List<Users>
+     */
     public List<Users> getAllAccounts() throws Exception {
         List<Users> list = new ArrayList<>();
         String query = "SELECT * FROM Users";
@@ -271,6 +326,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         return list;
     }
 
+    /**
+     * count Accounts
+     *
+     * @param
+     * @return int
+     */
     public int countAccount() throws Exception {
         String query = "SELECT COUNT(*) FROM  Users";
         Connection conn = null;
@@ -293,6 +354,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         return 0;
     }
 
+    /**
+     * get Users List
+     *
+     * @param int start, int end
+     * @return ArrayList
+     */
     public ArrayList<Users> getUsersList(int start, int end) throws Exception {
         // Create ArrayList to store all User
         ArrayList<Users> user = new ArrayList<>();
@@ -332,6 +399,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         return user;
     }
 
+    /**
+     * get total page Users List
+     *
+     * @param
+     * @return int
+     */
     public int getTotalPage() throws Exception {
 
         //  Variable to store the condition values passed to filter products in Database
@@ -363,6 +436,12 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
         return (int) Math.ceil((double) totalPage / 6);
     }
 
+    /**
+     * get total page search Users List
+     *
+     * @param
+     * @return int
+     */
     public int getTotalPageSearch(String name) throws Exception {
 
         //  Variable to store the condition values passed to filter products in Database

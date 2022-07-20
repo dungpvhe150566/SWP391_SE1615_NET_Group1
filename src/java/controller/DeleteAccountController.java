@@ -1,12 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright(C) 2022,Group1-NETSE1615.<p>
+ * Shopping Web:
+ * <p>
+ * Electronic Shop<p>
+ *
+ * Record of change:
+ * <p>
+ * DATE Version AUTHOR DESCRIPTION<p>
+ * 2022-08-16 01 HaiPM Update Code Convention<p>
  */
 package controller;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -14,34 +19,31 @@ import javax.servlet.http.HttpServletResponse;
 import dao.impl.UsersDAOImpl;
 
 /**
+ * This class makes handling requirements for users to manage the user list
+ * Delete users
+ * <p>
+ * Error: Error occurs will be received and processed and handled errors Page
+ * <p>
  *
- * @author Admin
+ * @Author haipm
  */
 public class DeleteAccountController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
         try {
             boolean t;
-            //Get ID from JSP
+            //Get UserID from JSP
             String id = request.getParameter("UserID");
             System.out.println(id);
             //Call DAO
             UsersDAOImpl dao = new UsersDAOImpl();
             //Use function Delete to delete by ID
             t = dao.deleteAccount(id);
-            System.out.println("------------------"+t);
+            System.out.println("------------------" + t);
+            //Put data to JSP
             request.setAttribute("test", t);
             request.getRequestDispatcher("AccountManagerController").forward(request, response);
         } catch (Exception e) {

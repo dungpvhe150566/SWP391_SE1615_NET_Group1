@@ -1,7 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright(C) 2022,Group1-NETSE1615.<p>
+ * Shopping Web:
+ * <p>
+ * Electronic Shop<p>
+ *
+ * Record of change:
+ * <p>
+ * DATE Version AUTHOR DESCRIPTION<p>
+ * 2022-08-16 01 HaiPM Update Code Convention<p>
  */
 package controller;
 
@@ -9,13 +15,8 @@ import entity.Feedback;
 import entity.Product;
 import entity.Users;
 import java.io.IOException;
-import java.io.PrintWriter;
-import static java.lang.System.out;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,20 +27,17 @@ import dao.impl.ProductDAOImpl;
 import dao.impl.UsersDAOImpl;
 
 /**
+ * This class makes a handling requirement for users to seller is the view all
+ * feedback of the products that the seller manages Sort the feedbacks according
+ * to the requirements
+ * <p>
+ * Error: Error occurs will be received and processed and handled errors Page
+ * <p>
  *
- * @author Admin
+ * @Author haipm
  */
 public class ViewAllFeedbackController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -79,12 +77,12 @@ public class ViewAllFeedbackController extends HttpServlet {
                 index = "1";
             }
             indexpage = Integer.parseInt(index);
-            lsFeedback = feedbackDao.paging(indexpage, "ID","asc", a.getUserID());
+            lsFeedback = feedbackDao.paging(indexpage, "ID", "asc", a.getUserID());
             int total = feedbackDao.totalPage(a.getUserID());
             request.setAttribute("indexpage", indexpage);
             request.setAttribute("uid", total);
             int sortOption = 0;
-            int sortOrder = 0; 
+            int sortOrder = 0;
             if (request.getParameter("sopt") != null || request.getParameter("sodr") != null) {
                 sortOption = Integer.parseInt(request.getParameter("sopt"));
                 sortOrder = Integer.parseInt(request.getParameter("sodr"));
@@ -103,10 +101,10 @@ public class ViewAllFeedbackController extends HttpServlet {
                 case 1: {
                     if (sortOrder == 1) {
                         // sort ascending
-                        lsFeedback = feedbackDao.paging(indexpage, "star","asc", a.getUserID());
+                        lsFeedback = feedbackDao.paging(indexpage, "star", "asc", a.getUserID());
                     } else {
                         // sort descending
-                        lsFeedback = feedbackDao.paging(indexpage, "star","desc", a.getUserID());
+                        lsFeedback = feedbackDao.paging(indexpage, "star", "desc", a.getUserID());
                     }
                     break;
                 }
@@ -114,11 +112,11 @@ public class ViewAllFeedbackController extends HttpServlet {
                 case 2: {
                     if (sortOrder == 1) {
                         // sort ascending
-                        lsFeedback = feedbackDao.paging(indexpage, "username","asc", a.getUserID());
+                        lsFeedback = feedbackDao.paging(indexpage, "username", "asc", a.getUserID());
 
                     } else {
                         // sort descending
-                        lsFeedback = feedbackDao.paging(indexpage, "username","desc", a.getUserID());
+                        lsFeedback = feedbackDao.paging(indexpage, "username", "desc", a.getUserID());
                     }
                     break;
                 }
@@ -126,11 +124,11 @@ public class ViewAllFeedbackController extends HttpServlet {
                 case 3: {
                     if (sortOrder == 1) {
                         // sort ascending
-                        lsFeedback = feedbackDao.paging(indexpage, "productname","asc", a.getUserID());
+                        lsFeedback = feedbackDao.paging(indexpage, "productname", "asc", a.getUserID());
 
                     } else {
                         // sort descending
-                        lsFeedback = feedbackDao.paging(indexpage, "productname","desc", a.getUserID());
+                        lsFeedback = feedbackDao.paging(indexpage, "productname", "desc", a.getUserID());
                     }
                     break;
                 }

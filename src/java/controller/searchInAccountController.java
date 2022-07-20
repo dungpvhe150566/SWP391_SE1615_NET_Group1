@@ -1,14 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * Copyright(C) 2022,Group1-NETSE1615.<p>
+ * Shopping Web:
+ * <p>
+ * Electronic Shop<p>
+ *
+ * Record of change:
+ * <p>
+ * DATE Version AUTHOR DESCRIPTION<p>
+ * 2022-08-16 01 HaiPM Update Code Convention<p>
  */
 package controller;
 
 import dao.impl.UsersDAOImpl;
 import entity.Users;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,20 +21,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
+ * This class will handle user requirements is to search for the user's account
+ * in the list Search for user accounts in the list
+ * <p>
+ * Error: Error occurs will be received and processed and handled errors Page
+ * <p>
  *
- * @author Admin
+ * @Author haipm
  */
 public class searchInAccountController extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -37,17 +38,17 @@ public class searchInAccountController extends HttpServlet {
         try {
             String searchText = request.getParameter("text");
             int indexPage = 1;
-//            get the Page position being displayed to the user so that page transitions can be performed
+            //get the Page position being displayed to the user so that page transitions can be performed
             String index = request.getParameter("indexPage");
             if (index != null) {
                 indexPage = Integer.parseInt(index);
             }
             request.setAttribute("indexPage", indexPage);
             UsersDAOImpl userDAO = new UsersDAOImpl();
-            //            Get total PAge of list product(each page have max 6 products)
+            //Get total PAge of list product(each page have max 6 products)
             int totalPage = userDAO.getTotalPageSearch(searchText.trim());
             request.setAttribute("totalPage", totalPage);
-            
+
             //Set data to JSP
             UsersDAOImpl UserDAO = new UsersDAOImpl();
             List<Users> listA = UserDAO.searchAccountInManager(searchText.trim(), 6 * (indexPage - 1) + 1, 6 * indexPage);

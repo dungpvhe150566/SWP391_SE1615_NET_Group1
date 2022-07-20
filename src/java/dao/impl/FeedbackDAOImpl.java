@@ -62,6 +62,12 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
         return feedbacks;
     }
 
+    /**
+     * Get a feedback
+     *
+     * @param
+     * @return list
+     */
     public List<Feedback> getFeedbacks() throws Exception {
         String query = "SELECT * FROM Feedback";
         Connection connection = null;
@@ -169,6 +175,12 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
         }
     }
 
+    /**
+     * Get a list of feedback sort
+     *
+     * @param int sellerID, String sort, String namesort, int start, int end
+     * @return ArrayList
+     */
     public ArrayList<Feedback> getFeedbacksSort(int sellerID, String sort, String namesort, int start, int end) throws Exception {
         String query = "with a as (	select row_number() over(order by ID  asc) as row, ID,Username,ProductName,Star,FeedbackDetail from Feedback f join Product p \n"
                 + "                on p.ProductID=f.ProductID join Users u \n"
@@ -363,6 +375,12 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
         }
     }
 
+    /**
+     * Get feedback by productid
+     *
+     * @param int start, int end
+     * @return list
+     */
     public List<Feedback> getFeedbacksByProductId(int start, int end) throws Exception {
         String query = "with a as (	select row_number() over(order by ID  asc) as row, ID,Username,ProductName,Star,FeedbackDetail from Feedback f \n"
                 + "                join Users u on f.UserID=u.UserID\n"
@@ -397,6 +415,12 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
         }
     }
 
+    /**
+     * get Total Page Feedbacks
+     *
+     * @param
+     * @return int
+     */
     public int getTotalPageFeedbacks() throws Exception {
 
         //  Variable to store the condition values passed to filter feedbacks in Database
@@ -428,6 +452,12 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
         return (int) Math.ceil((double) totalPage / 6);
     }
 
+    /**
+     * delete Feedback by ID
+     *
+     * @param String id
+     * @return
+     */
     public void deleteFeedbackbyID(String id) throws Exception {
         String query = "delete from Feedback where ID=?";
 
@@ -448,6 +478,12 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
         return;
     }
 
+    /**
+     * total page
+     *
+     * @param int index
+     * @return int
+     */
     public int totalPage(int index) throws Exception {
         //  Variable to store the condition values passed to filter feedbacks in Database
         int totalPage = 0;
@@ -485,6 +521,12 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
         return totalPage;
     }
 
+    /**
+     * paging view list feedback
+     *
+     * @param int index, String name, String sort, int sellerID
+     * @return list
+     */
     public List<Feedback> paging(int index, String name, String sort, int sellerID) throws Exception {
         String query = "with a as (	select row_number() over(order by ID  asc) as row, ID,Username,ProductName,Star,FeedbackDetail from Feedback f join Product p \n"
                 + "                on p.ProductID=f.ProductID join Users u \n"
@@ -524,7 +566,7 @@ public class FeedbackDAOImpl extends DBContext implements FeedbackDAO {
         FeedbackDAOImpl feedbackDAO = new FeedbackDAOImpl();
         try {
             List<Feedback> lsFeedback = new ArrayList<>();
-            lsFeedback = feedbackDAO.paging(1, "star","desc", 3);
+            lsFeedback = feedbackDAO.paging(1, "star", "desc", 3);
             System.out.println(feedbackDAO.totalPage(3));
             for (Feedback feedback : lsFeedback) {
                 System.out.println(feedback);

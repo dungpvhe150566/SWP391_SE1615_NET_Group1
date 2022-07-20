@@ -51,7 +51,7 @@
                         </c:if>
                         <c:if test = "${sessionScope.user != null}">
                             <li class="nav-item">
-                                <a class="nav-link" href="#"><i class="fas fa-user-circle"></i>Hello ${sessionScope.acc.user}</a>
+                                <a class="nav-link" href="#"><i class="fas fa-user-circle"></i>Hello ${sessionScope.user.getUsername()}</a>
                                 <hr class="line">
                             </li>
 
