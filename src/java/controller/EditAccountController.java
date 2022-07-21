@@ -32,7 +32,6 @@ import javax.servlet.http.HttpSession;
  */
 public class EditAccountController extends HttpServlet {
 
-    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
@@ -115,12 +114,17 @@ public class EditAccountController extends HttpServlet {
             if (!"1".equals(isAdmin)) {
                 isAdmin = "0";
             }
-            System.out.println(isAdmin);
-            System.out.println(isSell);
             //Step 2: update to database
             UsersDAOImpl dao = new UsersDAOImpl();
             Users x = dao.getAccountByID(uid);
-            dao.updateUser(uid, user, email, isSell, isAdmin);
+            boolean t = true;
+            if (t = true) {
+                dao.updateUser(uid, user, email, isSell, isAdmin);
+
+            }
+            //Set data to JSP
+            request.setAttribute("mesde1", "Updated successfully");
+            request.setAttribute("test1", t);
             request.getRequestDispatcher("AccountManagerController").forward(request, response);
 
         } catch (Exception e) {

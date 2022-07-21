@@ -36,12 +36,17 @@ public class DeleteFeedbackController extends HttpServlet {
         try {
             //Get ID from JSP
             String id = request.getParameter("fbID");
-            System.out.println(id);
             //Call DAO
             FeedbackDAOImpl dao = new FeedbackDAOImpl();
             //Use function Delete to delete by ID
-            dao.deleteFeedbackbyID(id);
+            boolean t = true;
+            if (t = true) {
+                dao.deleteFeedbackbyID(id);
+
+            }
             //Set data to JSP
+            request.setAttribute("mesde", "Deleted successfully");
+            request.setAttribute("test", t);
             request.getRequestDispatcher("ViewAllFeedbackController").forward(request, response);
         } catch (Exception e) {
             response.sendRedirect("error.jsp");

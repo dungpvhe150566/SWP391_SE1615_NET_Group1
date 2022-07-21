@@ -162,7 +162,9 @@
                                     <input type="submit" class="btn btn-success mt-5" value="Submit">   
                                     <a href="ShopController" class="btn btn-success mt-5" >Home</a>
                                     <c:if test="${fb==""}">
-                                        ${mess}
+                                        <p style="color: red;" >${mess}</p>
+
+                                        
                                     </c:if> 
                                 </form>
                             </div>

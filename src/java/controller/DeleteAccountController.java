@@ -37,15 +37,16 @@ public class DeleteAccountController extends HttpServlet {
         try {
             //Get UserID from JSP
             String id = request.getParameter("UserID");
-            System.out.println(id);
+            System.out.println("aaaaa" + id);
             //Call DAO
             UsersDAOImpl dao = new UsersDAOImpl();
-            Users u= dao.getAccountByID(id);
+            Users u = dao.getAccountByID(id);
             //Use function Delete to delete by ID
             int countOrder = dao.checkExistOrder(id);
             System.out.println(countOrder);
-            if (countOrder == 0) {
+            if (countOrder == 0 && u.getIsAdmin() == 0 && u.getIsSeller() == 0) {
                 dao.deleteAccount(id);
+
             } else {
                 request.setAttribute("test", countOrder);
                 request.setAttribute("isseller", u.getIsSeller());
@@ -55,7 +56,12 @@ public class DeleteAccountController extends HttpServlet {
 
             }
             //Put data to JSP
+            request.setAttribute("test", countOrder);
+            request.setAttribute("isseller", u.getIsSeller());
+            request.setAttribute("isadmin", u.getIsAdmin());
+            request.setAttribute("mesde", "Deleted successfully");
             request.getRequestDispatcher("AccountManagerController").forward(request, response);
+
         } catch (Exception e) {
 
             response.sendRedirect("error.jsp");

@@ -109,6 +109,15 @@
                                                 </c:if>
                                             </tr>
                                         </thead>
+                                        <c:if test="${test!=0|| isseller!=0 ||isadmin!=0}">
+                                            <p style="color: red;" >${mes}</p>
+                                        </c:if>
+                                        <c:if test="${test==0|| isseller==0 ||isadmin==0}">
+                                            <p style="color: red;" >${mesde}</p>
+                                        </c:if>
+                                        <c:if test="${test==true1}">
+                                            <p style="color: red;" >${mesde1}</p>
+                                        </c:if>
                                         <tbody>
                                             <c:forEach items="${list}" var="o">
                                                 <tr>
@@ -169,9 +178,7 @@
                             <c:if test="${totalPage==0}">
                                 ${mess}
                             </c:if>  
-                            <c:if test="${test!=0|| isseller!=0 ||isadmin!=0}">
-                                ${mes}
-                            </c:if> 
+
                         </div>
                     </div>
 

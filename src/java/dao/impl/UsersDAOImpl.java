@@ -256,7 +256,7 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
                 + "                delete from Feedback where UserID = ?\n"
                 + "                delete from Blog where SellerID=?\n"
                 + "                delete from UserAddress where UserID=?\n"
-                + "				delete from Comment_Blogs where UserID=\n"
+                + "				delete from Comment_Blogs where UserID=?\n"
                 + "                delete from Users where UserID = ?";
 
         Connection conn = null;
@@ -505,7 +505,7 @@ public class UsersDAOImpl extends DBContext implements UserDAO {
     public static void main(String[] args) {
         UsersDAOImpl dao = new UsersDAOImpl();
         try {
-            System.out.println(dao.checkExistOrder("7"));
+            dao.deleteAccount("24");
 
         } catch (Exception ex) {
             Logger.getLogger(UsersDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
