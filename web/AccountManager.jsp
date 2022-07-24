@@ -59,7 +59,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="ProductsController"><i class="fas fa-tasks"></i>Manager Product</a>
                                     <hr class="line">
-                                    <a class="nav-link" href="#"><i class="fas fa-tasks"></i>Manager Blog</a>
+                                    <a class="nav-link" href="blogs"><i class="fas fa-tasks"></i>Manager Blog</a>
                                     <hr class="line">
                                     <a class="nav-link" href="ViewAllFeedbackController"><i class="fas fa-tasks"></i>Manage Feedback</a>
                                     <hr class="line">
@@ -175,9 +175,11 @@
                                     </nav>
                                 </div>
                             </c:if>
-                            <c:if test="${totalPage==0}">
-                                ${mess}
-                            </c:if>  
+                            <div style="color: red">
+                                <c:if test="${totalPage==0}">
+                                    ${mess}
+                                </c:if>  
+                            </div>
 
                         </div>
                     </div>

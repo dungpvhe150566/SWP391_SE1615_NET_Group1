@@ -177,7 +177,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="ProductsController"><i class="fas fa-tasks"></i>Manager Product</a>
                                         <hr class="line">
-                                        <a class="nav-link" href="#"><i class="fas fa-tasks"></i>Manager Blog</a>
+                                        <a class="nav-link" href="blogs"><i class="fas fa-tasks"></i>Manager Blog</a>
                                         <hr class="line">
                                         <a class="nav-link" href="ViewAllFeedbackController"><i class="fas fa-tasks"></i>Manage Feedback</a>
                                         <hr class="line">
@@ -259,13 +259,13 @@
                                 <tbody>
                                     <c:forEach var="item" items="${lsFeedback}" >
                                         <tr style="padding:2px; border: 1px solid">
-                                            <td>${item.getUserName()}</td>
+                                            <td style="text-align: left">${item.getUserName()}</td>
                                             <td>
                                                 <c:forEach begin="1" end="${item.getStar()}">
                                                     <span><i class="fa fa-star checked" style="font-size: 10px"></i></span>  
                                                     </c:forEach>
                                             </td>
-                                            <td>
+                                            <td style="text-align: left">
                                                 ${item.getProductName()}
                                             </td>
                                             <td><a href="ViewFeedbackDetailController?id=${item.getID()}">Detail</a></td>

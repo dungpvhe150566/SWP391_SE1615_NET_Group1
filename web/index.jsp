@@ -36,7 +36,9 @@
             <div class="row bg-secondary py-2 px-xl-5">
                 <div class="col-lg-6 d-none d-lg-block">
                     <div class="d-inline-flex align-items-center">
-                        <a class="text-dark" href="dontrollner-dasboard">Admin</a>
+                        <c:if test="${users.getIsAdmin()==1}">
+                                                    <a class="text-dark" href="dontrollner-dasboard">Admin</a>
+                        </c:if>
                         <span class="text-muted px-2">|</span>
                         <a class="text-dark" href="">Help</a>
                         <span class="text-muted px-2">|</span>

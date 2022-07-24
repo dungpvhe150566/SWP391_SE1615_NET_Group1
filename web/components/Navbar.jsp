@@ -19,7 +19,9 @@
             <div class="row bg-secondary py-2 px-xl-5">
                 <div class="col-lg-6 d-none d-lg-block">
                     <div class="d-inline-flex align-items-center">
-                        <a class="text-dark" href="dontrollner-dasboard">Admin</a>
+                        <c:if test="${users.getIsAdmin()==1}">
+                            <a class="text-dark" href="dontrollner-dasboard">Admin</a>
+                        </c:if>
                         <span class="text-muted px-2">|</span>
                         <a class="text-dark" href="">Help</a>
                         <span class="text-muted px-2">|</span>
@@ -82,9 +84,9 @@
                     </a>
                     <div class="nav-item dropdown ">
                         <a href="" class="btn border nav-link" data-toggle="dropdown">
-                                <i class="fas fa-bell text-primary"></i>
-                                <span class="badge">0</span>
-                            </a>
+                            <i class="fas fa-bell text-primary"></i>
+                            <span class="badge">0</span>
+                        </a>
                         <div class="dropdown-menu rounded-0 m-0">
                             <p>Notification1</p>
                             <p>Notification2</p>
@@ -135,7 +137,7 @@
                             <div class="navbar-nav mr-auto py-0">
                                 <a href="HomeController" class="nav-item nav-link">Home</a>
                                 <a href="ShopController" class="nav-item nav-link active">Shop</a>
-                                
+
                                 <a href="#" class="nav-item nav-link">Contact</a>
                             </div>
                             <div class="navbar-nav ml-auto py-0">
