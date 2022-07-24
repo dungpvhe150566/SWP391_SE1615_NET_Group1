@@ -280,12 +280,12 @@
         <!-- Offer End -->
 
         <!--ChatBox-->
-        <div class="" id="myForm">
+        <div class="myForm" id="myForm">
             <div class="container">
                 <h3 class=" text-center">Messaging</h3>
                 <div class="messaging">
                     <div class="inbox_msg">
-                        <div class="inbox_people">
+                        <div ${sessionScope.user.getUsername()!="lehoangchi"?'style="display: none"':''}  class="inbox_people">
                             <div class="headind_srch">
                                 <div class="recent_heading">
                                     <h4>Recent</h4>
@@ -299,77 +299,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="inbox_chat">
-                                <div class="chat_list active_chat">
-                                    <div class="chat_people">
-                                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png"
-                                                                    alt="sunil"> </div>
-                                        <div class="chat_ib">
-                                            <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
+                            <div id="abcd" class="inbox_chat">
+                                <c:forEach var="uMes" items="${listMessage}">
+                                    <div id="userID${uMes.getUserID()}" class="chat_list ">
+                                        <div class="chat_people">
+                                            <div onclick="changeUser(${uMes.getUserID()})" class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png"
+                                                                                                                  alt="sunil"> </div>
+                                            <div class="chat_ib">
+                                                <h5>${uMes.getUserName()}<span class="chat_date">Dec 25</span></h5>
+                                                <p>Test, which is a new approach to have all solutions
+                                                    astrology under one roof.</p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="chat_list">
-                                    <div class="chat_people">
-                                        <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png"
-                                                                    alt="sunil"> </div>
-                                        <div class="chat_ib">
-                                            <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                            <p>Test, which is a new approach to have all solutions
-                                                astrology under one roof.</p>
-                                        </div>
-                                    </div>
-                                </div>
+                                </c:forEach>
                             </div>
+                            
                         </div>
                         <div class="mesgs">
                             <div id="textAreaMessage" class="msg_history">
-                                <div class="incoming_msg">
-                                    <div class="incoming_msg_img"> <img
-                                            src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                    <div class="received_msg">
-                                        <div class="received_withd_msg">
-                                            <p>Test which is a new approach to have all
-                                                solutions</p>
-                                            <span class="time_date"> 11:01 AM | June 9</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="outgoing_msg">
-                                    <div class="sent_msg">
-                                        <p>Test which is a new approach to have all
-                                            solutions</p>
-                                        <span class="time_date"> 11:01 AM | June 9</span>
-                                    </div>
-                                </div>
-                                <div class="incoming_msg">
-                                    <div class="incoming_msg_img"> <img
-                                            src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                    <div class="received_msg">
-                                        <div class="received_withd_msg">
-                                            <p>Test, which is a new approach to have</p>
-                                            <span class="time_date"> 11:01 AM | Yesterday</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="outgoing_msg">
-                                    <div class="sent_msg">
-                                        <p>Apollo University, Delhi, India Test</p>
-                                        <span class="time_date"> 11:01 AM | Today</span>
-                                    </div>
-                                </div>
-                                <div class="incoming_msg">
-                                    <div class="incoming_msg_img"> <img
-                                            src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                                    <div class="received_msg">
-                                        <div class="received_withd_msg">
-                                            <p>We work directly with our designers and suppliers,</p>
-                                            <span class="time_date"> 11:01 AM | Today</span>
-                                        </div>
-                                    </div>
-                                </div>
+                               
                             </div>
                             <div class="type_msg">
                                 <div class="input_msg_write">
@@ -383,8 +332,6 @@
                 </div>
             </div>
         </div>
-        <button id="open" onclick="openForm()">Open Chat</button>
-        <button id="close" onclick="closeForm()">Close Chat</button>
         <script>
             function openForm() {
                 document.getElementById("myForm").style.display = "block";
@@ -398,18 +345,13 @@
                 document.getElementById("close").style.display = "none";
             }
         </script>
-        <script type="text/javascript">
-            var user = "${sessionScope.user.getUsername()}";
+         <script type="text/javascript">
+            var userName = "${sessionScope.user.getUsername()}";
+            var userID = "${sessionScope.user.getUserID()}";
 //            var user = "<%=session.getAttribute("user")%>";
-//            if (user !== null) {
-//                name += "Admin";
-//            }
-//            else{
-//                name+="User";
-//            }
             var websocket = new WebSocket("ws://localhost:8080/Update/chatRoomServer");
             websocket.onopen = function (message) {
-                processOpen(user);
+                processOpen(userID + "/" + userName);
             };
             websocket.onmessage = function (message) {
                 processMessage(message);
@@ -425,8 +367,16 @@
                 websocket.send(message);
             }
             function processMessage(message) {
-                console.log(message);
-                document.getElementById("textAreaMessage").innerHTML += '<div class="outgoing_msg"> <div class="sent_msg"> <p>' + message.data + '</p> <span class="time_date"> 11:01 AM | Today</span> </div></div>';
+                if (message.data.toString().includes("addUser")) {
+//                    document.getElementById("abcd").innerHTML += message.substring(7);
+                    var mes =message.data.substring(7);
+                    console.log(message.data);
+                    console.log(mes);
+                    document.getElementById("abcd").innerHTML += mes;
+                } else {
+                    console.log(message);
+                    document.getElementById("textAreaMessage").innerHTML += message.data;
+                }
             }
             function processClose(message) {
                 textAreaMessage.value += "Server Disconnect... \n";
@@ -437,15 +387,36 @@
 
             function sendMessage() {
                 if (typeof websocket != 'undefined' && websocket.readyState == WebSocket.OPEN) {
-                    websocket.send(textMessage.value);
+
+                    var mess = textMessage.value;
+
+                    const collection = document.getElementsByClassName("chat_list");
+                    for (let i = 0; i < collection.length; i++) {
+                        if (collection[i].className.includes("active_chat")) {
+                            mess += collection[i].id;
+                        }
+                    }
+                    console.log(mess);
+                    websocket.send(mess);
                     textMessage.value = "";
                 }
             }
 
-            function changeUser() {
+            function changeUser(userID) {
                 if (typeof websocket != 'undefined' && websocket.readyState == WebSocket.OPEN) {
-                    websocket.send(textMessage.value);
+                    var param = "change" + userID;
+                    websocket.send(param);
                     textMessage.value = "";
+                    document.getElementById("textAreaMessage").innerHTML = "";
+
+
+                    const collection = document.getElementsByClassName("chat_list");
+                    for (let i = 0; i < collection.length; i++) {
+                        collection[i].className = "chat_list";
+                    }
+
+                    document.getElementById("userID" + userID).className = "chat_list active_chat";
+
                 }
             }
 

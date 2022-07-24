@@ -13,6 +13,7 @@ package controller;
 
 import dao.BlogDAO;
 import dao.CategoryDAO;
+import dao.MessageDAO;
 import entity.Blog;
 import entity.Category;
 import java.io.IOException;
@@ -23,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import dao.impl.BlogDAOImpl;
 import dao.impl.CategoryDAOImpl;
+import dao.impl.MessageDAOImpl;
+import entity.Message;
 import java.util.ArrayList;
 
 /**
@@ -48,30 +51,33 @@ public class HomeController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            
+
             /* Create variable to get data from database */
             BlogDAO blogDAO = new BlogDAOImpl();// Create a DAO object to get the Blog table data from the Database
             CategoryDAO categoryDAO = new CategoryDAOImpl();// Create a DAO object to get the Category table data from the Database
+            MessageDAO messageDAO = new MessageDAOImpl();
 
             /* Create variable to store data after being retrieved from database */
             ArrayList<Blog> blogs = blogDAO.getBlogList();// Get Blog List
             ArrayList<Category> categoryList = categoryDAO.getAllCategory();// Get Category List
+            ArrayList<Message> listMessage = messageDAO.getUserList();
 
             /* Create variable to store data after being retrieved from database */
             request.setAttribute("blogs", blogs);// Set the Blog List in the application scope
             request.setAttribute("categoryList", categoryList);// Set the Category List in the application scope
-            
+            request.setAttribute("listMessage", listMessage);
+
             /* Make requests and properties to View Page */
             RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");// Set URL path of View Page
             dispatcher.forward(request, response);// Make a move to the View page 
-            
+
         } catch (Exception e) {// In case an Exception occurs
-            
+
             /* Make requests and properties to Error Page */
             request.setAttribute("ex", e);// Send type Error to Error Page
             RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
             dispatcher.forward(request, response);
-            
+
         }
     }
 
