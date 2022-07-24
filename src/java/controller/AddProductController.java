@@ -1,4 +1,3 @@
-
 package controller;
 
 import entity.Category;
@@ -14,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import dao.impl.CategoryDAOImpl;
 import dao.impl.ManufacturerDAOImpl;
-import dao.impl.ProductDAOImpl;
+import dao.impl.ProductOldDAOImpl;
+import entity.Users;
+import java.io.InputStream;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 
@@ -42,15 +43,29 @@ public class AddProductController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try{
+        try {
             String service = request.getParameter("do");
             String message = "";
+            
+            Users user = (Users) request.getSession().getAttribute("user");
+            if (user == null) {
+                if (user.getIsAdmin() == 0 && user.getIsSeller()== 0)
+                        throw new Exception("Access denied");
+                throw new Exception("Please login first");
+            }
 
             if (service != null) {
                 if (service.equals("addproduct")) {
                     Part filePart = request.getPart("fileInput");
                     String fileName = filePart.getSubmittedFileName();
+                    
+                    InputStream inputStream = null; // input stream of the upload file
 
+                    if (filePart != null) {
+                        // obtains input stream of the upload file
+                        fileName = filePart.getSubmittedFileName();
+                        inputStream = filePart.getInputStream();
+                    }
                     //Get and store all attribute of each Product
                     try {
                         String productName = request.getParameter("product_name").trim();
@@ -60,7 +75,7 @@ public class AddProductController extends HttpServlet {
                         int salePercent = Integer.parseInt(request.getParameter("sale_percent").trim());
                         String imageLink = fileName;
                         int category = Integer.parseInt(request.getParameter("category").trim());
-                        int seller = 1;
+                        int seller = user.getUserID();
                         int amount = Integer.parseInt(request.getParameter("amount").trim());
                         int statusID = 1;
                         int manufacture = Integer.parseInt(request.getParameter("manufacture").trim());
@@ -68,9 +83,9 @@ public class AddProductController extends HttpServlet {
                         float width = Float.parseFloat(request.getParameter("width").trim());
                         float weight = Float.parseFloat(request.getParameter("weight").trim());
 
-                        Product pro = new Product(productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight);
+                        Product pro = new Product(productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight, inputStream);
 
-                        if ((new ProductDAOImpl()).addProduct(pro) > 0) {
+                        if ((new ProductOldDAOImpl()).addProduct(pro) > 0) {
                             message = "<p style=\"color: green\">Succesful</p>";
                         } else {
                             message = "<p style=\"color: green\">Fail to add products</p>";
@@ -91,7 +106,7 @@ public class AddProductController extends HttpServlet {
             request.setAttribute("manufacturerList", manufacturerList);
 
             request.getRequestDispatcher("add-product.jsp").forward(request, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
             dispatcher2.forward(request, response);

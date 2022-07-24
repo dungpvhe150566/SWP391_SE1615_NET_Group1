@@ -6,30 +6,23 @@
 package controller;
 
 import dao.impl.BlogDAOImpl;
-import entity.Blog;
-import entity.Users;
+import dao.impl.ProductOldDAOImpl;
 import java.io.IOException;
-import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.Blob;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 
 /**
  *
  * @author Dung
  */
-@WebServlet(name = "AddBlogController", urlPatterns = {"/addblog"})
-@MultipartConfig(
-        fileSizeThreshold = 1024 * 1024 * 1, // 1 MB
-        maxFileSize = 1024 * 1024 * 10, // 10 MB
-        maxRequestSize = 1024 * 1024 * 100 // 100 MB
-)
-public class AddBlogController extends HttpServlet {
+@WebServlet(name = "RetrieveImage", urlPatterns = {"/Blogs/getImage"})
+public class RetrieveImage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -43,54 +36,35 @@ public class AddBlogController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("utf-8");
         try {
-            Users user = (Users) request.getSession().getAttribute("user");
-            if (user == null) {
-                if (user.getIsAdmin() == 0 && user.getIsSeller()== 0)
-                        throw new Exception("Access denied");
-                throw new Exception("Please login first");
-            }
-            
+            /* TODO output your page here. You may use following sample code. */
+
             String service = request.getParameter("do");
-            String message = "";
-
-            if (service != null) {
-                if (service.equals("addblog")) {
-                    Part filePart = request.getPart("fileInput");
-                    String fileName = "";
-
-                    InputStream inputStream = null; // input stream of the upload file
-                    
-                    if (filePart != null) {
-                        // obtains input stream of the upload file
-                        fileName = filePart.getSubmittedFileName();
-                        inputStream = filePart.getInputStream();
-                    }
-                    
-                    //Get and store all attribute of each Blog
-                    try {
-                        String title = request.getParameter("title").trim();
-                        String content = request.getParameter("content").trim();
-                        String imageLink = fileName;
-                        int sellerID = 1;
-
-                        Blog blog = new Blog(title, content, imageLink, sellerID, inputStream);
-
-                        if ((new BlogDAOImpl()).addBlog(blog) > 0) {
-                            message = "<p style=\"color: green\">Succesful</p>";
-                        } else {
-                            message = "<p style=\"color: green\">Fail to add products</p>";
-                        }
-                    } catch (NumberFormatException e) {
-                        message = "<p style=\"color: red\">Wrong format input</p>";
-                        e.printStackTrace();
-                    }
+            if (service != null && service != "") {
+                String productId = request.getParameter("id");
+                if (productId != null) {
+                    int productID = Integer.parseInt(productId);
+                    Blob image = (new ProductOldDAOImpl().getImage(productID));
+                    byte byteArray[] = image.getBytes(1, (int) image.length());
+                    response.setContentType("image/gif");
+                    OutputStream os = response.getOutputStream();
+                    os.write(byteArray);
+                    os.flush();
+                    os.close();
+                }
+            } else {
+                String blogId = request.getParameter("id");
+                if (blogId != null) {
+                    int blogID = Integer.parseInt(blogId);
+                    Blob image = (new BlogDAOImpl().getImage(blogID));
+                    byte byteArray[] = image.getBytes(1, (int) image.length());
+                    response.setContentType("image/gif");
+                    OutputStream os = response.getOutputStream();
+                    os.write(byteArray);
+                    os.flush();
+                    os.close();
                 }
             }
-
-            request.setAttribute("message", message);
-            request.getRequestDispatcher("add-blog.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");

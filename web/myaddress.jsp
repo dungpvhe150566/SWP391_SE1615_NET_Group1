@@ -145,7 +145,7 @@
                             <img src="image/Other/ava1.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 30px;">
                             ${sessionScope.user.getUsername()}</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="" class="dropdown-item"><i class="fas fa-id-card"></i> YOUR PROFILE</a>
+                            <a href="profile" class="dropdown-item"><i class="fas fa-id-card"></i> YOUR PROFILE</a>
                             <a href="logout" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> LOG OUT</a>
                         </div>
                     </div>
@@ -199,9 +199,9 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <div class="row">
                                             <div class="col-md-3">
-                                                <i class="fas fa-user" style="color: black"></i>
+                                                <i class="fas fa-address-book" style="color: black"></i>
                                             </div>
-                                            <div class="col-md-9">
+                                            <div class="col-md-9" onclick="window.location.href = 'profile'">
                                                 <h6 class="mb-0">User Profile</h6>
                                             </div>
                                         </div>

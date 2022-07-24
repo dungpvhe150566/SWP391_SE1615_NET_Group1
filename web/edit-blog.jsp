@@ -33,11 +33,11 @@
                     <div class="tm-bg-primary-dark tm-block tm-block-h-auto">
                         <div class="row">
                             <div class="col-12">
-                                <h2 class="tm-block-title d-inline-block">Edit Product</h2>
+                                <h2 class="tm-block-title d-inline-block">Edit Blog</h2>
                             </div>
                         </div>
                         <form method="post" action="editblog?do=editblog&blogID=${blog.getID()}" class="tm-edit-product-form" enctype="multipart/form-data">
-                           
+
                             ${message}
                             <div class="row tm-edit-product-row">
                                 <div class="col-xl-6 col-lg-6 col-md-12 mx-auto mb-4">
@@ -47,12 +47,23 @@
                                             >Image
                                         </label>
                                         <div class="tm-product-img-dummy mx-auto">
-                                            <img
-                                                src="/image/${blog.getImageLink()}"
-                                                onclick="document.getElementById('fileInput').click();"
-                                                id="previewImage"
-                                                style="max-height: 100%; width: 100%;"
-                                                >
+                                            <input type="hidden" name="imageLink" value="${blog.getImageLink()}">
+                                            <c:if test="${blog.getImage() != null}">
+                                                <img
+                                                    src="Blogs/getImage?id=${blog.getID()}"
+                                                    onclick="document.getElementById('fileInput').click();"
+                                                    id="previewImage"
+                                                    style="max-height: 100%; width: 100%;"
+                                                    >
+                                            </c:if>
+                                            <c:if test="${blog.getImage() == null}">
+                                                <img
+                                                    src="image/${blog.getImageLink()}"
+                                                    onclick="document.getElementById('fileInput').click();"
+                                                    id="previewImage"
+                                                    style="max-height: 100%; width: 100%;"
+                                                    >
+                                            </c:if>
                                         </div>
                                     </div>
 

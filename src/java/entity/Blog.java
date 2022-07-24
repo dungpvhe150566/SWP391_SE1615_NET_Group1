@@ -5,6 +5,8 @@
  */
 package entity;
 
+import java.io.InputStream;
+
 /**
  *
  * @author Admin
@@ -16,10 +18,26 @@ public class Blog {
     String imageLink;
     int SellerID;
     String MOdife;
-
-  
+    InputStream image;
 
     public Blog() {
+    }
+
+    public Blog(String Title, String Content, String imageLink, int SellerID, InputStream image) {
+        this.Title = Title;
+        this.Content = Content;
+        this.imageLink = imageLink;
+        this.SellerID = SellerID;
+        this.image = image;
+    }
+    
+    public Blog(int ID, String Title, String Content, String imageLink, int SellerID, InputStream image) {
+        this.ID = ID;
+        this.Title = Title;
+        this.Content = Content;
+        this.imageLink = imageLink;
+        this.SellerID = SellerID;
+        this.image = image;
     }
 
     public Blog(String Title, String Content, String imageLink, int SellerID) {
@@ -46,6 +64,15 @@ public class Blog {
         this.SellerID = SellerID;
     }
 
+    
+    public InputStream getImage() {
+        return image;
+    }
+
+    public void setImage(InputStream image) {
+        this.image = image;
+    }
+    
     public int getID() {
         return ID;
     }

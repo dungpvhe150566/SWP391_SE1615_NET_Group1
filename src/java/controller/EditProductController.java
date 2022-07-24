@@ -17,6 +17,8 @@ import dao.impl.CategoryDAOImpl;
 import dao.impl.ManufacturerDAOImpl;
 import dao.impl.ProductDAOImpl;
 import dao.impl.ProductStatusDAOImpl;
+import entity.Users;
+import java.io.InputStream;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 
@@ -45,7 +47,14 @@ public class EditProductController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         request.setCharacterEncoding("UTF-8");
+
         try {
+            Users user = (Users) request.getSession().getAttribute("user");
+            if (user == null) {
+                if (user.getIsAdmin() == 0 && user.getIsSeller()== 0)
+                        throw new Exception("Access denied");
+                throw new Exception("Please login first");
+            }
 
             String service = request.getParameter("do");
             String message = "";
@@ -67,15 +76,16 @@ public class EditProductController extends HttpServlet {
                     int salePercent = Integer.parseInt(request.getParameter("sale_percent").trim());
                     String imageLink = fileName;
                     int category = Integer.parseInt(request.getParameter("category").trim());
-                    int seller = 1;
+                    int seller = user.getUserID();
                     int amount = Integer.parseInt(request.getParameter("amount").trim());
                     int statusID = 1;
                     int manufacture = Integer.parseInt(request.getParameter("manufacture").trim());
                     float height = Float.parseFloat(request.getParameter("height").trim());
                     float width = Float.parseFloat(request.getParameter("width").trim());
                     float weight = Float.parseFloat(request.getParameter("weight").trim());
+                    InputStream image = filePart.getInputStream();
 
-                    Product pro = new Product(productID, productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight);
+                    Product pro = new Product(productID, productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight, image);
 
                     if ((new ProductDAOImpl()).updateProduct(pro) > 0) {
                         message = "<p style=\"color: green\">Succesful</p>";
@@ -108,7 +118,7 @@ public class EditProductController extends HttpServlet {
             request.setAttribute("productStatusList", productStatusList);
 
             request.getRequestDispatcher("edit-product.jsp").forward(request, response);
-        }catch(Exception e){
+        } catch (Exception e) {
             request.setAttribute("ex", e);
             RequestDispatcher dispatcher2 = request.getRequestDispatcher("/error.jsp");
             dispatcher2.forward(request, response);

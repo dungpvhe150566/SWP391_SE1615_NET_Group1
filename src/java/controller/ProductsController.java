@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import dao.impl.CategoryDAOImpl;
 import dao.impl.ProductDAOImpl;
 import dao.impl.ProductOldDAOImpl;
+import entity.Users;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 
@@ -32,7 +33,13 @@ public class ProductsController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try {
-            /* TODO output your page here. You may use following sample code. */
+            Users user = (Users) request.getSession().getAttribute("user");
+            if (user == null) {
+                if (user.getIsAdmin() == 0 && user.getIsSeller()== 0)
+                        throw new Exception("Access denied");
+                throw new Exception("Please login first");
+            }
+            
             String service = request.getParameter("do");
             String categoryID = request.getParameter("CategoryID");
             ProductOldDAOImpl productDAO = new ProductOldDAOImpl();
@@ -67,7 +74,7 @@ public class ProductsController extends HttpServlet {
                         if ((new ProductDAOImpl()).deleteProducts(arrProductID) > 0) {
                             message = "<p style=\"color: green\">Succesful</p>";
                         } else {
-                            message = "<p style=\"color: red\">Fail to add products</p>";
+                            message = "<p style=\"color: red\">Fail to delete products.</p>";
                         }
                     } catch (NumberFormatException e) {
                         request.getRequestDispatcher("error.jsp").forward(request, response);

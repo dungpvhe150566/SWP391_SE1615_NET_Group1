@@ -7,8 +7,9 @@ package controller;
 
 import dao.impl.BlogDAOImpl;
 import entity.Blog;
+import entity.Users;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.InputStream;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -49,19 +50,37 @@ public class EditBlogController extends HttpServlet {
             int blogID = Integer.parseInt(request.getParameter("blogID"));
             BlogDAOImpl blogDAO = new BlogDAOImpl();
 
+            Users user = (Users) request.getSession().getAttribute("user");
+            if (user == null) {
+                if (user.getIsAdmin() == 0 && user.getIsSeller()== 0)
+                        throw new Exception("Access denied");
+                throw new Exception("Please login first");
+            }
             if (service != null) {
                 if (service.equals("editblog")) {
                     Part filePart = request.getPart("fileInput");
-                    String fileName = filePart.getSubmittedFileName();
+                    String fileName = "";
+
+                    InputStream inputStream = null; // input stream of the upload file
+
+                    if (filePart != null) {
+                        // obtains input stream of the upload file
+                        if (request.getParameter("imageLink") != null && request.getParameter("imageLink").length() > 0) {
+                            fileName = request.getParameter("imageLink");
+                        } else {
+                            fileName = filePart.getSubmittedFileName();
+                            inputStream = filePart.getInputStream();
+                        }
+                    }
 
                     //Get and store all attribute of each Blog
                     try {
                         String title = request.getParameter("title").trim();
                         String content = request.getParameter("content").trim();
                         String imageLink = fileName;
-                        int sellerID = 1;
+                        int sellerID = user.getUserID();
 
-                        Blog blog = new Blog(blogID, title, content, imageLink, sellerID);
+                        Blog blog = new Blog(blogID, title, content, imageLink, sellerID, inputStream);
 
                         if ((new BlogDAOImpl()).editBlog(blog) > 0) {
                             message = "<p style=\"color: green\">Succesful</p>";
@@ -74,9 +93,9 @@ public class EditBlogController extends HttpServlet {
                     }
                 }
             }
-            
+
             Blog blog = blogDAO.getBlog(blogID);
-            
+
             request.setAttribute("message", message);
             request.setAttribute("blog", blog);
             request.getRequestDispatcher("edit-blog.jsp").forward(request, response);

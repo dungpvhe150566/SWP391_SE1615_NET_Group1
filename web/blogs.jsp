@@ -1,4 +1,4 @@
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -57,7 +57,12 @@
                                         <c:forEach items="${blogList}" var="blog">
                                             <tr class="product-tr">
                                                 <th scope="row"><input type="checkbox" value="${blog.getID()}" name="blogID"></th>
-                                                <td><image src="image/${blog.getImageLink()}" style="max-width: 100px; max-height: 100px"></td>
+                                                    <c:if test="${blog.getImage() != null}">
+                                                    <td><image src="Blogs/getImage?id=${blog.getID()}" style="max-width: 100px; max-height: 100px"></td>
+                                                    </c:if>
+                                                    <c:if test="${blog.getImage() == null}">
+                                                    <td><image src="image/${blog.getImageLink()}" style="max-width: 100px; max-height: 100px"></td>
+                                                    </c:if>
                                                 <td onclick="editBlog(${blog.getID()})">${blog.getTitle()}</td>
                                                 <td>${blog.getContent()}</td>
                                                 <td>
@@ -113,48 +118,48 @@
         </style>
 
         <script>
-                                                function searchName() {
-                                                    let input = document.getElementById('myInput').value;
-                                                    input = input.toLowerCase();
-                                                    let x = document.getElementsByClassName('product-tr');
+                                function searchName() {
+                                    let input = document.getElementById('myInput').value;
+                                    input = input.toLowerCase();
+                                    let x = document.getElementsByClassName('product-tr');
 
-                                                    for (i = 0; i < x.length; i++) {
-                                                        if (!x[i].getElementsByTagName("td")[0].innerHTML.toLowerCase().includes(input)) {
-                                                            x[i].style.display = "none";
-                                                        } else {
-                                                            x[i].style.display = "";
-                                                        }
-                                                    }
-                                                }
+                                    for (i = 0; i < x.length; i++) {
+                                        if (!x[i].getElementsByTagName("td")[0].innerHTML.toLowerCase().includes(input)) {
+                                            x[i].style.display = "none";
+                                        } else {
+                                            x[i].style.display = "";
+                                        }
+                                    }
+                                }
 
-                                                function searchCategory(categoryID) {
-                                                    window.location.href = "ProductsController?CategoryID=" + categoryID;
-                                                }
+                                function searchCategory(categoryID) {
+                                    window.location.href = "ProductsController?CategoryID=" + categoryID;
+                                }
 
-                                                function deleteBlog(blogID) {
-                                                    if (confirm("Are you sure you want to delete? \nThis will delete all data related to the product.")) {
-                                                        window.location.href = "blogs?do=deleteBlog&blogID=" + blogID;
-                                                    } else {
-                                                        return false;
-                                                    }
-                                                }
+                                function deleteBlog(blogID) {
+                                    if (confirm("Are you sure you want to delete? \nThis will delete all data related to the product.")) {
+                                        window.location.href = "blogs?do=deleteBlog&blogID=" + blogID;
+                                    } else {
+                                        return false;
+                                    }
+                                }
 
-                                                function editBlog(blogID) {
-                                                    window.location.href = "editblog?blogID=" + blogID;
-                                                }
+                                function editBlog(blogID) {
+                                    window.location.href = "editblog?blogID=" + blogID;
+                                }
 
-                                                function deleteProducts() {
-                                                    if (confirm("Are you sure you want to delete? \nThis will delete all data related to the product.")) {
-                                                        document.getElementById('products').submit();
-                                                    } else {
-                                                        return false;
-                                                    }
-                                                }
+                                function deleteProducts() {
+                                    if (confirm("Are you sure you want to delete? \nThis will delete all data related to the blog.")) {
+                                        document.getElementById('products').submit();
+                                    } else {
+                                        return false;
+                                    }
+                                }
 
-                                                function selectPage(page, categoryID) {
-                                                    let title = document.getElementById('myInput').value;
-                                                    window.location.href = "blogs?page=" + page + "&title=" + title;
-                                                }
+                                function selectPage(page, categoryID) {
+                                    let title = document.getElementById('myInput').value;
+                                    window.location.href = "blogs?page=" + page + "&title=" + title;
+                                }
         </script>
     </body>
 </html>

@@ -4,6 +4,8 @@ import dao.BlogDAO;
 import dao.DBContext;
 import entity.Blog;
 import entity.CommentBlog;
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -497,10 +499,12 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
                 int id = rs.getInt("ID");
                 String titleContent = rs.getString("Title");
                 String content = rs.getString("Content");
-                String image = rs.getString("imageLink");
+                String imageLink = rs.getString("imageLink");
                 int sellerID = rs.getInt("SellerID");
+                InputStream image = rs.getBinaryStream("image");
+                
                 // Add Product to vector 
-                blogs.add(new Blog(id, titleContent, content, image, sellerID));
+                blogs.add(new Blog(id, titleContent, content, imageLink, sellerID, image));
             }
         } catch (Exception ex) {
             throw ex;
@@ -510,6 +514,41 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             closeConnection(connection);
         }
         return blogs;
+    }
+    
+    /**
+     * Get Blog Image From Database follow blog ID
+     *
+     * @param
+     * @return InputStream image 
+     */
+    public Blob getImage(int blogID) throws Exception {
+
+        // Query Statement to get all Categories in Database 
+        String sqlQuery = "select image from Blog where ID = " + blogID;
+
+        // Resultset to store all Categories 
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Get all categories store to vector
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Blob image = rs.getBlob("image");
+                return image;
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        
+        return null;
     }
 
     /**
@@ -552,15 +591,14 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
 
     public int deleteBlog(int blogID) throws Exception {
         int n = 0;
-        String sql = "delete from Blog where ID = " + blogID;
+        String sql = "delete from [Comment_Blogs] where [BlogID] = " + blogID
+                + "delete from [Like_Blog] where [BlogID] = " + blogID;
 
-//        Connection conn = null;
-//        PreparedStatement prepare = null;
-//        ResultSet rs = null;
         try {
             Statement state = getConnection().createStatement();
 
             n = state.executeUpdate(sql);
+            n = state.executeUpdate("delete from Blog where ID = " + blogID);
         } catch (SQLException ex) {
             throw ex;
         }
@@ -576,12 +614,14 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
         blogIDs = blogIDs.trim().replace(" ", ",");
 
         int n = 0;
-        String sql = "delete from Blog where ID in (" + blogIDs + ")";
+        String sql = "delete from [Comment_Blogs] where [BlogID] in (" + blogIDs + ")"
+                + "delete from [Like_Blog] where [BlogID] in (" + blogIDs + ")";
 
         try {
             Statement state = getConnection().createStatement();
 
             n = state.executeUpdate(sql);
+            n = state.executeUpdate("delete from Blog where ID in (" + blogIDs + ")");
         } catch (SQLException ex) {
             throw ex;
         }
@@ -594,9 +634,10 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
                 + "           ([Title]\n"
                 + "           ,[Content]\n"
                 + "           ,[imageLink]\n"
-                + "           ,[SellerID])\n"
+                + "           ,[SellerID]\n"
+                + "           ,[image])\n"
                 + "     VALUES\n"
-                + "           (?,?,?,?)";
+                + "           (?,?,?,?,?)";
 
         Connection conn = null;
         PreparedStatement prepare = null;
@@ -609,7 +650,8 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             prepare.setString(2, blog.getContent());
             prepare.setString(3, blog.getImageLink());
             prepare.setInt(4, blog.getSellerID());
-
+            prepare.setBinaryStream(5, blog.getImage());
+            
             n = prepare.executeUpdate();
         } finally {
             closePrepareStatement(prepare);
@@ -625,6 +667,7 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
                 + "   SET [Title] = ?\n"
                 + "      ,[Content] = ?\n"
                 + "      ,[imageLink] = ?\n"
+                + "      ,[image] = ?\n"
                 + " WHERE ID = " + blog.getID();
 
         Connection conn = null;
@@ -637,6 +680,7 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             prepare.setString(1, blog.getTitle());
             prepare.setString(2, blog.getContent());
             prepare.setString(3, blog.getImageLink());
+            prepare.setBinaryStream(4, blog.getImage());
 
             n = prepare.executeUpdate();
         } finally {
@@ -665,11 +709,14 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 // Get and store all attribute of each Product
-                String blogTitle = rs.getString(2);
-                String blogContent = rs.getString(3);
-                String blogImageLink = rs.getString(4);
-                int sellerID = rs.getInt(5);
-                blog = new Blog(blogID, blogTitle, blogContent, blogImageLink, sellerID);
+                int id = rs.getInt("ID");
+                String titleContent = rs.getString("Title");
+                String content = rs.getString("Content");
+                String imageLink = rs.getString("imageLink");
+                int sellerID = rs.getInt("SellerID");
+                InputStream image = rs.getBinaryStream("image");
+                
+                blog = (new Blog(id, titleContent, content, imageLink, sellerID, image));
             }
         } catch (SQLException ex) {
             throw ex;

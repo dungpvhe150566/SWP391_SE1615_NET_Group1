@@ -167,12 +167,22 @@
                                         </label>
                                         <div class="tm-product-img-dummy mx-auto">
                                             <input type="hidden" name="imageLink" value="${product.getImageLink()}">
-                                            <img
-                                                src="/image/${product.getImageLink()}"
-                                                onclick="document.getElementById('fileInput').click();"
-                                                id="previewImage"
-                                                style="max-height: 100%; width: 100%;"
-                                                >
+                                            <c:if test="${product.getImage() != null}">
+                                                <img
+                                                    src="Blogs/getImage?do=product&id=${product.getProductID()}"
+                                                    onclick="document.getElementById('fileInput').click();"
+                                                    id="previewImage"
+                                                    style="max-height: 100%; width: 100%;"
+                                                    >
+                                            </c:if>
+                                            <c:if test="${product.getImage() == null}">
+                                                <img
+                                                    src="image/${product.getImageLink()}"
+                                                    onclick="document.getElementById('fileInput').click();"
+                                                    id="previewImage"
+                                                    style="max-height: 100%; width: 100%;"
+                                                    >
+                                            </c:if>
                                         </div>
                                     </div>
 

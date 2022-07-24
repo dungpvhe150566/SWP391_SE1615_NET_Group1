@@ -3,6 +3,7 @@ package dao.impl;
 import dao.DBContext;
 import dao.ProductDAO;
 import entity.Product;
+import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -380,6 +381,42 @@ public class ProductOldDAOImpl extends DBContext{
 
         return null;
     }
+    
+    /**
+     * Get Blog Image From Database follow blog ID
+     *
+     * @param
+     * @return InputStream image 
+     */
+    public Blob getImage(int productID) throws Exception {
+
+        // Query Statement to get all Categories in Database 
+        String sqlQuery = "select image from Product where [ProductID] = " + productID;
+
+        // Resultset to store all Categories 
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet rs = null;
+        // Get all categories store to vector
+        try {
+            connection = getConnection();
+            preparedStatement = connection.prepareStatement(sqlQuery);
+            rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                Blob image = rs.getBlob("image");
+                return image;
+            }
+        } catch (Exception ex) {
+            throw ex;
+        } finally {
+            closeRS(rs);
+            closePrepareStatement(preparedStatement);
+            closeConnection(connection);
+        }
+        
+        return null;
+    }
+
 
     public int addProduct(Product pro) throws Exception {
         int n = 0;
@@ -396,8 +433,9 @@ public class ProductOldDAOImpl extends DBContext{
                 + "           ,[ManufacturerID]\n"
                 + "           ,[height]\n"
                 + "           ,[width]\n"
-                + "           ,[weight])\n"
-                + "       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "           ,[weight]\n"
+                + "           ,[image])\n"
+                + "       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         Connection conn = null;
         PreparedStatement prepare = null;
@@ -421,10 +459,9 @@ public class ProductOldDAOImpl extends DBContext{
             prepare.setFloat(12, pro.getHeight());
             prepare.setFloat(13, pro.getWidth());
             prepare.setFloat(14, pro.getWeight());
+            prepare.setBinaryStream(15, pro.getImage());
 
             n = prepare.executeUpdate();
-
-//            n = pre.executeUpdate();
         } finally {
             closePrepareStatement(prepare);
             closeConnection(conn);

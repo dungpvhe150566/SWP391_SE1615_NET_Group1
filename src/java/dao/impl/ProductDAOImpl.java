@@ -3,6 +3,7 @@ package dao.impl;
 import dao.DBContext;
 import dao.ProductDAO;
 import entity.Product;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -370,7 +371,8 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
                 float height = rs.getFloat(13);
                 float width = rs.getFloat(14);
                 float weight = rs.getFloat(15);
-                Product product = new Product(productId, ProductName, Description, OriginalPrice, SellPrice, SalePercent, imageLink, CategoryID, SellerID, Amount, StatusID, ManufacturerID, height, width, weight);
+                InputStream image = rs.getBinaryStream("image");
+                Product product = new Product(productId, ProductName, Description, OriginalPrice, SellPrice, SalePercent, imageLink, CategoryID, SellerID, Amount, StatusID, ManufacturerID, height, width, weight, image);
                 return product;
             }
         } catch (Exception ex) {
@@ -453,6 +455,7 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
                 + "      ,[height] = ?\n"
                 + "      ,[width] = ?\n"
                 + "      ,[weight] = ?\n"
+                + "      ,[image] = ?\n"
                 + " WHERE ProductID = " + pro.getProductID();
 
         Connection conn = null;
@@ -478,6 +481,7 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
             pre.setFloat(12, pro.getHeight());
             pre.setFloat(13, pro.getWidth());
             pre.setFloat(14, pro.getWeight());
+            pre.setBinaryStream(15, pro.getImage());
 
             n = pre.executeUpdate();
 //            n = pre.executeUpdate();
@@ -504,9 +508,6 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
                 + "	delete from Feedback_Replies where FeedbackID in (select FeedbackID from Feedback where ProductID = " + ProductID + ")\n"
                 + "	delete from Feedback where ProductID = " + ProductID + "\n";
 
-//        Connection conn = null;
-//        PreparedStatement prepare = null;
-//        ResultSet rs = null;
         try {
             Statement state = getConnection().createStatement();
 

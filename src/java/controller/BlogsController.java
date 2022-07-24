@@ -7,8 +7,8 @@ package controller;
 
 import dao.impl.BlogDAOImpl;
 import entity.Blog;
+import entity.Users;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -39,6 +39,14 @@ public class BlogsController extends HttpServlet {
         try {
             BlogDAOImpl blogDAO = new BlogDAOImpl();
             String service = request.getParameter("do");
+            
+            Users user = (Users) request.getSession().getAttribute("user");
+            if (user == null) {
+                if (user.getIsAdmin() == 0 && user.getIsSeller()== 0)
+                        throw new Exception("Access denied");
+                throw new Exception("Please login first");
+            }
+
             
             String message = "";
             if (service != null) {
