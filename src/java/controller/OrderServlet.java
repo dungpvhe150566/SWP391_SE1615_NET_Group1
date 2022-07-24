@@ -72,7 +72,7 @@ public class OrderServlet extends HttpServlet {
                 indexPage = "1"; //Luc nay gia tri = 1
             }
             int index = Integer.parseInt(indexPage); 
-            int num = dao.getTotalOrder(); //Lay toan bo order trong co so du lieu
+            int num = dao.getTotalOrder(); //Lay toan bo so order trong co so du lieu
             int endPage = num / 6;
             if (num % 6 != 0) {
                 endPage++;
