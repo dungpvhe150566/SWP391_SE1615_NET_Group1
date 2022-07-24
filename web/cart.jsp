@@ -69,7 +69,7 @@
                                         <td class="align-middle">${C.value.product.getOriginalPrice()} VND</td>
                                         <td class="align-middle">
 
-                                            <input  min='0' type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" name ="quantity" onchange="this.form.submit()"  class="form-control form-control-sm bg-secondary text-center" value="${C.value.getAmount()}">
+                                            <input  min='0' max="30" type="number" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" name ="quantity" onchange="this.form.submit()"  class="form-control form-control-sm bg-secondary text-center" value="${C.value.getAmount()}">
 
                                         </td>
                                         <td class="align-middle">${C.value.product.getOriginalPrice()*C.value.getAmount()}</td>

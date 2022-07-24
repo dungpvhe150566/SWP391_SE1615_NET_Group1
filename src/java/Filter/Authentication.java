@@ -116,35 +116,35 @@ public class Authentication implements Filter {
         HttpSession session = httprequest.getSession();
         Users user = (Users) session.getAttribute("user");
         if (user == null) {
-            if (url.equals("/ViewAllFeedbackController")
-                    || url.equals("/AccountManagerController")
-                    || url.equals("/ViewlistfavoriteController")
-                    || url.equals("/dontrollner-dasboard")
-                    || url.equals("/ProductsController")
-                    || url.equals("/blogs")
-                    || url.equals("/ProcessOrders")) {
+            if (url.contains("/ViewAllFeedbackController")
+                    || url.contains("/AccountManagerController")
+                    || url.contains("/ViewlistfavoriteController")
+                    || url.contains("/dontrollner-dasboard")
+                    || url.contains("/ProductsController")
+                    || url.contains("/blogs")
+                    || url.contains("/ProcessOrders")) {
                 httpresponse.sendRedirect("error.jsp");
             }
         } else {
             if (user.getIsAdmin() == 1) {
-                if (url.equals("/ViewlistfavoriteController")) {
+                if (url.contains("/ViewlistfavoriteController")) {
                     httpresponse.sendRedirect("error.jsp");
                 }
             } else if (user.getIsSeller() == 1) {
-                if (url.equals("/ViewlistfavoriteController")
-                        || url.equals("/dontrollner-dasboard")
-                        || url.equals("/ProductsController")
-                        || url.equals("/blogs")
-                        || url.equals("/ProcessOrders")) {
+                if (url.contains("/ViewlistfavoriteController")
+                        || url.contains("/dontrollner-dasboard")
+                        || url.contains("/ProductsController")
+                        || url.contains("/blogs")
+                        || url.contains("/ProcessOrders")) {
                     httpresponse.sendRedirect("error.jsp");
                 }
             } else {
                 if (url.equals("/ViewAllFeedbackController")
-                        || url.equals("/AccountManagerController")
-                        || url.equals("/dontrollner-dasboard")
-                        || url.equals("/ProductsController")
-                        || url.equals("/blogs")
-                        || url.equals("/ProcessOrders")) {
+                        || url.contains("/AccountManagerController")
+                        || url.contains("/dontrollner-dasboard")
+                        || url.contains("/ProductsController")
+                        || url.contains("/blogs")
+                        || url.contains("/ProcessOrders")) {
                     httpresponse.sendRedirect("error.jsp");
                 }
             }
