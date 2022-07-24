@@ -32,4 +32,7 @@ public interface UserDAO {
     void updateUser(int id, String user, String email, String isSell, String isAdmin) throws Exception;
 
     List<Users> getAllAccounts() throws Exception;
+    
+    void resetPassword(String pass, String email) throws Exception;
+    
 }

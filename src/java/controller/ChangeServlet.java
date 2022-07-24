@@ -76,21 +76,21 @@ public class ChangeServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             HttpSession session = request.getSession();
-            String pass = request.getParameter("opass");
-            String npass = request.getParameter("npass");
-            String cpass = request.getParameter("cpass");
-            Users U = (Users)session.getAttribute("user");
-            if(!U.getPassword().equalsIgnoreCase(pass)){
+            String pass = request.getParameter("opass"); //lay password cu da nhap
+            String npass = request.getParameter("npass"); // lay password moi da nhap
+            String cpass = request.getParameter("cpass"); // lay password ma nguoi dung nhap lai
+            Users U = (Users)session.getAttribute("user"); // lay du lieu user tren session
+            if(!U.getPassword().equalsIgnoreCase(pass)){ // neu pass cu nguoi dung nhap khong giong password trong database thi hien len thong bao
                 String alert = "You enter the wrong password";
                 request.setAttribute("err", alert);
                 request.getRequestDispatcher("change.jsp").forward(request, response);
             }
-            if(!npass.equalsIgnoreCase(cpass)){
+            if(!npass.equalsIgnoreCase(cpass)){ // new password moi da nhap khac voi password nhap lai thi hien ra thong bao
                 String alert = "Your confirm password is wrong";
                 request.setAttribute("err", alert);
                 request.getRequestDispatcher("change.jsp").forward(request, response);
             }
-            UsersDAOImpl dao = new UsersDAOImpl();
+            UsersDAOImpl dao = new UsersDAOImpl(); // neu trong vao truong nao o tren thi su dung ham de reset lai mat khau
             dao.resetPassword(npass, U.getEmail());
             request.getRequestDispatcher("login.jsp").forward(request, response);
     }

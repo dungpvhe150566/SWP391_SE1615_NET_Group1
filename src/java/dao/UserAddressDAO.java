@@ -9,4 +9,5 @@ public interface UserAddressDAO {
     public int addUserAddress(UserAddress userAddress) throws Exception;
     public int deleteUserAddress(int userAddressID) throws Exception;
     public int editUserAddress(UserAddress userAddress) throws Exception;
+    public UserAddress getAll(String id) throws Exception;
 }

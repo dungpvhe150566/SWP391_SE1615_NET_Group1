@@ -61,9 +61,9 @@ public class SearchOrderServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String text = request.getParameter("total");
+        String text = request.getParameter("total"); //lay so tien vao
         OrdersDAOImpl dao = new OrdersDAOImpl();
-        List<Orders> listO = dao.searchTotal(text);
+        List<Orders> listO = dao.searchTotal(text); // su dung ham de tim ra nhung don hang nhieu hon so tien nhap
         request.setAttribute("listO", listO);
         request.getRequestDispatcher("finalorder.jsp").forward(request, response);
     }

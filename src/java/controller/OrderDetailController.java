@@ -60,9 +60,9 @@ public class OrderDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-            String id = request.getParameter("id");
+            String id = request.getParameter("id"); //lay id vao
             OrderDetailDAOImpl dao = new OrderDetailDAOImpl();
-            OrderDetail OD = dao.getOrderByID(id);
+            OrderDetail OD = dao.getOrderByID(id); // lay da order detail cua id da truyen vao
             request.setAttribute("OD", OD);
             request.getRequestDispatcher("orderdetails.jsp").forward(request, response);
     }

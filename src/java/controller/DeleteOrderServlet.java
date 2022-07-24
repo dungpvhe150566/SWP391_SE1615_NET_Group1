@@ -61,7 +61,7 @@ public class DeleteOrderServlet extends HttpServlet {
             throws ServletException, IOException {
         String id = request.getParameter("id");
         OrdersDAOImpl dao = new OrdersDAOImpl();
-        dao.deleteOrder(id);
+        dao.deleteOrder(id); //goi ham delete
         request.getRequestDispatcher("order").forward(request, response);
     }
 

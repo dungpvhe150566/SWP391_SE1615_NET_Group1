@@ -64,10 +64,10 @@ public class UserProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
             HttpSession session = request.getSession();
-            Users U = (Users)session.getAttribute("user");
-            String id = U.getUserID()+"";
-            UserAddressDAOImpl dao = new UserAddressDAOImpl();
-            UserAddress currentU = dao.getAll(id);
+            Users U = (Users)session.getAttribute("user");//lay du lieu user trong session
+            String id = U.getUserID()+""; // chuyen id lay duoc ve dang string vi id la dang int
+            UserAddressDAOImpl dao = new UserAddressDAOImpl(); 
+            UserAddress currentU = dao.getAll(id); // goi ham de lay du lieu
             request.setAttribute("U", currentU);
             request.getRequestDispatcher("myprofile.jsp").forward(request, response);
     }

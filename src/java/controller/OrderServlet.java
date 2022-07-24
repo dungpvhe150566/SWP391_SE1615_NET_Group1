@@ -67,17 +67,17 @@ public class OrderServlet extends HttpServlet {
             throws ServletException, IOException {
          HttpSession session = request.getSession();
             OrdersDAOImpl dao = new OrdersDAOImpl();
-            String indexPage = request.getParameter("index");
+            String indexPage = request.getParameter("index"); //Lan dau chay gia tri chac chan la null
             if (indexPage == null) {
-                indexPage = "1";
+                indexPage = "1"; //Luc nay gia tri = 1
             }
-            int index = Integer.parseInt(indexPage);
-            int num = dao.getTotalOrder();
+            int index = Integer.parseInt(indexPage); 
+            int num = dao.getTotalOrder(); //Lay toan bo order trong co so du lieu
             int endPage = num / 6;
             if (num % 6 != 0) {
                 endPage++;
             }
-            List<Orders> listO = dao.pagingOrders(index);
+            List<Orders> listO = dao.pagingOrders(index); //goi ham phan trang voi moi so trang da chon
             request.setAttribute("tag", index);
             request.setAttribute("endP", endPage);
             request.setAttribute("listO", listO);
