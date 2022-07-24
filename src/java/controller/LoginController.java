@@ -73,6 +73,9 @@ public class LoginController extends HttpServlet {
                     users=dao.getAccountByID(users.getUserID());
                     HttpSession session = request.getSession();
                     session.setAttribute("user", users);
+                    if(users.getIsAdmin()==1){ //new la admin thi vao trang admid
+                        response.sendRedirect("/dontrollner-dasboard");
+                    }else
                     request.getRequestDispatcher("HomeController").forward(request, response); //Neu dang nhap thanh cong chuyen den home
                 }
             }
