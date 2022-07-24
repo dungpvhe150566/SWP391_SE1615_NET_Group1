@@ -19,7 +19,7 @@
             <div class="row bg-secondary py-2 px-xl-5">
                 <div class="col-lg-6 d-none d-lg-block">
                     <div class="d-inline-flex align-items-center">
-                        <c:if test="${users.getIsAdmin()==1}">
+                        <c:if test="${sessionScope.user.getIsAdmin()==1}">
                             <a class="text-dark" href="dontrollner-dasboard">Admin</a>
                         </c:if>
                         <span class="text-muted px-2">|</span>
