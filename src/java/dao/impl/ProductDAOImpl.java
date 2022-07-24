@@ -484,7 +484,6 @@ public class ProductDAOImpl extends DBContext implements ProductDAO {
             pre.setBinaryStream(15, pro.getImage());
 
             n = pre.executeUpdate();
-//            n = pre.executeUpdate();
         } catch (SQLException ex) {
             throw ex;
         } finally {

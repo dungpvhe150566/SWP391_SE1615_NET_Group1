@@ -16,6 +16,7 @@ import javax.servlet.http.Part;
 import dao.impl.CategoryDAOImpl;
 import dao.impl.ManufacturerDAOImpl;
 import dao.impl.ProductDAOImpl;
+import dao.impl.ProductOldDAOImpl;
 import dao.impl.ProductStatusDAOImpl;
 import entity.Users;
 import java.io.InputStream;
@@ -51,8 +52,9 @@ public class EditProductController extends HttpServlet {
         try {
             Users user = (Users) request.getSession().getAttribute("user");
             if (user == null) {
-                if (user.getIsAdmin() == 0 && user.getIsSeller()== 0)
-                        throw new Exception("Access denied");
+                if (user.getIsAdmin() == 0 && user.getIsSeller() == 0) {
+                    throw new Exception("Access denied");
+                }
                 throw new Exception("Please login first");
             }
 
@@ -61,9 +63,18 @@ public class EditProductController extends HttpServlet {
 
             if (service != null) {
                 Part filePart = request.getPart("fileInput");
-                String fileName = filePart.getSubmittedFileName();
-                if (fileName.length() == 0) {
-                    fileName = request.getParameter("imageLink");
+                String fileName = "";
+
+                InputStream inputStream = null; // input stream of the upload file
+
+                if (filePart != null && filePart.getSubmittedFileName() != "") {
+                    // obtains input stream of the upload file
+                    fileName = filePart.getSubmittedFileName();
+                    inputStream = filePart.getInputStream();
+                } else {
+                    if (request.getParameter("imageLink") != null && request.getParameter("imageLink").length() > 0) {
+                        fileName = request.getParameter("imageLink");
+                    }
                 }
 
                 //Get and store all attribute of each Product
@@ -78,19 +89,23 @@ public class EditProductController extends HttpServlet {
                     int category = Integer.parseInt(request.getParameter("category").trim());
                     int seller = user.getUserID();
                     int amount = Integer.parseInt(request.getParameter("amount").trim());
-                    int statusID = 1;
+                    int statusID = Integer.parseInt(request.getParameter("productstatus").trim());
                     int manufacture = Integer.parseInt(request.getParameter("manufacture").trim());
                     float height = Float.parseFloat(request.getParameter("height").trim());
                     float width = Float.parseFloat(request.getParameter("width").trim());
                     float weight = Float.parseFloat(request.getParameter("weight").trim());
-                    InputStream image = filePart.getInputStream();
 
-                    Product pro = new Product(productID, productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight, image);
+                    Product pro = new Product(productID, productName, description, originalPrice, sellPrice, salePercent, imageLink, category, seller, amount, statusID, manufacture, height, width, weight);
+                    if (inputStream != null) {
+                        pro.setImage(inputStream);
+                    } else {
+                        pro.setImage((new ProductOldDAOImpl()).getImage(productID).getBinaryStream());
+                    }
 
                     if ((new ProductDAOImpl()).updateProduct(pro) > 0) {
-                        message = "<p style=\"color: green\">Succesful</p>";
+                        message = "<p style=\"color: white\">Succesful</p>";
                     } else {
-                        message = "<p style=\"color: green\">Fail to add products</p>";
+                        message = "<p style=\"color: red\">Fail to edit product</p>";
                     }
                 } catch (NumberFormatException e) {
                     message = "<p style=\"color: red\">Wrong format input</p>";

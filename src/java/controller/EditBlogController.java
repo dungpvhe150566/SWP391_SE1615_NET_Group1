@@ -52,40 +52,43 @@ public class EditBlogController extends HttpServlet {
 
             Users user = (Users) request.getSession().getAttribute("user");
             if (user == null) {
-                if (user.getIsAdmin() == 0 && user.getIsSeller()== 0)
-                        throw new Exception("Access denied");
+                if (user.getIsAdmin() == 0 && user.getIsSeller() == 0) {
+                    throw new Exception("Access denied");
+                }
                 throw new Exception("Please login first");
             }
             if (service != null) {
                 if (service.equals("editblog")) {
                     Part filePart = request.getPart("fileInput");
                     String fileName = "";
-
+                    
                     InputStream inputStream = null; // input stream of the upload file
 
-                    if (filePart != null) {
+                    if (filePart != null && filePart.getSubmittedFileName() != "") {
                         // obtains input stream of the upload file
+                        fileName = filePart.getSubmittedFileName();
+                        inputStream = filePart.getInputStream();
+                    } else {
                         if (request.getParameter("imageLink") != null && request.getParameter("imageLink").length() > 0) {
                             fileName = request.getParameter("imageLink");
-                        } else {
-                            fileName = filePart.getSubmittedFileName();
-                            inputStream = filePart.getInputStream();
                         }
                     }
 
                     //Get and store all attribute of each Blog
                     try {
-                        String title = request.getParameter("title").trim();
-                        String content = request.getParameter("content").trim();
-                        String imageLink = fileName;
-                        int sellerID = user.getUserID();
-
-                        Blog blog = new Blog(blogID, title, content, imageLink, sellerID, inputStream);
+                        Blog blog = new Blog();
+                        blog.setID(blogID);
+                        blog.setTitle(request.getParameter("title").trim());
+                        blog.setContent(request.getParameter("content").trim());
+                        blog.setImageLink(fileName);
+                        blog.setSellerID(user.getUserID());
+                        if (inputStream != null) blog.setImage(inputStream); 
+                        else blog.setImage((new BlogDAOImpl()).getImage(blogID).getBinaryStream());
 
                         if ((new BlogDAOImpl()).editBlog(blog) > 0) {
                             message = "<p style=\"color: green\">Succesful</p>";
                         } else {
-                            message = "<p style=\"color: green\">Fail to add products</p>";
+                            message = "<p style=\"color: red\">Fail to edit blog</p>";
                         }
                     } catch (NumberFormatException e) {
                         message = "<p style=\"color: red\">Wrong format input</p>";

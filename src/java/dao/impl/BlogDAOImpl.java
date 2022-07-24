@@ -683,6 +683,8 @@ public class BlogDAOImpl extends DBContext implements BlogDAO {
             prepare.setBinaryStream(4, blog.getImage());
 
             n = prepare.executeUpdate();
+        } catch (Exception ex) {
+            throw ex;
         } finally {
             closePrepareStatement(prepare);
             closeConnection(conn);
