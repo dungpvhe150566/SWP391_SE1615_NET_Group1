@@ -62,7 +62,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="order">
-                                <i class="fa-thin"></i> Order
+                                <i class="fab fa-first-order"></i> Order
                             </a>
                         </li>
                         <li class="nav-item dropdown">
