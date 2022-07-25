@@ -3,31 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/controller/UserProfileController.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/controller/ChangeServlet.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/index.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/dao/UserDAO.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/myprofile.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/controller/OrderServlet.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/controller/LoginController.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/dao/DBContext.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/dao/UserAddressDAO.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/userprofile.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/dao/impl/OrdersDAOImpl.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/controller/RegisterController.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/allorder.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/editorder.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/controller/OrderDetailController.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/mynotify.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/login.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/reset.jsp</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/controller/DeleteOrder.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/finalorder.jsp</file>
             <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/dao/impl/UsersDAOImpl.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/controller/EditOrderServlet.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/dao/OrdersDAO.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/controller/DeleteOrderServlet.java</file>
-            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/shop.jsp</file>
+            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/dao/impl/OrdersDAOImpl.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/dao/impl/OrderDetailDAOImpl.java</file>
+            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/web/login.jsp</file>
+            <file>file:/D:/SWP391/SWP391_SE1615_NET_Group1/src/java/controller/OrderDetailController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -201,7 +201,7 @@
                                                     <span>Name</span>
                                                 </div>
                                                 <div class="col-md-8" style="color: black;">
-                                                    <input class="form-control" type="text" pattern="{6,20}" title="Username must bettween 6-20 character,contains only letters,numbers" name="name" value="${U.shipName}">
+                                                    <input class="form-control" type="text" pattern=".{6,20}" title="Username must bettween 6-20 character,contains only letters,numbers" name="name" value="${U.shipName}">
                                                     <input class="form-control" type="text" name="id" value="${U.userID}" hidden="">
                                                 </div>
                                             </div>
